@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MINING PRO</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; }
+        body { background-color: #0f172a; color: #f8fafc; padding-bottom: 80px; }
+        .header-bar { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: #1e293b; border-bottom: 1px solid #334155; }
+        .logo-section { display: flex; align-items: center; gap: 10px; }
+        .avatar { width: 35px; height: 35px; background: #3b82f6; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .badge { background: #854d0e; color: #fef08a; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: bold; }
+        
+        .menu-content { display: none; padding: 20px; max-width: 500px; margin: 0 auto; }
+        .menu-content.active { display: block; }
+        
+        /* Home Tab Styles */
+        .balance-card { background: #1e293b; padding: 25px; border-radius: 15px; text-align: center; margin-top: 10px; border: 1px solid #334155; }
+        .balance-title { color: #94a3b8; font-size: 14px; margin-bottom: 5px; }
+        .balance-value { font-size: 32px; font-weight: bold; color: #38bdf8; }
+        .circle-container { display: flex; justify-content: center; margin-top: 40px; }
+        .mine-btn { width: 220px; height: 220px; border-radius: 50%; border: none; background: linear-gradient(135deg, #3b82f6, #06b6d4); color: white; font-size: 20px; font-weight: bold; cursor: pointer; box-shadow: 0 0 25px rgba(59,130,246,0.5); transition: transform 0.1s ease; }
+        .mine-btn:active { transform: scale(0.95); }
+        
+        /* Global UI Elements */
+        .box-item { background: #1e293b; padding: 15px; border-radius: 10px; margin-bottom: 12px; border: 1px solid #334155; display: flex; justify-content: space-between; align-items: center; }
+        .action-btn { background: #3b82f6; color: white; border: none; padding: 8px 15px; border-radius: 6px; font-weight: bold; cursor: pointer; font-size: 12px; }
+        .input-field { width: 100%; background: #0f172a; border: 1px solid #334155; color: white; padding: 10px; border-radius: 6px; margin-top: 5px; font-size: 14px; }
+        
+        /* Navigation Bar Bottom */
+        .nav-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: #1e293b; border-top: 1px solid #334155; display: flex; justify-content: space-around; padding: 10px 0; z-index: 999; }
+        .nav-item { background: none; border: none; color: #64748b; cursor: pointer; display: flex; flex-direction: column; align-items: center; gap: 4px; font-size: 11px; font-weight: 500; }
+        .nav-item.active { color: #38bdf8; }
+        .nav-icon { font-size: 18px; }
+    </style>
+</head>
+<body>
+
+    <div class="header-bar">
+        <div class="logo-section">
+            <div class="avatar" id="avatar-letter">M</div>
+            <span style="font-weight: bold;" id="username-display">Loading...</span>
+        </div>
+        <div class="badge">✨ Level 1</div>
+    </div>
+
+    <div id="tab-home" class="menu-content active">
+        <div class="balance-card">
+            <div class="balance-title">Saldo Dompet Anda</div>
+            <div class="balance-value" id="saldo-display">0.000000 TRX</div>
+        </div>
+        <div class="circle-container">
+            <button class="mine-btn" onclick="jalanMining()">TAP TO MINE</button>
+        </div>
+    </div>
+
+    <div id="tab-task" class="menu-content">
+        <h3 style="margin-bottom: 15px;">Misi Harian</h3>
+        <div class="box-item">
+            <div>
+                <p style="font-weight: bold;">Join Channel Telegram Sponsor</p>
+                <p style="font-size: 12px; color: #10b981;">+5.000000 TRX</p>
+            </div>
+            <button class="action-btn" onclick="eksekusiTask(1, 'https://t.me/SponsorChannel')">Buka Misi</button>
+        </div>
+        <div class="box-item">
+            <div>
+                <p style="font-weight: bold;">Tonton Video Iklan Kerja Sama</p>
+                <p style="font-size: 12px; color: #10b981;">+10.000000 TRX</p>
+            </div>
+            <button class="action-btn" onclick="eksekusiTask(2, 'https://youtube.com')">Tonton</button>
+        </div>
+    </div>
+
+    <div id="tab-referral" class="menu-content">
+        <h3 style="margin-bottom: 10px;">Undang Teman</h3>
+        <p style="color: #94a3b8; font-size: 13px; margin-bottom: 20px;">Dapatkan bonus +5 TronPower setiap kali sukses mengajak teman bergabung.</p>
+        <div class="box-item" style="flex-direction: column; align-items: flex-start; gap: 10px;">
+            <label style="font-size: 12px; color: #94a3b8;">Link Referral Unik Anda:</label>
+            <input type="text" id="ref-link" readonly class="input-field" value="https://t.me/MiningProBot?start=ref">
+            <button class="action-btn" style="width: 100%; padding: 12px;" onclick="salinLinkRef()">Salin Tautan</button>
+        </div>
+    </div>
+
+    <div id="tab-deposit" class="menu-content">
+        <h3 style="margin-bottom: 15px; text-align: center;">Isi Saldo (Deposit)</h3>
+        <div style="background: #1e293b; padding: 15px; border-radius: 10px; margin-bottom: 15px; border: 1px solid #334155;">
+            <p style="color: #f59e0b; font-size: 12px; margin-bottom: 12px; font-weight: bold; text-align: center;">⚡ Pilih jaringan untuk langsung terlempar transfer otomatis ke Trust Wallet/Metamask Anda:</p>
+            
+            <button onclick="bukaDompetOtomatis('trc')" style="width: 100%; background: #3b82f6; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; margin-bottom: 10px;">🚀 Jalur TRC20 (Buka Trust Wallet - TRX)</button>
+            <button onclick="bukaDompetOtomatis('bep')" style="width: 100%; background: #eab308; color: #0f172a; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer;">🚀 Jalur BEP20 (Buka Trust Wallet - BNB)</button>
+        </div>
+
+        <div style="background: #1e293b; padding: 15px; border-radius: 10px; border: 1px solid #334155;">
+            <h4 style="font-size: 14px; margin-bottom: 10px; text-align: center;">Formulir Klaim Verifikasi Setoran</h4>
+            <input type="number" id="depo-amount" placeholder="Jumlah Koin" class="input-field">
+            <input type="text" id="depo-hash" placeholder="Tempel ID Transaksi (TxID Hash) di sini" class="input-field" style="margin-top: 8px; margin-bottom: 12px;">
+            <button onclick="kirimFormulirDeposit()" style="width: 100%; background: #10b981; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer;">Kirim Bukti Konfirmasi</button>
+        </div>
+    </div>
+
+    <div id="tab-withdraw" class="menu-content">
+        <h3 style="margin-bottom: 15px;">Penarikan Dana (Withdraw)</h3>
+        <div style="background: #1e293b; padding: 15px; border-radius: 10px; border: 1px solid #334155;">
+            <p style="font-size: 12px; color: #94a3b8; margin-bottom: 10px;">Minimal Penarikan: <strong style="color: white;">100 TRX</strong></p>
+            <input type="number" id="wd-amount" placeholder="Jumlah TRX yang ditarik" class="input-field">
+            <input type="text" id="wd-wallet" placeholder="Masukkan Alamat Dompet TRX (TRC20) Anda" class="input-field" style="margin-top: 8px; margin-bottom: 12px;">
+            <button onclick="prosesWithdraw()" style="width: 100%; background: #ef4444; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer;">Ajukan Penarikan</button>
+        </div>
+    </div>
+
+    <div id="tab-rank" class="menu-content">
+        <h3 style="margin-bottom: 15px;">Papan Peringkat Global</h3>
+        <div id="leaderboard-list">
+            </div>
+    </div>
+
+    <div id="tab-profile" class="menu-content">
+        <h3 style="margin-bottom: 15px;">Profil Pengguna</h3>
+        <div class="box-item"><span>ID Telegram</span> <strong id="prof-id">-</strong></div>
+        <div class="box-item"><span>Kecepatan Tambang</span> <strong id="prof-power" style="color: #38bdf8;">15 TronPower</strong></div>
+        <div class="box-item"><span>Total Rujukan (Referral)</span> <strong id="prof-ref">0 Orang</strong></div>
+        <div class="box-item"><span>Misi Selesai</span> <strong id="prof-task">0 Selesai</strong></div>
+    </div>
+
+    <div class="nav-bar">
+        <button class="nav-item active" onclick="pindahTab('home', this)"><span class="nav-icon">🏠</span>Home</button>
+        <button class="nav-item" onclick="pindahTab('task', this)"><span class="nav-icon">📋</span>Task</button>
+        <button class="nav-item" onclick="pindahTab('referral', this)"><span class="nav-icon">👥</span>Ref</button>
+        <button class="nav-item" onclick="pindahTab('deposit', this)"><span class="nav-icon">💳</span>Deposit</button>
+        <button class="nav-item" onclick="pindahTab('withdraw', this)"><span class="nav-icon">💸</span>WD</button>
+        <button class="nav-item" onclick="pindahTab('rank', this)"><span class="nav-icon">🏆</span>Rank</button>
+        <button class="nav-item" onclick="pindahTab('profile', this)"><span class="nav-icon">👤</span>Profil</button>
+    </div>
+
+    <script>
+        // Alamat Trust Wallet Anda yang statis dan permanen
+        const WALLET_TRX_ANDA = "TYf8H2kS9xLmPqWvZsNxBvYtRnQpWzMx4v"; 
+        const WALLET_BNB_ANDA = "0x71C23f40A257e84124357B7dE434823432B";
+
+        // Mengambil data pengguna asli 100% langsung dari akun Telegramnya
+        const tg = window.Telegram.WebApp;
+        tg.expand();
+        
+        const user = tg.initDataUnsafe?.user;
+        const telegramId = user ? user.id.toString() : "123456789"; 
+        const telegramUser = user ? (user.username || user.first_name) : "Guest_Pro";
+
+        // Ganti URL ini dengan URL Ngrok/Server Anda nantinya
+        const BASE_URL = "https://zukekrud1n.loclx.io"; 
+
+        // Sinkronisasi data saat pertama kali aplikasi dibuka
+        async function muatDataAkun() {
+            try {
+                const res = await fetch(`${BASE_URL}/status/${telegramId}`, {
+    headers: { "bypass-tunnel-reminder": "true" }
+}); 
+                const data = await res.json();
+                if (data.status === "success") {
+                    document.getElementById("username-display").innerText = data.username;
+                    document.getElementById("avatar-letter").innerText = data.username.charAt(0).toUpperCase();
+                    document.getElementById("saldo-display").innerText = `${data.balance} TRX`;
+                    
+                    // Isi data tab profil
+                    document.getElementById("prof-id").innerText = data.telegram_id;
+                    document.getElementById("prof-power").innerText = `${data.power} TronPower`;
+                    document.getElementById("prof-ref").innerText = `${data.referrals} Orang`;
+                    document.getElementById("prof-task").innerText = `${data.task_completed} Selesai`;
+                    
+                    // Buat tautan rujukan kustom
+                    document.getElementById("ref-link").value = `https://t.me/MiningProBot?start=${data.telegram_id}`;
+                }
+            } catch (e) { console.log("Koneksi server gagal."); }
+        }
+
+        // Fungsi klik tombol tambang
+        async function jalanMining() {
+            try {
+                const res = await fetch(`${BASE_URL}/mine/${telegramId}`, {
+    headers: { "bypass-tunnel-reminder": "true" }
+}); 
+                const data = await res.json();
+                if (data.status === "success") {
+                    document.getElementById("saldo-display").innerText = `${data.balance} TRX`;
+                }
+            } catch (e) { alert("Server sedang sibuk."); }
+        }
+
+        // Deep linking otomatis melempar ke aplikasi dompet hp pengguna
+        function bukaDompetOtomatis(jaringan) {
+            let link = "";
+            const nominal = document.getElementById("depo-amount").value || "0";
+            if(jaringan === "trc") link = `tron:${WALLET_TRX_ANDA}?amount=${nominal}`;
+            else link = `ethereum:${WALLET_BNB_ANDA}?amount=${nominal}`;
+            window.location.href = link;
+        }
+
+        async function kirimFormulirDeposit() {
+            const amount = document.getElementById("depo-amount").value;
+            const hash = document.getElementById("depo-hash").value;
+            if(!amount || !hash) return alert("Harap lengkapi isi formulir!");
+
+            const res = await fetch(`${BASE_URL}/deposit`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ user_id: telegramId, amount: parseFloat(amount), tx_hash: hash })
+            });
+            const data = await res.json();
+            alert(data.message);
+        }
+
+        async function eksekusiTask(taskId, url) {
+            window.open(url, '_blank');
+            setTimeout(async () => {
+                const res = await fetch(`${BASE_URL}/task`, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({ user_id: telegramId, task_id: taskId })
+                });
+                const data = await res.json();
+                alert(data.message);
+                muatDataAkun();
+            }, 5000);
+        }
+
+        async function prosesWithdraw() {
+            const amount = document.getElementById("wd-amount").value;
+            const wallet = document.getElementById("wd-wallet").value;
+            if(!amount || !wallet) return alert("Lengkapi jumlah koin dan alamat dompet!");
+
+            const res = await fetch(`${BASE_URL}/withdraw`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ user_id: telegramId, amount: parseFloat(amount), wallet_address: wallet })
+            });
+            const data = await res.json();
+            alert(data.message);
+            muatDataAkun();
+        }
+
+        async function muatLeaderboard() {
+            const res = await fetch(`${BASE_URL}/leaderboard`);
+            const data = await res.json();
+            let html = "";
+            data.forEach(u => {
+                html += `<div class="box-item"><span>#${u.rank} ${u.username}</span><strong>${u.balance} TRX</strong></div>`;
+            });
+            document.getElementById("leaderboard-list").innerHTML = html;
+        }
+
+        function salinLinkRef() {
+            const copyText = document.getElementById("ref-link");
+            copyText.select();
+            navigator.clipboard.writeText(copyText.value);
+            alert("Tautan rujukan sukses disalin!");
+        }
+
+        // Pengatur perpindahan tab menu tanpa reload halaman
+        function pindahTab(tabName, elemen) {
+            document.querySelectorAll('.menu-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(el => el.classList.remove('active'));
+            
+            document.getElementById(`tab-${tabName}`).classList.add('active');
+            elemen.classList.add('active');
+            
+            if(tabName === 'rank') muatLeaderboard();
+            if(tabName === 'profile' || tabName === 'home') muatDataAkun();
+        }
+
+        // Menjalankan pemuatan data secara instan saat sistem dinyalakan
+        muatDataAkun();
+    </script>
+</body>
+</html>
