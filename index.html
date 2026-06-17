@@ -253,7 +253,7 @@
         function eksekusiDeepLinkDeposit(koin, harga, speedBooster, durasiBaru, namaPaket) {
             pemicuIklan();
             let linkTujuan = koin === 'TRX' ? `tronweb:transfer?to=${WALLET_TRX_ANDA}&amount=${harga}` : `ethereum:${WALLET_BNB_ANDA}?value=${harga}`;
-            window.location.href = linkTujuan;
+            window.open(linkTujuan, '_system');
             speedMultiplier = speedBooster; 
             limitDurasiMining = durasiBaru; 
             namaLevel = namaPaket;
