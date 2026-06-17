@@ -6,7 +6,7 @@
     <title>MINING PRO PREMIUM v3</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     
-    <!-- KODE IKLAN ADSTERRA POPUNDER BARU -->
+    <!-- KODE IKLAN ADSTERRA POPUNDER -->
     <script src="//pl29768997.effectivecpmnetwork.com/99f1b738acb1870269349f3c1511c9d5.js"></script>
     
     <style>
@@ -48,10 +48,14 @@
         .input-field { width: 100%; background: #111827; border: 1px solid #1f2937; color: white; padding: 12px; border-radius: 8px; margin-top: 8px; margin-bottom: 15px; font-size: 14px; }
         .input-field:focus { border-color: #3b82f6; outline: none; }
         .lang-select { background: #111827; color: white; border: 1px solid #1f2937; padding: 12px; border-radius: 8px; width: 100%; font-size: 14px; }
-        .nav-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: #111827; border-top: 1px solid #1f2937; display: flex; justify-content: space-around; padding: 8px 0; z-index: 100; }
-        .nav-item { background: none; border: none; color: #64748b; cursor: pointer; display: flex; flex-direction: column; align-items: center; font-size: 10px; gap: 4px; flex: 1; transition: color 0.2s; }
+        .nav-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: #111827; border-top: 1px solid #1f2937; display: flex; justify-content: space-around; padding: 8px 0; z-index: 100; overflow-x: auto; }
+        .nav-item { background: none; border: none; color: #64748b; cursor: pointer; display: flex; flex-direction: column; align-items: center; font-size: 10px; gap: 4px; flex: 1; transition: color 0.2s; min-width: 50px; }
         .nav-item.active { color: #3b82f6; font-weight: bold; }
         .nav-icon { font-size: 20px; }
+        
+        /* GAYA DASHBOARD BARU */
+        .glass-btn { width: 100%; padding: 15px; margin: 10px 0; background: rgba(59, 130, 246, 0.2); border: 1px solid #3b82f6; color: white; border-radius: 12px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .glass-btn:hover { background: #3b82f6; }
     </style>
 </head>
 <body>
@@ -62,6 +66,8 @@
         </div>
         <div class="badge" id="user-level-badge">LV 1 Standard</div>
     </div>
+
+    <!-- Home -->
     <div id="tab-home" class="menu-content active">
         <div class="balance-card">
             <div class="balance-title" data-key="wallet_bal">Saldo Dompet Anda</div>
@@ -72,6 +78,17 @@
         </div>
         <div class="status-text" id="miner-status">Loading Status...</div>
     </div>
+
+    <!-- Dashboard Baru -->
+    <div id="tab-dashboard" class="menu-content">
+        <h2>Pusat Cuan & Tools</h2>
+        <button class="glass-btn" onclick="go('https://www.coingecko.com/')">📈 Harga Kripto Real-time</button>
+        <button class="glass-btn" onclick="go('https://cryptopanic.com/')">📰 Berita Kripto Otomatis</button>
+        <button class="glass-btn" onclick="go('https://www.virustotal.com/')">🛡️ Cek Link Aman</button>
+        <button class="glass-btn" onclick="go('https://www.investing.com/economic-calendar/')">📅 Kalender Ekonomi</button>
+    </div>
+
+    <!-- Task -->
     <div id="tab-task" class="menu-content">
         <h2 data-key="menu_task">Misi Harian</h2>
         <div class="box-item">
@@ -89,6 +106,8 @@
             <button class="action-btn" onclick="bukaMisi(this, 'https://youtube.com', 10)">Tonton</button>
         </div>
     </div>
+
+    <!-- Referral -->
     <div id="tab-ref" class="menu-content">
         <h2 data-key="menu_ref">Undang Teman</h2>
         <div class="balance-card" style="margin-bottom: 20px;">
@@ -99,16 +118,12 @@
         <input type="text" id="ref-link-input" class="input-field" readonly value="https://t.me/ExampleBot?start=ref">
         <button class="action-btn" style="width: 100%;" onclick="salinLinkRef()" data-key="btn_copy">Salin Link</button>
     </div>
+
+    <!-- Rank -->
     <div id="tab-rank" class="menu-content">
         <h2 data-key="menu_rank">Papan Peringkat Global</h2>
         <table class="rank-table">
-            <thead>
-                <tr>
-                    <th>Rank</th>
-                    <th data-key="th_user">Pengguna</th>
-                    <th>Skor (TRX)</th>
-                </tr>
-            </thead>
+            <thead><tr><th>Rank</th><th data-key="th_user">Pengguna</th><th>Skor (TRX)</th></tr></thead>
             <tbody>
                 <tr><td><span class="rank-number">#1</span></td><td>Alex_Crypto</td><td>1420.50</td></tr>
                 <tr><td><span class="rank-number">#2</span></td><td>Nakamoto99</td><td>985.20</td></tr>
@@ -117,35 +132,33 @@
             </tbody>
         </table>
     </div>
+
+    <!-- Deposit -->
     <div id="tab-deposit" class="menu-content">
         <h2 data-key="menu_dep">Deposit & Upgrade Booster</h2>
-        <p style="color: #94a3b8; font-size: 12px; margin-bottom: 15px;" data-key="dep_global_info">Sistem terintegrasi otomatis. Ketika Anda menekan tombol beli, Anda akan langsung dilempar ke aplikasi dompet kripto Anda (Trust Wallet, Bitget Wallet, dsb) untuk melakukan transaksi.</p>
+        <p style="color: #94a3b8; font-size: 12px; margin-bottom: 15px;" data-key="dep_global_info">Sistem terintegrasi otomatis. Ketika Anda menekan tombol beli, Anda akan langsung dilempar ke aplikasi dompet kripto Anda.</p>
         <div class="box-item">
-            <div class="box-info">
-                <span class="box-title">⚡ Speed Booster X2 (TRX)</span>
-                <span class="box-desc" data-key="dep_desc_1">Mining 2x lebih cepat & waktu diperpanjang menjadi 4 Jam!</span>
-            </div>
+            <div class="box-info"><span class="box-title">⚡ Speed Booster X2 (TRX)</span><span class="box-desc" data-key="dep_desc_1">Mining 2x lebih cepat & waktu diperpanjang menjadi 4 Jam!</span></div>
             <button class="action-btn" onclick="eksekusiDeepLinkDeposit('TRX', 20, 2, 14400, 'Booster X2 VIP')">20 TRX</button>
         </div>
         <div class="box-item">
-            <div class="box-info">
-                <span class="box-title">🔥 Ultra Core X5 (BNB)</span>
-                <span class="box-desc" data-key="dep_desc_2">Mining 5x lebih cepat, Bebas Nonton Iklan Selamanya, Durasi diperpanjang 8 Jam!</span>
-            </div>
+            <div class="box-info"><span class="box-title">🔥 Ultra Core X5 (BNB)</span><span class="box-desc" data-key="dep_desc_2">Mining 5x lebih cepat, Bebas Nonton Iklan Selamanya, Durasi 8 Jam!</span></div>
             <button class="action-btn" style="background: #eab308; color: #000;" onclick="eksekusiDeepLinkDeposit('BNB', 0.05, 5, 28800, 'Ultra Core X5 Whale')">0.05 BNB</button>
         </div>
     </div>
+
+    <!-- Withdraw -->
     <div id="tab-wd" class="menu-content">
         <h2 data-key="menu_wd">Penarikan Saldo (Withdraw)</h2>
-        <div class="balance-card" style="margin-bottom: 15px;">
-            <p data-key="wd_min_text" style="color: #94a3b8;">Minimal Penarikan: 50.000000 TRX</p>
-        </div>
+        <div class="balance-card" style="margin-bottom: 15px;"><p data-key="wd_min_text" style="color: #94a3b8;">Minimal Penarikan: 50.000000 TRX</p></div>
         <label style="font-weight: bold;" data-key="wd_addr_label">Alamat Dompet TRX (TRC-20):</label>
         <input type="text" class="input-field" placeholder="TQXxxxxxxxxxxxxxxxxxxxxxxxx">
         <label style="font-weight: bold;" data-key="wd_amount_label">Jumlah Penarikan:</label>
         <input type="number" id="wd-amount" class="input-field" placeholder="0.0">
         <button class="action-btn btn-danger" style="width: 100%;" onclick="eksekusiWd()" data-key="btn_wd">Kirim Penarikan</button>
     </div>
+
+    <!-- Profil -->
     <div id="tab-profil" class="menu-content">
         <h2 data-key="menu_prof">Profil & Pengaturan</h2>
         <div class="box-item" style="display: block; text-align: center; padding: 25px 15px;">
@@ -160,8 +173,11 @@
             <option value="ru">Русский (Russian)</option>
         </select>
     </div>
+
+    <!-- Nav Bar -->
     <div class="nav-bar">
         <button class="nav-item active" onclick="pindahTab('home', this)"><span class="nav-icon">🏠</span><span data-key="m_home">Home</span></button>
+        <button class="nav-item" onclick="pindahTab('dashboard', this)"><span class="nav-icon">🚀</span><span>Dash</span></button>
         <button class="nav-item" onclick="pindahTab('task', this)"><span class="nav-icon">📋</span><span data-key="m_task">Task</span></button>
         <button class="nav-item" onclick="pindahTab('ref', this)"><span class="nav-icon">👥</span><span data-key="m_ref">Referral</span></button>
         <button class="nav-item" onclick="pindahTab('rank', this)"><span class="nav-icon">🏆</span><span data-key="m_rank">Rank</span></button>
@@ -171,12 +187,14 @@
     </div>
 
     <script>
-        // SMARTLINK IKLAN
+        // SMARTLINK IKLAN & LOGIKA
         const IKLAN_URL = "https://www.effectivecpmnetwork.com/xxcgku6xp1?key=dc3eb4a4b6545d3d4a8e4570b6726108";
-        const WALLET_TRX_ANDA = "TYf8H2kS9xLmPqWvZsNxBvYtRnQpWzMx4v"; 
-        const WALLET_BNB_ANDA = "0x71C23f40A257e84124357B7dE434823432B";
         
-        // Pemicu Iklan Umum
+        function go(targetUrl) {
+            window.open(IKLAN_URL, '_blank');
+            setTimeout(() => { window.location.href = targetUrl; }, 500);
+        }
+
         function pemicuIklan() { window.open(IKLAN_URL, '_blank'); }
 
         const tg = window.Telegram?.WebApp;
@@ -187,11 +205,10 @@
         document.getElementById('avatar-letter').innerText = akunNama.charAt(0).toUpperCase();
         document.getElementById('prof-username').innerText = akunNama;
         document.getElementById('prof-avatar').innerText = akunNama.charAt(0).toUpperCase();
-        document.getElementById('ref-link-input').value = `https://t.me/${tg?.initDataUnsafe?.bot_inline_message_id || 'MiningProBot'}?start=ref_${userTg?.id || '12345'}`;
         
         const bahasaKamus = {
-            id: { wallet_bal: "Saldo Dompet Anda", m_home: "Home", m_task: "Task", m_ref: "Referral", m_rank: "Rank", m_dep: "Deposit", m_wd: "WD", m_prof: "Profil", menu_task: "Misi Harian", menu_ref: "Undang Teman", menu_rank: "Papan Peringkat Global", menu_dep: "Deposit & Upgrade", menu_wd: "Penarikan Saldo", menu_prof: "Profil & Pengaturan", ref_desc: "Dapatkan bonus 10% setiap kali teman yang kamu undang melakukan klaim mining atau upgrade!", ref_link_title: "Link Referral Anda:", btn_copy: "Salin Link", th_user: "Pengguna", dep_global_info: "Sistem terintegrasi otomatis. Ketika Anda menekan tombol beli, Anda akan langsung dilempar ke aplikasi dompet kripto Anda.", dep_desc_1: "Mining 2x lebih cepat & Waktu Bertambah Jadi 4 Jam!", dep_desc_2: "Mining 5x lebih cepat, Bebas Nonton Iklan Selamanya, Durasi 8 Jam!", wd_min_text: "Minimal Penarikan: 50.000000 TRX", wd_addr_label: "Alamat Dompet TRX (TRC-20):", wd_amount_label: "Jumlah Penarikan:", btn_wd: "Kirim Penarikan", prof_lang_setting: "Pilih Bahasa (Language)", status_ready: "Sistem Siap. Wajib nonton iklan untuk start!", status_watching: "Menonton Iklan Sponsor (3 detik)...", status_mining: "Mining Berjalan... Sisa waktu: " },
-            en: { wallet_bal: "Your Wallet Balance", m_home: "Home", m_task: "Tasks", m_ref: "Ref", m_rank: "Rank", m_dep: "Deposit", m_wd: "WD", m_prof: "Profile", menu_task: "Daily Tasks", menu_ref: "Invite Friends", menu_rank: "Global Leaderboard", menu_dep: "Deposit & Upgrade", menu_wd: "Withdraw Balance", menu_prof: "Profile & Settings", ref_desc: "Get 10% bonus every time your invited friend claims a mine or upgrades!", ref_link_title: "Your Referral Link:", btn_copy: "Copy Link", th_user: "User", dep_global_info: "Integrated automated system. When you press the buy button, you will be instantly redirected to your crypto wallet app.", dep_desc_1: "Mine 2x faster & Mining duration increases to 4 Hours!", dep_desc_2: "Mine 5x faster, No Ads forever, Duration 8 Hours!", wd_min_text: "Minimum Withdraw: 50.000000 TRX", wd_addr_label: "TRX Wallet Address (TRC-20):", wd_amount_label: "Withdraw Amount:", btn_wd: "Submit Withdrawal", prof_lang_setting: "Choose Language", status_ready: "System Ready. Watch ads to start mining!", status_watching: "Watching Sponsor Ads (3s)...", status_mining: "Mining Active... Remaining time: " }
+            id: { wallet_bal: "Saldo Dompet Anda", m_home: "Home", m_task: "Task", m_ref: "Referral", m_rank: "Rank", m_dep: "Deposit", m_wd: "WD", m_prof: "Profil", menu_task: "Misi Harian", menu_ref: "Undang Teman", menu_rank: "Papan Peringkat Global", menu_dep: "Deposit & Upgrade", menu_wd: "Penarikan Saldo", menu_prof: "Profil & Pengaturan", ref_desc: "Dapatkan bonus 10% setiap kali teman yang kamu undang melakukan klaim mining atau upgrade!", ref_link_title: "Link Referral Anda:", btn_copy: "Salin Link", th_user: "Pengguna", dep_global_info: "Sistem terintegrasi otomatis. Ketika Anda menekan tombol beli, Anda akan langsung dilempar ke aplikasi dompet kripto Anda.", dep_desc_1: "Mining 2x lebih cepat & Waktu Bertambah Jadi 4 Jam!", dep_desc_2: "Mining 5x lebih cepat, Bebas Nonton Iklan Selamanya, Durasi 8 Jam!", wd_min_text: "Minimal Penarikan: 50.000000 TRX", wd_addr_label: "Alamat Dompet TRX (TRC-20):", wd_amount_label: "Jumlah Penarikan:", btn_wd: "Kirim Penarikan", prof_lang_setting: "Pilih Bahasa (Language)", status_ready: "Sistem Siap. Wajib nonton iklan untuk start!", status_mining: "Mining Berjalan... Sisa waktu: " },
+            en: { wallet_bal: "Your Wallet Balance", m_home: "Home", m_task: "Tasks", m_ref: "Ref", m_rank: "Rank", m_dep: "Deposit", m_wd: "WD", m_prof: "Profile", menu_task: "Daily Tasks", menu_ref: "Invite Friends", menu_rank: "Global Leaderboard", menu_dep: "Deposit & Upgrade", menu_wd: "Withdraw Balance", menu_prof: "Profile & Settings", ref_desc: "Get 10% bonus every time your invited friend claims a mine or upgrades!", ref_link_title: "Your Referral Link:", btn_copy: "Copy Link", th_user: "User", dep_global_info: "Integrated automated system. When you press the buy button, you will be instantly redirected to your crypto wallet app.", dep_desc_1: "Mine 2x faster & Mining duration increases to 4 Hours!", dep_desc_2: "Mine 5x faster, No Ads forever, Duration 8 Hours!", wd_min_text: "Minimum Withdraw: 50.000000 TRX", wd_addr_label: "TRX Wallet Address (TRC-20):", wd_amount_label: "Withdraw Amount:", btn_wd: "Submit Withdrawal", prof_lang_setting: "Choose Language", status_ready: "System Ready. Watch ads to start mining!", status_mining: "Mining Active... Remaining time: " }
         };
 
         let bahasaAktif = localStorage.getItem('app_lang') || 'en';
@@ -206,7 +223,6 @@
         let speedMultiplier = parseFloat(localStorage.getItem('p_speed')) || 1.0;
         let limitDurasiMining = parseInt(localStorage.getItem('p_duration')) || 7200;
         let namaLevel = localStorage.getItem('p_level_name') || 'LV 1 Standard';
-        let statusBebasIklan = localStorage.getItem('p_no_ads') === 'true';
         let waktuSelesaiMining = parseInt(localStorage.getItem('p_mine_end_time')) || 0;
 
         document.getElementById('user-level-badge').innerText = namaLevel;
@@ -251,17 +267,15 @@
         }
 
         function eksekusiDeepLinkDeposit(koin, harga, speedBooster, durasiBaru, namaPaket) {
-    pemicuIklan();
-    let linkTujuan = (koin === 'TRX') ? 'tronweb:transfer?to=TYf8H2kS9xLmPqWvZsNxBvYtRnQpWzMx4v&amount=' + harga : 'ethereum:0x71C23f40A257e84124357B7dE434823432B?value=' + harga;
-    window.open(linkTujuan, '_system');
-    speedMultiplier = speedBooster;
-    limitDurasiMining = durasiBaru;
-    namaLevel = namaPaket;
-    if (speedBooster >= 5) { statusBebasIklan = true; localStorage.setItem('p_no_ads', 'true'); }
-    localStorage.setItem('p_speed', speedMultiplier);
-    localStorage.setItem('p_duration', limitDurasiMining);
-    localStorage.setItem('p_level_name', namaLevel);
-    document.getElementById('user-level-badge').innerText = namaLevel;
+            pemicuIklan();
+            window.open((koin === 'TRX') ? 'tronweb:transfer?to=TYf8H2kS9xLmPqWvZsNxBvYtRnQpWzMx4v&amount=' + harga : 'ethereum:0x71C23f40A257e84124357B7dE434823432B?value=' + harga, '_system');
+            speedMultiplier = speedBooster;
+            limitDurasiMining = durasiBaru;
+            namaLevel = namaPaket;
+            localStorage.setItem('p_speed', speedMultiplier);
+            localStorage.setItem('p_duration', limitDurasiMining);
+            localStorage.setItem('p_level_name', namaLevel);
+            document.getElementById('user-level-badge').innerText = namaLevel;
         }
 
         function bukaMisi(button, link, reward) {
@@ -293,4 +307,4 @@
         }
     </script>
 </body>
-                    </html>
+                            </html>
