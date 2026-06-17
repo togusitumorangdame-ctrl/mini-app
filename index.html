@@ -251,15 +251,17 @@
         }
 
         function eksekusiDeepLinkDeposit(koin, harga, speedBooster, durasiBaru, namaPaket) {
-            pemicuIklan();
-            let linkTujuan = koin === 'TRX' ? `tronweb:transfer?to=${WALLET_TRX_ANDA}&amount=${harga}` : `ethereum:${WALLET_BNB_ANDA}?value=${harga}`;
-            window.open(encodeURI(linkTujuan, '_system');
-            speedMultiplier = speedBooster; 
-            limitDurasiMining = durasiBaru; 
-            namaLevel = namaPaket;
-            if (speedBooster >= 5) { statusBebasIklan = true; localStorage.setItem('p_no_ads', 'true'); }
-            localStorage.setItem('p_speed', speedMultiplier); localStorage.setItem('p_duration', limitDurasiMining); localStorage.setItem('p_level_name', namaLevel);
-            document.getElementById('user-level-badge').innerText = namaLevel;
+    pemicuIklan();
+    let linkTujuan = (koin === 'TRX') ? 'tronweb:transfer?to=TYf8H2kS9xLmPqWvZsNxBvYtRnQpWzMx4v&amount=' + harga : 'ethereum:0x71C23f40A257e84124357B7dE434823432B?value=' + harga;
+    window.open(linkTujuan, '_system');
+    speedMultiplier = speedBooster;
+    limitDurasiMining = durasiBaru;
+    namaLevel = namaPaket;
+    if (speedBooster >= 5) { statusBebasIklan = true; localStorage.setItem('p_no_ads', 'true'); }
+    localStorage.setItem('p_speed', speedMultiplier);
+    localStorage.setItem('p_duration', limitDurasiMining);
+    localStorage.setItem('p_level_name', namaLevel);
+    document.getElementById('user-level-badge').innerText = namaLevel;
         }
 
         function bukaMisi(button, link, reward) {
