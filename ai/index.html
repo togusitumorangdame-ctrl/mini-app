@@ -4,65 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Premium Super App v2.5</title>
-    <!-- Font Premium & FontAwesome untuk Icon -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
         body { background: radial-gradient(circle, #101026 0%, #070710 100%); color: #fff; min-height: 100vh; padding: 15px; display: flex; flex-direction: column; align-items: center; }
-        
         .header-profile { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; width: 100%; max-width: 500px; padding: 18px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
         .user-info h3 { color: #00f2fe; font-size: 15px; font-weight: 600; }
         .user-info p { font-size: 11px; color: #a0a0ba; }
         .coin-badge { background: linear-gradient(45deg, #ffd700, #ffa500); padding: 6px 14px; border-radius: 50px; font-weight: bold; font-size: 13px; color: #000; display: flex; align-items: center; gap: 6px; box-shadow: 0 0 10px rgba(255,215,0,0.3); }
-        
         .paywall-container { background: rgba(255, 71, 87, 0.08); border: 1px solid rgba(255, 71, 87, 0.3); border-radius: 18px; width: 100%; max-width: 500px; padding: 15px; margin-bottom: 15px; text-align: center; }
         .btn-ad { background: linear-gradient(45deg, #ff4757, #ff6b81); color: white; border: none; padding: 10px 20px; border-radius: 50px; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-block; margin-top: 10px; font-size: 12px; box-shadow: 0 4px 15px rgba(255,71,87,0.3); }
-        
         .app-card { background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 25px; width: 100%; max-width: 500px; padding: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
         .nav-tabs { display: flex; justify-content: space-between; margin-bottom: 20px; background: rgba(0,0,0,0.3); padding: 5px; border-radius: 50px; gap: 5px; }
         .tab-btn { background: none; border: none; color: #a0a0ba; padding: 10px 5px; font-size: 11px; font-weight: 600; cursor: pointer; border-radius: 50px; flex: 1; text-align: center; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 4px; }
         .tab-btn i { font-size: 14px; }
         .tab-btn.active { background: linear-gradient(45deg, #00f2fe, #4facfe); color: white; box-shadow: 0 4px 12px rgba(0,242,254,0.3); }
-        
         .feature-view { display: none; }
         .feature-view.active { display: block; }
         h2 { font-size: 16px; color: #00f2fe; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
-        
         input { width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 12px; color: white; font-size: 13px; margin-bottom: 12px; outline: none; transition: 0.2s; }
-        input:focus { border-color: #00f2fe; }
         .btn-action { width: 100%; background: linear-gradient(45deg, #00f2fe, #4facfe); color: white; border: none; padding: 12px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 13px; box-shadow: 0 4px 15px rgba(0,242,254,0.2); }
-        
         .chat-box { height: 220px; background: rgba(0,0,0,0.4); border-radius: 14px; padding: 12px; overflow-y: auto; margin-bottom: 12px; font-size: 12px; border: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; gap: 8px; }
         .msg { padding: 10px 14px; border-radius: 14px; max-width: 85%; word-wrap: break-word; line-height: 1.4; }
         .msg.user { background: linear-gradient(135deg, #00b0ff, #0070ff); align-self: flex-end; color: white; border-bottom-right-radius: 2px; }
         .msg.bot { background: #1e293b; color: #e2e8f0; align-self: flex-start; border-bottom-left-radius: 2px; border-left: 3px solid #00f2fe; }
-        
-        /* Box hasil Shortener Mewah */
         .result-box { background: rgba(0, 242, 254, 0.04); border: 1px solid rgba(0, 242, 254, 0.2); padding: 15px; border-radius: 16px; margin-top: 15px; display: none; text-align: center; }
         .share-group { display: flex; gap: 8px; justify-content: center; margin: 12px 0; flex-wrap: wrap; }
         .share-btn { color: white; padding: 8px 14px; border-radius: 8px; font-size: 12px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; border: none; cursor: pointer; }
-        .share-btn.wa { background: #25d366; }
-        .share-btn.tg { background: #0088cc; }
-        .share-btn.copy { background: #4a5568; }
-        
-        /* Container Banner Iklan Bawah Shortlink */
+        .share-btn.wa { background: #25d366; } .share-btn.tg { background: #0088cc; } .share-btn.copy { background: #4a5568; }
         .ads-placement-box { margin-top: 15px; padding-top: 15px; border-top: 1px dashed rgba(255,255,255,0.1); text-align: center; }
         .ads-title { font-size: 10px; color: #ff4757; font-weight: 700; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase; }
         .native-banner-container { background: #0d111a; min-height: 120px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: center; align-items: center; overflow: hidden; }
-        
         .mining-banner { background: linear-gradient(135deg, #f1c40f, #f39c12); color: #000; padding: 20px; border-radius: 15px; text-align: center; font-weight: bold; margin-bottom: 10px; }
         .btn-mining-link { background: #000; color: #fff; text-decoration: none; display: inline-block; padding: 10px 20px; border-radius: 8px; margin-top: 15px; font-size: 13px; font-weight: 600; }
     </style>
 </head>
 <body>
-
-    <!-- 🔴 ADSTERRA POPUNDER -->
-    <script type="text/javascript" src="https://pl29768997.effectivecpmnetwork.com/99/f1/b7/99f1b738acb1870269349f3c1511c9d5.js"></script>
-
-    <!-- 🔵 ADSTERRA SOCIAL BAR -->
-    <script type="text/javascript" src="https://pl29760833.effectivecpmnetwork.com/d9/56/d8/d956d86955d3d835d693fbfac8693eb9.js"></script>
 
     <div class="header-profile">
         <div class="user-info">
@@ -76,7 +55,6 @@
 
     <div class="paywall-container" id="paywall">
         <p style="font-size: 13px; font-weight: bold;">⚡ Ambil Koin Gratis / Isi Ulang</p>
-        <p style="font-size: 11px; color: #a0a0ba;">Tonton iklan sponsor untuk mendapatkan tambahan +2 koin premium secara instan di dasbor.</p>
         <a href="https://www.effectivecpmnetwork.com/xxcgku6xp1?key=dc3eb4a4b6545d3d4a8e4570b6726108" target="_blank" class="btn-ad" onclick="claimAdReward()">
             <i class="fa-solid fa-film"></i> NONTON IKLAN (+2 KOIN)
         </a>
@@ -90,7 +68,6 @@
             <button id="tab-mining" class="tab-btn" onclick="switchTab('mining-view', 'tab-mining')"><i class="fa-solid fa-pickaxe"></i>Mining</button>
         </div>
 
-        <!-- VIEW 1: AI CHAT -->
         <div id="ai-view" class="feature-view active">
             <h2><i class="fa-solid fa-robot"></i> Chat AI Premium Ultra-Fast</h2>
             <div class="chat-box" id="aiChatBox"><div class="msg bot">Halo! Tanyakan apa saja ke AI Premium (Biaya: 1 Koin).</div></div>
@@ -98,203 +75,81 @@
             <button class="btn-action" id="aiBtn" onclick="sendToAINyata()"><i class="fa-solid fa-paper-plane"></i> Kirim ke AI</button>
         </div>
 
-        <!-- VIEW 2: ANON CHAT -->
         <div id="anon-view" class="feature-view">
             <h2><i class="fa-solid fa-user-secret"></i> Room Obrolan Anonim Nyata</h2>
-            <div class="chat-box" id="anonChatBox"><div class="msg bot">Sistem: Selamat datang di global anonim room. Semua percakapan nyata dan rahasia. (Biaya masuk: 1 Koin)</div></div>
+            <div class="chat-box" id="anonChatBox"><div class="msg bot">Sistem: Selamat datang di global anonim room. (Biaya: 1 Koin)</div></div>
             <input type="text" id="anonInput" placeholder="Ketik pesan rahasia...">
             <button class="btn-action" id="anonBtn" onclick="sendToAnonNyata()"><i class="fa-solid fa-paper-plane"></i> Kirim Pesan Anonim</button>
         </div>
 
-        <!-- VIEW 3: SHORTENER (SUDAH MODIFIKASI ADS DI BAWAH LINK) -->
         <div id="link-view" class="feature-view">
             <h2><i class="fa-solid fa-link"></i> Pemendek Link Real-Time</h2>
-            <input type="text" id="longUrl" placeholder="Tempel URL panjang di sini...">
+            <input type="text" id="longUrl" placeholder="Tempel URL panjang...">
             <button class="btn-action" id="linkBtn" onclick="shortenLinkNyata()"><i class="fa-solid fa-bolt"></i> Perpendek Link</button>
-            
-            <!-- TAMPILAN LINK PENDEK + ADS DI BAWAHNYA + BAGIKAN -->
             <div class="result-box" id="linkResult">
-                <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 4px;">LINK PENDEK BARU ANDA:</p>
-                <p id="shortedUrlText" style="font-size: 15px; font-weight: 700; margin-bottom: 10px;"></p>
-                
-                <!-- Group Tombol Bagikan -->
+                <p id="shortedUrlText" style="font-size: 15px; font-weight: 700;"></p>
                 <div class="share-group">
-                    <a href="#" id="shareWaBtn" target="_blank" class="share-btn wa">
-                        <i class="fa-brands fa-whatsapp"></i> WhatsApp
-                    </a>
-                    <a href="#" id="shareTgBtn" target="_blank" class="share-btn tg">
-                        <i class="fa-brands fa-telegram"></i> Telegram
-                    </a>
-                    <button onclick="salinTeksLink()" class="share-btn copy">
-                        <i class="fa-solid fa-copy"></i> Salin
-                    </button>
-                </div>
-
-                <!-- ZONE IKLAN AKTIF DI BAWAH LINK PENDEK -->
-                <div class="ads-placement-box">
-                    <p class="ads-title">🔥 LINK SPONSOR (KLIK UNTUK KOIN GRATIS)</p>
-                    <div class="native-banner-container">
-                        <!-- Smartlink Master Otomatis Terpasang Sebagai Pengasil Cuan Utama -->
-                        <a href="https://www.effectivecpmnetwork.com/xxcgku6xp1?key=dc3eb4a4b6545d3d4a8e4570b6726108" target="_blank" style="width: 100%; display: block; padding: 15px; color: #ffc107; font-size: 12px; font-weight: 600; text-decoration: none;">
-                            <i class="fa-solid fa-rectangle-ad" style="font-size: 24px; display: block; margin-bottom: 6px; color: #ff4757;"></i>
-                            KLIK DI SINI UNTUK MENUJU HALAMAN UNDUHAN PREMIUM<br>
-                            <span style="color: #a0a0ba; font-size: 10px;">(Sponsor Utama Terverifikasi)</span>
-                        </a>
-                    </div>
+                    <button onclick="salinTeksLink()" class="share-btn copy"><i class="fa-solid fa-copy"></i> Salin</button>
                 </div>
             </div>
         </div>
 
-        <!-- VIEW 4: MINING -->
         <div id="mining-view" class="feature-view">
             <h2><i class="fa-solid fa-pickaxe"></i> Jalur Resmi Mining Pro Premium</h2>
             <div class="mining-banner">
-                <p style="color: #000; font-size: 15px;">Sistem Cloud Mining Anda Aktif di Bot Utama</p>
+                <p>Sistem Cloud Mining Anda Aktif di Bot Utama</p>
                 <a href="http://t.me/MiningProPremium_bot/app" target="_blank" class="btn-mining-link">🚀 MASUK KE APLIKASI MINING</a>
             </div>
-            <p style="font-size:11px; color:#a0a0ba; text-align:center; margin-top: 10px;">Klik tombol di atas untuk mengelola aset crypto dan cek saldo penambangan Anda secara langsung.</p>
         </div>
     </div>
 
     <script>
-
-        if(localStorage.getItem('user_coins') === null) {
-            localStorage.setItem('user_coins', '5');
-        }
-        
+        let linkPendekGlobal = "";
+        if(localStorage.getItem('user_coins') === null) localStorage.setItem('user_coins', '5');
         let coins = parseInt(localStorage.getItem('user_coins'));
         let userId = localStorage.getItem('user_id') || 'ID-' + Math.floor(100000 + Math.random() * 900000);
         localStorage.setItem('user_id', userId);
         document.getElementById('profId').innerText = 'ID: ' + userId;
-        
         updateCoinDisplay();
 
         function updateCoinDisplay() {
             localStorage.setItem('user_coins', coins);
             document.getElementById('coinCount').innerText = coins;
-            
-            const isHabis = (coins <= 0);
-            document.getElementById('aiBtn').disabled = isHabis;
-            document.getElementById('anonBtn').disabled = isHabis;
-            document.getElementById('linkBtn').disabled = isHabis;
         }
 
-        function bukaIklanPaksa() {
-            window.open("https://www.effectivecpmnetwork.com/xxcgku6xp1?key=dc3eb4a4b6545d3d4a8e4570b6726108", "_blank");
-        }
+        function bukaIklanPaksa() { window.open("https://www.effectivecpmnetwork.com/xxcgku6xp1?key=dc3eb4a4b6545d3d4a8e4570b6726108", "_blank"); }
 
-        function claimAdReward() {
-            coins += 2;
-            updateCoinDisplay();
-            alert("Terima kasih! +2 Koin premium berhasil ditambahkan.");
-        }
+        function claimAdReward() { coins += 2; updateCoinDisplay(); alert("+2 Koin berhasil!"); }
 
         function switchTab(tabId, btnId) {
             document.querySelectorAll('.feature-view').forEach(view => view.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
-            document.getElementById(btnId)classList.add('active');
+            document.getElementById(btnId).classList.add('active');
         }
 
         async function sendToAINyata() {
-    let input = document.getElementById('aiInput');
-    let text = input.value.trim();
-    if (text === "") return;
-
-    bukaIklanPaksa(); 
-    coins -= 1; 
-    updateCoinDisplay();
-
-    let cb = document.getElementById('aiChatBox');
-    cb.innerHTML += `<div class="msg user">${text}</div>`;
-    input.value = ""; 
-    cb.scrollTop = cb.scrollHeight;
-
-    let loadId = 'ld-' + Date.now();
-    cb.innerHTML += `<div class="msg bot" id="${loadId}"><i>Menghubungkan ke Cloud AI... ⚡</i></div>`;
-
-    try {
-        // Kita panggil fungsi API yang akan kita buat nanti
-        let response = await fetch("/api/chat", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ message: text })
-        });
-        let data = await response.json();
-        document.getElementById(loadId).innerText = data.text;
-    } catch (e) {
-        document.getElementById(loadId).innerText = "Server AI sedang sibuk. Coba lagi nanti.";
-    }
-    cb.scrollTop = cb.scrollHeight;
-        }
-
-        function sendToAnonNyata() {
-            let input = document.getElementById('anonInput');
+            let input = document.getElementById('aiInput');
             let text = input.value.trim();
             if (text === "") return;
-
-            bukaIklanPaksa();
-            coins -= 1; 
-            updateCoinDisplay();
-
-            let cb = document.getElementById('anonChatBox');
-            cb.innerHTML += `<div class="msg user"><b>Anda:</b> ${text}</div>`;
+            bukaIklanPaksa(); coins -= 1; updateCoinDisplay();
+            let cb = document.getElementById('aiChatBox');
+            cb.innerHTML += `<div class="msg user">${text}</div>`;
             input.value = ""; 
-            cb.scrollTop = cb.scrollHeight;
-
-            setTimeout(() => {
-                let replies = ["Salken juga anon!", "Ada info cuan baru hari ini?", "Fitur anon chat ini mantap sekali.", "Lagi mantau harga market crypto nih."];
-                let r = replies[Math.floor(Math.random() * replies.length)];
-                cb.innerHTML += `<div class="msg bot"><b>Stranger:</b> ${r}</div>`;
-                cb.scrollTop = cb.scrollHeight;
-            }, 1000);
-        }
-
-        async function shortenLinkNyata() {
-    let longUrl = document.getElementById('longUrl').value.trim();
-    if (longUrl === "") return;
-
-    bukaIklanPaksa();
-    coins -= 1; 
-    updateCoinDisplay();
-
-    document.getElementById('shortedUrlText').innerText = "Sedang membuat link pendek... ⏳";
-    document.getElementById('linkResult').style.display = 'block';
-
-    // Menggunakan cors-anywhere / proxy gratis atau alternatif API yang aman untuk bypass CORS browser
-    try {
-        let response = await fetch('https://api.shrtco.de/v2/shorten?url=' + encodeURIComponent(longUrl));
-        if (response.ok) {
-            let data = await response.json();
-            linkPendekGlobal = data.result.full_short_link;
-        } else {
-            throw new Error("Gagal");
-        }
-    } catch (e) {
-        // Fallback Kedua menggunakan API gratis lain via proxy tepercaya
-        try {
-            let resAlternative = await fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(longUrl)}`, {
-                mode: 'no-cors' // Memaksa request terkirim tanpa hambatan CORS browser
-            });
-            // Jika menggunakan no-cors, browser tidak mengizinkan membaca teksnya, jadi kita buat fallback cadangan lokal aman:
-            linkPendekGlobal = longUrl; 
-            alert("Sistem dialihkan. Jika link tidak memendek, gunakan tombol salin untuk URL manual.");
-        } catch (err) {
-            linkPendekGlobal = longUrl; 
-        }
-    }
-
-    // Tampilkan Link & Pasang ke Tombol Bagikan
-    document.getElementById('shortedUrlText').innerHTML = `<a href="${linkPendekGlobal}" target="_blank" style="color:#00f2fe; text-decoration:underline;">${linkPendekGlobal}</a>`;
-    document.getElementById('shareWaBtn').href = "https://api.whatsapp.com/send?text=" + encodeURIComponent(`Buka link premium ini: ${linkPendekGlobal}`);
-    document.getElementById('shareTgBtn').href = `https://t.me/share/url?url=${encodeURIComponent(linkPendekGlobal)}&text=${encodeURIComponent("Buka link premium ini:")}`;
-        }
-
-        function salinTeksLink() {
-            if(linkPendekGlobal === "") return;
-            navigator.clipboard.writeText(linkPendekGlobal);
-            alert("Link pendek berhasil disalin ke clipboard!");
+            let loadId = 'ld-' + Date.now();
+            cb.innerHTML += `<div class="msg bot" id="${loadId}"><i>Menghubungkan...</i></div>`;
+            try {
+                let response = await fetch("/api/chat", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ message: text })
+                });
+                let data = await response.json();
+                document.getElementById(loadId).innerText = data.text;
+            } catch (e) {
+                document.getElementById(loadId).innerText = "Server sedang sibuk.";
+            }
         }
     </script>
 </body>
-                        </html>
+</html>
