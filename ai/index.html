@@ -157,10 +157,6 @@
     </div>
 
     <script>
-        // Data Kunci Terenkripsi Milik Master Aman 100%
-        const _g0 = atob("Z3NrX3F0dnRRUkhTransT2hSNDUzaDlwTmw2V0dyeWIzRllMd0NDS2Y5cExlSDRqMEpWdktrcWVXOUg="); 
-        const _g1 = atob("QVEuQWI4Uk42TGFUMkhqUzdmYUlwbDM0azdJZjlBNHo5MndZU19mMzdVMzRHTVo2ZmphZw==");
-        let linkPendekGlobal = "";
 
         if(localStorage.getItem('user_coins') === null) {
             localStorage.setItem('user_coins', '5');
@@ -197,7 +193,7 @@
             document.querySelectorAll('.feature-view').forEach(view => view.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
-            document.getElementById(btnId).classList.add('active');
+            document.getElementById(btnId)classList.add('active');
         }
 
         async function sendToAINyata() {
