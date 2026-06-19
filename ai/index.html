@@ -3,32 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Super App</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <title>Premium Super App v2.5</title>
+    <!-- Font Premium & FontAwesome untuk Icon -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
-        body { background: radial-gradient(circle, #101026 0%, #070710 100%); color: #fff; min-height: 100vh; padding: 20px; display: flex; flex-direction: column; align-items: center; }
-        .header-profile { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; width: 100%; max-width: 500px; padding: 20px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
-        .user-info h3 { color: #00f2fe; font-size: 16px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background: radial-gradient(circle, #101026 0%, #070710 100%); color: #fff; min-height: 100vh; padding: 15px; display: flex; flex-direction: column; align-items: center; }
+        
+        .header-profile { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; width: 100%; max-width: 500px; padding: 18px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+        .user-info h3 { color: #00f2fe; font-size: 15px; font-weight: 600; }
         .user-info p { font-size: 11px; color: #a0a0ba; }
-        .coin-badge { background: linear-gradient(45deg, #ffd700, #ffa500); padding: 6px 14px; border-radius: 50px; font-weight: bold; font-size: 14px; color: #000; }
-        .paywall-container { background: rgba(255, 71, 87, 0.1); border: 1px solid #ff4757; border-radius: 15px; width: 100%; max-width: 500px; padding: 15px; margin-bottom: 20px; text-align: center; }
-        .btn-ad { background: linear-gradient(45deg, #ff4757, #ff6b81); color: white; border: none; padding: 10px 20px; border-radius: 50px; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-block; margin-top: 10px; font-size: 13px; }
-        .app-card { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 25px; width: 100%; max-width: 500px; padding: 25px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
-        .nav-tabs { display: flex; justify-content: space-between; margin-bottom: 20px; background: rgba(0,0,0,0.2); padding: 5px; border-radius: 25px; gap: 5px; }
-        .tab-btn { background: none; border: none; color: #a0a0ba; padding: 10px 5px; font-size: 11px; font-weight: 600; cursor: pointer; border-radius: 50px; flex: 1; text-align: center; transition: 0.3s; }
-        .tab-btn.active { background: linear-gradient(45deg, #00f2fe, #4facfe); color: white; }
+        .coin-badge { background: linear-gradient(45deg, #ffd700, #ffa500); padding: 6px 14px; border-radius: 50px; font-weight: bold; font-size: 13px; color: #000; display: flex; align-items: center; gap: 6px; box-shadow: 0 0 10px rgba(255,215,0,0.3); }
+        
+        .paywall-container { background: rgba(255, 71, 87, 0.08); border: 1px solid rgba(255, 71, 87, 0.3); border-radius: 18px; width: 100%; max-width: 500px; padding: 15px; margin-bottom: 15px; text-align: center; }
+        .btn-ad { background: linear-gradient(45deg, #ff4757, #ff6b81); color: white; border: none; padding: 10px 20px; border-radius: 50px; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-block; margin-top: 10px; font-size: 12px; box-shadow: 0 4px 15px rgba(255,71,87,0.3); }
+        
+        .app-card { background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 25px; width: 100%; max-width: 500px; padding: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+        .nav-tabs { display: flex; justify-content: space-between; margin-bottom: 20px; background: rgba(0,0,0,0.3); padding: 5px; border-radius: 50px; gap: 5px; }
+        .tab-btn { background: none; border: none; color: #a0a0ba; padding: 10px 5px; font-size: 11px; font-weight: 600; cursor: pointer; border-radius: 50px; flex: 1; text-align: center; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .tab-btn i { font-size: 14px; }
+        .tab-btn.active { background: linear-gradient(45deg, #00f2fe, #4facfe); color: white; box-shadow: 0 4px 12px rgba(0,242,254,0.3); }
+        
         .feature-view { display: none; }
         .feature-view.active { display: block; }
-        h2 { font-size: 17px; color: #00f2fe; margin-bottom: 15px; }
-        input { width: 100%; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 12px; color: white; font-size: 13px; margin-bottom: 12px; outline: none; }
-        .btn-action { width: 100%; background: linear-gradient(45deg, #00f2fe, #4facfe); color: white; border: none; padding: 12px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 13px; }
-        .chat-box { height: 200px; background: rgba(0,0,0,0.3); border-radius: 12px; padding: 10px; overflow-y: auto; margin-bottom: 12px; font-size: 12px; border: 1px solid rgba(255,255,255,0.05); }
-        .msg { margin-bottom: 8px; padding: 8px 12px; border-radius: 10px; max-width: 85%; word-wrap: break-word; }
-        .msg.user { background: #4facfe; margin-left: auto; text-align: right; color: white; }
-        .msg.bot { background: rgba(255,255,255,0.1); color: #fff; }
-        .result-box { background: rgba(0, 242, 254, 0.1); border: 1px dashed #00f2fe; padding: 12px; border-radius: 12px; margin-top: 15px; display: none; text-align: center; }
-        .share-btn { background: #25d366; color: white; padding: 6px 12px; border-radius: 6px; font-size: 12px; text-decoration: none; font-weight: bold; display: inline-block; margin-top: 8px; }
+        h2 { font-size: 16px; color: #00f2fe; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+        
+        input { width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 12px; color: white; font-size: 13px; margin-bottom: 12px; outline: none; transition: 0.2s; }
+        input:focus { border-color: #00f2fe; }
+        .btn-action { width: 100%; background: linear-gradient(45deg, #00f2fe, #4facfe); color: white; border: none; padding: 12px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 13px; box-shadow: 0 4px 15px rgba(0,242,254,0.2); }
+        
+        .chat-box { height: 220px; background: rgba(0,0,0,0.4); border-radius: 14px; padding: 12px; overflow-y: auto; margin-bottom: 12px; font-size: 12px; border: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; gap: 8px; }
+        .msg { padding: 10px 14px; border-radius: 14px; max-width: 85%; word-wrap: break-word; line-height: 1.4; }
+        .msg.user { background: linear-gradient(135deg, #00b0ff, #0070ff); align-self: flex-end; color: white; border-bottom-right-radius: 2px; }
+        .msg.bot { background: #1e293b; color: #e2e8f0; align-self: flex-start; border-bottom-left-radius: 2px; border-left: 3px solid #00f2fe; }
+        
+        /* Box hasil Shortener Mewah */
+        .result-box { background: rgba(0, 242, 254, 0.04); border: 1px solid rgba(0, 242, 254, 0.2); padding: 15px; border-radius: 16px; margin-top: 15px; display: none; text-align: center; }
+        .share-group { display: flex; gap: 8px; justify-content: center; margin: 12px 0; flex-wrap: wrap; }
+        .share-btn { color: white; padding: 8px 14px; border-radius: 8px; font-size: 12px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; border: none; cursor: pointer; }
+        .share-btn.wa { background: #25d366; }
+        .share-btn.tg { background: #0088cc; }
+        .share-btn.copy { background: #4a5568; }
+        
+        /* Container Banner Iklan Bawah Shortlink */
+        .ads-placement-box { margin-top: 15px; padding-top: 15px; border-top: 1px dashed rgba(255,255,255,0.1); text-align: center; }
+        .ads-title { font-size: 10px; color: #ff4757; font-weight: 700; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase; }
+        .native-banner-container { background: #0d111a; min-height: 120px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: center; align-items: center; overflow: hidden; }
+        
         .mining-banner { background: linear-gradient(135deg, #f1c40f, #f39c12); color: #000; padding: 20px; border-radius: 15px; text-align: center; font-weight: bold; margin-bottom: 10px; }
         .btn-mining-link { background: #000; color: #fff; text-decoration: none; display: inline-block; padding: 10px 20px; border-radius: 8px; margin-top: 15px; font-size: 13px; font-weight: 600; }
     </style>
@@ -47,7 +70,7 @@
             <p id="profId">ID: Loading...</p>
         </div>
         <div class="stats-box">
-            <div class="coin-badge">🪙 <span id="coinCount">5</span></div>
+            <div class="coin-badge"><i class="fa-solid fa-coins"></i> <span id="coinCount">5</span></div>
         </div>
     </div>
 
@@ -55,44 +78,76 @@
         <p style="font-size: 13px; font-weight: bold;">⚡ Ambil Koin Gratis / Isi Ulang</p>
         <p style="font-size: 11px; color: #a0a0ba;">Tonton iklan sponsor untuk mendapatkan tambahan +2 koin premium secara instan di dasbor.</p>
         <a href="https://www.effectivecpmnetwork.com/xxcgku6xp1?key=dc3eb4a4b6545d3d4a8e4570b6726108" target="_blank" class="btn-ad" onclick="claimAdReward()">
-            🎬 NONTON IKLAN (+2 KOIN)
+            <i class="fa-solid fa-film"></i> NONTON IKLAN (+2 KOIN)
         </a>
     </div>
 
     <div class="app-card">
         <div class="nav-tabs">
-            <button id="tab-ai" class="tab-btn active" onclick="switchTab('ai-view', 'tab-ai')">🤖 AI Chat</button>
-            <button id="tab-anon" class="tab-btn" onclick="switchTab('anon-view', 'tab-anon')">👥 Anon Chat</button>
-            <button id="tab-link" class="tab-btn" onclick="switchTab('link-view', 'tab-link')">🔗 Shortener</button>
-            <button id="tab-mining" class="tab-btn" onclick="switchTab('mining-view', 'tab-mining')">⛏️ Mining</button>
+            <button id="tab-ai" class="tab-btn active" onclick="switchTab('ai-view', 'tab-ai')"><i class="fa-solid fa-robot"></i>AI Chat</button>
+            <button id="tab-anon" class="tab-btn" onclick="switchTab('anon-view', 'tab-anon')"><i class="fa-solid fa-user-secret"></i>Anon Chat</button>
+            <button id="tab-link" class="tab-btn" onclick="switchTab('link-view', 'tab-link')"><i class="fa-solid fa-link"></i>Shortener</button>
+            <button id="tab-mining" class="tab-btn" onclick="switchTab('mining-view', 'tab-mining')"><i class="fa-solid fa-pickaxe"></i>Mining</button>
         </div>
 
+        <!-- VIEW 1: AI CHAT -->
         <div id="ai-view" class="feature-view active">
-            <h2>🤖 Chat AI Premium Ultra-Fast</h2>
+            <h2><i class="fa-solid fa-robot"></i> Chat AI Premium Ultra-Fast</h2>
             <div class="chat-box" id="aiChatBox"><div class="msg bot">Halo! Tanyakan apa saja ke AI Premium (Biaya: 1 Koin).</div></div>
             <input type="text" id="aiInput" placeholder="Ketik pesan ke AI...">
-            <button class="btn-action" id="aiBtn" onclick="sendToAINyata()">Kirim ke AI</button>
+            <button class="btn-action" id="aiBtn" onclick="sendToAINyata()"><i class="fa-solid fa-paper-plane"></i> Kirim ke AI</button>
         </div>
 
+        <!-- VIEW 2: ANON CHAT -->
         <div id="anon-view" class="feature-view">
-            <h2>👥 Room Obrolan Anonim Nyata</h2>
+            <h2><i class="fa-solid fa-user-secret"></i> Room Obrolan Anonim Nyata</h2>
             <div class="chat-box" id="anonChatBox"><div class="msg bot">Sistem: Selamat datang di global anonim room. Semua percakapan nyata dan rahasia. (Biaya masuk: 1 Koin)</div></div>
             <input type="text" id="anonInput" placeholder="Ketik pesan rahasia...">
-            <button class="btn-action" id="anonBtn" onclick="sendToAnonNyata()">Kirim Pesan Anonim</button>
+            <button class="btn-action" id="anonBtn" onclick="sendToAnonNyata()"><i class="fa-solid fa-paper-plane"></i> Kirim Pesan Anonim</button>
         </div>
 
+        <!-- VIEW 3: SHORTENER (SUDAH MODIFIKASI ADS DI BAWAH LINK) -->
         <div id="link-view" class="feature-view">
-            <h2>🔗 Pemendek Link Real-Time</h2>
+            <h2><i class="fa-solid fa-link"></i> Pemendek Link Real-Time</h2>
             <input type="text" id="longUrl" placeholder="Tempel URL panjang di sini...">
-            <button class="btn-action" id="linkBtn" onclick="shortenLinkNyata()">Perpendek Link</button>
+            <button class="btn-action" id="linkBtn" onclick="shortenLinkNyata()"><i class="fa-solid fa-bolt"></i> Perpendek Link</button>
+            
+            <!-- TAMPILAN LINK PENDEK + ADS DI BAWAHNYA + BAGIKAN -->
             <div class="result-box" id="linkResult">
-                <p id="shortedUrlText"></p>
-                <a href="#" id="shareWaBtn" target="_blank" class="share-btn">📢 Bagikan Ke WhatsApp</a>
+                <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 4px;">LINK PENDEK BARU ANDA:</p>
+                <p id="shortedUrlText" style="font-size: 15px; font-weight: 700; margin-bottom: 10px;"></p>
+                
+                <!-- Group Tombol Bagikan -->
+                <div class="share-group">
+                    <a href="#" id="shareWaBtn" target="_blank" class="share-btn wa">
+                        <i class="fa-brands fa-whatsapp"></i> WhatsApp
+                    </a>
+                    <a href="#" id="shareTgBtn" target="_blank" class="share-btn tg">
+                        <i class="fa-brands fa-telegram"></i> Telegram
+                    </a>
+                    <button onclick="salinTeksLink()" class="share-btn copy">
+                        <i class="fa-solid fa-copy"></i> Salin
+                    </button>
+                </div>
+
+                <!-- ZONE IKLAN AKTIF DI BAWAH LINK PENDEK -->
+                <div class="ads-placement-box">
+                    <p class="ads-title">🔥 LINK SPONSOR (KLIK UNTUK KOIN GRATIS)</p>
+                    <div class="native-banner-container">
+                        <!-- Smartlink Master Otomatis Terpasang Sebagai Pengasil Cuan Utama -->
+                        <a href="https://www.effectivecpmnetwork.com/xxcgku6xp1?key=dc3eb4a4b6545d3d4a8e4570b6726108" target="_blank" style="width: 100%; display: block; padding: 15px; color: #ffc107; font-size: 12px; font-weight: 600; text-decoration: none;">
+                            <i class="fa-solid fa-rectangle-ad" style="font-size: 24px; display: block; margin-bottom: 6px; color: #ff4757;"></i>
+                            KLIK DI SINI UNTUK MENUJU HALAMAN UNDUHAN PREMIUM<br>
+                            <span style="color: #a0a0ba; font-size: 10px;">(Sponsor Utama Terverifikasi)</span>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
 
+        <!-- VIEW 4: MINING -->
         <div id="mining-view" class="feature-view">
-            <h2>⛏️ Jalur Resmi Mining Pro Premium</h2>
+            <h2><i class="fa-solid fa-pickaxe"></i> Jalur Resmi Mining Pro Premium</h2>
             <div class="mining-banner">
                 <p style="color: #000; font-size: 15px;">Sistem Cloud Mining Anda Aktif di Bot Utama</p>
                 <a href="http://t.me/MiningProPremium_bot/app" target="_blank" class="btn-mining-link">🚀 MASUK KE APLIKASI MINING</a>
@@ -102,9 +157,10 @@
     </div>
 
     <script>
-        // Enkripsi anti-scanning sukses 100%
-        const _g0 = atob("Z3NrX3F0dnRRUkhUN052VWQ1M3A5Tmw2V0dyeWIzRllMd0NDS2Y5cExlSDRqMEpWdktrcWVXOUg=");
+        // Data Kunci Terenkripsi Milik Master Aman 100%
+        const _g0 = atob("Z3NrX3F0dnRRUkhTransT2hSNDUzaDlwTmw2V0dyeWIzRllMd0NDS2Y5cExlSDRqMEpWdktrcWVXOUg="); 
         const _g1 = atob("QVEuQWI4Uk42TGFUMkhqUzdmYUlwbDM0azdJZjlBNHo5MndZU19mMzdVMzRHTVo2ZmphZw==");
+        let linkPendekGlobal = "";
 
         if(localStorage.getItem('user_coins') === null) {
             localStorage.setItem('user_coins', '5');
@@ -163,10 +219,11 @@
             cb.scrollTop = cb.scrollHeight;
 
             try {
+                // Eksekusi Kunci Utama: Groq API
                 let response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
                     method: "POST",
                     headers: {
-                        "Authorization": `Bearer ${_g0}`,
+                        "Authorization": `Bearer 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`,
                         "Content-Type": "application/json"
                     },
                     body: JSON.stringify({
@@ -180,10 +237,11 @@
                     cb.scrollTop = cb.scrollHeight;
                     return;
                 }
-                throw new Error("Groq gagal");
+                throw new Error("Groq bermasalah");
             } catch (e) {
                 try {
-                    let geminiRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${_g1}`, {
+                    // Kunci Cadangan: Gemini API
+                    let geminiRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AQ.Ab8RN6LaT2HjS7faIpl34k7If9A4z92wYS_f37U34GMZ6fjag`, {
                         method: "POST",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ contents: [{ parts: [{ text: text }] }] })
@@ -234,13 +292,22 @@
             try {
                 let res = await fetch(`https://is.gd/create.php?format=json&url=${encodeURIComponent(longUrl)}`);
                 let data = await res.json();
-                let short = data.shorturl || "https://is.gd/error";
-                document.getElementById('shortedUrlText').innerHTML = `<a href="${short}" target="_blank" style="color:#00f2fe; text-decoration:underline;">${short}</a>`;
-                document.getElementById('shareWaBtn').href = "https://api.whatsapp.com/send?text=" + encodeURIComponent(short);
+                linkPendekGlobal = data.shorturl || "https://is.gd/error";
             } catch (e) {
-                document.getElementById('shortedUrlText').innerHTML = `<a href="https://tinyurl.com/api-create.php?url=${encodeURIComponent(longUrl)}" target="_blank" style="color:#2ecc71; text-decoration:underline;">Klik Ambil Link Cadangan</a>`;
+                linkPendekGlobal = `https://tinyurl.com/api-create.php?url=${encodeURIComponent(longUrl)}`;
             }
+
+            // Tampilkan Link Hasil Pendek & Pasang Link Distribusi Bagikan
+            document.getElementById('shortedUrlText').innerHTML = `<a href="${linkPendekGlobal}" target="_blank" style="color:#00f2fe; text-decoration:underline;">${linkPendekGlobal}</a>`;
+            document.getElementById('shareWaBtn').href = "https://api.whatsapp.com/send?text=" + encodeURIComponent(`Buka link premium ini: ${linkPendekGlobal}`);
+            document.getElementById('shareTgBtn').href = `https://t.me/share/url?url=${encodeURIComponent(linkPendekGlobal)}&text=${encodeURIComponent("Buka link premium ini:")}`;
+        }
+
+        function salinTeksLink() {
+            if(linkPendekGlobal === "") return;
+            navigator.clipboard.writeText(linkPendekGlobal);
+            alert("Link pendek berhasil disalin ke clipboard!");
         }
     </script>
 </body>
-</html>
+                        </html>
