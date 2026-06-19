@@ -197,59 +197,35 @@
         }
 
         async function sendToAINyata() {
-            let input = document.getElementById('aiInput');
-            let text = input.value.trim();
-            if (text === "") return;
+    let input = document.getElementById('aiInput');
+    let text = input.value.trim();
+    if (text === "") return;
 
-            bukaIklanPaksa(); 
-            coins -= 1; 
-            updateCoinDisplay();
+    bukaIklanPaksa(); 
+    coins -= 1; 
+    updateCoinDisplay();
 
-            let cb = document.getElementById('aiChatBox');
-            cb.innerHTML += `<div class="msg user">${text}</div>`;
-            input.value = ""; 
-            cb.scrollTop = cb.scrollHeight;
+    let cb = document.getElementById('aiChatBox');
+    cb.innerHTML += `<div class="msg user">${text}</div>`;
+    input.value = ""; 
+    cb.scrollTop = cb.scrollHeight;
 
-            let loadId = 'ld-' + Date.now();
-            cb.innerHTML += `<div class="msg bot" id="${loadId}"><i>Menghubungkan ke Cloud AI... ⚡</i></div>`;
-            cb.scrollTop = cb.scrollHeight;
+    let loadId = 'ld-' + Date.now();
+    cb.innerHTML += `<div class="msg bot" id="${loadId}"><i>Menghubungkan ke Cloud AI... ⚡</i></div>`;
 
-            try {
-                // Eksekusi Kunci Utama: Groq API
-                let response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
-                    method: "POST",
-                    headers: {
-                        "Authorization": `Bearer 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`,
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        model: "llama3-8b-8192",
-                        messages: [{ role: "user", content: text }]
-                    })
-                });
-                let data = await response.json();
-                if(data.choices && data.choices[0]) {
-                    document.getElementById(loadId).innerText = data.choices[0].message.content;
-                    cb.scrollTop = cb.scrollHeight;
-                    return;
-                }
-                throw new Error("Groq bermasalah");
-            } catch (e) {
-                try {
-                    // Kunci Cadangan: Gemini API
-                    let geminiRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=AQ.Ab8RN6LaT2HjS7faIpl34k7If9A4z92wYS_f37U34GMZ6fjag`, {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ contents: [{ parts: [{ text: text }] }] })
-                    });
-                    let geminiData = await geminiRes.json();
-                    let reply = geminiData.candidates[0].content.parts[0].text;
-                    document.getElementById(loadId).innerText = reply;
-                } catch (err) {
-                    document.getElementById(loadId).innerText = "Maaf, server AI sedang padat. Silakan coba kirim ulang pesan Anda beberapa saat lagi.";
-                }
-            }
-            cb.scrollTop = cb.scrollHeight;
+    try {
+        // Kita panggil fungsi API yang akan kita buat nanti
+        let response = await fetch("/api/chat", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: text })
+        });
+        let data = await response.json();
+        document.getElementById(loadId).innerText = data.text;
+    } catch (e) {
+        document.getElementById(loadId).innerText = "Server AI sedang sibuk. Coba lagi nanti.";
+    }
+    cb.scrollTop = cb.scrollHeight;
         }
 
         function sendToAnonNyata() {
