@@ -279,28 +279,41 @@
         }
 
         async function shortenLinkNyata() {
-            let longUrl = document.getElementById('longUrl').value.trim();
-            if (longUrl === "") return;
+    let longUrl = document.getElementById('longUrl').value.trim();
+    if (longUrl === "") return;
 
-            bukaIklanPaksa();
-            coins -= 1; 
-            updateCoinDisplay();
+    bukaIklanPaksa();
+    coins -= 1; 
+    updateCoinDisplay();
 
-            document.getElementById('shortedUrlText').innerText = "Sedang membuat link pendek... ⏳";
-            document.getElementById('linkResult').style.display = 'block';
+    document.getElementById('shortedUrlText').innerText = "Sedang membuat link pendek... ⏳";
+    document.getElementById('linkResult').style.display = 'block';
 
-            try {
-                let res = await fetch(`https://is.gd/create.php?format=json&url=${encodeURIComponent(longUrl)}`);
-                let data = await res.json();
-                linkPendekGlobal = data.shorturl || "https://is.gd/error";
-            } catch (e) {
-                linkPendekGlobal = `https://tinyurl.com/api-create.php?url=${encodeURIComponent(longUrl)}`;
+    try {
+        // Coba pakai is.gd dulu
+        let res = await fetch(`https://is.gd/create.php?format=json&url=${encodeURIComponent(longUrl)}`);
+        let data = await res.json();
+        linkPendekGlobal = data.shorturl || "https://is.gd/error";
+    } catch (e) {
+        // JIKA IS.GD GAGAL, PROSES API TINYURL DENGAN BENAR (Bukan cuma nampilin link API)
+        try {
+            let resTiny = await fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(longUrl)}`);
+            if (resTiny.ok) {
+                linkPendekGlobal = await resTiny.text(); // TinyURL mengembalikan teks langsung, bukan JSON
+            } else {
+                throw new Error("TinyURL gagal");
             }
+        } catch (err) {
+            // Jika kedua API gagal, pakai fallback link manual yang aman
+            linkPendekGlobal = longUrl; 
+            alert("Semua server pemendek sedang sibuk, Master. Menggunakan URL asli sementara.");
+        }
+    }
 
-            // Tampilkan Link Hasil Pendek & Pasang Link Distribusi Bagikan
-            document.getElementById('shortedUrlText').innerHTML = `<a href="${linkPendekGlobal}" target="_blank" style="color:#00f2fe; text-decoration:underline;">${linkPendekGlobal}</a>`;
-            document.getElementById('shareWaBtn').href = "https://api.whatsapp.com/send?text=" + encodeURIComponent(`Buka link premium ini: ${linkPendekGlobal}`);
-            document.getElementById('shareTgBtn').href = `https://t.me/share/url?url=${encodeURIComponent(linkPendekGlobal)}&text=${encodeURIComponent("Buka link premium ini:")}`;
+    // Tampilkan Link Hasil Pendek yang BENAR-BENAR PENDEK & Pasang ke Tombol Bagikan
+    document.getElementById('shortedUrlText').innerHTML = `<a href="${linkPendekGlobal}" target="_blank" style="color:#00f2fe; text-decoration:underline;">${linkPendekGlobal}</a>`;
+    document.getElementById('shareWaBtn').href = "https://api.whatsapp.com/send?text=" + encodeURIComponent(`Buka link premium ini: ${linkPendekGlobal}`);
+    document.getElementById('shareTgBtn').href = `https://t.me/share/url?url=${encodeURIComponent(linkPendekGlobal)}&text=${encodeURIComponent("Buka link premium ini:")}`;
         }
 
         function salinTeksLink() {
