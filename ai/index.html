@@ -163,23 +163,35 @@
         }
 
         async function sendToAINyata() {
-            let input = document.getElementById('aiInput');
-            let text = input.value.trim();
-            if (text === "") return;
-            bukaIklanPaksa(); coins -= 1; updateCoinDisplay();
-            let cb = document.getElementById('aiChatBox');
-            cb.innerHTML += `<div class="msg user">${text}</div>`;
-            input.value = ""; cb.scrollTop = cb.scrollHeight;
-            let loadId = 'ld-' + Date.now();
-            cb.innerHTML += `<div class="msg bot" id="${loadId}"><i>Menghubungkan ke Cloud AI... ⚡</i></div>`;
-            try {
-                await fetch(WEB_APP_URL, {
-                    method: "POST", mode: "no-cors",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ message: text })
-                });
-                document.getElementById(loadId).innerText = "Pesan terkirim ke Telegram.";
-            } catch (e) { document.getElementById(loadId).innerText = "Server AI sedang sibuk."; }
+    let input = document.getElementById('aiInput');
+    let text = input.value.trim();
+    if (text === "") return;
+
+    bukaIklanPaksa(); 
+    coins -= 1; 
+    updateCoinDisplay();
+
+    let cb = document.getElementById('aiChatBox');
+    cb.innerHTML += `<div class="msg user">${text}</div>`;
+    input.value = ""; 
+    cb.scrollTop = cb.scrollHeight;
+
+    let loadId = 'ld-' + Date.now();
+    cb.innerHTML += `<div class="msg bot" id="${loadId}"><i>AI sedang berpikir...</i></div>`;
+
+    try {
+        let response = await fetch(WEB_APP_URL, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ message: text })
+        });
+        
+        let data = await response.json(); 
+        document.getElementById(loadId).innerHTML = data.text; 
+    } catch (e) {
+        document.getElementById(loadId).innerText = "Gagal terhubung ke server AI.";
+    }
+    cb.scrollTop = cb.scrollHeight;
         }
 
         function sendToAnonNyata() {
