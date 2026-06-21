@@ -133,9 +133,6 @@
     </div>
 
     <script>
-        // URL Google Apps Script Anda
-        const WEB_APP_URL = "https://script.google.com/macros/s/AKfycbz-J-a3P90x7G9HipAaWyuGrWEM1QbK_Vds2XiJm3MHxsxjl9nCDsA7rkuApFEUBnr4-g/exec";
-        let linkPendekGlobal = "";
 
         if(localStorage.getItem('user_coins') === null) localStorage.setItem('user_coins', '5');
         let coins = parseInt(localStorage.getItem('user_coins'));
@@ -167,29 +164,43 @@
     let text = input.value.trim();
     if (text === "") return;
 
-    bukaIklanPaksa(); 
-    coins -= 1; 
+    bukaIklanPaksa();
+    coins -= 1;
     updateCoinDisplay();
 
     let cb = document.getElementById('aiChatBox');
     cb.innerHTML += `<div class="msg user">${text}</div>`;
     input.value = ""; 
-    cb.scrollTop = cb.scrollHeight;
 
     let loadId = 'ld-' + Date.now();
     cb.innerHTML += `<div class="msg bot" id="${loadId}"><i>AI sedang berpikir...</i></div>`;
 
+    // Kunci API yang Anda berikan
+    const API_KEY = "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"; 
+
     try {
-        let response = await fetch(WEB_APP_URL, {
+        let response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ message: text })
+            headers: { 
+                "Content-Type": "application/json",
+                "Authorization": `Bearer ${API_KEY}`,
+                "HTTP-Referer": "https://togusitumorangdame-ctrl.github.io/mini-app/ai/", 
+                "X-Title": "Aplikasi AI Master"
+            },
+            body: JSON.stringify({
+                model: "meta-llama/llama-3-8b-instruct",
+                messages: [{ role: "user", content: text }]
+            })
         });
         
-        let data = await response.json(); 
-        document.getElementById(loadId).innerHTML = data.text; 
+        let data = await response.json();
+        if(data.choices && data.choices[0]) {
+            document.getElementById(loadId).innerText = data.choices[0].message.content;
+        } else {
+            document.getElementById(loadId).innerText = "Server sedang sibuk.";
+        }
     } catch (e) {
-        document.getElementById(loadId).innerText = "Gagal terhubung ke server AI.";
+        document.getElementById(loadId).innerText = "Gagal terhubung.";
     }
     cb.scrollTop = cb.scrollHeight;
         }
