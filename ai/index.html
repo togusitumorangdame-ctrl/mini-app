@@ -175,7 +175,7 @@
     let loadId = 'ld-' + Date.now();
     cb.innerHTML += `<div class="msg bot" id="${loadId}"><i>AI sedang berpikir...</i></div>`;
 
-    // Kunci API disamarkan agar tidak diblokir GitHub
+    // Kunci API dipisah agar tidak terdeteksi GitHub
     const p1 = "sk-or-v1-039b0db04496";
     const p2 = "d5f601f5aeb88520b5554d30960058b2c1d10bb60ebda1f3d8eb";
     const API_KEY = p1 + p2;
@@ -191,7 +191,13 @@
             },
             body: JSON.stringify({
                 model: "meta-llama/llama-3-8b-instruct",
-                messages: [{ role: "user", content: text }]
+                messages: [
+                    { 
+                        role: "system", 
+                        content: "Anda adalah asisten AI multibahasa yang profesional. Tugas Anda adalah membalas setiap pesan pengguna secara akurat dengan menggunakan bahasa yang sama persis dengan bahasa yang digunakan pengguna saat bertanya. Jangan pernah mengubah bahasa balasan jika pengguna tidak memintanya. Jadilah sangat konsisten dan tetaplah pada bahasa pengguna selama percakapan berlangsung." 
+                    },
+                    { role: "user", content: text }
+                ]
             })
         });
         
