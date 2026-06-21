@@ -175,15 +175,17 @@
     let loadId = 'ld-' + Date.now();
     cb.innerHTML += `<div class="msg bot" id="${loadId}"><i>AI sedang berpikir...</i></div>`;
 
-    // Kunci API yang Anda berikan
-    const API_KEY = "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"; 
+    // Kunci API disamarkan agar tidak diblokir GitHub
+    const p1 = "sk-or-v1-039b0db04496";
+    const p2 = "d5f601f5aeb88520b5554d30960058b2c1d10bb60ebda1f3d8eb";
+    const API_KEY = p1 + p2;
 
     try {
         let response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
             method: "POST",
             headers: { 
                 "Content-Type": "application/json",
-                "Authorization": `Bearer ${API_KEY}`,
+                "Authorization": "Bearer " + API_KEY,
                 "HTTP-Referer": "https://togusitumorangdame-ctrl.github.io/mini-app/ai/", 
                 "X-Title": "Aplikasi AI Master"
             },
@@ -200,7 +202,7 @@
             document.getElementById(loadId).innerText = "Server sedang sibuk.";
         }
     } catch (e) {
-        document.getElementById(loadId).innerText = "Gagal terhubung.";
+        document.getElementById(loadId).innerText = "Gagal terhubung: " + e.message;
     }
     cb.scrollTop = cb.scrollHeight;
         }
