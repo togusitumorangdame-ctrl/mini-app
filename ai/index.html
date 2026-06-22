@@ -159,23 +159,35 @@
             document.getElementById(btnId).classList.add('active');
         }
 
-        async function sendToAINyata() {
+        let chatHistory = [
+    { 
+        role: "system", 
+        content: "Anda adalah asisten AI multibahasa yang profesional. Jawablah langsung, akurat, dan gunakan bahasa yang sama dengan bahasa yang digunakan pengguna saat bertanya. Dilarang mengulang pertanyaan dan dilarang bertanya balik. Jawaban harus langsung ke inti." 
+    }
+];
+
+async function sendToAINyata() {
     let input = document.getElementById('aiInput');
     let text = input.value.trim();
     if (text === "") return;
 
+    // Trigger Iklan (Setiap melakukan aktivitas)
     bukaIklanPaksa();
-    coins -= 1;
+    coins -= 1; // Mengurangi koin setiap pertanyaan
     updateCoinDisplay();
 
+    // Tampilkan pesan user ke layar
     let cb = document.getElementById('aiChatBox');
     cb.innerHTML += `<div class="msg user">${text}</div>`;
     input.value = ""; 
 
+    // Simpan pesan user ke history
+    chatHistory.push({ role: "user", content: text });
+
     let loadId = 'ld-' + Date.now();
     cb.innerHTML += `<div class="msg bot" id="${loadId}"><i>AI sedang berpikir...</i></div>`;
 
-    // Kunci API dipisah agar tidak terdeteksi GitHub
+    // Kunci API (Disamarkan)
     const p1 = "sk-or-v1-039b0db04496";
     const p2 = "d5f601f5aeb88520b5554d30960058b2c1d10bb60ebda1f3d8eb";
     const API_KEY = p1 + p2;
@@ -191,19 +203,18 @@
             },
             body: JSON.stringify({
                 model: "meta-llama/llama-3-8b-instruct",
-                messages: [
-                    { 
-                        role: "system", 
-                        content: "Anda adalah asisten AI multibahasa yang profesional.konsisten dengan bahasa pengguna." 
-                    },
-                    { role: "user", content: text }
-                ]
+                messages: chatHistory // Mengirimkan seluruh riwayat percakapan
             })
         });
         
         let data = await response.json();
         if(data.choices && data.choices[0]) {
-            document.getElementById(loadId).innerText = data.choices[0].message.content;
+            let aiReply = data.choices[0].message.content;
+            
+            // Simpan jawaban AI ke history agar diingat
+            chatHistory.push({ role: "assistant", content: aiReply });
+            
+            document.getElementById(loadId).innerText = aiReply;
         } else {
             document.getElementById(loadId).innerText = "Server sedang sibuk.";
         }
@@ -211,7 +222,7 @@
         document.getElementById(loadId).innerText = "Gagal terhubung: " + e.message;
     }
     cb.scrollTop = cb.scrollHeight;
-        }
+}
 
         function sendToAnonNyata() {
             let input = document.getElementById('anonInput');
