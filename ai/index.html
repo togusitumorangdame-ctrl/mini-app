@@ -43,18 +43,18 @@
         .share-btn { color: white; padding: 8px 14px; border-radius: 8px; font-size: 12px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; border: none; cursor: pointer; }
         .share-btn.wa { background: #25d366; }
         .share-btn.tg { background: #0088cc; }
+        .share-btn.fb { background: #4267B2; }
         .share-btn.copy { background: #4a5568; }
-        
-        .ads-placement-box { margin-top: 15px; padding-top: 15px; border-top: 1px dashed rgba(255,255,255,0.1); text-align: center; }
-        .ads-title { font-size: 10px; color: #ff4757; font-weight: 700; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase; }
-        .native-banner-container { background: #0d111a; min-height: 120px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: center; align-items: center; overflow: hidden; }
         
         .mining-banner { background: linear-gradient(135deg, #f1c40f, #f39c12); color: #000; padding: 20px; border-radius: 15px; text-align: center; font-weight: bold; margin-bottom: 10px; }
         .btn-mining-link { background: #000; color: #fff; text-decoration: none; display: inline-block; padding: 10px 20px; border-radius: 8px; margin-top: 15px; font-size: 13px; font-weight: 600; }
         
-        /* 10 FITUR BARU */
-        .grid-features { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 15px; }
-        .f-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: #fff; padding: 8px 0; font-size: 9px; cursor: pointer; text-align: center; }
+        /* DESAIN MEWAH 10 FITUR */
+        .features-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; width: 100%; max-width: 500px; margin-top: 20px; }
+        .f-box { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); padding: 10px 5px; border-radius: 15px; text-align: center; cursor: pointer; transition: 0.3s; }
+        .f-box:hover { background: rgba(0, 242, 254, 0.15); border-color: #00f2fe; }
+        .f-box i { font-size: 18px; color: #00f2fe; margin-bottom: 5px; display: block; }
+        .f-box span { font-size: 9px; color: #fff; font-weight: bold; text-transform: uppercase; }
     </style>
 </head>
 <body>
@@ -64,7 +64,7 @@
 
     <div class="header-profile">
         <div class="user-info">
-            <h3>Master_Premium_User</h3>
+            <h3 id="ui_user">Master_Premium_User</h3>
             <p id="profId">ID: Loading...</p>
         </div>
         <div class="stats-box">
@@ -72,24 +72,11 @@
         </div>
     </div>
 
-    <div class="grid-features">
-        <div class="f-btn" onclick="claimDaily()">Daily<br>Gift</div>
-        <div class="f-btn" onclick="withdraw()">With<br>Draw</div>
-        <div class="f-btn" onclick="alert('Voice: ON')">Voice<br>AI</div>
-        <div class="f-btn" onclick="copyRef()">Invite<br>Ref</div>
-        <div class="f-btn" onclick="alert('System: Normal')">AI<br>Check</div>
-        <div class="f-btn" onclick="document.body.style.filter='invert(1)'">Dark<br>Mode</div>
-        <div class="f-btn" onclick="alert('Saved')">His<br>tory</div>
-        <div class="f-btn" onclick="alert('Level: Pro')">User<br>Lvl</div>
-        <div class="f-btn" onclick="alert('Prompt: Active')">Smart<br>Prop</div>
-        <div class="f-btn" onclick="window.open('http://t.me/MiningProPremium_bot')">Cloud<br>Mine</div>
-    </div>
-
     <div class="paywall-container" id="paywall">
-        <p style="font-size: 13px; font-weight: bold;">⚡ Ambil Koin Gratis / Isi Ulang</p>
-        <p style="font-size: 11px; color: #a0a0ba;">Tonton iklan sponsor untuk mendapatkan tambahan +2 koin premium secara instan di dasbor.</p>
+        <p id="ui_coin_text" style="font-size: 13px; font-weight: bold;">⚡ Ambil Koin Gratis / Isi Ulang</p>
+        <p id="ui_ad_text" style="font-size: 11px; color: #a0a0ba;">Tonton iklan sponsor untuk mendapatkan tambahan +2 koin premium secara instan di dasbor.</p>
         <a href="https://www.effectivecpmnetwork.com/xxcgku6xp1?key=dc3eb4a4b6545d3d4a8e4570b6726108" target="_blank" class="btn-ad" onclick="claimAdReward()">
-            <i class="fa-solid fa-film"></i> NONTON IKLAN (+2 KOIN)
+            <i class="fa-solid fa-film"></i> <span id="ui_btn_ad">NONTON IKLAN (+2 KOIN)</span>
         </a>
     </div>
 
@@ -101,46 +88,61 @@
         </div>
 
         <div id="ai-view" class="feature-view active">
-            <h2><i class="fa-solid fa-robot"></i> Chat AI Premium Ultra-Fast</h2>
-            <div class="chat-box" id="aiChatBox"><div class="msg bot">Halo! Tanyakan apa saja ke AI Premium (Biaya: 1 Koin).</div></div>
+            <h2 id="ui_chat_title"><i class="fa-solid fa-robot"></i> Chat AI Premium Ultra-Fast</h2>
+            <div class="chat-box" id="aiChatBox"><div class="msg bot" id="ui_bot_msg">Halo! Tanyakan apa saja ke AI Premium (Biaya: 1 Koin).</div></div>
             <input type="text" id="aiInput" placeholder="Ketik pesan ke AI...">
-            <button class="btn-action" id="aiBtn" onclick="sendToAINyata()"><i class="fa-solid fa-paper-plane"></i> Kirim ke AI</button>
+            <button class="btn-action" id="aiBtn" onclick="sendToAINyata()"><i class="fa-solid fa-paper-plane"></i> <span id="ui_btn_send">Kirim ke AI</span></button>
         </div>
 
         <div id="link-view" class="feature-view">
-            <h2><i class="fa-solid fa-link"></i> Pemendek Link Real-Time</h2>
+            <h2 id="ui_link_title"><i class="fa-solid fa-link"></i> Pemendek Link Real-Time</h2>
             <input type="text" id="longUrl" placeholder="Tempel URL panjang di sini...">
-            <button class="btn-action" id="linkBtn" onclick="shortenLinkNyata()"><i class="fa-solid fa-bolt"></i> Perpendek Link</button>
+            <button class="btn-action" id="linkBtn" onclick="shortenLinkNyata()"><i class="fa-solid fa-bolt"></i> <span id="ui_btn_link">Perpendek Link</span></button>
             
             <div class="result-box" id="linkResult">
-                <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 4px;">LINK PENDEK BARU ANDA:</p>
+                <p id="ui_result_text" style="font-size: 11px; color: #a0a0ba; margin-bottom: 4px;">LINK PENDEK BARU ANDA:</p>
                 <p id="shortedUrlText" style="font-size: 15px; font-weight: 700; margin-bottom: 10px;"></p>
                 <div class="share-group">
-                    <a href="#" id="shareWaBtn" target="_blank" class="share-btn wa"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
-                    <a href="#" id="shareTgBtn" target="_blank" class="share-btn tg"><i class="fa-brands fa-telegram"></i> Telegram</a>
+                    <a href="#" id="shareWaBtn" target="_blank" class="share-btn wa"><i class="fa-brands fa-whatsapp"></i> WA</a>
+                    <a href="#" id="shareTgBtn" target="_blank" class="share-btn tg"><i class="fa-brands fa-telegram"></i> TG</a>
+                    <a href="#" id="shareFbBtn" target="_blank" class="share-btn fb"><i class="fa-brands fa-facebook-f"></i> FB</a>
                     <button onclick="salinTeksLink()" class="share-btn copy"><i class="fa-solid fa-copy"></i> Salin</button>
                 </div>
             </div>
         </div>
 
         <div id="mining-view" class="feature-view">
-            <h2><i class="fa-solid fa-pickaxe"></i> Jalur Resmi Mining Pro Premium</h2>
+            <h2 id="ui_mine_title"><i class="fa-solid fa-pickaxe"></i> Jalur Resmi Mining Pro Premium</h2>
             <div class="mining-banner">
-                <p style="color: #000; font-size: 15px;">Sistem Cloud Mining Anda Aktif di Bot Utama</p>
-                <a href="http://t.me/MiningProPremium_bot/app" target="_blank" class="btn-mining-link">🚀 MASUK KE APLIKASI MINING</a>
+                <p id="ui_mine_text" style="color: #000; font-size: 15px;">Sistem Cloud Mining Anda Aktif di Bot Utama</p>
+                <a href="http://t.me/MiningProPremium_bot/app" target="_blank" class="btn-mining-link">🚀 <span id="ui_btn_mine">MASUK KE MINING</span></a>
             </div>
         </div>
     </div>
 
-    <script>
-        // SISTEM WITHDRAW 500 KOIN & LAINNYA
-        function withdraw() {
-            if(coins < 500) alert("Minimal 500 Koin untuk Withdraw!");
-            else { let w = prompt("Masukkan No Wallet/Telegram Anda untuk dikirim ke Admin:"); if(w) alert("Permintaan withdraw terkirim ke Admin."); }
-        }
-        function claimDaily() { coins += 10; updateCoinDisplay(); alert("Berhasil +10 Koin!"); }
-        function copyRef() { navigator.clipboard.writeText(window.location.href); alert("Link disalin!"); }
+    <div class="features-grid">
+        <div class="f-box" onclick="claimDaily()"><i class="fa-solid fa-gift"></i><span id="f1">Daily</span></div>
+        <div class="f-box" onclick="withdraw()"><i class="fa-solid fa-wallet"></i><span id="f2">W-Draw</span></div>
+        <div class="f-box" onclick="alert('Voice AI: Active')"><i class="fa-solid fa-microphone"></i><span id="f3">Voice</span></div>
+        <div class="f-box" onclick="copyRef()"><i class="fa-solid fa-share-nodes"></i><span id="f4">Share</span></div>
+        <div class="f-box" onclick="alert('AI Check: Status Normal')"><i class="fa-solid fa-eye"></i><span id="f5">Check</span></div>
+        <div class="f-box" onclick="document.body.style.filter='invert(1)'"><i class="fa-solid fa-moon"></i><span id="f6">Theme</span></div>
+        <div class="f-box" onclick="alert('History Saved')"><i class="fa-solid fa-clock"></i><span id="f7">History</span></div>
+        <div class="f-box" onclick="alert('Level: Pro User')"><i class="fa-solid fa-chart-line"></i><span id="f8">Level</span></div>
+        <div class="f-box" onclick="alert('Prompt Library')"><i class="fa-solid fa-bolt"></i><span id="f9">Prompt</span></div>
+        <div class="f-box" onclick="window.open('http://t.me/MiningProPremium_bot')"><i class="fa-solid fa-pickaxe"></i><span id="f10">Mining</span></div>
+    </div>
 
+    <script>
+        // SISTEM MULTIBAHASA
+        const langPack = {
+            'en': { ui_coin_text: '⚡ Get Free Coins / Top Up', ui_ad_text: 'Watch ads to get +2 premium coins.', ui_btn_ad: 'WATCH ADS (+2 COINS)', ui_chat_title: 'Chat AI Premium Ultra-Fast', ui_bot_msg: 'Hello! Ask anything (Cost: 1 Coin).', ui_btn_send: 'Send to AI', ui_link_title: 'Real-Time Link Shortener', ui_btn_link: 'Shorten Link', ui_result_text: 'YOUR NEW SHORT LINK:', ui_mine_title: 'Mining Pro Official', ui_mine_text: 'Cloud Mining Active', ui_btn_mine: 'ENTER MINING', f1: 'Daily', f2: 'Withdraw', f3: 'Voice', f4: 'Share', f5: 'Check', f6: 'Theme', f7: 'History', f8: 'Level', f9: 'Prompt', f10: 'Mining' },
+            'id': { ui_coin_text: '⚡ Ambil Koin Gratis / Isi Ulang', ui_ad_text: 'Tonton iklan untuk dapat +2 koin premium.', ui_btn_ad: 'NONTON IKLAN (+2 KOIN)', ui_chat_title: 'Chat AI Premium Ultra-Fast', ui_bot_msg: 'Halo! Tanyakan apa saja (Biaya: 1 Koin).', ui_btn_send: 'Kirim ke AI', ui_link_title: 'Pemendek Link Real-Time', ui_btn_link: 'Perpendek Link', ui_result_text: 'LINK PENDEK BARU ANDA:', ui_mine_title: 'Jalur Resmi Mining Pro', ui_mine_text: 'Sistem Cloud Mining Aktif', ui_btn_mine: 'MASUK KE MINING', f1: 'Daily', f2: 'W-Draw', f3: 'Voice', f4: 'Share', f5: 'Check', f6: 'Theme', f7: 'History', f8: 'Level', f9: 'Prompt', f10: 'Mining' }
+        };
+        const lang = navigator.language.startsWith('id') ? 'id' : 'en';
+        Object.keys(langPack[lang]).forEach(id => { if(document.getElementById(id)) document.getElementById(id).innerText = langPack[lang][id]; });
+
+        // LOGIKA ASLI
         if(localStorage.getItem('user_coins') === null) localStorage.setItem('user_coins', '5');
         let coins = parseInt(localStorage.getItem('user_coins'));
         let userId = localStorage.getItem('user_id') || 'ID-' + Math.floor(100000 + Math.random() * 900000);
@@ -157,7 +159,7 @@
         }
 
         function bukaIklanPaksa() { window.open("https://www.effectivecpmnetwork.com/xxcgku6xp1?key=dc3eb4a4b6545d3d4a8e4570b6726108", "_blank"); }
-        function claimAdReward() { coins += 2; updateCoinDisplay(); alert("Terima kasih! +2 Koin premium berhasil ditambahkan."); }
+        function claimAdReward() { coins += 2; updateCoinDisplay(); alert("Berhasil +2 Koin!"); }
         function switchTab(tabId, btnId) {
             document.querySelectorAll('.feature-view').forEach(view => view.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -165,15 +167,19 @@
             document.getElementById(btnId).classList.add('active');
         }
 
-        let chatHistory = [{ role: "system", content: "Anda adalah asisten AI multibahasa. Jawablah langsung ke inti." }];
+        function withdraw() {
+            if(coins < 500) alert("Minimal 500 Koin untuk Withdraw!");
+            else { let w = prompt("Masukkan No Wallet/Telegram Anda:"); if(w) alert("Permintaan withdraw terkirim ke Admin."); }
+        }
+        function claimDaily() { coins += 10; updateCoinDisplay(); alert("Berhasil +10 Koin!"); }
+        function copyRef() { navigator.clipboard.writeText(window.location.href); alert("Link disalin!"); }
 
+        let chatHistory = [{ role: "system", content: "Anda asisten AI multibahasa." }];
         async function sendToAINyata() {
             let input = document.getElementById('aiInput');
             let text = input.value.trim();
             if (text === "") return;
-            bukaIklanPaksa();
-            coins -= 1;
-            updateCoinDisplay();
+            bukaIklanPaksa(); coins -= 1; updateCoinDisplay();
             let cb = document.getElementById('aiChatBox');
             cb.innerHTML += `<div class="msg user">${text}</div>`;
             input.value = ""; 
@@ -194,7 +200,7 @@
                     let aiReply = data.choices[0].message.content;
                     chatHistory.push({ role: "assistant", content: aiReply });
                     document.getElementById(loadId).innerText = aiReply;
-                } else { document.getElementById(loadId).innerText = "Server sedang sibuk."; }
+                } else { document.getElementById(loadId).innerText = "Server sibuk."; }
             } catch (e) { document.getElementById(loadId).innerText = "Gagal terhubung."; }
             cb.scrollTop = cb.scrollHeight;
         }
@@ -208,10 +214,14 @@
                 linkPendekGlobal = await res.text();
                 document.getElementById('shortedUrlText').innerHTML = `<a href="${linkPendekGlobal}" target="_blank" style="color:#00f2fe;">${linkPendekGlobal}</a>`;
                 document.getElementById('linkResult').style.display = 'block';
+                // Update Share Buttons
+                document.getElementById('shareWaBtn').href = "https://wa.me/?text=" + encodeURIComponent(linkPendekGlobal);
+                document.getElementById('shareTgBtn').href = "https://t.me/share/url?url=" + encodeURIComponent(linkPendekGlobal);
+                document.getElementById('shareFbBtn').href = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(linkPendekGlobal);
             } catch (e) { alert("Error!"); }
         }
 
         function salinTeksLink() { navigator.clipboard.writeText(linkPendekGlobal); alert("Link disalin!"); }
     </script>
 </body>
-                    </html>
+</html>
