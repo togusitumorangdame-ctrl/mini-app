@@ -123,10 +123,10 @@
     <div class="features-grid">
         <div class="f-box" onclick="claimDaily()"><i class="fa-solid fa-gift"></i><span id="f1">Daily</span></div>
         <div class="f-box" onclick="withdraw()"><i class="fa-solid fa-wallet"></i><span id="f2">W-Draw</span></div>
-        <div class="f-box" onclick="alert('Voice AI: Active')"><i class="fa-solid fa-microphone"></i><span id="f3">Voice</span></div>
+        <div class="f-box" onclick="activateVoice()"><i class="fa-solid fa-microphone"></i><span id="f3">VOICE</span></div>
         <div class="f-box" onclick="copyRef()"><i class="fa-solid fa-share-nodes"></i><span id="f4">Share</span></div>
         <div class="f-box" onclick="alert('AI Check: Status Normal')"><i class="fa-solid fa-eye"></i><span id="f5">Check</span></div>
-        <div class="f-box" onclick="document.body.style.filter='invert(1)'"><i class="fa-solid fa-moon"></i><span id="f6">Theme</span></div>
+        <div class="f-box" onclick="document.body.classList.toggle('dark-mode')"><i class="fa-solid fa-moon"></i><span id="f6">THEME</span></div>
         <div class="f-box" onclick="alert('History Saved')"><i class="fa-solid fa-clock"></i><span id="f7">History</span></div>
         <div class="f-box" onclick="alert('Level: Pro User')"><i class="fa-solid fa-chart-line"></i><span id="f8">Level</span></div>
         <div class="f-box" onclick="alert('Prompt Library')"><i class="fa-solid fa-bolt"></i><span id="f9">Prompt</span></div>
@@ -171,8 +171,40 @@
             if(coins < 500) alert("Minimal 500 Koin untuk Withdraw!");
             else { let w = prompt("Masukkan No Wallet/Telegram Anda:"); if(w) alert("Permintaan withdraw terkirim ke Admin."); }
         }
-        function claimDaily() { coins += 10; updateCoinDisplay(); alert("Berhasil +10 Koin!"); }
+        function claimDaily() {
+    // 1. Pemicu Iklan Wajib
+    window.open("https://www.effectivecpmnetwork.com/xxcgku6xp1?key=dc3eb4a4b6545d3d4a8e4570b6726108", "_blank");
+    
+    // 2. Logika Anti-Cheat (Limit 24 Jam)
+    const lastClaim = localStorage.getItem('last_daily');
+    const now = new Date().getTime();
+    const oneDay = 86400000; // 24 jam dalam milidetik
+
+    if (lastClaim && (now - lastClaim < oneDay)) {
+        // Pesan dalam bahasa Indonesia/Inggris sesuai bahasa perangkat
+        const msg = lang === 'id' ? "Sudah klaim! Coba lagi besok." : "Already claimed! Try again tomorrow.";
+        alert(msg);
+        return;
+    }
+
+    // 3. Eksekusi klaim koin
+    coins += 10;
+    localStorage.setItem('user_coins', coins);
+    localStorage.setItem('last_daily', now); // Simpan waktu klaim
+    
+    document.getElementById('coinCount').innerText = coins;
+    alert("Success! +10 Coins");
+        }
         function copyRef() { navigator.clipboard.writeText(window.location.href); alert("Link disalin!"); }
+        function activateVoice() { 
+    const rec = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+    rec.lang = lang === 'id' ? 'id-ID' : 'en-US';
+    rec.start();
+    rec.onresult = (e) => {
+        document.getElementById('aiInput').value = e.results[0][0].transcript;
+    };
+    rec.onerror = (e) => alert("Voice Error: " + e.error);
+        }
 
         let chatHistory = [{ role: "system", content: "Anda asisten AI multibahasa." }];
         async function sendToAINyata() {
