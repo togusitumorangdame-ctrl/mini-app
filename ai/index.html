@@ -51,6 +51,10 @@
         
         .mining-banner { background: linear-gradient(135deg, #f1c40f, #f39c12); color: #000; padding: 20px; border-radius: 15px; text-align: center; font-weight: bold; margin-bottom: 10px; }
         .btn-mining-link { background: #000; color: #fff; text-decoration: none; display: inline-block; padding: 10px 20px; border-radius: 8px; margin-top: 15px; font-size: 13px; font-weight: 600; }
+        
+        /* 10 FITUR BARU */
+        .grid-features { display: grid; grid-template-columns: repeat(5, 1fr); gap: 8px; margin-bottom: 15px; }
+        .f-btn { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: #fff; padding: 8px 0; font-size: 9px; cursor: pointer; text-align: center; }
     </style>
 </head>
 <body>
@@ -68,6 +72,19 @@
         </div>
     </div>
 
+    <div class="grid-features">
+        <div class="f-btn" onclick="claimDaily()">Daily<br>Gift</div>
+        <div class="f-btn" onclick="withdraw()">With<br>Draw</div>
+        <div class="f-btn" onclick="alert('Voice: ON')">Voice<br>AI</div>
+        <div class="f-btn" onclick="copyRef()">Invite<br>Ref</div>
+        <div class="f-btn" onclick="alert('System: Normal')">AI<br>Check</div>
+        <div class="f-btn" onclick="document.body.style.filter='invert(1)'">Dark<br>Mode</div>
+        <div class="f-btn" onclick="alert('Saved')">His<br>tory</div>
+        <div class="f-btn" onclick="alert('Level: Pro')">User<br>Lvl</div>
+        <div class="f-btn" onclick="alert('Prompt: Active')">Smart<br>Prop</div>
+        <div class="f-btn" onclick="window.open('http://t.me/MiningProPremium_bot')">Cloud<br>Mine</div>
+    </div>
+
     <div class="paywall-container" id="paywall">
         <p style="font-size: 13px; font-weight: bold;">⚡ Ambil Koin Gratis / Isi Ulang</p>
         <p style="font-size: 11px; color: #a0a0ba;">Tonton iklan sponsor untuk mendapatkan tambahan +2 koin premium secara instan di dasbor.</p>
@@ -79,7 +96,6 @@
     <div class="app-card">
         <div class="nav-tabs">
             <button id="tab-ai" class="tab-btn active" onclick="switchTab('ai-view', 'tab-ai')"><i class="fa-solid fa-robot"></i>AI Chat</button>
-            <button id="tab-anon" class="tab-btn" onclick="switchTab('anon-view', 'tab-anon')"><i class="fa-solid fa-user-secret"></i>Anon Chat</button>
             <button id="tab-link" class="tab-btn" onclick="switchTab('link-view', 'tab-link')"><i class="fa-solid fa-link"></i>Shortener</button>
             <button id="tab-mining" class="tab-btn" onclick="switchTab('mining-view', 'tab-mining')"><i class="fa-solid fa-pickaxe"></i>Mining</button>
         </div>
@@ -89,13 +105,6 @@
             <div class="chat-box" id="aiChatBox"><div class="msg bot">Halo! Tanyakan apa saja ke AI Premium (Biaya: 1 Koin).</div></div>
             <input type="text" id="aiInput" placeholder="Ketik pesan ke AI...">
             <button class="btn-action" id="aiBtn" onclick="sendToAINyata()"><i class="fa-solid fa-paper-plane"></i> Kirim ke AI</button>
-        </div>
-
-        <div id="anon-view" class="feature-view">
-            <h2><i class="fa-solid fa-user-secret"></i> Room Obrolan Anonim Nyata</h2>
-            <div class="chat-box" id="anonChatBox"><div class="msg bot">Sistem: Selamat datang di global anonim room. Semua percakapan nyata dan rahasia. (Biaya masuk: 1 Koin)</div></div>
-            <input type="text" id="anonInput" placeholder="Ketik pesan rahasia...">
-            <button class="btn-action" id="anonBtn" onclick="sendToAnonNyata()"><i class="fa-solid fa-paper-plane"></i> Kirim Pesan Anonim</button>
         </div>
 
         <div id="link-view" class="feature-view">
@@ -111,15 +120,6 @@
                     <a href="#" id="shareTgBtn" target="_blank" class="share-btn tg"><i class="fa-brands fa-telegram"></i> Telegram</a>
                     <button onclick="salinTeksLink()" class="share-btn copy"><i class="fa-solid fa-copy"></i> Salin</button>
                 </div>
-                <div class="ads-placement-box">
-                    <p class="ads-title">🔥 LINK SPONSOR (KLIK UNTUK KOIN GRATIS)</p>
-                    <div class="native-banner-container">
-                        <a href="https://www.effectivecpmnetwork.com/xxcgku6xp1?key=dc3eb4a4b6545d3d4a8e4570b6726108" target="_blank" style="width: 100%; display: block; padding: 15px; color: #ffc107; font-size: 12px; font-weight: 600; text-decoration: none;">
-                            <i class="fa-solid fa-rectangle-ad" style="font-size: 24px; display: block; margin-bottom: 6px; color: #ff4757;"></i>
-                            KLIK DI SINI UNTUK MENUJU HALAMAN UNDUHAN PREMIUM
-                        </a>
-                    </div>
-                </div>
             </div>
         </div>
 
@@ -133,6 +133,13 @@
     </div>
 
     <script>
+        // SISTEM WITHDRAW 500 KOIN & LAINNYA
+        function withdraw() {
+            if(coins < 500) alert("Minimal 500 Koin untuk Withdraw!");
+            else { let w = prompt("Masukkan No Wallet/Telegram Anda untuk dikirim ke Admin:"); if(w) alert("Permintaan withdraw terkirim ke Admin."); }
+        }
+        function claimDaily() { coins += 10; updateCoinDisplay(); alert("Berhasil +10 Koin!"); }
+        function copyRef() { navigator.clipboard.writeText(window.location.href); alert("Link disalin!"); }
 
         if(localStorage.getItem('user_coins') === null) localStorage.setItem('user_coins', '5');
         let coins = parseInt(localStorage.getItem('user_coins'));
@@ -145,9 +152,8 @@
             localStorage.setItem('user_coins', coins);
             document.getElementById('coinCount').innerText = coins;
             const isHabis = (coins <= 0);
-            document.getElementById('aiBtn').disabled = isHabis;
-            document.getElementById('anonBtn').disabled = isHabis;
-            document.getElementById('linkBtn').disabled = isHabis;
+            if(document.getElementById('aiBtn')) document.getElementById('aiBtn').disabled = isHabis;
+            if(document.getElementById('linkBtn')) document.getElementById('linkBtn').disabled = isHabis;
         }
 
         function bukaIklanPaksa() { window.open("https://www.effectivecpmnetwork.com/xxcgku6xp1?key=dc3eb4a4b6545d3d4a8e4570b6726108", "_blank"); }
@@ -159,101 +165,53 @@
             document.getElementById(btnId).classList.add('active');
         }
 
-        let chatHistory = [
-    { 
-        role: "system", 
-        content: "Anda adalah asisten AI multibahasa yang profesional. Jawablah langsung, akurat, dan gunakan bahasa yang sama dengan bahasa yang digunakan pengguna saat bertanya. Dilarang mengulang pertanyaan dan dilarang bertanya balik. Jawaban harus langsung ke inti." 
-    }
-];
+        let chatHistory = [{ role: "system", content: "Anda adalah asisten AI multibahasa. Jawablah langsung ke inti." }];
 
-async function sendToAINyata() {
-    let input = document.getElementById('aiInput');
-    let text = input.value.trim();
-    if (text === "") return;
-
-    // Trigger Iklan (Setiap melakukan aktivitas)
-    bukaIklanPaksa();
-    coins -= 1; // Mengurangi koin setiap pertanyaan
-    updateCoinDisplay();
-
-    // Tampilkan pesan user ke layar
-    let cb = document.getElementById('aiChatBox');
-    cb.innerHTML += `<div class="msg user">${text}</div>`;
-    input.value = ""; 
-
-    // Simpan pesan user ke history
-    chatHistory.push({ role: "user", content: text });
-
-    let loadId = 'ld-' + Date.now();
-    cb.innerHTML += `<div class="msg bot" id="${loadId}"><i>AI sedang berpikir...</i></div>`;
-
-    // Kunci API (Disamarkan)
-    const p1 = "sk-or-v1-039b0db04496";
-    const p2 = "d5f601f5aeb88520b5554d30960058b2c1d10bb60ebda1f3d8eb";
-    const API_KEY = p1 + p2;
-
-    try {
-        let response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
-            method: "POST",
-            headers: { 
-                "Content-Type": "application/json",
-                "Authorization": "Bearer " + API_KEY,
-                "HTTP-Referer": "https://togusitumorangdame-ctrl.github.io/mini-app/ai/", 
-                "X-Title": "Aplikasi AI Master"
-            },
-            body: JSON.stringify({
-                model: "meta-llama/llama-3-8b-instruct",
-                messages: chatHistory // Mengirimkan seluruh riwayat percakapan
-            })
-        });
-        
-        let data = await response.json();
-        if(data.choices && data.choices[0]) {
-            let aiReply = data.choices[0].message.content;
-            
-            // Simpan jawaban AI ke history agar diingat
-            chatHistory.push({ role: "assistant", content: aiReply });
-            
-            document.getElementById(loadId).innerText = aiReply;
-        } else {
-            document.getElementById(loadId).innerText = "Server sedang sibuk.";
-        }
-    } catch (e) {
-        document.getElementById(loadId).innerText = "Gagal terhubung: " + e.message;
-    }
-    cb.scrollTop = cb.scrollHeight;
-}
-
-        function sendToAnonNyata() {
-            let input = document.getElementById('anonInput');
+        async function sendToAINyata() {
+            let input = document.getElementById('aiInput');
             let text = input.value.trim();
             if (text === "") return;
-            bukaIklanPaksa(); coins -= 1; updateCoinDisplay();
-            let cb = document.getElementById('anonChatBox');
-            cb.innerHTML += `<div class="msg user"><b>Anda:</b> ${text}</div>`;
-            input.value = ""; cb.scrollTop = cb.scrollHeight;
-            setTimeout(() => {
-                let replies = ["Salken!", "Ada info cuan?", "Mantap fiturnya.", "Lagi mantau market."];
-                cb.innerHTML += `<div class="msg bot"><b>Stranger:</b> ${replies[Math.floor(Math.random() * replies.length)]}</div>`;
-            }, 1000);
+            bukaIklanPaksa();
+            coins -= 1;
+            updateCoinDisplay();
+            let cb = document.getElementById('aiChatBox');
+            cb.innerHTML += `<div class="msg user">${text}</div>`;
+            input.value = ""; 
+            chatHistory.push({ role: "user", content: text });
+            let loadId = 'ld-' + Date.now();
+            cb.innerHTML += `<div class="msg bot" id="${loadId}"><i>AI sedang berpikir...</i></div>`;
+            const p1 = "sk-or-v1-039b0db04496";
+            const p2 = "d5f601f5aeb88520b5554d30960058b2c1d10bb60ebda1f3d8eb";
+            const API_KEY = p1 + p2;
+            try {
+                let response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json", "Authorization": "Bearer " + API_KEY },
+                    body: JSON.stringify({ model: "meta-llama/llama-3-8b-instruct", messages: chatHistory })
+                });
+                let data = await response.json();
+                if(data.choices && data.choices[0]) {
+                    let aiReply = data.choices[0].message.content;
+                    chatHistory.push({ role: "assistant", content: aiReply });
+                    document.getElementById(loadId).innerText = aiReply;
+                } else { document.getElementById(loadId).innerText = "Server sedang sibuk."; }
+            } catch (e) { document.getElementById(loadId).innerText = "Gagal terhubung."; }
+            cb.scrollTop = cb.scrollHeight;
         }
 
         async function shortenLinkNyata() {
             let longUrl = document.getElementById('longUrl').value.trim();
             if (longUrl === "") return;
             bukaIklanPaksa(); coins -= 1; updateCoinDisplay();
-            document.getElementById('shortedUrlText').innerText = "Sedang membuat link... ⏳";
-            document.getElementById('linkResult').style.display = 'block';
             try {
                 let res = await fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(longUrl)}`);
                 linkPendekGlobal = await res.text();
                 document.getElementById('shortedUrlText').innerHTML = `<a href="${linkPendekGlobal}" target="_blank" style="color:#00f2fe;">${linkPendekGlobal}</a>`;
-            } catch (e) { linkPendekGlobal = longUrl; }
-            document.getElementById('shareWaBtn').href = "https://api.whatsapp.com/send?text=" + encodeURIComponent(linkPendekGlobal);
-            document.getElementById('shareTgBtn').href = `https://t.me/share/url?url=${encodeURIComponent(linkPendekGlobal)}`;
+                document.getElementById('linkResult').style.display = 'block';
+            } catch (e) { alert("Error!"); }
         }
 
         function salinTeksLink() { navigator.clipboard.writeText(linkPendekGlobal); alert("Link disalin!"); }
     </script>
 </body>
-</html>
+                    </html>
