@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Premium Super App v2.5</title>
+    <!-- INTEGRASI SDK ADSGRAM RESMI -->
+    <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -85,6 +87,8 @@
             <button id="tab-ai" class="tab-btn active" onclick="switchTab('ai-view', 'tab-ai')"><i class="fa-solid fa-robot"></i>AI Chat</button>
             <button id="tab-link" class="tab-btn" onclick="switchTab('link-view', 'tab-link')"><i class="fa-solid fa-link"></i>Shortener</button>
             <button id="tab-mining" class="tab-btn" onclick="switchTab('mining-view', 'tab-mining')"><i class="fa-solid fa-pickaxe"></i>Mining</button>
+            <!-- TAB BARU UNTUK CAPTCHA PUZZLE -->
+            <button id="tab-puzzle" class="tab-btn" onclick="switchTab('puzzle-view', 'tab-puzzle')"><i class="fa-solid fa-puzzle-piece"></i>Puzzle</button>
         </div>
 
         <div id="ai-view" class="feature-view active">
@@ -118,6 +122,19 @@
                 <a href="http://t.me/MiningProPremium_bot/app" target="_blank" class="btn-mining-link">🚀 <span id="ui_btn_mine">MASUK KE MINING</span></a>
             </div>
         </div>
+
+        <!-- VIEW PANEL BARU GAME CAPTCHA PUZZLE -->
+        <div id="puzzle-view" class="feature-view">
+            <h2><i class="fa-solid fa-puzzle-piece"></i> Captcha Puzzle Game (5 Koin)</h2>
+            <div style="background: rgba(0,0,0,0.4); padding: 15px; border-radius: 12px; text-align: center;">
+                <p id="puzzleInstruction" style="font-size: 13px; margin-bottom: 10px; color:#a0a0ba;">Selesaikan 5 tantangan captcha puzzle untuk mendapatkan 5 koin premium!</p>
+                <h3 id="puzzleQuestion" style="font-size: 16px; color: #00f2fe; margin: 15px 0;"></h3>
+                <input type="text" id="puzzleInput" placeholder="Masukkan jawaban..." style="display:none; text-align:center;">
+                <button class="btn-action" id="puzzleStartBtn" onclick="startPuzzleGame()">Mulai Game</button>
+                <button class="btn-action" id="puzzleSubmitBtn" onclick="checkPuzzleAnswer()" style="display:none;">Kirim Jawaban</button>
+                <button class="btn-action" id="puzzleClaimBtn" onclick="claimPuzzleReward()" style="display:none; background: linear-gradient(45deg, #ffd700, #ffa500); color: black;">Klaim 5 Koin (Iklan Wajib)</button>
+            </div>
+        </div>
     </div>
 
     <div class="features-grid">
@@ -129,15 +146,15 @@
         <div class="f-box" onclick="document.body.classList.toggle('dark-mode')"><i class="fa-solid fa-moon"></i><span id="f6">THEME</span></div>
         <div class="f-box" onclick="alert('History Saved')"><i class="fa-solid fa-clock"></i><span id="f7">History</span></div>
         <div class="f-box" onclick="alert('Level: Pro User')"><i class="fa-solid fa-chart-line"></i><span id="f8">Level</span></div>
-        <div class="f-box" onclick="window.open('https://t.me/NaburjuSidoli')">
-    <i class="fa-brands fa-telegram"></i>
-    <span id="f_support">SUPPORT</span>
-        </div>
+        <div class="f-box" onclick="window.open('https://t.me/NaburjuSidoli')"><i class="fa-brands fa-telegram"></i><span id="f_support">SUPPORT</span></div>
         <div class="f-box" onclick="window.open('http://t.me/MiningProPremium_bot')"><i class="fa-solid fa-pickaxe"></i><span id="f10">Mining</span></div>
     </div>
 
     <script>
-        // SISTEM MULTIBAHASA
+        // INISIALISASI NETWORK ADSGRAM RESMI
+        const adsgramAd = window.Adsgram ? window.Adsgram.init({ blockId: "36478" }) : null;
+
+        // SISTEM MULTIBAHASA ASLI
         const langPack = {
             'en': { ui_coin_text: '⚡ Get Free Coins / Top Up', ui_ad_text: 'Watch ads to get +2 premium coins.', ui_btn_ad: 'WATCH ADS (+2 COINS)', ui_chat_title: 'Chat AI Premium Ultra-Fast', ui_bot_msg: 'Hello! Ask anything (Cost: 1 Coin).', ui_btn_send: 'Send to AI', ui_link_title: 'Real-Time Link Shortener', ui_btn_link: 'Shorten Link', ui_result_text: 'YOUR NEW SHORT LINK:', ui_mine_title: 'Mining Pro Official', ui_mine_text: 'Cloud Mining Active', ui_btn_mine: 'ENTER MINING', f1: 'Daily', f2: 'Withdraw', f3: 'Voice', f4: 'Share', f5: 'Check', f6: 'Theme', f7: 'History', f8: 'Level', f9: 'Prompt', f10: 'Mining' },
             'id': { ui_coin_text: '⚡ Ambil Koin Gratis / Isi Ulang', ui_ad_text: 'Tonton iklan untuk dapat +2 koin premium.', ui_btn_ad: 'NONTON IKLAN (+2 KOIN)', ui_chat_title: 'Chat AI Premium Ultra-Fast', ui_bot_msg: 'Halo! Tanyakan apa saja (Biaya: 1 Koin).', ui_btn_send: 'Kirim ke AI', ui_link_title: 'Pemendek Link Real-Time', ui_btn_link: 'Perpendek Link', ui_result_text: 'LINK PENDEK BARU ANDA:', ui_mine_title: 'Jalur Resmi Mining Pro', ui_mine_text: 'Sistem Cloud Mining Aktif', ui_btn_mine: 'MASUK KE MINING', f1: 'Daily', f2: 'W-Draw', f3: 'Voice', f4: 'Share', f5: 'Check', f6: 'Theme', f7: 'History', f8: 'Level', f9: 'Prompt', f10: 'Mining' }
@@ -145,13 +162,50 @@
         const lang = navigator.language.startsWith('id') ? 'id' : 'en';
         Object.keys(langPack[lang]).forEach(id => { if(document.getElementById(id)) document.getElementById(id).innerText = langPack[lang][id]; });
 
-        // LOGIKA ASLI
+        // LOGIKA UTAMA ASLI
         if(localStorage.getItem('user_coins') === null) localStorage.setItem('user_coins', '5');
         let coins = parseInt(localStorage.getItem('user_coins'));
         let userId = localStorage.getItem('user_id') || 'ID-' + Math.floor(100000 + Math.random() * 900000);
         localStorage.setItem('user_id', userId);
         document.getElementById('profId').innerText = 'ID: ' + userId;
         updateCoinDisplay();
+
+        // CEK REFERRAL KETIKA DIKUNJUNGI PENGGUNA BARU (SISTEM REFF +5 KOIN)
+        function checkReferral() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const refId = urlParams.get('ref');
+            if (refId && refId !== userId) {
+                const hasBeenReferred = localStorage.getItem('referred_by');
+                if (!hasBeenReferred) {
+                    localStorage.setItem('referred_by', refId);
+                    coins += 5;
+                    updateCoinDisplay();
+                    alert(lang === 'id' ? "Bonus Referral Berhasil! Anda mendapatkan +5 Koin." : "Referral Bonus! You got +5 Coins.");
+                }
+            }
+        }
+        checkReferral();
+
+        // TIMER MUNDUR OTOMATIS DAILY REWARD (1 JAM COOLDOWN)
+        function startDailyTimer() {
+            setInterval(() => {
+                const lastClaim = localStorage.getItem('last_daily');
+                if (lastClaim) {
+                    const now = new Date().getTime();
+                    const diff = now - parseInt(lastClaim);
+                    const oneHour = 3600000;
+                    if (diff < oneHour) {
+                        const timeLeft = oneHour - diff;
+                        const minutes = Math.floor(timeLeft / 60000);
+                        const seconds = Math.floor((timeLeft % 60000) / 1000);
+                        document.getElementById('f1').innerText = `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+                        return;
+                    }
+                }
+                document.getElementById('f1').innerText = langPack[lang]['f1'];
+            }, 1000);
+        }
+        startDailyTimer();
 
         function updateCoinDisplay() {
             localStorage.setItem('user_coins', coins);
@@ -163,6 +217,7 @@
 
         function bukaIklanPaksa() { window.open("https://www.effectivecpmnetwork.com/xxcgku6xp1?key=dc3eb4a4b6545d3d4a8e4570b6726108", "_blank"); }
         function claimAdReward() { coins += 2; updateCoinDisplay(); alert("Berhasil +2 Koin!"); }
+        
         function switchTab(tabId, btnId) {
             document.querySelectorAll('.feature-view').forEach(view => view.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -174,41 +229,142 @@
             if(coins < 500) alert("Minimal 500 Koin untuk Withdraw!");
             else { let w = prompt("Masukkan No Wallet/Telegram Anda:"); if(w) alert("Permintaan withdraw terkirim ke Admin."); }
         }
+
+        // PEMBARUAN DAILY REWARD WAJIB ADSGRAM (1 JAM / 10 KOIN)
         function claimDaily() {
-    // 1. Pemicu Iklan Wajib
-    window.open("https://www.effectivecpmnetwork.com/xxcgku6xp1?key=dc3eb4a4b6545d3d4a8e4570b6726108", "_blank");
-    
-    // 2. Logika Anti-Cheat (Limit 24 Jam)
-    const lastClaim = localStorage.getItem('last_daily');
-    const now = new Date().getTime();
-    const oneDay = 86400000; // 24 jam dalam milidetik
+            const lastClaim = localStorage.getItem('last_daily');
+            const now = new Date().getTime();
+            const oneHour = 3600000;
 
-    if (lastClaim && (now - lastClaim < oneDay)) {
-        // Pesan dalam bahasa Indonesia/Inggris sesuai bahasa perangkat
-        const msg = lang === 'id' ? "Sudah klaim! Coba lagi besok." : "Already claimed! Try again tomorrow.";
-        alert(msg);
-        return;
-    }
+            if (lastClaim && (now - parseInt(lastClaim) < oneHour)) {
+                const timeLeft = oneHour - (now - parseInt(lastClaim));
+                const minutes = Math.floor(timeLeft / 60000);
+                const seconds = Math.floor((timeLeft % 60000) / 1000);
+                alert(lang === 'id' ? `Tunggu ${minutes} menit ${seconds} detik lagi!` : `Wait ${minutes}m ${seconds}s!`);
+                return;
+            }
 
-    // 3. Eksekusi klaim koin
-    coins += 10;
-    localStorage.setItem('user_coins', coins);
-    localStorage.setItem('last_daily', now); // Simpan waktu klaim
-    
-    document.getElementById('coinCount').innerText = coins;
-    alert("Success! +10 Coins");
+            if (adsgramAd) {
+                adsgramAd.show().then((result) => {
+                    if (result.done) {
+                        coins += 10;
+                        localStorage.setItem('last_daily', new Date().getTime());
+                        updateCoinDisplay();
+                        alert(lang === 'id' ? "Sukses! +10 Koin ditambahkan." : "Success! +10 Coins added.");
+                    } else {
+                        alert(lang === 'id' ? "Anda harus menonton iklan sampai selesai!" : "Ad was not completed.");
+                    }
+                }).catch(() => {
+                    bukaIklanPaksa();
+                    coins += 10;
+                    localStorage.setItem('last_daily', new Date().getTime());
+                    updateCoinDisplay();
+                });
+            } else {
+                bukaIklanPaksa();
+                coins += 10;
+                localStorage.setItem('last_daily', now);
+                updateCoinDisplay();
+            }
         }
-        function copyRef() { navigator.clipboard.writeText(window.location.href); alert("Link disalin!"); }
+
+        // PEMBARUAN FITUR REFERRAL SHARE LINK UNIK
+        function copyRef() { 
+            const refLink = window.location.origin + window.location.pathname + "?ref=" + userId;
+            navigator.clipboard.writeText(refLink); 
+            alert(lang === 'id' ? "Link Referral Anda disalin! Bagikan untuk dapat koin." : "Referral link copied!"); 
+        }
+
         function activateVoice() { 
-    const rec = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
-    rec.lang = lang === 'id' ? 'id-ID' : 'en-US';
-    rec.start();
-    rec.onresult = (e) => {
-        document.getElementById('aiInput').value = e.results[0][0].transcript;
-    };
-    rec.onerror = (e) => alert("Voice Error: " + e.error);
+            const rec = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+            rec.lang = lang === 'id' ? 'id-ID' : 'en-US';
+            rec.start();
+            rec.onresult = (e) => { document.getElementById('aiInput').value = e.results[0][0].transcript; };
+            rec.onerror = (e) => alert("Voice Error: " + e.error);
         }
 
+        // LOGIKA GAME CAPTCHA PUZZLE (5 TINGKAT, HADIAH 5 KOIN + ADSGRAM)
+        let puzzleRound = 0;
+        let currentAnswer = "";
+        const puzzleQuestions = [
+            { q: "Berapa hasil dari 12 + 18?", a: "30" },
+            { q: "Berapa hasil dari 35 - 12?", a: "23" },
+            { q: "Berapa hasil dari 6 x 7?", a: "42" },
+            { q: "Ketik ulang kode ini: PT88X", a: "PT88X" },
+            { q: "Berapa hasil dari 40 / 5?", a: "8" }
+        ];
+
+        function startPuzzleGame() {
+            puzzleRound = 0;
+            document.getElementById('puzzleStartBtn').style.display = 'none';
+            document.getElementById('puzzleInput').style.display = 'block';
+            document.getElementById('puzzleSubmitBtn').style.display = 'block';
+            document.getElementById('puzzleClaimBtn').style.display = 'none';
+            nextPuzzleRound();
+        }
+
+        function nextPuzzleRound() {
+            if (puzzleRound < puzzleQuestions.length) {
+                document.getElementById('puzzleInstruction').innerText = `Tantangan ${puzzleRound + 1} dari 5`;
+                document.getElementById('puzzleQuestion').innerText = puzzleQuestions[puzzleRound].q;
+                currentAnswer = puzzleQuestions[puzzleRound].a;
+                document.getElementById('puzzleInput').value = "";
+                document.getElementById('puzzleInput').focus();
+            } else {
+                document.getElementById('puzzleInstruction').innerText = "Tantangan selesai!";
+                document.getElementById('puzzleQuestion').innerText = "Hebat! Semua captcha puzzle terjawab.";
+                document.getElementById('puzzleInput').style.display = 'none';
+                document.getElementById('puzzleSubmitBtn').style.display = 'none';
+                document.getElementById('puzzleClaimBtn').style.display = 'block';
+            }
+        }
+
+        function checkPuzzleAnswer() {
+            const userAnswer = document.getElementById('puzzleInput').value.trim();
+            if (userAnswer.toLowerCase() === currentAnswer.toLowerCase()) {
+                puzzleRound++;
+                alert(lang === 'id' ? "Benar! Lanjut ke tantangan berikutnya." : "Correct! Next challenge.");
+                nextPuzzleRound();
+            } else {
+                alert(lang === 'id' ? "Jawaban Salah! Coba tebak lagi." : "Wrong! Try again.");
+            }
+        }
+
+        function claimPuzzleReward() {
+            if (adsgramAd) {
+                adsgramAd.show().then((result) => {
+                    if (result.done) {
+                        coins += 5;
+                        updateCoinDisplay();
+                        alert(lang === 'id' ? "Sukses! +5 Koin ditambahkan." : "Success! +5 Coins.");
+                        resetPuzzleUI();
+                    } else {
+                        alert(lang === 'id' ? "Tonton iklan sampai habis untuk klaim!" : "Watch full ad to claim!");
+                    }
+                }).catch(() => {
+                    bukaIklanPaksa();
+                    coins += 5;
+                    updateCoinDisplay();
+                    resetPuzzleUI();
+                });
+            } else {
+                bukaIklanPaksa();
+                coins += 5;
+                updateCoinDisplay();
+                resetPuzzleUI();
+            }
+        }
+
+        function resetPuzzleUI() {
+            document.getElementById('puzzleStartBtn').style.display = 'block';
+            document.getElementById('puzzleInput').style.display = 'none';
+            document.getElementById('puzzleSubmitBtn').style.display = 'none';
+            document.getElementById('puzzleClaimBtn').style.display = 'none';
+            document.getElementById('puzzleInstruction').innerText = "Selesaikan 5 tantangan captcha puzzle untuk mendapatkan 5 koin premium!";
+            document.getElementById('puzzleQuestion').innerText = "";
+        }
+
+        // INTEGRASI SCRIPT LAMA CHAT AI ASLI
         let chatHistory = [{ role: "system", content: "Anda asisten AI multibahasa." }];
         async function sendToAINyata() {
             let input = document.getElementById('aiInput');
@@ -240,6 +396,7 @@
             cb.scrollTop = cb.scrollHeight;
         }
 
+        // INTEGRASI SCRIPT LAMA SHORTENER ASLI
         async function shortenLinkNyata() {
             let longUrl = document.getElementById('longUrl').value.trim();
             if (longUrl === "") return;
@@ -249,7 +406,6 @@
                 linkPendekGlobal = await res.text();
                 document.getElementById('shortedUrlText').innerHTML = `<a href="${linkPendekGlobal}" target="_blank" style="color:#00f2fe;">${linkPendekGlobal}</a>`;
                 document.getElementById('linkResult').style.display = 'block';
-                // Update Share Buttons
                 document.getElementById('shareWaBtn').href = "https://wa.me/?text=" + encodeURIComponent(linkPendekGlobal);
                 document.getElementById('shareTgBtn').href = "https://t.me/share/url?url=" + encodeURIComponent(linkPendekGlobal);
                 document.getElementById('shareFbBtn').href = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(linkPendekGlobal);
@@ -259,4 +415,4 @@
         function salinTeksLink() { navigator.clipboard.writeText(linkPendekGlobal); alert("Link disalin!"); }
     </script>
 </body>
-</html>
+                                                        </html>
