@@ -3,84 +3,238 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Media Pro Downloader</title>
+    <title>Premium Super App v2.5</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        body { margin: 0; background: #050505; color: white; font-family: 'Inter', sans-serif; overflow: hidden; }
-        canvas { position: fixed; top: 0; left: 0; z-index: 0; }
-        .glass-container { 
-            position: relative; z-index: 1; display: flex; flex-direction: column; 
-            align-items: center; justify-content: center; height: 100vh; 
-        }
-        .card { 
-            width: 85%; max-width: 350px; padding: 30px; 
-            background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 25px;
-            text-align: center; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
-        }
-        input { 
-            width: 100%; padding: 14px; margin: 15px 0; border-radius: 12px; 
-            border: 1px solid #333; background: rgba(0,0,0,0.3); color: white; 
-            box-sizing: border-box; outline: none;
-        }
-        button { 
-            width: 100%; padding: 14px; border-radius: 12px; border: none; 
-            background: #ffffff; color: #000; font-weight: bold; cursor: pointer;
-            transition: 0.3s;
-        }
-        button:hover { background: #e0e0e0; }
-        #msg { margin-top: 15px; font-size: 0.85rem; color: #aaa; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background: radial-gradient(circle, #101026 0%, #070710 100%); color: #fff; min-height: 100vh; padding: 15px; display: flex; flex-direction: column; align-items: center; }
+        
+        .header-profile { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; width: 100%; max-width: 500px; padding: 18px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+        .user-info h3 { color: #00f2fe; font-size: 15px; font-weight: 600; }
+        .user-info p { font-size: 11px; color: #a0a0ba; }
+        .coin-badge { background: linear-gradient(45deg, #ffd700, #ffa500); padding: 6px 14px; border-radius: 50px; font-weight: bold; font-size: 13px; color: #000; display: flex; align-items: center; gap: 6px; box-shadow: 0 0 10px rgba(255,215,0,0.3); }
+        
+        .paywall-container { background: rgba(255, 71, 87, 0.08); border: 1px solid rgba(255, 71, 87, 0.3); border-radius: 18px; width: 100%; max-width: 500px; padding: 15px; margin-bottom: 15px; text-align: center; }
+        .btn-ad { background: linear-gradient(45deg, #ff4757, #ff6b81); color: white; border: none; padding: 10px 20px; border-radius: 50px; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-block; margin-top: 10px; font-size: 12px; box-shadow: 0 4px 15px rgba(255,71,87,0.3); }
+        
+        .app-card { background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 25px; width: 100%; max-width: 500px; padding: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+        .nav-tabs { display: flex; justify-content: space-between; margin-bottom: 20px; background: rgba(0,0,0,0.3); padding: 5px; border-radius: 50px; gap: 5px; }
+        .tab-btn { background: none; border: none; color: #a0a0ba; padding: 10px 5px; font-size: 11px; font-weight: 600; cursor: pointer; border-radius: 50px; flex: 1; text-align: center; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .tab-btn i { font-size: 14px; }
+        .tab-btn.active { background: linear-gradient(45deg, #00f2fe, #4facfe); color: white; box-shadow: 0 4px 12px rgba(0,242,254,0.3); }
+        
+        .feature-view { display: none; }
+        .feature-view.active { display: block; }
+        h2 { font-size: 16px; color: #00f2fe; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+        
+        input { width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 12px; color: white; font-size: 13px; margin-bottom: 12px; outline: none; transition: 0.2s; }
+        input:focus { border-color: #00f2fe; }
+        .btn-action { width: 100%; background: linear-gradient(45deg, #00f2fe, #4facfe); color: white; border: none; padding: 12px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 13px; box-shadow: 0 4px 15px rgba(0,242,254,0.2); }
+        
+        .chat-box { height: 220px; background: rgba(0,0,0,0.4); border-radius: 14px; padding: 12px; overflow-y: auto; margin-bottom: 12px; font-size: 12px; border: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; gap: 8px; }
+        .msg { padding: 10px 14px; border-radius: 14px; max-width: 85%; word-wrap: break-word; line-height: 1.4; }
+        .msg.user { background: linear-gradient(135deg, #00b0ff, #0070ff); align-self: flex-end; color: white; border-bottom-right-radius: 2px; }
+        .msg.bot { background: #1e293b; color: #e2e8f0; align-self: flex-start; border-bottom-left-radius: 2px; border-left: 3px solid #00f2fe; }
+        
+        .result-box { background: rgba(0, 242, 254, 0.04); border: 1px solid rgba(0, 242, 254, 0.2); padding: 15px; border-radius: 16px; margin-top: 15px; display: none; text-align: center; }
+        .share-group { display: flex; gap: 8px; justify-content: center; margin: 12px 0; flex-wrap: wrap; }
+        .share-btn { color: white; padding: 8px 14px; border-radius: 8px; font-size: 12px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; border: none; cursor: pointer; }
+        .share-btn.wa { background: #25d366; }
+        .share-btn.tg { background: #0088cc; }
+        .share-btn.copy { background: #4a5568; }
+        
+        .ads-placement-box { margin-top: 15px; padding-top: 15px; border-top: 1px dashed rgba(255,255,255,0.1); text-align: center; }
+        .ads-title { font-size: 10px; color: #ff4757; font-weight: 700; letter-spacing: 1px; margin-bottom: 8px; text-transform: uppercase; }
+        .native-banner-container { background: #0d111a; min-height: 120px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: center; align-items: center; overflow: hidden; }
+        
+        .mining-banner { background: linear-gradient(135deg, #f1c40f, #f39c12); color: #000; padding: 20px; border-radius: 15px; text-align: center; font-weight: bold; margin-bottom: 10px; }
+        .btn-mining-link { background: #000; color: #fff; text-decoration: none; display: inline-block; padding: 10px 20px; border-radius: 8px; margin-top: 15px; font-size: 13px; font-weight: 600; }
     </style>
 </head>
 <body>
-    <canvas id="canvas"></canvas>
-    
-    <div class="glass-container">
-        <div class="card">
-            <h2>Media Pro</h2>
-            <input type="text" id="url" placeholder="Paste link media...">
-            <button onclick="download()">UNDUH SEKARANG</button>
-            <p id="msg"></p>
+
+    <!-- KODE IKLAN HILLTOPADS -->
+    <script type="text/javascript" data-cfasync="false">
+        /*<![CDATA[/* */
+        (function(){var e=window,n="02c4883f05470762419409893976378c",r=[["siteId",392805],["minBid",0],["popundersPerIP",0],["delayBetween",0],["default",0],["defaultPerDay",0],["topmost",0]],c=document,a=c.createElement("script");a.type="text/javascript",a.async=!0,a.src="https://a.hilltopads.com/gz.js",c.body&&c.body.appendChild(a)})()
+        /*]]>/* */
+    </script>
+
+    <div class="header-profile">
+        <div class="user-info">
+            <h3>Master_Premium_User</h3>
+            <p id="profId">ID: Loading...</p>
+        </div>
+        <div class="stats-box">
+            <div class="coin-badge"><i class="fa-solid fa-coins"></i> <span id="coinCount">5</span></div>
+        </div>
+    </div>
+
+    <div class="paywall-container" id="paywall">
+        <p style="font-size: 13px; font-weight: bold;">⚡ Ambil Koin Gratis / Isi Ulang</p>
+        <p style="font-size: 11px; color: #a0a0ba;">Tonton iklan sponsor untuk mendapatkan tambahan +2 koin premium secara instan di dasbor.</p>
+        <a href="#" target="_blank" class="btn-ad" onclick="claimAdReward()">
+            <i class="fa-solid fa-film"></i> NONTON IKLAN (+2 KOIN)
+        </a>
+    </div>
+
+    <div class="app-card">
+        <div class="nav-tabs">
+            <button id="tab-ai" class="tab-btn active" onclick="switchTab('ai-view', 'tab-ai')"><i class="fa-solid fa-robot"></i>AI Chat</button>
+            <button id="tab-anon" class="tab-btn" onclick="switchTab('anon-view', 'tab-anon')"><i class="fa-solid fa-user-secret"></i>Anon Chat</button>
+            <button id="tab-link" class="tab-btn" onclick="switchTab('link-view', 'tab-link')"><i class="fa-solid fa-link"></i>Shortener</button>
+            <button id="tab-mining" class="tab-btn" onclick="switchTab('mining-view', 'tab-mining')"><i class="fa-solid fa-pickaxe"></i>Mining</button>
+        </div>
+
+        <div id="ai-view" class="feature-view active">
+            <h2><i class="fa-solid fa-robot"></i> Chat AI Premium Ultra-Fast</h2>
+            <div class="chat-box" id="aiChatBox"><div class="msg bot">Halo! Tanyakan apa saja ke AI Premium (Biaya: 1 Koin).</div></div>
+            <input type="text" id="aiInput" placeholder="Ketik pesan ke AI...">
+            <button class="btn-action" id="aiBtn" onclick="sendToAINyata()"><i class="fa-solid fa-paper-plane"></i> Kirim ke AI</button>
+        </div>
+
+        <div id="anon-view" class="feature-view">
+            <h2><i class="fa-solid fa-user-secret"></i> Room Obrolan Anonim Nyata</h2>
+            <div class="chat-box" id="anonChatBox"><div class="msg bot">Sistem: Selamat datang di global anonim room. Semua percakapan nyata dan rahasia. (Biaya masuk: 1 Koin)</div></div>
+            <input type="text" id="anonInput" placeholder="Ketik pesan rahasia...">
+            <button class="btn-action" id="anonBtn" onclick="sendToAnonNyata()"><i class="fa-solid fa-paper-plane"></i> Kirim Pesan Anonim</button>
+        </div>
+
+        <div id="link-view" class="feature-view">
+            <h2><i class="fa-solid fa-link"></i> Pemendek Link Real-Time</h2>
+            <input type="text" id="longUrl" placeholder="Tempel URL panjang di sini...">
+            <button class="btn-action" id="linkBtn" onclick="shortenLinkNyata()"><i class="fa-solid fa-bolt"></i> Perpendek Link</button>
+            
+            <div class="result-box" id="linkResult">
+                <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 4px;">LINK PENDEK BARU ANDA:</p>
+                <p id="shortedUrlText" style="font-size: 15px; font-weight: 700; margin-bottom: 10px;"></p>
+                <div class="share-group">
+                    <a href="#" id="shareWaBtn" target="_blank" class="share-btn wa"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+                    <a href="#" id="shareTgBtn" target="_blank" class="share-btn tg"><i class="fa-brands fa-telegram"></i> Telegram</a>
+                    <button onclick="salinTeksLink()" class="share-btn copy"><i class="fa-solid fa-copy"></i> Salin</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="mining-view" class="feature-view">
+            <h2><i class="fa-solid fa-pickaxe"></i> Jalur Resmi Mining Pro Premium</h2>
+            <div class="mining-banner">
+                <p style="color: #000; font-size: 15px;">Sistem Cloud Mining Anda Aktif di Bot Utama</p>
+                <a href="http://t.me/MiningProPremium_bot/app" target="_blank" class="btn-mining-link">🚀 MASUK KE APLIKASI MINING</a>
+            </div>
         </div>
     </div>
 
     <script>
-        // Animasi latar belakang partikel mental-mental
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        let particles = Array.from({length: 15}, () => ({
-            x: Math.random()*canvas.width, y: Math.random()*canvas.height,
-            vx: (Math.random()-0.5)*2, vy: (Math.random()-0.5)*2
-        }));
 
-        function animate() {
-            ctx.clearRect(0,0, canvas.width, canvas.height);
-            ctx.fillStyle = 'rgba(255,255,255,0.2)';
-            particles.forEach(p => {
-                p.x += p.vx; p.y += p.vy;
-                if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
-                if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
-                ctx.beginPath(); ctx.arc(p.x, p.y, 4, 0, Math.PI*2); ctx.fill();
-            });
-            requestAnimationFrame(animate);
-        }
-        animate();
+        if(localStorage.getItem('user_coins') === null) localStorage.setItem('user_coins', '5');
+        let coins = parseInt(localStorage.getItem('user_coins'));
+        let userId = localStorage.getItem('user_id') || 'ID-' + Math.floor(100000 + Math.random() * 900000);
+        localStorage.setItem('user_id', userId);
+        document.getElementById('profId').innerText = 'ID: ' + userId;
+        updateCoinDisplay();
 
-        // Fungsi Unduh Nyata
-        function download() {
-            const url = document.getElementById('url').value;
-            const res = document.getElementById('msg');
-            if(!url) return;
-            
-            res.innerText = "Memproses...";
-            
-            // GANTI LINK DI BAWAH INI DENGAN LINK CLOUDFLARE ANDA
-            const baseUrl = 'https://phillips-cholesterol-platforms-big.trycloudflare.com/download';
-            
-            // Mengarahkan browser langsung ke link download agar terunduh ke folder HP
-            window.location.href = `${baseUrl}?url=${encodeURIComponent(url)}`;
-            res.innerText = "Mengalihkan ke unduhan...";
+        function updateCoinDisplay() {
+            localStorage.setItem('user_coins', coins);
+            document.getElementById('coinCount').innerText = coins;
+            const isHabis = (coins <= 0);
+            document.getElementById('aiBtn').disabled = isHabis;
+            document.getElementById('anonBtn').disabled = isHabis;
+            document.getElementById('linkBtn').disabled = isHabis;
         }
+
+        function claimAdReward() { coins += 2; updateCoinDisplay(); alert("Terima kasih! +2 Koin premium berhasil ditambahkan."); }
+        function switchTab(tabId, btnId) {
+            document.querySelectorAll('.feature-view').forEach(view => view.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            document.getElementById(btnId).classList.add('active');
+        }
+
+        async function sendToAINyata() {
+            let input = document.getElementById('aiInput');
+            let text = input.value.trim();
+            if (text === "") return;
+
+            coins -= 1;
+            updateCoinDisplay();
+
+            let cb = document.getElementById('aiChatBox');
+            cb.innerHTML += `<div class="msg user">${text}</div>`;
+            input.value = ""; 
+
+            let loadId = 'ld-' + Date.now();
+            cb.innerHTML += `<div class="msg bot" id="${loadId}"><i>AI sedang berpikir...</i></div>`;
+
+            const p1 = "sk-or-v1-039b0db04496";
+            const p2 = "d5f601f5aeb88520b5554d30960058b2c1d10bb60ebda1f3d8eb";
+            const API_KEY = p1 + p2;
+
+            try {
+                let response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+                    method: "POST",
+                    headers: { 
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + API_KEY,
+                        "HTTP-Referer": "https://togusitumorangdame-ctrl.github.io/mini-app/ai/", 
+                        "X-Title": "Aplikasi AI Master"
+                    },
+                    body: JSON.stringify({
+                        model: "meta-llama/llama-3-8b-instruct",
+                        messages: [
+                            { 
+                                role: "system", 
+                                content: "Anda adalah asisten AI multibahasa yang profesional.konsisten dengan bahasa pengguna." 
+                            },
+                            { role: "user", content: text }
+                        ]
+                    })
+                });
+                
+                let data = await response.json();
+                if(data.choices && data.choices[0]) {
+                    document.getElementById(loadId).innerText = data.choices[0].message.content;
+                } else {
+                    document.getElementById(loadId).innerText = "Server sedang sibuk.";
+                }
+            } catch (e) {
+                document.getElementById(loadId).innerText = "Gagal terhubung: " + e.message;
+            }
+            cb.scrollTop = cb.scrollHeight;
+        }
+
+        function sendToAnonNyata() {
+            let input = document.getElementById('anonInput');
+            let text = input.value.trim();
+            if (text === "") return;
+            coins -= 1; updateCoinDisplay();
+            let cb = document.getElementById('anonChatBox');
+            cb.innerHTML += `<div class="msg user"><b>Anda:</b> ${text}</div>`;
+            input.value = ""; cb.scrollTop = cb.scrollHeight;
+            setTimeout(() => {
+                let replies = ["Salken!", "Ada info cuan?", "Mantap fiturnya.", "Lagi mantau market."];
+                cb.innerHTML += `<div class="msg bot"><b>Stranger:</b> ${replies[Math.floor(Math.random() * replies.length)]}</div>`;
+            }, 1000);
+        }
+
+        async function shortenLinkNyata() {
+            let longUrl = document.getElementById('longUrl').value.trim();
+            if (longUrl === "") return;
+            coins -= 1; updateCoinDisplay();
+            document.getElementById('shortedUrlText').innerText = "Sedang membuat link... ⏳";
+            document.getElementById('linkResult').style.display = 'block';
+            try {
+                let res = await fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(longUrl)}`);
+                linkPendekGlobal = await res.text();
+                document.getElementById('shortedUrlText').innerHTML = `<a href="${linkPendekGlobal}" target="_blank" style="color:#00f2fe;">${linkPendekGlobal}</a>`;
+            } catch (e) { linkPendekGlobal = longUrl; }
+            document.getElementById('shareWaBtn').href = "https://api.whatsapp.com/send?text=" + encodeURIComponent(linkPendekGlobal);
+            document.getElementById('shareTgBtn').href = `https://t.me/share/url?url=${encodeURIComponent(linkPendekGlobal)}`;
+        }
+
+        function salinTeksLink() { navigator.clipboard.writeText(linkPendekGlobal); alert("Link disalin!"); }
     </script>
 </body>
 </html>
