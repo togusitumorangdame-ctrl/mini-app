@@ -48,7 +48,7 @@
         .share-btn.tg { background: #0088cc; }
         .share-btn.copy { background: #4a5568; }
         
-        .mining-banner { background: linear-gradient(135deg, #f1c40f, #f39c12); color: #000; padding: 20px; border-radius: 15px; text-align: center; font-weight: bold; margin-bottom: 10px; }
+        .mining-banner { background: linear-gradient(135deg, #f1c40f, #f39c12); color:000; padding: 20px; border-radius: 15px; text-align: center; font-weight: bold; margin-bottom: 10px; }
         .btn-mining-link { background: #000; color: #fff; text-decoration: none; display: inline-block; padding: 10px 20px; border-radius: 8px; margin-top: 15px; font-size: 13px; font-weight: 600; }
     </style>
 </head>
@@ -63,11 +63,14 @@
             <h3>Master_Premium_User</h3>
             <p id="profId">ID: Loading...</p>
         </div>
-        <div class="coin-badge"><i class="fa-solid fa-coins"></i> <span id="coinCount">5</span></div>
+        <div class="stats-box">
+            <div class="coin-badge"><i class="fa-solid fa-coins"></i> <span id="coinCount">5</span></div>
+        </div>
     </div>
 
     <div class="paywall-container" id="paywall">
-        <p style="font-size: 13px; font-weight: bold;">⚡ Ambil Koin Gratis</p>
+        <p style="font-size: 13px; font-weight: bold;">⚡ Ambil Koin Gratis / Isi Ulang</p>
+        <p style="font-size: 11px; color: #a0a0ba;">Tonton iklan untuk mendapatkan tambahan +5 koin.</p>
         <button class="btn-ad" onclick="runRewardedAd()">
             <i class="fa-solid fa-film"></i> NONTON IKLAN (+5 KOIN)
         </button>
@@ -81,32 +84,40 @@
         </div>
 
         <div id="ai-view" class="feature-view active">
-            <h2><i class="fa-solid fa-robot"></i> Chat AI</h2>
-            <div class="chat-box" id="aiChatBox"><div class="msg bot">Halo! Tanyakan apa saja (Biaya: 1 Koin).</div></div>
-            <input type="text" id="aiInput" placeholder="Ketik pesan...">
-            <button class="btn-action" onclick="triggerAiWithAd()">Kirim ke AI</button>
+            <h2><i class="fa-solid fa-robot"></i> Chat AI Premium Ultra-Fast</h2>
+            <div class="chat-box" id="aiChatBox"><div class="msg bot">Halo! Tanyakan apa saja ke AI Premium (Biaya: 1 Koin).</div></div>
+            <input type="text" id="aiInput" placeholder="Ketik pesan ke AI...">
+            <button class="btn-action" id="aiBtn" onclick="triggerAiWithAd()"><i class="fa-solid fa-paper-plane"></i> Kirim ke AI</button>
         </div>
 
         <div id="link-view" class="feature-view">
-            <h2><i class="fa-solid fa-link"></i> Pemendek Link</h2>
-            <input type="text" id="longUrl" placeholder="Tempel URL di sini...">
-            <button class="btn-action" onclick="triggerLinkWithAd()">Perpendek Link</button>
+            <h2><i class="fa-solid fa-link"></i> Pemendek Link Real-Time</h2>
+            <input type="text" id="longUrl" placeholder="Tempel URL panjang di sini...">
+            <button class="btn-action" id="linkBtn" onclick="triggerLinkWithAd()"><i class="fa-solid fa-bolt"></i> Perpendek Link</button>
+            
             <div class="result-box" id="linkResult">
-                <p id="shortedUrlText" style="font-size: 15px; font-weight: 700;"></p>
+                <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 4px;">LINK PENDEK BARU ANDA:</p>
+                <p id="shortedUrlText" style="font-size: 15px; font-weight: 700; margin-bottom: 10px;"></p>
+                <div class="share-group">
+                    <a href="#" id="shareWaBtn" target="_blank" class="share-btn wa"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+                    <a href="#" id="shareTgBtn" target="_blank" class="share-btn tg"><i class="fa-brands fa-telegram"></i> Telegram</a>
+                    <button onclick="salinTeksLink()" class="share-btn copy"><i class="fa-solid fa-copy"></i> Salin</button>
+                </div>
             </div>
         </div>
 
         <div id="mining-view" class="feature-view">
-            <h2><i class="fa-solid fa-pickaxe"></i> Mining Pro Premium</h2>
+            <h2><i class="fa-solid fa-pickaxe"></i> Jalur Resmi Mining Pro Premium</h2>
             <div class="mining-banner">
-                <p>Sistem Cloud Mining Aktif</p>
-                <a href="http://t.me/MiningProPremium_bot/app" target="_blank" class="btn-mining-link">🚀 MASUK KE MINING</a>
+                <p style="color: #000; font-size: 15px;">Sistem Cloud Mining Anda Aktif di Bot Utama</p>
+                <a href="http://t.me/MiningProPremium_bot/app" target="_blank" class="btn-mining-link">🚀 MASUK KE APLIKASI MINING</a>
             </div>
         </div>
     </div>
 
     <script>
-        let coins = parseInt(localStorage.getItem('user_coins')) || 5;
+        if(localStorage.getItem('user_coins') === null) localStorage.setItem('user_coins', '5');
+        let coins = parseInt(localStorage.getItem('user_coins'));
         let userId = localStorage.getItem('user_id') || 'ID-' + Math.floor(100000 + Math.random() * 900000);
         localStorage.setItem('user_id', userId);
         document.getElementById('profId').innerText = 'ID: ' + userId;
@@ -115,16 +126,21 @@
         function updateCoinDisplay() {
             localStorage.setItem('user_coins', coins);
             document.getElementById('coinCount').innerText = coins;
+            const isHabis = (coins <= 0);
+            document.getElementById('aiBtn').disabled = isHabis;
+            document.getElementById('linkBtn').disabled = isHabis;
         }
 
+        // IKLAN REWARDED INTERSTITIAL
         function runRewardedAd() {
             show_11267753().then(() => {
                 coins += 5;
                 updateCoinDisplay();
-                alert("Berhasil! +5 Koin telah ditambahkan.");
-            });
+                alert("Terima kasih! +5 Koin premium berhasil ditambahkan.");
+            }).catch(e => { alert("Iklan belum tersedia."); });
         }
 
+        // IKLAN REWARDED POPUP
         function triggerAiWithAd() {
             show_11267753('pop').then(() => { sendToAINyata(); });
         }
@@ -142,14 +158,13 @@
         async function sendToAINyata() {
             let input = document.getElementById('aiInput');
             let text = input.value.trim();
-            if (text === "" || coins < 1) { alert("Koin tidak cukup!"); return; }
+            if (text === "") return;
             coins -= 1; updateCoinDisplay();
             let cb = document.getElementById('aiChatBox');
             cb.innerHTML += `<div class="msg user">${text}</div>`;
-            input.value = "";
+            input.value = ""; 
             let loadId = 'ld-' + Date.now();
             cb.innerHTML += `<div class="msg bot" id="${loadId}"><i>AI sedang berpikir...</i></div>`;
-            
             const p1 = "sk-or-v1-039b0db04496";
             const p2 = "d5f601f5aeb88520b5554d30960058b2c1d10bb60ebda1f3d8eb";
             const API_KEY = p1 + p2;
@@ -157,24 +172,35 @@
                 let response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
                     method: "POST",
                     headers: { "Content-Type": "application/json", "Authorization": "Bearer " + API_KEY },
-                    body: JSON.stringify({ model: "meta-llama/llama-3-8b-instruct", messages: [{ role: "user", content: text }] })
+                    body: JSON.stringify({
+                        model: "meta-llama/llama-3-8b-instruct",
+                        messages: [
+                            { role: "system", content: "Anda adalah asisten AI profesional yang mahir berbahasa Indonesia. Jawablah setiap pertanyaan pengguna dengan tepat, detail, dan dalam bahasa Indonesia yang baik." },
+                            { role: "user", content: text }
+                        ]
+                    })
                 });
                 let data = await response.json();
-                document.getElementById(loadId).innerText = data.choices[0].message.content;
+                if(data.choices) document.getElementById(loadId).innerText = data.choices[0].message.content;
             } catch (e) { document.getElementById(loadId).innerText = "Gagal terhubung."; }
+            cb.scrollTop = cb.scrollHeight;
         }
 
         async function shortenLinkNyata() {
             let longUrl = document.getElementById('longUrl').value.trim();
-            if (longUrl === "" || coins < 1) { alert("Koin tidak cukup!"); return; }
+            if (longUrl === "") return;
             coins -= 1; updateCoinDisplay();
+            document.getElementById('shortedUrlText').innerText = "Sedang membuat link... ⏳";
             document.getElementById('linkResult').style.display = 'block';
             try {
                 let res = await fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(longUrl)}`);
-                let link = await res.text();
-                document.getElementById('shortedUrlText').innerHTML = `<a href="${link}" target="_blank">${link}</a>`;
-            } catch (e) { document.getElementById('shortedUrlText').innerText = "Gagal."; }
+                linkPendekGlobal = await res.text();
+                document.getElementById('shortedUrlText').innerHTML = `<a href="${linkPendekGlobal}" target="_blank" style="color:#00f2fe;">${linkPendekGlobal}</a>`;
+            } catch (e) { linkPendekGlobal = longUrl; }
+            document.getElementById('shareWaBtn').href = "https://api.whatsapp.com/send?text=" + encodeURIComponent(linkPendekGlobal);
+            document.getElementById('shareTgBtn').href = `https://t.me/share/url?url=${encodeURIComponent(linkPendekGlobal)}`;
         }
+        function salinTeksLink() { navigator.clipboard.writeText(linkPendekGlobal); alert("Link disalin!"); }
     </script>
 </body>
 </html>
