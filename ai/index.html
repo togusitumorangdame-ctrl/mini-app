@@ -19,7 +19,6 @@
 </head>
 <body>
     <canvas id="canvas"></canvas>
-    
     <div class="card">
         <h2>SOLANA LUXURY</h2>
         <input type="text" id="url" placeholder="Paste link video...">
@@ -28,7 +27,7 @@
     </div>
 
     <script>
-        // Animasi Segitiga
+        // Animasi Background (Tetap)
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
@@ -56,34 +55,14 @@
         }
         animate();
 
-        // LOGIKA DOWNLOAD TANPA ERROR
+        // SOLUSI: Menggunakan URL redirect langsung ke pengunduh resmi
         function download() {
             const url = document.getElementById('url').value;
-            const res = document.getElementById('result');
             if(!url) return;
             
-            res.innerText = "Processing...";
-            
-            // Menggunakan API pihak ketiga yang paling stabil dan tidak memblokir GitHub Pages
-            // Jika cara ini tetap gagal, artinya API tersebut sedang down
-            const api = "https://api.tiklydown.eu.org/api/download?url=" + encodeURIComponent(url);
-            
-            fetch(api)
-            .then(res => res.json())
-            .then(data => {
-                if(data.video && data.video.noWatermark) {
-                    // Berhasil: Langsung buka link video di tab baru
-                    window.open(data.video.noWatermark, '_blank');
-                    res.innerText = "Success! Starting download...";
-                } else {
-                    res.innerText = "Error: Link tidak valid atau API limit tercapai.";
-                }
-            })
-            .catch(() => {
-                // FALLBACK: Jika API utama gagal, buka SSSTIK sebagai cadangan
-                window.open("https://ssstik.io/id/download?url=" + encodeURIComponent(url), "_blank");
-                res.innerText = "Using backup method...";
-            });
+            // Mengarahkan ke penyedia resmi yang masih berfungsi
+            // Ini akan membuka situs pengunduh resmi, sehingga tidak akan ada video palsu
+            window.open("https://snaptik.app/en?url=" + encodeURIComponent(url), "_blank");
         }
     </script>
 </body>
