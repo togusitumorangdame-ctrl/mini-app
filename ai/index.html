@@ -48,8 +48,7 @@
         .share-btn.tg { background: #0088cc; }
         .share-btn.copy { background: #4a5568; }
         
-        .mining-banner { background: linear-gradient(135deg, #f1c40f, #f39c12); color: #000; padding: 20px; border-radius: 15px; text-align: center; font-weight: bold; margin-bottom: 10px; }
-        .btn-mining-link { background: #000; color: #fff; text-decoration: none; display: inline-block; padding: 10px 20px; border-radius: 8px; margin-top: 15px; font-size: 13px; font-weight: 600; }
+        #aiImageResult { width: 100%; border-radius: 14px; margin-top: 15px; display: none; border: 2px solid rgba(0,242,254,0.2); }
     </style>
 </head>
 <body>
@@ -80,14 +79,14 @@
         <div class="nav-tabs">
             <button id="tab-ai" class="tab-btn active" onclick="switchTab('ai-view', 'tab-ai')"><i class="fa-solid fa-robot"></i>AI Chat</button>
             <button id="tab-link" class="tab-btn" onclick="switchTab('link-view', 'tab-link')"><i class="fa-solid fa-link"></i>Shortener</button>
-            <button id="tab-mining" class="tab-btn" onclick="switchTab('mining-view', 'tab-mining')"><i class="fa-solid fa-pickaxe"></i>Mining</button>
+            <button id="tab-img" class="tab-btn" onclick="switchTab('img-view', 'tab-img')"><i class="fa-solid fa-image"></i>AI Image</button>
         </div>
 
         <div id="ai-view" class="feature-view active">
             <h2><i class="fa-solid fa-robot"></i> Chat AI Premium Ultra-Fast</h2>
             <div class="chat-box" id="aiChatBox"><div class="msg bot">Halo! Tanyakan apa saja ke AI Premium (Biaya: 1 Koin).</div></div>
             <input type="text" id="aiInput" placeholder="Ketik pesan ke AI...">
-            <button class="btn-action" id="aiBtn" onclick="processAiRequest()"><i class="fa-solid fa-paper-plane"></i> Kirim ke AI</button>
+            <button class="btn-action" id="aiBtn" onclick="sendToAINyata()"><i class="fa-solid fa-paper-plane"></i> Kirim ke AI</button>
         </div>
 
         <div id="link-view" class="feature-view">
@@ -106,12 +105,11 @@
             </div>
         </div>
 
-        <div id="mining-view" class="feature-view">
-            <h2><i class="fa-solid fa-pickaxe"></i> Jalur Resmi Mining Pro Premium</h2>
-            <div class="mining-banner">
-                <p style="color: #000; font-size: 15px;">Sistem Cloud Mining Anda Aktif di Bot Utama</p>
-                <a href="http://t.me/MiningProPremium_bot/app" target="_blank" class="btn-mining-link">🚀 MASUK KE APLIKASI MINING</a>
-            </div>
+        <div id="img-view" class="feature-view">
+            <h2><i class="fa-solid fa-image"></i> AI Image Generator (5 Koin)</h2>
+            <input type="text" id="imgPrompt" placeholder="Contoh: Pemandangan kota cyberpunk masa depan...">
+            <button class="btn-action" id="imgBtn" onclick="processImgRequest()"><i class="fa-solid fa-wand-magic-sparkles"></i> Buat Gambar</button>
+            <img id="aiImageResult" src="" alt="Hasil Gambar AI">
         </div>
     </div>
 
@@ -128,9 +126,6 @@
         function updateCoinDisplay() {
             localStorage.setItem('user_coins', coins);
             document.getElementById('coinCount').innerText = coins;
-            const isHabis = (coins <= 0);
-            document.getElementById('aiBtn').disabled = isHabis;
-            document.getElementById('linkBtn').disabled = isHabis;
         }
 
         function claimAdReward() { 
@@ -148,15 +143,24 @@
             document.getElementById(btnId).classList.add('active');
         }
 
-        function processAiRequest() {
-            show_11267753().then(() => { sendToAINyata(); });
+        // Fungsi Fitur tanpa iklan
+        function sendToAINyata() {
+            if(coins < 1) return alert("Koin tidak cukup! Nonton iklan dulu.");
+            processAiLogic();
         }
 
+        // Fungsi Fitur dengan iklan
         function processLinkRequest() {
+            if(coins < 1) return alert("Koin tidak cukup! Nonton iklan dulu.");
             show_11267753().then(() => { shortenLinkNyata(); });
         }
 
-        async function sendToAINyata() {
+        function processImgRequest() {
+            if(coins < 5) return alert("Butuh 5 koin untuk fitur ini!");
+            show_11267753().then(() => { generateImageNyata(); });
+        }
+
+        async function processAiLogic() {
             let input = document.getElementById('aiInput');
             let text = input.value.trim();
             if (text === "") return;
@@ -206,6 +210,16 @@
             document.getElementById('shareWaBtn').href = "https://api.whatsapp.com/send?text=" + encodeURIComponent(linkPendekGlobal);
             document.getElementById('shareTgBtn').href = `https://t.me/share/url?url=${encodeURIComponent(linkPendekGlobal)}`;
         }
+
+        function generateImageNyata() {
+            let prompt = document.getElementById('imgPrompt').value.trim();
+            if(prompt === "") return;
+            coins -= 5; updateCoinDisplay();
+            let img = document.getElementById('aiImageResult');
+            img.style.display = 'block';
+            img.src = "https://image.pollinations.ai/prompt/" + encodeURIComponent(prompt) + "?nologo=true&width=512&height=512";
+        }
+
         function salinTeksLink() { navigator.clipboard.writeText(linkPendekGlobal); alert("Link disalin!"); }
     </script>
 </body>
