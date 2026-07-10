@@ -7,6 +7,9 @@
     <!-- KODE VERIFIKASI HILLTOPADS -->
     <meta name="b7bac7dd9cc41735cae966cb5a84a44ec7243d5f" content="b7bac7dd9cc41735cae966cb5a84a44ec7243d5f" />
     
+    <!-- SDK MONETAG -->
+    <script src='//libtl.com/sdk.js' data-zone='11267753' data-sdk='show_11267753'></script>
+    
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -54,11 +57,8 @@
 </head>
 <body>
 
-    <!-- KODE IKLAN HILLTOPADS -->
     <script type="text/javascript" data-cfasync="false">
-        /*<![CDATA[/* */
         (function(){var e=window,n="02c4883f05470762419409893976378c",r=[["siteId",392805],["minBid",0],["popundersPerIP",0],["delayBetween",0],["default",0],["defaultPerDay",0],["topmost",0]],c=document,a=c.createElement("script");a.type="text/javascript",a.async=!0,a.src="https://a.hilltopads.com/gz.js",c.body&&c.body.appendChild(a)})()
-        /*]]>/* */
     </script>
 
     <div class="header-profile">
@@ -66,17 +66,14 @@
             <h3>Master_Premium_User</h3>
             <p id="profId">ID: Loading...</p>
         </div>
-        <div class="stats-box">
-            <div class="coin-badge"><i class="fa-solid fa-coins"></i> <span id="coinCount">5</span></div>
-        </div>
+        <div class="coin-badge"><i class="fa-solid fa-coins"></i> <span id="coinCount">5</span></div>
     </div>
 
     <div class="paywall-container" id="paywall">
-        <p style="font-size: 13px; font-weight: bold;">⚡ Ambil Koin Gratis / Isi Ulang</p>
-        <p style="font-size: 11px; color: #a0a0ba;">Tonton iklan sponsor untuk mendapatkan tambahan +2 koin premium secara instan di dasbor.</p>
-        <a href="#" target="_blank" class="btn-ad" onclick="claimAdReward()">
-            <i class="fa-solid fa-film"></i> NONTON IKLAN (+2 KOIN)
-        </a>
+        <p style="font-size: 13px; font-weight: bold;">⚡ Ambil Koin Gratis</p>
+        <button class="btn-ad" onclick="runRewardedAd()">
+            <i class="fa-solid fa-film"></i> NONTON IKLAN (+5 KOIN)
+        </button>
     </div>
 
     <div class="app-card">
@@ -87,40 +84,32 @@
         </div>
 
         <div id="ai-view" class="feature-view active">
-            <h2><i class="fa-solid fa-robot"></i> Chat AI Premium Ultra-Fast</h2>
-            <div class="chat-box" id="aiChatBox"><div class="msg bot">Halo! Tanyakan apa saja ke AI Premium (Biaya: 1 Koin).</div></div>
-            <input type="text" id="aiInput" placeholder="Ketik pesan ke AI...">
-            <button class="btn-action" id="aiBtn" onclick="sendToAINyata()"><i class="fa-solid fa-paper-plane"></i> Kirim ke AI</button>
+            <h2><i class="fa-solid fa-robot"></i> Chat AI</h2>
+            <div class="chat-box" id="aiChatBox"><div class="msg bot">Halo! Tanyakan apa saja (Biaya: 1 Koin).</div></div>
+            <input type="text" id="aiInput" placeholder="Ketik pesan...">
+            <button class="btn-action" onclick="triggerAiWithAd()">Kirim ke AI</button>
         </div>
 
         <div id="link-view" class="feature-view">
-            <h2><i class="fa-solid fa-link"></i> Pemendek Link Real-Time</h2>
-            <input type="text" id="longUrl" placeholder="Tempel URL panjang di sini...">
-            <button class="btn-action" id="linkBtn" onclick="shortenLinkNyata()"><i class="fa-solid fa-bolt"></i> Perpendek Link</button>
-            
+            <h2><i class="fa-solid fa-link"></i> Pemendek Link</h2>
+            <input type="text" id="longUrl" placeholder="Tempel URL di sini...">
+            <button class="btn-action" onclick="triggerLinkWithAd()">Perpendek Link</button>
             <div class="result-box" id="linkResult">
-                <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 4px;">LINK PENDEK BARU ANDA:</p>
-                <p id="shortedUrlText" style="font-size: 15px; font-weight: 700; margin-bottom: 10px;"></p>
-                <div class="share-group">
-                    <a href="#" id="shareWaBtn" target="_blank" class="share-btn wa"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
-                    <a href="#" id="shareTgBtn" target="_blank" class="share-btn tg"><i class="fa-brands fa-telegram"></i> Telegram</a>
-                    <button onclick="salinTeksLink()" class="share-btn copy"><i class="fa-solid fa-copy"></i> Salin</button>
-                </div>
+                <p id="shortedUrlText" style="font-size: 15px; font-weight: 700;"></p>
             </div>
         </div>
 
         <div id="mining-view" class="feature-view">
-            <h2><i class="fa-solid fa-pickaxe"></i> Jalur Resmi Mining Pro Premium</h2>
+            <h2><i class="fa-solid fa-pickaxe"></i> Mining Pro Premium</h2>
             <div class="mining-banner">
-                <p style="color: #000; font-size: 15px;">Sistem Cloud Mining Anda Aktif di Bot Utama</p>
-                <a href="http://t.me/MiningProPremium_bot/app" target="_blank" class="btn-mining-link">🚀 MASUK KE APLIKASI MINING</a>
+                <p>Sistem Cloud Mining Aktif</p>
+                <a href="http://t.me/MiningProPremium_bot/app" target="_blank" class="btn-mining-link">🚀 MASUK KE MINING</a>
             </div>
         </div>
     </div>
 
     <script>
-        if(localStorage.getItem('user_coins') === null) localStorage.setItem('user_coins', '5');
-        let coins = parseInt(localStorage.getItem('user_coins'));
+        let coins = parseInt(localStorage.getItem('user_coins')) || 5;
         let userId = localStorage.getItem('user_id') || 'ID-' + Math.floor(100000 + Math.random() * 900000);
         localStorage.setItem('user_id', userId);
         document.getElementById('profId').innerText = 'ID: ' + userId;
@@ -129,12 +118,23 @@
         function updateCoinDisplay() {
             localStorage.setItem('user_coins', coins);
             document.getElementById('coinCount').innerText = coins;
-            const isHabis = (coins <= 0);
-            document.getElementById('aiBtn').disabled = isHabis;
-            document.getElementById('linkBtn').disabled = isHabis;
         }
 
-        function claimAdReward() { coins += 2; updateCoinDisplay(); alert("Terima kasih! +2 Koin premium berhasil ditambahkan."); }
+        function runRewardedAd() {
+            show_11267753().then(() => {
+                coins += 5;
+                updateCoinDisplay();
+                alert("Berhasil! +5 Koin telah ditambahkan.");
+            });
+        }
+
+        function triggerAiWithAd() {
+            show_11267753('pop').then(() => { sendToAINyata(); });
+        }
+        function triggerLinkWithAd() {
+            show_11267753('pop').then(() => { shortenLinkNyata(); });
+        }
+
         function switchTab(tabId, btnId) {
             document.querySelectorAll('.feature-view').forEach(view => view.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -145,13 +145,14 @@
         async function sendToAINyata() {
             let input = document.getElementById('aiInput');
             let text = input.value.trim();
-            if (text === "") return;
+            if (text === "" || coins < 1) { alert("Koin tidak cukup!"); return; }
             coins -= 1; updateCoinDisplay();
             let cb = document.getElementById('aiChatBox');
             cb.innerHTML += `<div class="msg user">${text}</div>`;
-            input.value = ""; 
+            input.value = "";
             let loadId = 'ld-' + Date.now();
             cb.innerHTML += `<div class="msg bot" id="${loadId}"><i>AI sedang berpikir...</i></div>`;
+            
             const p1 = "sk-or-v1-039b0db04496";
             const p2 = "d5f601f5aeb88520b5554d30960058b2c1d10bb60ebda1f3d8eb";
             const API_KEY = p1 + p2;
@@ -159,32 +160,24 @@
                 let response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
                     method: "POST",
                     headers: { "Content-Type": "application/json", "Authorization": "Bearer " + API_KEY },
-                    body: JSON.stringify({
-                        model: "meta-llama/llama-3-8b-instruct",
-                        messages: [{ role: "system", content: "Anda asisten AI profesional." }, { role: "user", content: text }]
-                    })
+                    body: JSON.stringify({ model: "meta-llama/llama-3-8b-instruct", messages: [{ role: "user", content: text }] })
                 });
                 let data = await response.json();
-                if(data.choices) document.getElementById(loadId).innerText = data.choices[0].message.content;
+                document.getElementById(loadId).innerText = data.choices[0].message.content;
             } catch (e) { document.getElementById(loadId).innerText = "Gagal terhubung."; }
-            cb.scrollTop = cb.scrollHeight;
         }
 
         async function shortenLinkNyata() {
             let longUrl = document.getElementById('longUrl').value.trim();
-            if (longUrl === "") return;
+            if (longUrl === "" || coins < 1) { alert("Koin tidak cukup!"); return; }
             coins -= 1; updateCoinDisplay();
-            document.getElementById('shortedUrlText').innerText = "Sedang membuat link... ⏳";
             document.getElementById('linkResult').style.display = 'block';
             try {
                 let res = await fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(longUrl)}`);
-                linkPendekGlobal = await res.text();
-                document.getElementById('shortedUrlText').innerHTML = `<a href="${linkPendekGlobal}" target="_blank" style="color:#00f2fe;">${linkPendekGlobal}</a>`;
-            } catch (e) { linkPendekGlobal = longUrl; }
-            document.getElementById('shareWaBtn').href = "https://api.whatsapp.com/send?text=" + encodeURIComponent(linkPendekGlobal);
-            document.getElementById('shareTgBtn').href = `https://t.me/share/url?url=${encodeURIComponent(linkPendekGlobal)}`;
+                let link = await res.text();
+                document.getElementById('shortedUrlText').innerHTML = `<a href="${link}" target="_blank">${link}</a>`;
+            } catch (e) { document.getElementById('shortedUrlText').innerText = "Gagal."; }
         }
-        function salinTeksLink() { navigator.clipboard.writeText(linkPendekGlobal); alert("Link disalin!"); }
     </script>
 </body>
 </html>
