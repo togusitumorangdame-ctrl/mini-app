@@ -3,42 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Solana Luxury Enterprise</title>
+    <title>Media Downloader Pro</title>
     <style>
         body { margin: 0; background: #0a0a0c; color: white; font-family: 'Inter', sans-serif; overflow: hidden; }
         canvas { position: fixed; top: 0; left: 0; z-index: 0; }
         .ui { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
-        .card { width: 90%; max-width: 400px; padding: 40px; background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid #9945FF; border-radius: 30px; text-align: center; }
-        input { width: 100%; padding: 15px; margin: 15px 0; background: #16161a; border: 1px solid #333; color: white; border-radius: 12px; }
-        button { width: 100%; padding: 15px; background: linear-gradient(90deg, #9945FF, #14F195); border: none; border-radius: 12px; color: white; font-weight: bold; cursor: pointer; }
+        .card { width: 90%; max-width: 400px; padding: 40px; background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid #666; border-radius: 30px; text-align: center; }
+        input { width: 100%; padding: 15px; margin: 15px 0; background: #16161a; border: 1px solid #444; color: white; border-radius: 12px; }
+        button { width: 100%; padding: 15px; background: #222; border: 1px solid #444; border-radius: 12px; color: white; font-weight: bold; cursor: pointer; transition: 0.3s; }
+        button:hover { background: #333; }
     </style>
 </head>
 <body>
     <canvas id="canvas"></canvas>
     <div class="ui">
         <div class="card">
-            <h2 id="ui-title">SOLANA LUXURY</h2>
-            <input type="text" id="url" placeholder="Paste link...">
-            <button id="ui-btn" onclick="download()">DOWNLOAD</button>
-            <div id="status" style="margin-top:20px; font-size:0.8rem;"></div>
+            <h2 id="title">MEDIA DOWNLOADER</h2>
+            <input type="text" id="url" placeholder="Paste link media...">
+            <button id="btn" onclick="handleDownload()">PROSES UNDUH</button>
+            <div id="status" style="margin-top:20px; font-size:0.8rem; color:#888;"></div>
         </div>
     </div>
 
     <script>
-        // Multi-Bahasa
-        const lang = navigator.language.startsWith('id') ? 'id' : 'en';
-        const trans = { id: { title: 'SOLANA LUXURY', btn: 'UNDUH SEKARANG' }, en: { title: 'SOLANA LUXURY', btn: 'DOWNLOAD NOW' } };
-        document.getElementById('ui-title').innerText = trans[lang].title;
-        document.getElementById('ui-btn').innerText = trans[lang].btn;
-
-        // Animasi Solana
+        // Animasi Latar Belakang (Geometris)
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        // (Animasi di sini akan membuat segitiga melayang cantik)
+        // (Logika animasi partikel melayang tetap aktif)
 
-        // Integrasi Server
-        async function download() {
+        async function handleDownload() {
             const url = document.getElementById('url').value;
             const res = document.getElementById('status');
             if(!url) return;
@@ -46,15 +40,31 @@
             
             try {
                 // Link Server Termux Anda
-                const response = await fetch('https://phillips-cholesterol-platforms-big.trycloudflare.com/download?url=' + encodeURIComponent(url));
-                const data = await response.json();
-                if(data.url) {
-                    window.open(data.url, '_blank');
-                    res.innerText = "Success!";
-                } else {
-                    res.innerText = "Error: " + data.error;
+                const API = 'https://phillips-cholesterol-platforms-big.trycloudflare.com/download?url=' + encodeURIComponent(url);
+                const response = await fetch(API);
+                const blob = await response.blob();
+                
+                // Trigger Download
+                const urlObject = window.URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = urlObject;
+                a.download = 'Media_Downloader_Pro.mp4';
+                a.click();
+                
+                res.innerText = "Download Selesai!";
+
+                // Fitur Share Native (Instagram, Telegram, Twitter, dll)
+                if (navigator.share) {
+                    const file = new File([blob], "media.mp4", { type: "video/mp4" });
+                    await navigator.share({
+                        title: 'Media Downloader Pro',
+                        text: 'Video dari Media Downloader Pro',
+                        files: [file]
+                    });
                 }
-            } catch(e) { res.innerText = "Server Error: Make sure Termux is running!"; }
+            } catch(e) {
+                res.innerText = "Server Error: Pastikan Termux Aktif.";
+            }
         }
     </script>
 </body>
