@@ -48,7 +48,7 @@
         .share-btn.tg { background: #0088cc; }
         .share-btn.copy { background: #4a5568; }
         
-        .mining-banner { background: linear-gradient(135deg, #f1c40f, #f39c12); color:000; padding: 20px; border-radius: 15px; text-align: center; font-weight: bold; margin-bottom: 10px; }
+        .mining-banner { background: linear-gradient(135deg, #f1c40f, #f39c12); color: #000; padding: 20px; border-radius: 15px; text-align: center; font-weight: bold; margin-bottom: 10px; }
         .btn-mining-link { background: #000; color: #fff; text-decoration: none; display: inline-block; padding: 10px 20px; border-radius: 8px; margin-top: 15px; font-size: 13px; font-weight: 600; }
     </style>
 </head>
@@ -70,10 +70,10 @@
 
     <div class="paywall-container" id="paywall">
         <p style="font-size: 13px; font-weight: bold;">⚡ Ambil Koin Gratis / Isi Ulang</p>
-        <p style="font-size: 11px; color: #a0a0ba;">Tonton iklan untuk mendapatkan tambahan +5 koin.</p>
-        <button class="btn-ad" onclick="runRewardedAd()">
+        <p style="font-size: 11px; color: #a0a0ba;">Tonton iklan untuk mendapatkan tambahan +5 koin premium secara instan.</p>
+        <a href="#" class="btn-ad" onclick="claimAdReward()">
             <i class="fa-solid fa-film"></i> NONTON IKLAN (+5 KOIN)
-        </button>
+        </a>
     </div>
 
     <div class="app-card">
@@ -87,13 +87,13 @@
             <h2><i class="fa-solid fa-robot"></i> Chat AI Premium Ultra-Fast</h2>
             <div class="chat-box" id="aiChatBox"><div class="msg bot">Halo! Tanyakan apa saja ke AI Premium (Biaya: 1 Koin).</div></div>
             <input type="text" id="aiInput" placeholder="Ketik pesan ke AI...">
-            <button class="btn-action" id="aiBtn" onclick="triggerAiWithAd()"><i class="fa-solid fa-paper-plane"></i> Kirim ke AI</button>
+            <button class="btn-action" id="aiBtn" onclick="processAiRequest()"><i class="fa-solid fa-paper-plane"></i> Kirim ke AI</button>
         </div>
 
         <div id="link-view" class="feature-view">
             <h2><i class="fa-solid fa-link"></i> Pemendek Link Real-Time</h2>
             <input type="text" id="longUrl" placeholder="Tempel URL panjang di sini...">
-            <button class="btn-action" id="linkBtn" onclick="triggerLinkWithAd()"><i class="fa-solid fa-bolt"></i> Perpendek Link</button>
+            <button class="btn-action" id="linkBtn" onclick="processLinkRequest()"><i class="fa-solid fa-bolt"></i> Perpendek Link</button>
             
             <div class="result-box" id="linkResult">
                 <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 4px;">LINK PENDEK BARU ANDA:</p>
@@ -116,6 +116,8 @@
     </div>
 
     <script>
+        let chatHistory = [{ role: "system", content: "Anda adalah asisten AI yang cerdas, mahir berbahasa Indonesia, dan sangat membantu. Ingatlah konteks percakapan sebelumnya agar jawaban Anda relevan dan konsisten." }];
+
         if(localStorage.getItem('user_coins') === null) localStorage.setItem('user_coins', '5');
         let coins = parseInt(localStorage.getItem('user_coins'));
         let userId = localStorage.getItem('user_id') || 'ID-' + Math.floor(100000 + Math.random() * 900000);
@@ -131,21 +133,12 @@
             document.getElementById('linkBtn').disabled = isHabis;
         }
 
-        // IKLAN REWARDED INTERSTITIAL
-        function runRewardedAd() {
+        function claimAdReward() { 
             show_11267753().then(() => {
-                coins += 5;
-                updateCoinDisplay();
-                alert("Terima kasih! +5 Koin premium berhasil ditambahkan.");
-            }).catch(e => { alert("Iklan belum tersedia."); });
-        }
-
-        // IKLAN REWARDED POPUP
-        function triggerAiWithAd() {
-            show_11267753('pop').then(() => { sendToAINyata(); });
-        }
-        function triggerLinkWithAd() {
-            show_11267753('pop').then(() => { shortenLinkNyata(); });
+                coins += 5; 
+                updateCoinDisplay(); 
+                alert("Terima kasih! +5 Koin premium berhasil ditambahkan."); 
+            });
         }
 
         function switchTab(tabId, btnId) {
@@ -153,6 +146,14 @@
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.getElementById(tabId).classList.add('active');
             document.getElementById(btnId).classList.add('active');
+        }
+
+        function processAiRequest() {
+            show_11267753().then(() => { sendToAINyata(); });
+        }
+
+        function processLinkRequest() {
+            show_11267753().then(() => { shortenLinkNyata(); });
         }
 
         async function sendToAINyata() {
@@ -165,23 +166,28 @@
             input.value = ""; 
             let loadId = 'ld-' + Date.now();
             cb.innerHTML += `<div class="msg bot" id="${loadId}"><i>AI sedang berpikir...</i></div>`;
+            
+            chatHistory.push({ role: "user", content: text });
+            
             const p1 = "sk-or-v1-039b0db04496";
             const p2 = "d5f601f5aeb88520b5554d30960058b2c1d10bb60ebda1f3d8eb";
             const API_KEY = p1 + p2;
+            
             try {
                 let response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
                     method: "POST",
                     headers: { "Content-Type": "application/json", "Authorization": "Bearer " + API_KEY },
                     body: JSON.stringify({
                         model: "meta-llama/llama-3-8b-instruct",
-                        messages: [
-                            { role: "system", content: "Anda adalah asisten AI profesional yang mahir berbahasa Indonesia. Jawablah setiap pertanyaan pengguna dengan tepat, detail, dan dalam bahasa Indonesia yang baik." },
-                            { role: "user", content: text }
-                        ]
+                        messages: chatHistory
                     })
                 });
                 let data = await response.json();
-                if(data.choices) document.getElementById(loadId).innerText = data.choices[0].message.content;
+                if(data.choices) {
+                    let reply = data.choices[0].message.content;
+                    document.getElementById(loadId).innerText = reply;
+                    chatHistory.push({ role: "assistant", content: reply });
+                }
             } catch (e) { document.getElementById(loadId).innerText = "Gagal terhubung."; }
             cb.scrollTop = cb.scrollHeight;
         }
