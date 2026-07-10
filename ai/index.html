@@ -1,70 +1,58 @@
 <!DOCTYPE html>
-<html lang="id">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Media Downloader Pro</title>
     <style>
-        body { margin: 0; background: #0a0a0c; color: white; font-family: 'Inter', sans-serif; overflow: hidden; }
-        canvas { position: fixed; top: 0; left: 0; z-index: 0; }
-        .ui { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; }
-        .card { width: 90%; max-width: 400px; padding: 40px; background: rgba(255,255,255,0.05); backdrop-filter: blur(20px); border: 1px solid #666; border-radius: 30px; text-align: center; }
-        input { width: 100%; padding: 15px; margin: 15px 0; background: #16161a; border: 1px solid #444; color: white; border-radius: 12px; }
-        button { width: 100%; padding: 15px; background: #222; border: 1px solid #444; border-radius: 12px; color: white; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        button:hover { background: #333; }
+        body { margin: 0; background: #050505; overflow: hidden; font-family: sans-serif; }
+        canvas { position: absolute; }
+        .glass { 
+            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 320px; padding: 30px; border-radius: 20px;
+            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.2); text-align: center; color: white;
+        }
+        input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: none; background: rgba(255,255,255,0.2); color: white; }
+        button { width: 100%; padding: 12px; border-radius: 10px; border: none; background: #fff; font-weight: bold; cursor: pointer; }
     </style>
 </head>
 <body>
-    <canvas id="canvas"></canvas>
-    <div class="ui">
-        <div class="card">
-            <h2 id="title">MEDIA DOWNLOADER</h2>
-            <input type="text" id="url" placeholder="Paste link media...">
-            <button id="btn" onclick="handleDownload()">PROSES UNDUH</button>
-            <div id="status" style="margin-top:20px; font-size:0.8rem; color:#888;"></div>
-        </div>
+    <canvas id="c"></canvas>
+    <div class="glass">
+        <h3>Media Pro</h3>
+        <input type="text" id="url" placeholder="Paste link video...">
+        <button onclick="download()">UNDUH SEKARANG</button>
+        <p id="msg"></p>
     </div>
 
     <script>
-        // Animasi Latar Belakang (Geometris)
-        const canvas = document.getElementById('canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
-        // (Logika animasi partikel melayang tetap aktif)
+        // Animasi Partikel Mental-Mental
+        const c = document.getElementById('c'), ctx = c.getContext('2d');
+        c.width = window.innerWidth; c.height = window.innerHeight;
+        let p = Array.from({length: 20}, () => ({x: Math.random()*c.width, y: Math.random()*c.height, vx: Math.random()*2-1, vy: Math.random()*2-1}));
+        function draw() {
+            ctx.fillStyle = '#050505'; ctx.fillRect(0,0,c.width, c.height);
+            p.forEach(b => {
+                b.x += b.vx; b.y += b.vy;
+                if(b.x < 0 || b.x > c.width) b.vx *= -1;
+                if(b.y < 0 || b.y > c.height) b.vy *= -1;
+                ctx.fillStyle = 'rgba(255,255,255,0.3)'; ctx.beginPath(); ctx.arc(b.x, b.y, 5, 0, 7); ctx.fill();
+            });
+            requestAnimationFrame(draw);
+        }
+        draw();
 
-        async function handleDownload() {
+        // Fungsi Download Langsung ke Memori
+        async function download() {
+            const res = document.getElementById('msg');
+            res.innerText = "Mengunduh...";
             const url = document.getElementById('url').value;
-            const res = document.getElementById('status');
-            if(!url) return;
-            res.innerText = "Processing...";
+            const link = 'https://phillips-cholesterol-platforms-big.trycloudflare.com/download?url=' + encodeURIComponent(url);
             
-            try {
-                // Link Server Termux Anda
-                const API = 'https://phillips-cholesterol-platforms-big.trycloudflare.com/download?url=' + encodeURIComponent(url);
-                const response = await fetch(API);
-                const blob = await response.blob();
-                
-                // Trigger Download
-                const urlObject = window.URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                a.href = urlObject;
-                a.download = 'Media_Downloader_Pro.mp4';
-                a.click();
-                
-                res.innerText = "Download Selesai!";
-
-                // Fitur Share Native (Instagram, Telegram, Twitter, dll)
-                if (navigator.share) {
-                    const file = new File([blob], "media.mp4", { type: "video/mp4" });
-                    await navigator.share({
-                        title: 'Media Downloader Pro',
-                        text: 'Video dari Media Downloader Pro',
-                        files: [file]
-                    });
-                }
-            } catch(e) {
-                res.innerText = "Server Error: Pastikan Termux Aktif.";
-            }
+            const a = document.createElement('a');
+            a.href = link;
+            a.download = 'video.mp4';
+            document.body.appendChild(a);
+            a.click();
+            res.innerText = "Selesai! Cek folder Download.";
         }
     </script>
 </body>
