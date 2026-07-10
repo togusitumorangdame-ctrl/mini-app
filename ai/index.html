@@ -1,64 +1,86 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Media Pro Downloader</title>
     <style>
-        body { margin: 0; background: #050505; overflow: hidden; font-family: sans-serif; }
-        canvas { position: absolute; }
-        .glass { 
-            position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            width: 320px; padding: 30px; border-radius: 20px;
-            background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px);
-            border: 1px solid rgba(255, 255, 255, 0.2); text-align: center; color: white;
+        body { margin: 0; background: #050505; color: white; font-family: 'Inter', sans-serif; overflow: hidden; }
+        canvas { position: fixed; top: 0; left: 0; z-index: 0; }
+        .glass-container { 
+            position: relative; z-index: 1; display: flex; flex-direction: column; 
+            align-items: center; justify-content: center; height: 100vh; 
         }
-        input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: none; background: rgba(255,255,255,0.2); color: white; }
-        button { width: 100%; padding: 12px; border-radius: 10px; border: none; background: #fff; font-weight: bold; cursor: pointer; }
+        .card { 
+            width: 85%; max-width: 350px; padding: 30px; 
+            background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 25px;
+            text-align: center; box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+        }
+        input { 
+            width: 100%; padding: 14px; margin: 15px 0; border-radius: 12px; 
+            border: 1px solid #333; background: rgba(0,0,0,0.3); color: white; 
+            box-sizing: border-box; outline: none;
+        }
+        button { 
+            width: 100%; padding: 14px; border-radius: 12px; border: none; 
+            background: #ffffff; color: #000; font-weight: bold; cursor: pointer;
+            transition: 0.3s;
+        }
+        button:hover { background: #e0e0e0; }
+        #msg { margin-top: 15px; font-size: 0.85rem; color: #aaa; }
     </style>
 </head>
 <body>
-    <canvas id="c"></canvas>
-    <div class="glass">
-        <h3>Media Pro</h3>
-        <input type="text" id="url" placeholder="Paste link video...">
-        <button onclick="download()">UNDUH SEKARANG</button>
-        <p id="msg"></p>
+    <canvas id="canvas"></canvas>
+    
+    <div class="glass-container">
+        <div class="card">
+            <h2>Media Pro</h2>
+            <input type="text" id="url" placeholder="Paste link media...">
+            <button onclick="download()">UNDUH SEKARANG</button>
+            <p id="msg"></p>
+        </div>
     </div>
 
     <script>
-        // Animasi Partikel Mental-Mental
-        const c = document.getElementById('c'), ctx = c.getContext('2d');
-        c.width = window.innerWidth; c.height = window.innerHeight;
-        let p = Array.from({length: 20}, () => ({x: Math.random()*c.width, y: Math.random()*c.height, vx: Math.random()*2-1, vy: Math.random()*2-1}));
-        function draw() {
-            ctx.fillStyle = '#050505'; ctx.fillRect(0,0,c.width, c.height);
-            p.forEach(b => {
-                b.x += b.vx; b.y += b.vy;
-                if(b.x < 0 || b.x > c.width) b.vx *= -1;
-                if(b.y < 0 || b.y > c.height) b.vy *= -1;
-                ctx.fillStyle = 'rgba(255,255,255,0.3)'; ctx.beginPath(); ctx.arc(b.x, b.y, 5, 0, 7); ctx.fill();
+        // Animasi latar belakang partikel mental-mental
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth; canvas.height = window.innerHeight;
+        let particles = Array.from({length: 15}, () => ({
+            x: Math.random()*canvas.width, y: Math.random()*canvas.height,
+            vx: (Math.random()-0.5)*2, vy: (Math.random()-0.5)*2
+        }));
+
+        function animate() {
+            ctx.clearRect(0,0, canvas.width, canvas.height);
+            ctx.fillStyle = 'rgba(255,255,255,0.2)';
+            particles.forEach(p => {
+                p.x += p.vx; p.y += p.vy;
+                if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                ctx.beginPath(); ctx.arc(p.x, p.y, 4, 0, Math.PI*2); ctx.fill();
             });
-            requestAnimationFrame(draw);
+            requestAnimationFrame(animate);
         }
-        draw();
+        animate();
 
-        // Fungsi Download Langsung ke Memori
-        async function handleDownload() {
-    const url = document.getElementById('url').value;
-    const res = document.getElementById('status');
-    const API = 'https://phillips-cholesterol-platforms-big.trycloudflare.com/download?url=' + encodeURIComponent(url);
-
-    res.innerText = "Memproses...";
-    
-    const response = await fetch(API);
-    const data = await response.json();
-    
-    if(data.url) {
-        res.innerText = "Mengalihkan ke unduhan...";
-        // Teknik ini memaksa browser membuka file di tab baru dan browser akan otomatis menyimpan
-        window.location.href = data.url; 
-    } else {
-        res.innerText = "Gagal memproses.";
-    }
-                   }
+        // Fungsi Unduh Nyata
+        function download() {
+            const url = document.getElementById('url').value;
+            const res = document.getElementById('msg');
+            if(!url) return;
+            
+            res.innerText = "Memproses...";
+            
+            // GANTI LINK DI BAWAH INI DENGAN LINK CLOUDFLARE ANDA
+            const baseUrl = 'https://phillips-cholesterol-platforms-big.trycloudflare.com/download';
+            
+            // Mengarahkan browser langsung ke link download agar terunduh ke folder HP
+            window.location.href = `${baseUrl}?url=${encodeURIComponent(url)}`;
+            res.innerText = "Mengalihkan ke unduhan...";
+        }
     </script>
 </body>
 </html>
