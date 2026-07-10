@@ -41,19 +41,24 @@
         draw();
 
         // Fungsi Download Langsung ke Memori
-        async function download() {
-            const res = document.getElementById('msg');
-            res.innerText = "Mengunduh...";
-            const url = document.getElementById('url').value;
-            const link = 'https://phillips-cholesterol-platforms-big.trycloudflare.com/download?url=' + encodeURIComponent(url);
-            
-            const a = document.createElement('a');
-            a.href = link;
-            a.download = 'video.mp4';
-            document.body.appendChild(a);
-            a.click();
-            res.innerText = "Selesai! Cek folder Download.";
-        }
+        async function handleDownload() {
+    const url = document.getElementById('url').value;
+    const res = document.getElementById('status');
+    const API = 'https://phillips-cholesterol-platforms-big.trycloudflare.com/download?url=' + encodeURIComponent(url);
+
+    res.innerText = "Memproses...";
+    
+    const response = await fetch(API);
+    const data = await response.json();
+    
+    if(data.url) {
+        res.innerText = "Mengalihkan ke unduhan...";
+        // Teknik ini memaksa browser membuka file di tab baru dan browser akan otomatis menyimpan
+        window.location.href = data.url; 
+    } else {
+        res.innerText = "Gagal memproses.";
+    }
+                   }
     </script>
 </body>
 </html>
