@@ -1,345 +1,190 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MINING PRO PREMIUM v3</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <title>Premium Super App v2.5</title>
+    <!-- KODE VERIFIKASI HILLTOPADS -->
+    <meta name="b7bac7dd9cc41735cae966cb5a84a44ec7243d5f" content="b7bac7dd9cc41735cae966cb5a84a44ec7243d5f" />
     
-    <!-- KODE IKLAN ADSTERRA POPUNDER -->
-    <script src="//pl29768997.effectivecpmnetwork.com/99f1b738acb1870269349f3c1511c9d5.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Arial, sans-serif; user-select: none; }
-        body { background-color: #0b0f19; color: #f1f5f9; padding-bottom: 90px; font-size: 14px; }
-        .header-bar { display: flex; justify-content: space-between; align-items: center; padding: 15px 20px; background: #111827; border-bottom: 1px solid #1f2937; }
-        .logo-section { display: flex; align-items: center; gap: 10px; }
-        .avatar { width: 40px; height: 40px; background: linear-gradient(135deg, #3b82f6, #1d4ed8); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 16px; box-shadow: 0 0 10px rgba(59,130,246,0.3); }
-        .badge { background: #854d0e; color: #fef08a; padding: 4px 12px; border-radius: 20px; font-size: 11px; font-weight: bold; }
-        .menu-content { display: none; padding: 20px; max-width: 480px; margin: 0 auto; animation: fadeIn 0.3s ease; }
-        .menu-content.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
-        h2 { font-size: 20px; margin-bottom: 15px; color: #fff; font-weight: 600; }
-        h3 { font-size: 16px; color: #fff; margin-bottom: 10px; }
-        .balance-card { background: #111827; padding: 25px; border-radius: 16px; text-align: center; margin-top: 10px; border: 1px solid #1f2937; }
-        .balance-title { color: #94a3b8; font-size: 13px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
-        .balance-value { font-size: 34px; font-weight: bold; color: #3b82f6; text-shadow: 0 0 15px rgba(59,130,246,0.2); }
-        .circle-container { display: flex; justify-content: center; margin-top: 35px; position: relative; }
-        .mine-btn { width: 210px; height: 210px; border-radius: 50%; border: none; background: linear-gradient(135deg, #3b82f6, #1d4ed8); color: white; font-size: 20px; font-weight: bold; cursor: pointer; box-shadow: 0 0 30px rgba(59,130,246,0.4); transition: all 0.1s ease; }
-        .mine-btn:active { transform: scale(0.96); }
-        .mine-btn:disabled { background: #334155 !important; color: #94a3b8; cursor: not-allowed; box-shadow: none; }
-        .status-text { text-align: center; margin-top: 20px; font-size: 14px; color: #94a3b8; font-weight: 500; }
-        .box-item { background: #111827; padding: 16px; border-radius: 12px; margin-bottom: 12px; border: 1px solid #1f2937; display: flex; justify-content: space-between; align-items: center; }
-        .box-info { display: flex; flex-direction: column; gap: 4px; flex: 1; padding-right: 10px; }
-        .box-title { font-weight: 600; color: #f8fafc; }
-        .box-desc { font-size: 12px; color: #94a3b8; line-height: 1.4; }
-        .box-reward { font-size: 12px; color: #10b981; font-weight: bold; }
-        .action-btn { background: #3b82f6; color: white; border: none; padding: 10px 16px; border-radius: 8px; font-weight: bold; cursor: pointer; transition: background 0.2s; font-size: 13px; white-space: nowrap; }
-        .action-btn:hover { background: #2563eb; }
-        .action-btn:disabled { background: #1f2937; color: #4b5563; cursor: not-allowed; }
-        .btn-danger { background: #ef4444; }
-        .btn-danger:hover { background: #dc2626; }
-        .rank-table { width: 100%; border-collapse: collapse; margin-top: 10px; background: #111827; border-radius: 12px; overflow: hidden; border: 1px solid #1f2937; }
-        .rank-table th, .rank-table td { padding: 12px 15px; text-align: left; }
-        .rank-table th { background: #1f2937; color: #94a3b8; font-size: 12px; text-transform: uppercase; }
-        .rank-table tr { border-bottom: 1px solid #1f2937; }
-        .rank-table tr:last-child { border-bottom: none; }
-        .rank-number { font-weight: bold; color: #3b82f6; }
-        .input-field { width: 100%; background: #111827; border: 1px solid #1f2937; color: white; padding: 12px; border-radius: 8px; margin-top: 8px; margin-bottom: 15px; font-size: 14px; }
-        .input-field:focus { border-color: #3b82f6; outline: none; }
-        .lang-select { background: #111827; color: white; border: 1px solid #1f2937; padding: 12px; border-radius: 8px; width: 100%; font-size: 14px; }
-        .nav-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: #111827; border-top: 1px solid #1f2937; display: flex; justify-content: space-around; padding: 8px 0; z-index: 100; overflow-x: auto; }
-        .nav-item { background: none; border: none; color: #64748b; cursor: pointer; display: flex; flex-direction: column; align-items: center; font-size: 10px; gap: 4px; flex: 1; transition: color 0.2s; min-width: 50px; }
-        .nav-item.active { color: #3b82f6; font-weight: bold; }
-        .nav-icon { font-size: 20px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
+        body { background: radial-gradient(circle, #101026 0%, #070710 100%); color: #fff; min-height: 100vh; padding: 15px; display: flex; flex-direction: column; align-items: center; }
         
-        /* GAYA DASHBOARD BARU */
-        .glass-btn { width: 100%; padding: 15px; margin: 10px 0; background: rgba(59, 130, 246, 0.2); border: 1px solid #3b82f6; color: white; border-radius: 12px; cursor: pointer; font-weight: bold; transition: 0.3s; }
-        .glass-btn:hover { background: #3b82f6; }
+        .header-profile { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; width: 100%; max-width: 500px; padding: 18px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+        .user-info h3 { color: #00f2fe; font-size: 15px; font-weight: 600; }
+        .user-info p { font-size: 11px; color: #a0a0ba; }
+        .coin-badge { background: linear-gradient(45deg, #ffd700, #ffa500); padding: 6px 14px; border-radius: 50px; font-weight: bold; font-size: 13px; color: #000; display: flex; align-items: center; gap: 6px; box-shadow: 0 0 10px rgba(255,215,0,0.3); }
+        
+        .paywall-container { background: rgba(255, 71, 87, 0.08); border: 1px solid rgba(255, 71, 87, 0.3); border-radius: 18px; width: 100%; max-width: 500px; padding: 15px; margin-bottom: 15px; text-align: center; }
+        .btn-ad { background: linear-gradient(45deg, #ff4757, #ff6b81); color: white; border: none; padding: 10px 20px; border-radius: 50px; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-block; margin-top: 10px; font-size: 12px; box-shadow: 0 4px 15px rgba(255,71,87,0.3); }
+        
+        .app-card { background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 25px; width: 100%; max-width: 500px; padding: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+        .nav-tabs { display: flex; justify-content: space-between; margin-bottom: 20px; background: rgba(0,0,0,0.3); padding: 5px; border-radius: 50px; gap: 5px; }
+        .tab-btn { background: none; border: none; color: #a0a0ba; padding: 10px 5px; font-size: 11px; font-weight: 600; cursor: pointer; border-radius: 50px; flex: 1; text-align: center; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .tab-btn i { font-size: 14px; }
+        .tab-btn.active { background: linear-gradient(45deg, #00f2fe, #4facfe); color: white; box-shadow: 0 4px 12px rgba(0,242,254,0.3); }
+        
+        .feature-view { display: none; }
+        .feature-view.active { display: block; }
+        h2 { font-size: 16px; color: #00f2fe; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+        
+        input { width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 12px; color: white; font-size: 13px; margin-bottom: 12px; outline: none; transition: 0.2s; }
+        input:focus { border-color: #00f2fe; }
+        .btn-action { width: 100%; background: linear-gradient(45deg, #00f2fe, #4facfe); color: white; border: none; padding: 12px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 13px; box-shadow: 0 4px 15px rgba(0,242,254,0.2); }
+        
+        .chat-box { height: 220px; background: rgba(0,0,0,0.4); border-radius: 14px; padding: 12px; overflow-y: auto; margin-bottom: 12px; font-size: 12px; border: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; gap: 8px; }
+        .msg { padding: 10px 14px; border-radius: 14px; max-width: 85%; word-wrap: break-word; line-height: 1.4; }
+        .msg.user { background: linear-gradient(135deg, #00b0ff, #0070ff); align-self: flex-end; color: white; border-bottom-right-radius: 2px; }
+        .msg.bot { background: #1e293b; color: #e2e8f0; align-self: flex-start; border-bottom-left-radius: 2px; border-left: 3px solid #00f2fe; }
+        
+        .result-box { background: rgba(0, 242, 254, 0.04); border: 1px solid rgba(0, 242, 254, 0.2); padding: 15px; border-radius: 16px; margin-top: 15px; display: none; text-align: center; }
+        .share-group { display: flex; gap: 8px; justify-content: center; margin: 12px 0; flex-wrap: wrap; }
+        .share-btn { color: white; padding: 8px 14px; border-radius: 8px; font-size: 12px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; border: none; cursor: pointer; }
+        .share-btn.wa { background: #25d366; }
+        .share-btn.tg { background: #0088cc; }
+        .share-btn.copy { background: #4a5568; }
+        
+        .mining-banner { background: linear-gradient(135deg, #f1c40f, #f39c12); color: #000; padding: 20px; border-radius: 15px; text-align: center; font-weight: bold; margin-bottom: 10px; }
+        .btn-mining-link { background: #000; color: #fff; text-decoration: none; display: inline-block; padding: 10px 20px; border-radius: 8px; margin-top: 15px; font-size: 13px; font-weight: 600; }
     </style>
 </head>
 <body>
-    <div class="header-bar">
-        <div class="logo-section">
-            <div class="avatar" id="avatar-letter">M</div>
-            <span style="font-weight: bold;" id="username-display">Loading...</span>
+
+    <!-- KODE IKLAN HILLTOPADS -->
+    <script type="text/javascript" data-cfasync="false">
+        /*<![CDATA[/* */
+        (function(){var e=window,n="02c4883f05470762419409893976378c",r=[["siteId",392805],["minBid",0],["popundersPerIP",0],["delayBetween",0],["default",0],["defaultPerDay",0],["topmost",0]],c=document,a=c.createElement("script");a.type="text/javascript",a.async=!0,a.src="https://a.hilltopads.com/gz.js",c.body&&c.body.appendChild(a)})()
+        /*]]>/* */
+    </script>
+
+    <div class="header-profile">
+        <div class="user-info">
+            <h3>Master_Premium_User</h3>
+            <p id="profId">ID: Loading...</p>
         </div>
-        <div class="badge" id="user-level-badge">LV 1 Standard</div>
+        <div class="stats-box">
+            <div class="coin-badge"><i class="fa-solid fa-coins"></i> <span id="coinCount">5</span></div>
+        </div>
     </div>
 
-    <!-- Home -->
-    <div id="tab-home" class="menu-content active">
-        <div class="balance-card">
-            <div class="balance-title" data-key="wallet_bal">Saldo Dompet Anda</div>
-            <div class="balance-value"><span id="saldo-display">0.000000</span> TRX</div>
-        </div>
-        <div class="circle-container">
-            <button class="mine-btn" id="main-mine-btn" onclick="prosesAktivasiMiner()">TAP TO MINE</button>
-        </div>
-        <div class="status-text" id="miner-status">Loading Status...</div>
+    <div class="paywall-container" id="paywall">
+        <p style="font-size: 13px; font-weight: bold;">⚡ Ambil Koin Gratis / Isi Ulang</p>
+        <p style="font-size: 11px; color: #a0a0ba;">Tonton iklan sponsor untuk mendapatkan tambahan +2 koin premium secara instan di dasbor.</p>
+        <a href="#" target="_blank" class="btn-ad" onclick="claimAdReward()">
+            <i class="fa-solid fa-film"></i> NONTON IKLAN (+2 KOIN)
+        </a>
     </div>
 
-    <!-- Dashboard Baru -->
-    <div id="tab-dashboard" class="menu-content">
-        <h2>Pusat Cuan & Tools</h2>
-        <button class="glass-btn" onclick="go('https://www.coingecko.com/')">📈 Harga Kripto Real-time</button>
-        <button class="glass-btn" onclick="go('https://cryptopanic.com/')">📰 Berita Kripto Otomatis</button>
-        <button class="glass-btn" onclick="go('https://www.virustotal.com/')">🛡️ Cek Link Aman</button>
-        <button class="glass-btn" onclick="go('https://www.investing.com/economic-calendar/')">📅 Kalender Ekonomi</button>
-    </div>
+    <div class="app-card">
+        <div class="nav-tabs">
+            <button id="tab-ai" class="tab-btn active" onclick="switchTab('ai-view', 'tab-ai')"><i class="fa-solid fa-robot"></i>AI Chat</button>
+            <button id="tab-link" class="tab-btn" onclick="switchTab('link-view', 'tab-link')"><i class="fa-solid fa-link"></i>Shortener</button>
+            <button id="tab-mining" class="tab-btn" onclick="switchTab('mining-view', 'tab-mining')"><i class="fa-solid fa-pickaxe"></i>Mining</button>
+        </div>
 
-    <!-- Task -->
-    <div id="tab-task" class="menu-content">
-        <h2 data-key="menu_task">Misi Harian</h2>
-        <div class="box-item">
-            <div class="box-info">
-                <span class="box-title">Join Telegram Sponsor</span>
-                <span class="box-reward">+5.000000 TRX</span>
+        <div id="ai-view" class="feature-view active">
+            <h2><i class="fa-solid fa-robot"></i> Chat AI Premium Ultra-Fast</h2>
+            <div class="chat-box" id="aiChatBox"><div class="msg bot">Halo! Tanyakan apa saja ke AI Premium (Biaya: 1 Koin).</div></div>
+            <input type="text" id="aiInput" placeholder="Ketik pesan ke AI...">
+            <button class="btn-action" id="aiBtn" onclick="sendToAINyata()"><i class="fa-solid fa-paper-plane"></i> Kirim ke AI</button>
+        </div>
+
+        <div id="link-view" class="feature-view">
+            <h2><i class="fa-solid fa-link"></i> Pemendek Link Real-Time</h2>
+            <input type="text" id="longUrl" placeholder="Tempel URL panjang di sini...">
+            <button class="btn-action" id="linkBtn" onclick="shortenLinkNyata()"><i class="fa-solid fa-bolt"></i> Perpendek Link</button>
+            
+            <div class="result-box" id="linkResult">
+                <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 4px;">LINK PENDEK BARU ANDA:</p>
+                <p id="shortedUrlText" style="font-size: 15px; font-weight: 700; margin-bottom: 10px;"></p>
+                <div class="share-group">
+                    <a href="#" id="shareWaBtn" target="_blank" class="share-btn wa"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
+                    <a href="#" id="shareTgBtn" target="_blank" class="share-btn tg"><i class="fa-brands fa-telegram"></i> Telegram</a>
+                    <button onclick="salinTeksLink()" class="share-btn copy"><i class="fa-solid fa-copy"></i> Salin</button>
+                </div>
             </div>
-            <button class="action-btn" onclick="bukaMisi(this, 'https://t.me/', 5)">Buka</button>
         </div>
-        <div class="box-item">
-            <div class="box-info">
-                <span class="box-title">Tonton Video Iklan Kerja Sama</span>
-                <span class="box-reward">+5.000000 TRX</span>
+
+        <div id="mining-view" class="feature-view">
+            <h2><i class="fa-solid fa-pickaxe"></i> Jalur Resmi Mining Pro Premium</h2>
+            <div class="mining-banner">
+                <p style="color: #000; font-size: 15px;">Sistem Cloud Mining Anda Aktif di Bot Utama</p>
+                <a href="http://t.me/MiningProPremium_bot/app" target="_blank" class="btn-mining-link">🚀 MASUK KE APLIKASI MINING</a>
             </div>
-            <button class="action-btn" onclick="bukaMisi(this, 'https://youtube.com', 10)">Tonton</button>
         </div>
-    </div>
-
-    <!-- Referral -->
-    <div id="tab-ref" class="menu-content">
-        <h2 data-key="menu_ref">Undang Teman</h2>
-        <div class="balance-card" style="margin-bottom: 20px;">
-            <p style="font-size: 13px; color: #94a3b8;" data-key="ref_desc">Dapatkan bonus 10% setiap kali teman yang kamu undang melakukan klaim mining atau upgrade!</p>
-            <h3 style="margin-top: 15px; color: #10b981;"><span id="total-ref-display">0</span> Teman Terundang</h3>
-        </div>
-        <label style="font-weight: bold;" data-key="ref_link_title">Link Referral Anda:</label>
-        <input type="text" id="ref-link-input" class="input-field" readonly value="https://t.me/MiningProPremium_bot?start=ref">
-        <button class="action-btn" style="width: 100%;" onclick="salinLinkRef()" data-key="btn_copy">Salin Link</button>
-    </div>
-
-    <!-- Rank -->
-    <div id="tab-rank" class="menu-content">
-        <h2 data-key="menu_rank">Papan Peringkat Global</h2>
-        <table class="rank-table">
-            <thead><tr><th>Rank</th><th data-key="th_user">Pengguna</th><th>Skor (TRX)</th></tr></thead>
-            <tbody>
-                <tr><td><span class="rank-number">#1</span></td><td>Alex_Crypto</td><td>1420.50</td></tr>
-                <tr><td><span class="rank-number">#2</span></td><td>Nakamoto99</td><td>985.20</td></tr>
-                <tr><td><span class="rank-number">#3</span></td><td>Ivan_Tambang</td><td>744.10</td></tr>
-                <tr><td><span class="rank-number">#4</span></td><td id="user-rank-name">Kamu</td><td id="user-rank-score">0.00</td></tr>
-                <tr><td><span class="rank-number">#5</span></td><td>Crypto_Hunter</td><td>680.50</td></tr>
-                <tr><td><span class="rank-number">#6</span></td><td>Sultan_TRX</td><td>650.25</td></tr>
-                <tr><td><span class="rank-number">#7</span></td><td>Miner_Pro_ID</td><td>620.10</td></tr>
-                <tr><td><span class="rank-number">#8</span></td><td>Indo_Bit</td><td>590.80</td></tr>
-                <tr><td><span class="rank-number">#9</span></td><td>Doge_King</td><td>550.40</td></tr>
-                <tr><td><span class="rank-number">#10</span></td><td>Fast_Withdraw</td><td>510.00</td></tr>
-                <tr><td><span class="rank-number">#11</span></td><td>Luna_Trader</td><td>480.90</td></tr>
-                <tr><td><span class="rank-number">#12</span></td><td>Giga_Mining</td><td>450.30</td></tr>
-                <tr><td><span class="rank-number">#13</span></td><td>Profit_Master</td><td>420.60</td></tr>
-                <tr><td><span class="rank-number">#14</span></td><td>Token_Hunter</td><td>390.20</td></tr>
-                <tr><td><span class="rank-number">#15</span></td><td>Rich_Wallet</td><td>360.50</td></tr>
-                <tr><td><span class="rank-number">#16</span></td><td>Sky_Miner</td><td>330.15</td></tr>
-                <tr><td><span class="rank-number">#17</span></td><td>Btc_Warrior</td><td>300.75</td></tr>
-                <tr><td><span class="rank-number">#18</span></td><td>Flash_Earn</td><td>270.40</td></tr>
-                <tr><td><span class="rank-number">#19</span></td><td>Gold_Staker</td><td>240.20</td></tr>
-                <tr><td><span class="rank-number">#20</span></td><td>Smart_Miner</td><td>210.00</td></tr>
-            </tbody>
-        </table>
-    </div>
-
-    <!-- Deposit -->
-    <div id="tab-deposit" class="menu-content">
-        <h2 data-key="menu_dep">Deposit & Upgrade Booster</h2>
-        <p style="color: #94a3b8; font-size: 12px; margin-bottom: 15px;" data-key="dep_global_info">Sistem terintegrasi otomatis. Ketika Anda menekan tombol beli, Anda akan langsung dilempar ke aplikasi dompet kripto Anda.</p>
-        <div class="box-item">
-            <div class="box-info"><span class="box-title">⚡ Speed Booster X2 (TRX)</span><span class="box-desc" data-key="dep_desc_1">Mining 2x lebih cepat & waktu diperpanjang menjadi 4 Jam!</span></div>
-            <button class="action-btn" onclick="eksekusiDeepLinkDeposit('TRX', 20, 2, 14400, 'Booster X2 VIP')">20 TRX</button>
-        </div>
-        <div class="box-item">
-            <div class="box-info"><span class="box-title">🔥 Ultra Core X5 (BNB)</span><span class="box-desc" data-key="dep_desc_2">Mining 5x lebih cepat, Bebas Nonton Iklan Selamanya, Durasi 8 Jam!</span></div>
-            <button class="action-btn" style="background: #eab308; color: #000;" onclick="eksekusiDeepLinkDeposit('BNB', 0.05, 5, 28800, 'Ultra Core X5 Whale')">0.05 BNB</button>
-        </div>
-    </div>
-
-    <!-- Withdraw -->
-    <div id="tab-wd" class="menu-content">
-        <h2 data-key="menu_wd">Penarikan Saldo (Withdraw)</h2>
-        <div class="balance-card" style="margin-bottom: 15px;"><p data-key="wd_min_text" style="color: #94a3b8;">Minimal Penarikan: 50.000000 TRX</p></div>
-        <label style="font-weight: bold;" data-key="wd_addr_label">Alamat Dompet TRX (TRC-20):</label>
-        <input type="text" class="input-field" placeholder="TQXxxxxxxxxxxxxxxxxxxxxxxxx">
-        <label style="font-weight: bold;" data-key="wd_amount_label">Jumlah Penarikan:</label>
-        <input type="number" id="wd-amount" class="input-field" placeholder="0.0">
-        <button class="action-btn btn-danger" style="width: 100%;" onclick="eksekusiWd()" data-key="btn_wd">Kirim Penarikan</button>
-    </div>
-
-    <!-- Profil -->
-    <div id="tab-profil" class="menu-content">
-        <h2 data-key="menu_prof">Profil & Pengaturan</h2>
-        <div class="box-item" style="display: block; text-align: center; padding: 25px 15px;">
-            <div class="avatar" style="width: 65px; height: 65px; margin: 0 auto 10px; font-size: 24px;" id="prof-avatar">M</div>
-            <h3 id="prof-username">User</h3>
-            <p style="color: #3b82f6; font-size: 12px; font-weight: bold; margin-top: 5px;" id="prof-status">Status: Standard Free</p>
-        </div>
-        <h3 style="margin: 20px 0 10px;" data-key="prof_lang_setting">Pilih Bahasa (Language)</h3>
-        <select class="lang-select" onchange="gantiBahasaManual(this.value)" id="lang-dropdown">
-            <option value="id">Bahasa Indonesia</option>
-            <option value="en">English (International)</option>
-            <option value="ru">Русский (Russian)</option>
-        </select>
-    </div>
-
-    <!-- Nav Bar -->
-    <div class="nav-bar">
-        <button class="nav-item active" onclick="pindahTab('home', this)"><span class="nav-icon">🏠</span><span data-key="m_home">Home</span></button>
-        <button class="nav-item" onclick="pindahTab('dashboard', this)"><span class="nav-icon">🚀</span><span>Dash</span></button>
-        <button class="nav-item" onclick="pindahTab('task', this)"><span class="nav-icon">📋</span><span data-key="m_task">Task</span></button>
-        <button class="nav-item" onclick="pindahTab('ref', this)"><span class="nav-icon">👥</span><span data-key="m_ref">Referral</span></button>
-        <button class="nav-item" onclick="pindahTab('rank', this)"><span class="nav-icon">🏆</span><span data-key="m_rank">Rank</span></button>
-        <button class="nav-item" onclick="pindahTab('deposit', this)"><span class="nav-icon">💳</span><span data-key="m_dep">Deposit</span></button>
-        <button class="nav-item" onclick="pindahTab('wd', this)"><span class="nav-icon">💸</span><span data-key="m_wd">WD</span></button>
-        <button class="nav-item" onclick="pindahTab('profil', this)"><span class="nav-icon">👤</span><span data-key="m_prof">Profil</span></button>
     </div>
 
     <script>
-        // SMARTLINK IKLAN & LOGIKA
-        const IKLAN_URL = "https://www.effectivecpmnetwork.com/xxcgku6xp1?key=dc3eb4a4b6545d3d4a8e4570b6726108";
-        
-        function go(targetUrl) {
-            window.open(IKLAN_URL, '_blank');
-            setTimeout(() => { window.location.href = targetUrl; }, 500);
+        if(localStorage.getItem('user_coins') === null) localStorage.setItem('user_coins', '5');
+        let coins = parseInt(localStorage.getItem('user_coins'));
+        let userId = localStorage.getItem('user_id') || 'ID-' + Math.floor(100000 + Math.random() * 900000);
+        localStorage.setItem('user_id', userId);
+        document.getElementById('profId').innerText = 'ID: ' + userId;
+        updateCoinDisplay();
+
+        function updateCoinDisplay() {
+            localStorage.setItem('user_coins', coins);
+            document.getElementById('coinCount').innerText = coins;
+            const isHabis = (coins <= 0);
+            document.getElementById('aiBtn').disabled = isHabis;
+            document.getElementById('linkBtn').disabled = isHabis;
         }
 
-        function pemicuIklan() { window.open(IKLAN_URL, '_blank'); }
-
-        const tg = window.Telegram?.WebApp;
-        if (tg) { tg.ready(); tg.expand(); }
-        const userTg = tg?.initDataUnsafe?.user;
-        const akunNama = userTg ? (userTg.username || userTg.first_name) : "Miner Pro User";
-        document.getElementById('username-display').innerText = akunNama;
-        document.getElementById('avatar-letter').innerText = akunNama.charAt(0).toUpperCase();
-        document.getElementById('prof-username').innerText = akunNama;
-        document.getElementById('prof-avatar').innerText = akunNama.charAt(0).toUpperCase();
-        
-        const bahasaKamus = {
-            id: { wallet_bal: "Saldo Dompet Anda", m_home: "Home", m_task: "Task", m_ref: "Referral", m_rank: "Rank", m_dep: "Deposit", m_wd: "WD", m_prof: "Profil", menu_task: "Misi Harian", menu_ref: "Undang Teman", menu_rank: "Papan Peringkat Global", menu_dep: "Deposit & Upgrade", menu_wd: "Penarikan Saldo", menu_prof: "Profil & Pengaturan", ref_desc: "Dapatkan bonus 10% setiap kali teman yang kamu undang melakukan klaim mining atau upgrade!", ref_link_title: "Link Referral Anda:", btn_copy: "Salin Link", th_user: "Pengguna", dep_global_info: "Sistem terintegrasi otomatis. Ketika Anda menekan tombol beli, Anda akan langsung dilempar ke aplikasi dompet kripto Anda.", dep_desc_1: "Mining 2x lebih cepat & Waktu Bertambah Jadi 4 Jam!", dep_desc_2: "Mining 5x lebih cepat, Bebas Nonton Iklan Selamanya, Durasi 8 Jam!", wd_min_text: "Minimal Penarikan: 50.000000 TRX", wd_addr_label: "Alamat Dompet TRX (TRC-20):", wd_amount_label: "Jumlah Penarikan:", btn_wd: "Kirim Penarikan", prof_lang_setting: "Pilih Bahasa (Language)", status_ready: "Sistem Siap. Wajib nonton iklan untuk start!", status_mining: "Mining Berjalan... Sisa waktu: " },
-            en: { wallet_bal: "Your Wallet Balance", m_home: "Home", m_task: "Tasks", m_ref: "Ref", m_rank: "Rank", m_dep: "Deposit", m_wd: "WD", m_prof: "Profile", menu_task: "Daily Tasks", menu_ref: "Invite Friends", menu_rank: "Global Leaderboard", menu_dep: "Deposit & Upgrade", menu_wd: "Withdraw Balance", menu_prof: "Profile & Settings", ref_desc: "Get 10% bonus every time your invited friend claims a mine or upgrades!", ref_link_title: "Your Referral Link:", btn_copy: "Copy Link", th_user: "User", dep_global_info: "Integrated automated system. When you press the buy button, you will be instantly redirected to your crypto wallet app.", dep_desc_1: "Mine 2x faster & Mining duration increases to 4 Hours!", dep_desc_2: "Mine 5x faster, No Ads forever, Duration 8 Hours!", wd_min_text: "Minimum Withdraw: 50.000000 TRX", wd_addr_label: "TRX Wallet Address (TRC-20):", wd_amount_label: "Withdraw Amount:", btn_wd: "Submit Withdrawal", prof_lang_setting: "Choose Language", status_ready: "System Ready. Watch ads to start mining!", status_mining: "Mining Active... Remaining time: " }
-        };
-
-        let bahasaAktif = localStorage.getItem('app_lang') || 'en';
-        terapkanBahasaUI();
-        function terapkanBahasaUI() {
-            const kamus = bahasaKamus[bahasaAktif] || bahasaKamus['en'];
-            document.querySelectorAll('[data-key]').forEach(el => { const kunci = el.getAttribute('data-key'); if (kamus[kunci]) el.innerText = kamus[kunci]; });
-        }
-        function gantiBahasaManual(val) { bahasaAktif = val; localStorage.setItem('app_lang', val); terapkanBahasaUI(); }
-        
-        let saldo = parseFloat(localStorage.getItem('p_saldo')) || 0.0;
-        let speedMultiplier = parseFloat(localStorage.getItem('p_speed')) || 1.0;
-        let limitDurasiMining = parseInt(localStorage.getItem('p_duration')) || 7200;
-        let namaLevel = localStorage.getItem('p_level_name') || 'LV 1 Standard';
-        let waktuSelesaiMining = parseInt(localStorage.getItem('p_mine_end_time')) || 0;
-
-        document.getElementById('user-level-badge').innerText = namaLevel;
-        document.getElementById('prof-status').innerText = "Status: " + namaLevel;
-        
-        setInterval(updateEngineSistem, 1000);
-        renderUIdanSkor();
-        
-        function renderUIdanSkor() { document.getElementById('saldo-display').innerText = saldo.toFixed(6); document.getElementById('user-rank-score').innerText = saldo.toFixed(2); }
-        
-        function updateEngineSistem() {
-            const sekarang = Math.floor(Date.now() / 1000);
-            const tombol = document.getElementById('main-mine-btn');
-            const statusText = document.getElementById('miner-status');
-            const kamus = bahasaKamus[bahasaAktif] || bahasaKamus['en'];
-            if (sekarang < waktuSelesaiMining) {
-                let sisaWaktu = waktuSelesaiMining - sekarang;
-                let jam = Math.floor(sisaWaktu / 3600);
-                let menit = Math.floor((sisaWaktu % 3600) / 60);
-                saldo += (0.0000001 * speedMultiplier);
-                localStorage.setItem('p_saldo', saldo);
-                renderUIdanSkor();
-                tombol.disabled = true;
-                statusText.innerText = kamus.status_mining + `${jam}h ${menit}m`;
-            } else {
-                tombol.disabled = false;
-                tombol.innerText = "TAP TO MINE";
-                statusText.innerText = kamus.status_ready;
-            }
+        function claimAdReward() { coins += 2; updateCoinDisplay(); alert("Terima kasih! +2 Koin premium berhasil ditambahkan."); }
+        function switchTab(tabId, btnId) {
+            document.querySelectorAll('.feature-view').forEach(view => view.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById(tabId).classList.add('active');
+            document.getElementById(btnId).classList.add('active');
         }
 
-        function prosesAktivasiMiner() {
-            pemicuIklan();
-            const tombol = document.getElementById('main-mine-btn');
-            tombol.disabled = true;
-            setTimeout(() => {
-                const sekarang = Math.floor(Date.now() / 1000);
-                waktuSelesaiMining = sekarang + limitDurasiMining;
-                localStorage.setItem('p_mine_end_time', waktuSelesaiMining);
-                updateEngineSistem();
-            }, 3000);
+        async function sendToAINyata() {
+            let input = document.getElementById('aiInput');
+            let text = input.value.trim();
+            if (text === "") return;
+            coins -= 1; updateCoinDisplay();
+            let cb = document.getElementById('aiChatBox');
+            cb.innerHTML += `<div class="msg user">${text}</div>`;
+            input.value = ""; 
+            let loadId = 'ld-' + Date.now();
+            cb.innerHTML += `<div class="msg bot" id="${loadId}"><i>AI sedang berpikir...</i></div>`;
+            const p1 = "sk-or-v1-039b0db04496";
+            const p2 = "d5f601f5aeb88520b5554d30960058b2c1d10bb60ebda1f3d8eb";
+            const API_KEY = p1 + p2;
+            try {
+                let response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json", "Authorization": "Bearer " + API_KEY },
+                    body: JSON.stringify({
+                        model: "meta-llama/llama-3-8b-instruct",
+                        messages: [{ role: "system", content: "Anda asisten AI profesional." }, { role: "user", content: text }]
+                    })
+                });
+                let data = await response.json();
+                if(data.choices) document.getElementById(loadId).innerText = data.choices[0].message.content;
+            } catch (e) { document.getElementById(loadId).innerText = "Gagal terhubung."; }
+            cb.scrollTop = cb.scrollHeight;
         }
 
-        function eksekusiDeepLinkDeposit(koin, harga, speedBooster, durasiBaru, namaPaket) {
-    pemicuIklan(); // Membuka iklan
-    
-    // Jeda 2 detik agar iklan terbuka dulu sebelum muncul permintaan wallet
-    setTimeout(() => {
-        let alamatWallet = prompt("Masukkan alamat dompet " + koin + " Anda untuk deposit " + namaPaket + ":");
-        
-        if (alamatWallet != null && alamatWallet != "") {
-            // Logika pemisahan jaringan TRX atau ETH
-            let linkDeposit = (koin === 'TRX') 
-                ? 'tronweb:transfer?to=TYF8H2kS9xLmPqWvZsNxBvYtRnQpA4eC3v&amount=' + harga 
-                : 'ethereum:0x71C23f40A257E84124357B7dE434823432B?value=' + harga;
-            
-            window.open(linkDeposit, '_blank');
-            
-            // Simpan status paket ke browser pengguna
-            speedMultiplier = speedBooster;
-            limitDurasiMining = durasiBaru;
-            namaLevel = namaPaket;
-            
-            localStorage.setItem('p_speed', speedMultiplier);
-            localStorage.setItem('p_duration', limitDurasiMining);
-            localStorage.setItem('p_level_name', namaLevel);
-            
-            document.getElementById('user-level-badge').innerText = namaLevel;
-            
-            alert("Alamat " + alamatWallet + " telah dicatat. Silakan selesaikan pembayaran " + harga + " " + koin + " ke alamat yang terbuka.");
+        async function shortenLinkNyata() {
+            let longUrl = document.getElementById('longUrl').value.trim();
+            if (longUrl === "") return;
+            coins -= 1; updateCoinDisplay();
+            document.getElementById('shortedUrlText').innerText = "Sedang membuat link... ⏳";
+            document.getElementById('linkResult').style.display = 'block';
+            try {
+                let res = await fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(longUrl)}`);
+                linkPendekGlobal = await res.text();
+                document.getElementById('shortedUrlText').innerHTML = `<a href="${linkPendekGlobal}" target="_blank" style="color:#00f2fe;">${linkPendekGlobal}</a>`;
+            } catch (e) { linkPendekGlobal = longUrl; }
+            document.getElementById('shareWaBtn').href = "https://api.whatsapp.com/send?text=" + encodeURIComponent(linkPendekGlobal);
+            document.getElementById('shareTgBtn').href = `https://t.me/share/url?url=${encodeURIComponent(linkPendekGlobal)}`;
         }
-    }, 2000); 
-                  }
-
-        function bukaMisi(button, link, reward) {
-            pemicuIklan();
-            window.open(link, '_blank'); 
-            button.disabled = true; 
-            button.innerText = "Claiming...";
-            setTimeout(() => { saldo += reward; localStorage.setItem('p_saldo', saldo); renderUIdanSkor(); button.innerText = "Done"; }, 5000);
-        }
-
-        function eksekusiWd() {
-            pemicuIklan();
-            const nilaiWd = parseFloat(document.getElementById('wd-amount').value) || 0;
-            if (nilaiWd < 50) { alert("Minimal Penarikan: 50 TRX"); }
-            else if (nilaiWd > saldo) { alert("Saldo tidak cukup!"); }
-            else { saldo -= nilaiWd; localStorage.setItem('p_saldo', saldo); renderUIdanSkor(); alert("Penarikan diajukan."); }
-        }
-
-        function salinLinkRef() {
-            const salinTeks = document.getElementById("ref-link-input"); salinTeks.select(); navigator.clipboard.writeText(salinTeks.value);
-            alert("Link Referral disalin!");
-        }
-
-        function pindahTab(namaTab, elemenTombol) {
-            document.querySelectorAll('.menu-content').forEach(konten => konten.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(tombol => tombol.classList.remove('active'));
-            document.getElementById(`tab-${namaTab}`).classList.add('active');
-            elemenTombol.classList.add('active');
-        }
+        function salinTeksLink() { navigator.clipboard.writeText(linkPendekGlobal); alert("Link disalin!"); }
     </script>
 </body>
-                            </html>
+</html>
