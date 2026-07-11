@@ -182,7 +182,7 @@
                     method: "POST",
                     headers: { "Content-Type": "application/json", "Authorization": "Bearer " + API_KEY },
                     body: JSON.stringify({
-                        model: "meta-llama/llama-3-8b-instruct",
+                        model: "nvidia/nemotron-3-nano-30b-a3b:free",
                         messages: chatHistory
                     })
                 });
@@ -192,7 +192,7 @@
                     document.getElementById(loadId).innerText = reply;
                     chatHistory.push({ role: "assistant", content: reply });
                 }
-            } catch (e) { document.getElementById(loadId).innerText = "Gagal terhubung."; }
+            } catch (e) { document.getElementById(loadId).innerText = "ERROR: " + e.message; }
             cb.scrollTop = cb.scrollHeight;
         }
 
