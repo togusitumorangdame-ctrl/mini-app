@@ -262,8 +262,9 @@
                             resultDiv.innerText = "✅ AMAN: URL bersih dari ancaman.";
                         }
                     }, 4000);
-                } catch (e) { resultDiv.innerText = "❌ Error: Tidak dapat terhubung ke pusat keamanan."; }
-            });
+                } catch (e) { 
+    resultDiv.innerText = "ERROR DETAIL: " + e.message + " | Status: " + e.status; 
+                }
         }
 
         function salinTeksLink() { navigator.clipboard.writeText(linkPendekGlobal); alert("Link disalin!"); }
