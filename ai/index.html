@@ -48,7 +48,7 @@
         .share-btn.tg { background: #0088cc; }
         .share-btn.copy { background: #4a5568; }
         
-        #aiImageResult { width: 100%; border-radius: 14px; margin-top: 15px; display: none; border: 2px solid rgba(0,242,254,0.2); }
+        #aiImageResult, #qrResult { width: 100%; border-radius: 14px; margin-top: 15px; display: none; border: 2px solid rgba(0,242,254,0.2); }
     </style>
 </head>
 <body>
@@ -59,7 +59,7 @@
 
     <div class="header-profile">
         <div class="user-info">
-            <h3>Master_Premium_User</h3>
+            <h3 id="ui-title-user">Master_Premium_User</h3>
             <p id="profId">ID: Loading...</p>
         </div>
         <div class="stats-box">
@@ -68,10 +68,10 @@
     </div>
 
     <div class="paywall-container" id="paywall">
-        <p style="font-size: 13px; font-weight: bold;">⚡ Ambil Koin Gratis / Isi Ulang</p>
-        <p style="font-size: 11px; color: #a0a0ba;">Tonton iklan untuk mendapatkan tambahan +5 koin premium secara instan.</p>
+        <p id="ui-paywall-text" style="font-size: 13px; font-weight: bold;">⚡ Ambil Koin Gratis / Isi Ulang</p>
+        <p id="ui-paywall-sub" style="font-size: 11px; color: #a0a0ba;">Tonton iklan untuk mendapatkan tambahan +5 koin premium secara instan.</p>
         <a href="#" class="btn-ad" onclick="claimAdReward()">
-            <i class="fa-solid fa-film"></i> NONTON IKLAN (+5 KOIN)
+            <i class="fa-solid fa-film"></i> <span id="ui-ad-btn">NONTON IKLAN (+5 KOIN)</span>
         </a>
     </div>
 
@@ -80,6 +80,7 @@
             <button id="tab-ai" class="tab-btn active" onclick="switchTab('ai-view', 'tab-ai')"><i class="fa-solid fa-robot"></i>AI Chat</button>
             <button id="tab-link" class="tab-btn" onclick="switchTab('link-view', 'tab-link')"><i class="fa-solid fa-link"></i>Shortener</button>
             <button id="tab-img" class="tab-btn" onclick="switchTab('img-view', 'tab-img')"><i class="fa-solid fa-image"></i>AI Image</button>
+            <button id="tab-qr" class="tab-btn" onclick="switchTab('qr-view', 'tab-qr')"><i class="fa-solid fa-qrcode"></i>QR Code</button>
             <button id="tab-scam" class="tab-btn" onclick="switchTab('scam-view', 'tab-scam')"><i class="fa-solid fa-shield-halved"></i>Scam Shield</button>
         </div>
 
@@ -112,6 +113,13 @@
             <img id="aiImageResult" src="" alt="Hasil Gambar AI">
         </div>
 
+        <div id="qr-view" class="feature-view">
+            <h2><i class="fa-solid fa-qrcode"></i> QR Code Generator (5 Koin)</h2>
+            <input type="text" id="qrText" placeholder="Masukkan URL atau teks untuk QR...">
+            <button class="btn-action" onclick="processQrRequest()"><i class="fa-solid fa-qrcode"></i> Buat QR Code</button>
+            <img id="qrResult" src="" alt="Hasil QR Code">
+        </div>
+
         <div id="scam-view" class="feature-view">
             <h2><i class="fa-solid fa-shield-halved"></i> Scam Shield (5 Koin)</h2>
             <input type="text" id="scamUrl" placeholder="https://web-telegram-scam.com...">
@@ -121,6 +129,26 @@
     </div>
 
     <script>
+        // Sistem Multi-Bahasa
+        const userLang = navigator.language || navigator.userLanguage;
+        const translations = {
+            'id': {
+                title: 'Master_Premium_User', paywall: '⚡ Ambil Koin Gratis / Isi Ulang',
+                sub: 'Tonton iklan untuk mendapatkan tambahan +5 koin premium secara instan.',
+                ad: 'NONTON IKLAN (+5 KOIN)'
+            },
+            'en': {
+                title: 'Premium_User', paywall: '⚡ Get Free Coins / Refill',
+                sub: 'Watch ads to get an additional +5 premium coins instantly.',
+                ad: 'WATCH ADS (+5 COINS)'
+            }
+        };
+        const lang = userLang.startsWith('id') ? 'id' : 'en';
+        document.getElementById('ui-title-user').innerText = translations[lang].title;
+        document.getElementById('ui-paywall-text').innerText = translations[lang].paywall;
+        document.getElementById('ui-paywall-sub').innerText = translations[lang].sub;
+        document.getElementById('ui-ad-btn').innerText = translations[lang].ad;
+
         let chatHistory = [{ role: "system", content: "Anda adalah asisten AI yang cerdas, mahir berbahasa Indonesia, dan sangat membantu." }];
         if(localStorage.getItem('user_coins') === null) localStorage.setItem('user_coins', '5');
         let coins = parseInt(localStorage.getItem('user_coins'));
@@ -138,7 +166,7 @@
             show_11267753().then(() => {
                 coins += 5; 
                 updateCoinDisplay(); 
-                alert("Terima kasih! +5 Koin premium berhasil ditambahkan."); 
+                alert(lang === 'id' ? "Terima kasih! +5 Koin premium berhasil ditambahkan." : "Thank you! +5 premium coins added."); 
             });
         }
 
@@ -150,18 +178,30 @@
         }
 
         function sendToAINyata() {
-            if(coins < 1) return alert("Koin tidak cukup! Nonton iklan dulu.");
+            if(coins < 1) return alert(lang === 'id' ? "Koin tidak cukup! Nonton iklan dulu." : "Not enough coins! Watch ads first.");
             processAiLogic();
         }
 
         function processLinkRequest() {
-            if(coins < 1) return alert("Koin tidak cukup! Nonton iklan dulu.");
+            if(coins < 1) return alert(lang === 'id' ? "Koin tidak cukup! Nonton iklan dulu." : "Not enough coins! Watch ads first.");
             show_11267753().then(() => { shortenLinkNyata(); });
         }
 
         function processImgRequest() {
-            if(coins < 5) return alert("Butuh 5 koin untuk fitur ini!");
+            if(coins < 5) return alert(lang === 'id' ? "Butuh 5 koin untuk fitur ini!" : "Need 5 coins for this feature!");
             show_11267753().then(() => { generateImageNyata(); });
+        }
+
+        function processQrRequest() {
+            if(coins < 5) return alert(lang === 'id' ? "Butuh 5 koin untuk fitur ini!" : "Need 5 coins for this feature!");
+            show_11267753().then(() => {
+                coins -= 5; updateCoinDisplay();
+                let txt = document.getElementById('qrText').value.trim();
+                if(!txt) return alert("Masukkan teks!");
+                let img = document.getElementById('qrResult');
+                img.src = "https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=" + encodeURIComponent(txt);
+                img.style.display = 'block';
+            });
         }
 
         async function processAiLogic() {
@@ -176,7 +216,6 @@
             cb.innerHTML += `<div class="msg bot" id="${loadId}"><i>AI sedang berpikir...</i></div>`;
             chatHistory.push({ role: "user", content: text });
             
-            // API KEY AI
             const p1 = "sk-or-v1-95fcacb6868";
             const p2 = "1769fc87d125615b04c100f7440bd962df29b5b8db92136811a17";
             const API_KEY = p1 + p2;
