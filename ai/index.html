@@ -7,6 +7,16 @@
     <!-- SDK MONETAG -->
     <script src='//libtl.com/sdk.js' data-zone='11267753' data-sdk='show_11267753'></script>
     
+    <!-- SCRIPT IKLAN TELEGRAM -->
+    <script src="https://richinfo.co/richpartners/telegram/js/tg-ob.js"></script>
+    <script>
+        window.TelegramAdsController = new TelegramAdsController();
+        window.TelegramAdsController.initialize({
+            pubId: "1017538",
+            appId: "8115",
+        });
+    </script>
+    
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -163,7 +173,8 @@
         }
 
         function claimAdReward() { 
-            show_11267753().then(() => {
+            // Integrasi Iklan Telegram
+            window.TelegramAdsController.show().then(() => {
                 coins += 5; 
                 updateCoinDisplay(); 
                 alert(lang === 'id' ? "Terima kasih! +5 Koin premium berhasil ditambahkan." : "Thank you! +5 premium coins added."); 
