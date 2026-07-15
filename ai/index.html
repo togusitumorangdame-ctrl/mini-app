@@ -5,21 +5,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Premium Super App v2.5</title>
     
-    <!-- SDK TELEGRAM ADS ONLY -->
+    <!-- SDK TELEGRAM ADS TERBARU -->
     <script src="https://richinfo.co/richpartners/telegram/js/tg-ob.js"></script>
     <script>
         window.TelegramAdsController = new TelegramAdsController();
         window.TelegramAdsController.initialize({
             pubId: "1017538",
-            appId: "8115",
+            appId: "8116",
         });
 
-        // FUNGSI PENGELOLA IKLAN
+        // FUNGSI PENGELOLA IKLAN YANG DIOPTIMALKAN
         function showTelegramAd() {
             return new Promise((resolve) => {
                 if (typeof window.TelegramAdsController !== 'undefined') {
-                    window.TelegramAdsController.show().then(resolve).catch(resolve);
+                    console.log("Memuat iklan untuk AppID 8116...");
+                    window.TelegramAdsController.show().then(() => {
+                        console.log("Iklan berhasil ditampilkan.");
+                        resolve();
+                    }).catch((err) => {
+                        console.error("Iklan gagal dimuat:", err);
+                        resolve();
+                    });
                 } else {
+                    console.error("SDK Iklan belum terinisialisasi.");
                     resolve();
                 }
             });
@@ -222,7 +230,6 @@
             cb.innerHTML += `<div class="msg bot" id="${loadId}"><i>AI sedang berpikir...</i></div>`;
             chatHistory.push({ role: "user", content: text });
             
-            // API KEY DIPISAH P1 DAN P2 SEPERTI KODE LAMA
             const p1 = "sk-or-v1-95fcacb6868";
             const p2 = "1769fc87d125615b04c100f7440bd962df29b5b8db92136811a17";
             const API_KEY = p1 + p2;
