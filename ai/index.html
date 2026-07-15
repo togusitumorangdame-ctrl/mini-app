@@ -5,8 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Premium Super App v2.5</title>
     
-    <!-- SDK MONETAG & TELEGRAM ADS -->
-    <script src='//libtl.com/sdk.js' data-zone='11267753' data-sdk='show_11267753'></script>
+    <!-- SDK TELEGRAM ADS ONLY -->
     <script src="https://richinfo.co/richpartners/telegram/js/tg-ob.js"></script>
     <script>
         window.TelegramAdsController = new TelegramAdsController();
@@ -15,21 +14,11 @@
             appId: "8115",
         });
 
-        // FUNGSI PENGELOLA IKLAN YANG AMAN
+        // FUNGSI PENGELOLA IKLAN
         function showTelegramAd() {
             return new Promise((resolve) => {
                 if (typeof window.TelegramAdsController !== 'undefined') {
                     window.TelegramAdsController.show().then(resolve).catch(resolve);
-                } else {
-                    resolve();
-                }
-            });
-        }
-
-        function showMonetagAd() {
-            return new Promise((resolve) => {
-                if (typeof show_11267753 === 'function') {
-                    show_11267753().then(resolve).catch(resolve);
                 } else {
                     resolve();
                 }
@@ -82,10 +71,6 @@
     </style>
 </head>
 <body>
-
-    <script type="text/javascript" data-cfasync="false">
-        (function(){var e=window,n="02c4883f05470762419409893976378c",r=[["siteId",392805],["minBid",0],["popundersPerIP",0],["delayBetween",0],["default",0],["defaultPerDay",0],["topmost",0]],c=document,a=c.createElement("script");a.type="text/javascript",a.async=!0,a.src="https://a.hilltopads.com/gz.js",c.body&&c.body.appendChild(a)})()
-    </script>
 
     <div class="header-profile">
         <div class="user-info">
@@ -159,19 +144,10 @@
     </div>
 
     <script>
-        // Sistem Multi-Bahasa
         const userLang = navigator.language || navigator.userLanguage;
         const translations = {
-            'id': {
-                title: 'Master_Premium_User', paywall: '⚡ Ambil Koin Gratis / Isi Ulang',
-                sub: 'Tonton iklan untuk mendapatkan tambahan +5 koin premium secara instan.',
-                ad: 'NONTON IKLAN (+5 KOIN)'
-            },
-            'en': {
-                title: 'Premium_User', paywall: '⚡ Get Free Coins / Refill',
-                sub: 'Watch ads to get an additional +5 premium coins instantly.',
-                ad: 'WATCH ADS (+5 COINS)'
-            }
+            'id': { title: 'Master_Premium_User', paywall: '⚡ Ambil Koin Gratis / Isi Ulang', sub: 'Tonton iklan untuk mendapatkan tambahan +5 koin premium secara instan.', ad: 'NONTON IKLAN (+5 KOIN)' },
+            'en': { title: 'Premium_User', paywall: '⚡ Get Free Coins / Refill', sub: 'Watch ads to get an additional +5 premium coins instantly.', ad: 'WATCH ADS (+5 COINS)' }
         };
         const lang = userLang.startsWith('id') ? 'id' : 'en';
         document.getElementById('ui-title-user').innerText = translations[lang].title;
@@ -192,7 +168,6 @@
             document.getElementById('coinCount').innerText = coins;
         }
 
-        // FUNGSI IKLAN
         function claimAdReward() { 
             showTelegramAd().then(() => {
                 coins += 5; 
@@ -215,17 +190,17 @@
 
         function processLinkRequest() {
             if(coins < 1) return alert(lang === 'id' ? "Koin tidak cukup! Nonton iklan dulu." : "Not enough coins! Watch ads first.");
-            showMonetagAd().then(() => { shortenLinkNyata(); });
+            showTelegramAd().then(() => { shortenLinkNyata(); });
         }
 
         function processImgRequest() {
             if(coins < 5) return alert(lang === 'id' ? "Butuh 5 koin untuk fitur ini!" : "Need 5 coins for this feature!");
-            showMonetagAd().then(() => { generateImageNyata(); });
+            showTelegramAd().then(() => { generateImageNyata(); });
         }
 
         function processQrRequest() {
             if(coins < 5) return alert(lang === 'id' ? "Butuh 5 koin untuk fitur ini!" : "Need 5 coins for this feature!");
-            showMonetagAd().then(() => {
+            showTelegramAd().then(() => {
                 coins -= 5; updateCoinDisplay();
                 let txt = document.getElementById('qrText').value.trim();
                 if(!txt) return alert("Masukkan teks!");
@@ -247,6 +222,7 @@
             cb.innerHTML += `<div class="msg bot" id="${loadId}"><i>AI sedang berpikir...</i></div>`;
             chatHistory.push({ role: "user", content: text });
             
+            // API KEY DIPISAH P1 DAN P2 SEPERTI KODE LAMA
             const p1 = "sk-or-v1-95fcacb6868";
             const p2 = "1769fc87d125615b04c100f7440bd962df29b5b8db92136811a17";
             const API_KEY = p1 + p2;
@@ -293,7 +269,7 @@
 
         async function checkTelegramScam() {
             if(coins < 5) return alert("Butuh 5 koin untuk analisis forensik!");
-            showMonetagAd().then(() => {
+            showTelegramAd().then(() => {
                 coins -= 5; updateCoinDisplay();
                 const targetUrl = document.getElementById('scamUrl').value.trim();
                 const resultDiv = document.getElementById('scamResult');
