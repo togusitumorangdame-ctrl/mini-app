@@ -4,8 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Premium Super App v2.5</title>
-    <!-- KODE VERIFIKASI HILLTOPADS -->
-    <meta name="b7bac7dd9cc41735cae966cb5a84a44ec7243d5f" content="b7bac7dd9cc41735cae966cb5a84a44ec7243d5f" />
+    
+    <!-- SDK TELEGRAM ADS ONLY -->
+    <script src="https://richinfo.co/richpartners/telegram/js/tg-ob.js"></script>
+    <script>
+        window.TelegramAdsController = new TelegramAdsController();
+        window.TelegramAdsController.initialize({
+            pubId: "1017538",
+            appId: "8115",
+        });
+
+        // FUNGSI PENGELOLA IKLAN
+        function showTelegramAd() {
+            return new Promise((resolve) => {
+                if (typeof window.TelegramAdsController !== 'undefined') {
+                    window.TelegramAdsController.show().then(resolve).catch(resolve);
+                } else {
+                    resolve();
+                }
+            });
+        }
+    </script>
     
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -23,9 +42,9 @@
         .btn-ad { background: linear-gradient(45deg, #ff4757, #ff6b81); color: white; border: none; padding: 10px 20px; border-radius: 50px; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-block; margin-top: 10px; font-size: 12px; box-shadow: 0 4px 15px rgba(255,71,87,0.3); }
         
         .app-card { background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 25px; width: 100%; max-width: 500px; padding: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
-        .nav-tabs { display: flex; justify-content: space-between; margin-bottom: 20px; background: rgba(0,0,0,0.3); padding: 5px; border-radius: 50px; gap: 5px; }
-        .tab-btn { background: none; border: none; color: #a0a0ba; padding: 10px 5px; font-size: 11px; font-weight: 600; cursor: pointer; border-radius: 50px; flex: 1; text-align: center; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-        .tab-btn i { font-size: 14px; }
+        .nav-tabs { display: flex; justify-content: space-between; margin-bottom: 20px; background: rgba(0,0,0,0.3); padding: 5px; border-radius: 50px; gap: 5px; flex-wrap: wrap; }
+        .tab-btn { background: none; border: none; color: #a0a0ba; padding: 10px 5px; font-size: 10px; font-weight: 600; cursor: pointer; border-radius: 50px; flex: 1; text-align: center; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .tab-btn i { font-size: 12px; }
         .tab-btn.active { background: linear-gradient(45deg, #00f2fe, #4facfe); color: white; box-shadow: 0 4px 12px rgba(0,242,254,0.3); }
         
         .feature-view { display: none; }
@@ -48,22 +67,14 @@
         .share-btn.tg { background: #0088cc; }
         .share-btn.copy { background: #4a5568; }
         
-        .mining-banner { background: linear-gradient(135deg, #f1c40f, #f39c12); color: #000; padding: 20px; border-radius: 15px; text-align: center; font-weight: bold; margin-bottom: 10px; }
-        .btn-mining-link { background: #000; color: #fff; text-decoration: none; display: inline-block; padding: 10px 20px; border-radius: 8px; margin-top: 15px; font-size: 13px; font-weight: 600; }
+        #aiImageResult, #qrResult { width: 100%; border-radius: 14px; margin-top: 15px; display: none; border: 2px solid rgba(0,242,254,0.2); }
     </style>
 </head>
 <body>
 
-    <!-- KODE IKLAN HILLTOPADS -->
-    <script type="text/javascript" data-cfasync="false">
-        /*<![CDATA[/* */
-        (function(){var e=window,n="02c4883f05470762419409893976378c",r=[["siteId",392805],["minBid",0],["popundersPerIP",0],["delayBetween",0],["default",0],["defaultPerDay",0],["topmost",0]],c=document,a=c.createElement("script");a.type="text/javascript",a.async=!0,a.src="https://a.hilltopads.com/gz.js",c.body&&c.body.appendChild(a)})()
-        /*]]>/* */
-    </script>
-
     <div class="header-profile">
         <div class="user-info">
-            <h3>Master_Premium_User</h3>
+            <h3 id="ui-title-user">Master_Premium_User</h3>
             <p id="profId">ID: Loading...</p>
         </div>
         <div class="stats-box">
@@ -72,10 +83,10 @@
     </div>
 
     <div class="paywall-container" id="paywall">
-        <p style="font-size: 13px; font-weight: bold;">⚡ Ambil Koin Gratis / Isi Ulang</p>
-        <p style="font-size: 11px; color: #a0a0ba;">Tonton iklan sponsor untuk mendapatkan tambahan +2 koin premium secara instan di dasbor.</p>
-        <a href="#" target="_blank" class="btn-ad" onclick="claimAdReward()">
-            <i class="fa-solid fa-film"></i> NONTON IKLAN (+2 KOIN)
+        <p id="ui-paywall-text" style="font-size: 13px; font-weight: bold;">⚡ Ambil Koin Gratis / Isi Ulang</p>
+        <p id="ui-paywall-sub" style="font-size: 11px; color: #a0a0ba;">Tonton iklan untuk mendapatkan tambahan +5 koin premium secara instan.</p>
+        <a href="#" class="btn-ad" onclick="claimAdReward()">
+            <i class="fa-solid fa-film"></i> <span id="ui-ad-btn">NONTON IKLAN (+5 KOIN)</span>
         </a>
     </div>
 
@@ -83,7 +94,9 @@
         <div class="nav-tabs">
             <button id="tab-ai" class="tab-btn active" onclick="switchTab('ai-view', 'tab-ai')"><i class="fa-solid fa-robot"></i>AI Chat</button>
             <button id="tab-link" class="tab-btn" onclick="switchTab('link-view', 'tab-link')"><i class="fa-solid fa-link"></i>Shortener</button>
-            <button id="tab-mining" class="tab-btn" onclick="switchTab('mining-view', 'tab-mining')"><i class="fa-solid fa-pickaxe"></i>Mining</button>
+            <button id="tab-img" class="tab-btn" onclick="switchTab('img-view', 'tab-img')"><i class="fa-solid fa-image"></i>AI Image</button>
+            <button id="tab-qr" class="tab-btn" onclick="switchTab('qr-view', 'tab-qr')"><i class="fa-solid fa-qrcode"></i>QR Code</button>
+            <button id="tab-scam" class="tab-btn" onclick="switchTab('scam-view', 'tab-scam')"><i class="fa-solid fa-shield-halved"></i>Scam Shield</button>
         </div>
 
         <div id="ai-view" class="feature-view active">
@@ -96,8 +109,7 @@
         <div id="link-view" class="feature-view">
             <h2><i class="fa-solid fa-link"></i> Pemendek Link Real-Time</h2>
             <input type="text" id="longUrl" placeholder="Tempel URL panjang di sini...">
-            <button class="btn-action" id="linkBtn" onclick="shortenLinkNyata()"><i class="fa-solid fa-bolt"></i> Perpendek Link</button>
-            
+            <button class="btn-action" id="linkBtn" onclick="processLinkRequest()"><i class="fa-solid fa-bolt"></i> Perpendek Link</button>
             <div class="result-box" id="linkResult">
                 <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 4px;">LINK PENDEK BARU ANDA:</p>
                 <p id="shortedUrlText" style="font-size: 15px; font-weight: 700; margin-bottom: 10px;"></p>
@@ -109,16 +121,41 @@
             </div>
         </div>
 
-        <div id="mining-view" class="feature-view">
-            <h2><i class="fa-solid fa-pickaxe"></i> Jalur Resmi Mining Pro Premium</h2>
-            <div class="mining-banner">
-                <p style="color: #000; font-size: 15px;">Sistem Cloud Mining Anda Aktif di Bot Utama</p>
-                <a href="http://t.me/MiningProPremium_bot/app" target="_blank" class="btn-mining-link">🚀 MASUK KE APLIKASI MINING</a>
-            </div>
+        <div id="img-view" class="feature-view">
+            <h2><i class="fa-solid fa-image"></i> AI Image Generator (5 Koin)</h2>
+            <input type="text" id="imgPrompt" placeholder="Contoh: Pemandangan kota cyberpunk masa depan...">
+            <button class="btn-action" id="imgBtn" onclick="processImgRequest()"><i class="fa-solid fa-wand-magic-sparkles"></i> Buat Gambar</button>
+            <img id="aiImageResult" src="" alt="Hasil Gambar AI">
+        </div>
+
+        <div id="qr-view" class="feature-view">
+            <h2><i class="fa-solid fa-qrcode"></i> QR Code Generator (5 Koin)</h2>
+            <input type="text" id="qrText" placeholder="Masukkan URL atau teks untuk QR...">
+            <button class="btn-action" onclick="processQrRequest()"><i class="fa-solid fa-qrcode"></i> Buat QR Code</button>
+            <img id="qrResult" src="" alt="Hasil QR Code">
+        </div>
+
+        <div id="scam-view" class="feature-view">
+            <h2><i class="fa-solid fa-shield-halved"></i> Scam Shield (5 Koin)</h2>
+            <input type="text" id="scamUrl" placeholder="https://web-telegram-scam.com...">
+            <button class="btn-action" onclick="checkTelegramScam()"><i class="fa-solid fa-magnifying-glass"></i> Analisis Forensik</button>
+            <div class="result-box" id="scamResult"></div>
         </div>
     </div>
 
     <script>
+        const userLang = navigator.language || navigator.userLanguage;
+        const translations = {
+            'id': { title: 'Master_Premium_User', paywall: '⚡ Ambil Koin Gratis / Isi Ulang', sub: 'Tonton iklan untuk mendapatkan tambahan +5 koin premium secara instan.', ad: 'NONTON IKLAN (+5 KOIN)' },
+            'en': { title: 'Premium_User', paywall: '⚡ Get Free Coins / Refill', sub: 'Watch ads to get an additional +5 premium coins instantly.', ad: 'WATCH ADS (+5 COINS)' }
+        };
+        const lang = userLang.startsWith('id') ? 'id' : 'en';
+        document.getElementById('ui-title-user').innerText = translations[lang].title;
+        document.getElementById('ui-paywall-text').innerText = translations[lang].paywall;
+        document.getElementById('ui-paywall-sub').innerText = translations[lang].sub;
+        document.getElementById('ui-ad-btn').innerText = translations[lang].ad;
+
+        let chatHistory = [{ role: "system", content: "Anda adalah asisten AI yang cerdas, mahir berbahasa Indonesia, dan sangat membantu." }];
         if(localStorage.getItem('user_coins') === null) localStorage.setItem('user_coins', '5');
         let coins = parseInt(localStorage.getItem('user_coins'));
         let userId = localStorage.getItem('user_id') || 'ID-' + Math.floor(100000 + Math.random() * 900000);
@@ -129,12 +166,16 @@
         function updateCoinDisplay() {
             localStorage.setItem('user_coins', coins);
             document.getElementById('coinCount').innerText = coins;
-            const isHabis = (coins <= 0);
-            document.getElementById('aiBtn').disabled = isHabis;
-            document.getElementById('linkBtn').disabled = isHabis;
         }
 
-        function claimAdReward() { coins += 2; updateCoinDisplay(); alert("Terima kasih! +2 Koin premium berhasil ditambahkan."); }
+        function claimAdReward() { 
+            showTelegramAd().then(() => {
+                coins += 5; 
+                updateCoinDisplay(); 
+                alert(lang === 'id' ? "Terima kasih! +5 Koin premium berhasil ditambahkan." : "Thank you! +5 premium coins added."); 
+            });
+        }
+
         function switchTab(tabId, btnId) {
             document.querySelectorAll('.feature-view').forEach(view => view.classList.remove('active'));
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
@@ -142,7 +183,34 @@
             document.getElementById(btnId).classList.add('active');
         }
 
-        async function sendToAINyata() {
+        function sendToAINyata() {
+            if(coins < 1) return alert(lang === 'id' ? "Koin tidak cukup! Nonton iklan dulu." : "Not enough coins! Watch ads first.");
+            processAiLogic();
+        }
+
+        function processLinkRequest() {
+            if(coins < 1) return alert(lang === 'id' ? "Koin tidak cukup! Nonton iklan dulu." : "Not enough coins! Watch ads first.");
+            showTelegramAd().then(() => { shortenLinkNyata(); });
+        }
+
+        function processImgRequest() {
+            if(coins < 5) return alert(lang === 'id' ? "Butuh 5 koin untuk fitur ini!" : "Need 5 coins for this feature!");
+            showTelegramAd().then(() => { generateImageNyata(); });
+        }
+
+        function processQrRequest() {
+            if(coins < 5) return alert(lang === 'id' ? "Butuh 5 koin untuk fitur ini!" : "Need 5 coins for this feature!");
+            showTelegramAd().then(() => {
+                coins -= 5; updateCoinDisplay();
+                let txt = document.getElementById('qrText').value.trim();
+                if(!txt) return alert("Masukkan teks!");
+                let img = document.getElementById('qrResult');
+                img.src = "https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=" + encodeURIComponent(txt);
+                img.style.display = 'block';
+            });
+        }
+
+        async function processAiLogic() {
             let input = document.getElementById('aiInput');
             let text = input.value.trim();
             if (text === "") return;
@@ -152,20 +220,25 @@
             input.value = ""; 
             let loadId = 'ld-' + Date.now();
             cb.innerHTML += `<div class="msg bot" id="${loadId}"><i>AI sedang berpikir...</i></div>`;
-            const p1 = "sk-or-v1-039b0db04496";
-            const p2 = "d5f601f5aeb88520b5554d30960058b2c1d10bb60ebda1f3d8eb";
+            chatHistory.push({ role: "user", content: text });
+            
+            // API KEY DIPISAH P1 DAN P2 SEPERTI KODE LAMA
+            const p1 = "sk-or-v1-95fcacb6868";
+            const p2 = "1769fc87d125615b04c100f7440bd962df29b5b8db92136811a17";
             const API_KEY = p1 + p2;
+            
             try {
                 let response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
                     method: "POST",
                     headers: { "Content-Type": "application/json", "Authorization": "Bearer " + API_KEY },
-                    body: JSON.stringify({
-                        model: "meta-llama/llama-3-8b-instruct",
-                        messages: [{ role: "system", content: "Anda asisten AI profesional." }, { role: "user", content: text }]
-                    })
+                    body: JSON.stringify({ model: "nvidia/nemotron-3-nano-30b-a3b:free", messages: chatHistory })
                 });
                 let data = await response.json();
-                if(data.choices) document.getElementById(loadId).innerText = data.choices[0].message.content;
+                if(data.choices) {
+                    let reply = data.choices[0].message.content;
+                    document.getElementById(loadId).innerText = reply;
+                    chatHistory.push({ role: "assistant", content: reply });
+                }
             } catch (e) { document.getElementById(loadId).innerText = "Gagal terhubung."; }
             cb.scrollTop = cb.scrollHeight;
         }
@@ -184,6 +257,30 @@
             document.getElementById('shareWaBtn').href = "https://api.whatsapp.com/send?text=" + encodeURIComponent(linkPendekGlobal);
             document.getElementById('shareTgBtn').href = `https://t.me/share/url?url=${encodeURIComponent(linkPendekGlobal)}`;
         }
+
+        function generateImageNyata() {
+            let prompt = document.getElementById('imgPrompt').value.trim();
+            if(prompt === "") return;
+            coins -= 5; updateCoinDisplay();
+            let img = document.getElementById('aiImageResult');
+            img.style.display = 'block';
+            img.src = "https://image.pollinations.ai/prompt/" + encodeURIComponent(prompt) + "?nologo=true&width=512&height=512";
+        }
+
+        async function checkTelegramScam() {
+            if(coins < 5) return alert("Butuh 5 koin untuk analisis forensik!");
+            showTelegramAd().then(() => {
+                coins -= 5; updateCoinDisplay();
+                const targetUrl = document.getElementById('scamUrl').value.trim();
+                const resultDiv = document.getElementById('scamResult');
+                if(!targetUrl) return alert("Masukkan URL!");
+                resultDiv.style.display = "block";
+                resultDiv.innerText = "🔍 Mengalihkan ke VirusTotal untuk analisis keamanan...";
+                window.open(`https://www.virustotal.com/gui/search/${encodeURIComponent(targetUrl)}`, '_blank');
+                resultDiv.innerText = "✅ Analisis dialihkan ke pusat keamanan.";
+            });
+        }
+
         function salinTeksLink() { navigator.clipboard.writeText(linkPendekGlobal); alert("Link disalin!"); }
     </script>
 </body>
