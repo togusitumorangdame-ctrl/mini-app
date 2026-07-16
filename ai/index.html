@@ -224,8 +224,8 @@
                 let loc = document.getElementById('camLocation').value.trim();
                 if(!loc) return alert("Masukkan nama lokasi!");
                 
-                // Menggunakan URL embed agar bisa dimuat di dalam iframe
-                let iframeUrl = `https://embed.windy.com/embed2.html?lat=-2.5&lon=118&zoom=5&overlay=wind&location=search&search=${encodeURIComponent(loc)}`;
+                // URL ini mengarahkan ke fitur pencarian webcam Windy
+                let iframeUrl = `https://embed.windy.com/embed2.html?lat=-2.5&lon=118&zoom=5&overlay=wind&location=search&search=${encodeURIComponent(loc)}&key=${WINDY_API_KEY}`;
                 
                 document.getElementById('windyIframe').src = iframeUrl;
                 document.getElementById('webcamContainer').style.display = 'block';
