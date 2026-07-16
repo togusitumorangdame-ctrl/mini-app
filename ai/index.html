@@ -131,7 +131,8 @@
         <div id="webcam-view" class="feature-view">
             <h2><i class="fa-solid fa-camera"></i> Windy Webcams (5 Koin)</h2>
             <input type="text" id="camLocation" placeholder="Masukkan nama kota/negara...">
-            <button class="btn-action" onclick="processWindyCam()"><i class="fa-solid fa-map-location-dot"></i> Buka Webcams</button>
+            <button class="btn-action" onclick="processWeatherMap()">Lihat Peta Cuaca</button>
+            <button class="btn-action" onclick="processCctvLink()">Lihat CCTV (Browser)</button>
             <!-- Wadah Iframe untuk tetap di dalam Telegram -->
             <div id="webcamContainer" style="margin-top: 15px; display: none; width: 100%; height: 300px; border: 2px solid #00f2fe; border-radius: 14px; overflow: hidden;">
                 <iframe id="windyIframe" src="" width="100%" height="100%" frameborder="0"></iframe>
@@ -215,25 +216,30 @@
             });
         }
         
-        // Fungsi Webcam diperbarui untuk menggunakan iframe agar tetap di dalam Telegram
-        function processWindyCam() {
+        // Fungsi untuk menampilkan Peta Cuaca saja di dalam aplikasi
+function processWeatherMap() {
     if(coins < 5) return alert("Butuh 5 koin untuk fitur ini!");
-    
     show_11267753().then(() => {
-        coins -= 5; 
-        updateCoinDisplay();
+        coins -= 5; updateCoinDisplay();
         let loc = document.getElementById('camLocation').value.trim();
         if(!loc) return alert("Masukkan nama lokasi!");
 
-        // 1. Tampilkan Peta Cuaca (Embed yang diizinkan Windy)
         let mapUrl = `https://embed.windy.com/embed2.html?lat=-2.5&lon=118&zoom=5&location=search&search=${encodeURIComponent(loc)}`;
         document.getElementById('windyIframe').src = mapUrl;
         document.getElementById('webcamContainer').style.display = 'block';
+    });
+}
 
-        // 2. Berikan akses ke CCTV melalui browser internal Telegram
-        let cctvUrl = `https://www.windy.com/-Webcams/webcams?search=${encodeURIComponent(loc)}`;
+// Fungsi untuk membuka CCTV di Browser Internal Telegram
+function processCctvLink() {
+    if(coins < 5) return alert("Butuh 5 koin untuk fitur ini!");
+    show_11267753().then(() => {
+        coins -= 5; updateCoinDisplay();
+        let loc = document.getElementById('camLocation').value.trim();
+        if(!loc) return alert("Masukkan nama lokasi!");
+
+        let cctvUrl = `https://www.windy.com/?webcams,${encodeURIComponent(loc)},detail=true`;
         
-        // Membuka link CCTV di browser internal agar pengguna tidak keluar dari Telegram
         if (window.Telegram && window.Telegram.WebApp) {
             window.Telegram.WebApp.openLink(cctvUrl);
         } else {
