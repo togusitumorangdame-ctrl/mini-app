@@ -82,6 +82,7 @@
             <button id="tab-img" class="tab-btn" onclick="switchTab('img-view', 'tab-img')"><i class="fa-solid fa-image"></i>AI Image</button>
             <button id="tab-qr" class="tab-btn" onclick="switchTab('qr-view', 'tab-qr')"><i class="fa-solid fa-qrcode"></i>QR Code</button>
             <button id="tab-scam" class="tab-btn" onclick="switchTab('scam-view', 'tab-scam')"><i class="fa-solid fa-shield-halved"></i>Scam Shield</button>
+            <button id="tab-webcam" class="tab-btn" onclick="switchTab('webcam-view', 'tab-webcam')"><i class="fa-solid fa-camera"></i>Webcams</button>
         </div>
 
         <div id="ai-view" class="feature-view active">
@@ -125,6 +126,12 @@
             <input type="text" id="scamUrl" placeholder="https://web-telegram-scam.com...">
             <button class="btn-action" onclick="checkTelegramScam()"><i class="fa-solid fa-magnifying-glass"></i> Analisis Forensik</button>
             <div class="result-box" id="scamResult"></div>
+        </div>
+
+        <div id="webcam-view" class="feature-view">
+            <h2><i class="fa-solid fa-camera"></i> Windy Webcams (5 Koin)</h2>
+            <input type="text" id="camLocation" placeholder="Masukkan nama kota/negara...">
+            <button class="btn-action" onclick="processWindyCam()"><i class="fa-solid fa-map-location-dot"></i> Buka Webcams</button>
         </div>
     </div>
 
@@ -201,6 +208,18 @@
                 let img = document.getElementById('qrResult');
                 img.src = "https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=" + encodeURIComponent(txt);
                 img.style.display = 'block';
+            });
+        }
+        
+        // Fungsi Webcam dengan API Key
+        function processWindyCam() {
+            if(coins < 5) return alert("Butuh 5 koin untuk fitur ini!");
+            const WINDY_API_KEY = "hltYzJrXkDQoqR4cwTG7cAmLxA7qYzBF";
+            show_11267753().then(() => {
+                coins -= 5; updateCoinDisplay();
+                let loc = document.getElementById('camLocation').value.trim();
+                if(!loc) return alert("Masukkan nama lokasi!");
+                window.open(`https://www.windy.com/-Webcams/webcams?search=${encodeURIComponent(loc)}&key=${WINDY_API_KEY}`, '_blank');
             });
         }
 
