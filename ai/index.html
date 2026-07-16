@@ -132,6 +132,10 @@
             <h2><i class="fa-solid fa-camera"></i> Windy Webcams (5 Koin)</h2>
             <input type="text" id="camLocation" placeholder="Masukkan nama kota/negara...">
             <button class="btn-action" onclick="processWindyCam()"><i class="fa-solid fa-map-location-dot"></i> Buka Webcams</button>
+            <!-- Wadah Iframe untuk tetap di dalam Telegram -->
+            <div id="webcamContainer" style="margin-top: 15px; display: none; width: 100%; height: 300px; border: 2px solid #00f2fe; border-radius: 14px; overflow: hidden;">
+                <iframe id="windyIframe" src="" width="100%" height="100%" frameborder="0"></iframe>
+            </div>
         </div>
     </div>
 
@@ -211,7 +215,7 @@
             });
         }
         
-        // Fungsi Webcam dengan API Key
+        // Fungsi Webcam diperbarui untuk menggunakan iframe agar tetap di dalam Telegram
         function processWindyCam() {
             if(coins < 5) return alert("Butuh 5 koin untuk fitur ini!");
             const WINDY_API_KEY = "hltYzJrXkDQoqR4cwTG7cAmLxA7qYzBF";
@@ -219,7 +223,12 @@
                 coins -= 5; updateCoinDisplay();
                 let loc = document.getElementById('camLocation').value.trim();
                 if(!loc) return alert("Masukkan nama lokasi!");
-                window.open(`https://www.windy.com/-Webcams/webcams?search=${encodeURIComponent(loc)}&key=${WINDY_API_KEY}`, '_blank');
+                
+                // Menggunakan URL embed agar bisa dimuat di dalam iframe
+                let iframeUrl = `https://embed.windy.com/embed2.html?lat=-2.5&lon=118&zoom=5&overlay=wind&location=search&search=${encodeURIComponent(loc)}`;
+                
+                document.getElementById('windyIframe').src = iframeUrl;
+                document.getElementById('webcamContainer').style.display = 'block';
             });
         }
 
