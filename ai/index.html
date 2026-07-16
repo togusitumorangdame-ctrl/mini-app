@@ -217,19 +217,29 @@
         
         // Fungsi Webcam diperbarui untuk menggunakan iframe agar tetap di dalam Telegram
         function processWindyCam() {
-            if(coins < 5) return alert("Butuh 5 koin untuk fitur ini!");
-            const WINDY_API_KEY = "hltYzJrXkDQoqR4cwTG7cAmLxA7qYzBF";
-            show_11267753().then(() => {
-                coins -= 5; updateCoinDisplay();
-                let loc = document.getElementById('camLocation').value.trim();
-                if(!loc) return alert("Masukkan nama lokasi!");
-                
-                // URL ini mengarahkan ke fitur pencarian webcam Windy
-                let iframeUrl = `https://embed.windy.com/embed2.html?lat=-2.5&lon=118&zoom=5&overlay=wind&location=search&search=${encodeURIComponent(loc)}&key=${WINDY_API_KEY}`;
-                
-                document.getElementById('windyIframe').src = iframeUrl;
-                document.getElementById('webcamContainer').style.display = 'block';
-            });
+    if(coins < 5) return alert("Butuh 5 koin untuk fitur ini!");
+    
+    show_11267753().then(() => {
+        coins -= 5; 
+        updateCoinDisplay();
+        let loc = document.getElementById('camLocation').value.trim();
+        if(!loc) return alert("Masukkan nama lokasi!");
+
+        // 1. Tampilkan Peta Cuaca (Embed yang diizinkan Windy)
+        let mapUrl = `https://embed.windy.com/embed2.html?lat=-2.5&lon=118&zoom=5&location=search&search=${encodeURIComponent(loc)}`;
+        document.getElementById('windyIframe').src = mapUrl;
+        document.getElementById('webcamContainer').style.display = 'block';
+
+        // 2. Berikan akses ke CCTV melalui browser internal Telegram
+        let cctvUrl = `https://www.windy.com/-Webcams/webcams?search=${encodeURIComponent(loc)}`;
+        
+        // Membuka link CCTV di browser internal agar pengguna tidak keluar dari Telegram
+        if (window.Telegram && window.Telegram.WebApp) {
+            window.Telegram.WebApp.openLink(cctvUrl);
+        } else {
+            window.open(cctvUrl, '_blank');
+        }
+    });
         }
 
         async function processAiLogic() {
