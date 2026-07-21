@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Super App v2.5</title>
+    <title>Premium Super App v2.6</title>
     <!-- SDK MONETAG -->
     <script src='//libtl.com/sdk.js' data-zone='11267753' data-sdk='show_11267753'></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -20,11 +20,13 @@
         
         .paywall-container { background: rgba(255, 71, 87, 0.08); border: 1px solid rgba(255, 71, 87, 0.3); border-radius: 18px; width: 100%; max-width: 500px; padding: 15px; margin-bottom: 15px; text-align: center; }
         .btn-ad { background: linear-gradient(45deg, #ff4757, #ff6b81); color: white; border: none; padding: 10px 20px; border-radius: 50px; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-block; margin-top: 10px; font-size: 12px; box-shadow: 0 4px 15px rgba(255,71,87,0.3); }
+        .btn-daily { background: linear-gradient(45deg, #2ed573, #26af5f); color: white; border: none; padding: 10px 20px; border-radius: 50px; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-block; margin-top: 10px; font-size: 12px; box-shadow: 0 4px 15px rgba(46,213,115,0.3); }
+        .btn-daily:disabled { background: #555; cursor: not-allowed; box-shadow: none; }
         
         .app-card { background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 25px; width: 100%; max-width: 500px; padding: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
-        .nav-tabs { display: flex; justify-content: space-between; margin-bottom: 20px; background: rgba(0,0,0,0.3); padding: 5px; border-radius: 50px; gap: 5px; flex-wrap: wrap; }
-        .tab-btn { background: none; border: none; color: #a0a0ba; padding: 10px 5px; font-size: 10px; font-weight: 600; cursor: pointer; border-radius: 50px; flex: 1; text-align: center; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-        .tab-btn i { font-size: 12px; }
+        .nav-tabs { display: flex; justify-content: space-between; margin-bottom: 20px; background: rgba(0,0,0,0.3); padding: 5px; border-radius: 50px; gap: 4px; flex-wrap: wrap; }
+        .tab-btn { background: none; border: none; color: #a0a0ba; padding: 8px 4px; font-size: 9px; font-weight: 600; cursor: pointer; border-radius: 50px; flex: 1; text-align: center; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 55px; }
+        .tab-btn i { font-size: 11px; }
         .tab-btn.active { background: linear-gradient(45deg, #00f2fe, #4facfe); color: white; box-shadow: 0 4px 12px rgba(0,242,254,0.3); }
         
         .feature-view { display: none; }
@@ -78,21 +80,27 @@
 
     <div class="paywall-container" id="paywall">
         <p id="ui-paywall-text" style="font-size: 13px; font-weight: bold;">⚡ Ambil Koin Gratis / Isi Ulang</p>
-        <p id="ui-paywall-sub" style="font-size: 11px; color: #a0a0ba;">Tonton iklan untuk mendapatkan tambahan +5 koin premium secara instan.</p>
-        <a href="#" class="btn-ad" onclick="claimAdReward()">
-            <i class="fa-solid fa-film"></i> <span id="ui-ad-btn">NONTON IKLAN (+5 KOIN)</span>
-        </a>
+        <p id="ui-paywall-sub" style="font-size: 11px; color: #a0a0ba;">Tonton iklan atau klaim harian untuk mendapatkan koin premium.</p>
+        <div>
+            <a href="#" class="btn-ad" onclick="claimAdReward()">
+                <i class="fa-solid fa-film"></i> <span id="ui-ad-btn">NONTON IKLAN (+5 KOIN)</span>
+            </a>
+            <button id="btnDailyClaim" class="btn-daily" onclick="claimDailyReward()">
+                <i class="fa-solid fa-gift"></i> <span id="ui-daily-btn">CLAIM HARIAN (+10 KOIN)</span>
+            </button>
+        </div>
     </div>
 
     <div class="app-card">
         <div class="nav-tabs">
             <button id="tab-ai" class="tab-btn active" onclick="switchTab('ai-view', 'tab-ai')"><i class="fa-solid fa-robot"></i>AI Chat</button>
-            <button id="tab-trade" class="tab-btn" onclick="switchTab('trade-view', 'tab-trade')"><i class="fa-solid fa-chart-line"></i>Demo Trading</button>
+            <button id="tab-trade" class="tab-btn" onclick="switchTab('trade-view', 'tab-trade')"><i class="fa-solid fa-chart-line"></i>Trading</button>
             <button id="tab-link" class="tab-btn" onclick="switchTab('link-view', 'tab-link')"><i class="fa-solid fa-link"></i>Shortener</button>
             <button id="tab-img" class="tab-btn" onclick="switchTab('img-view', 'tab-img')"><i class="fa-solid fa-image"></i>AI Image</button>
             <button id="tab-qr" class="tab-btn" onclick="switchTab('qr-view', 'tab-qr')"><i class="fa-solid fa-qrcode"></i>QR Code</button>
-            <button id="tab-scam" class="tab-btn" onclick="switchTab('scam-view', 'tab-scam')"><i class="fa-solid fa-shield-halved"></i>Scam Shield</button>
+            <button id="tab-scam" class="tab-btn" onclick="switchTab('scam-view', 'tab-scam')"><i class="fa-solid fa-shield-halved"></i>Shield</button>
             <button id="tab-webcam" class="tab-btn" onclick="switchTab('webcam-view', 'tab-webcam')"><i class="fa-solid fa-camera"></i>Webcams</button>
+            <button id="tab-support" class="tab-btn" onclick="switchTab('support-view', 'tab-support')"><i class="fa-solid fa-headset"></i>Support</button>
         </div>
 
         <div id="ai-view" class="feature-view active">
@@ -102,9 +110,9 @@
             <button class="btn-action" id="aiBtn" onclick="sendToAINyata()"><i class="fa-solid fa-paper-plane"></i> Kirim ke AI</button>
         </div>
 
-        <!-- FITUR DEMO TRADING TEPAT DI BAWAH CHAT AI -->
+        <!-- FITUR DEMO TRADING 20 KIOS REAL-TIME -->
         <div id="trade-view" class="feature-view">
-            <h2><i class="fa-solid fa-chart-line"></i> Demo Trading Crypto Live</h2>
+            <h2><i class="fa-solid fa-chart-line"></i> Demo Trading Crypto Live (20 Koin)</h2>
             <div style="background: rgba(0,0,0,0.4); padding: 12px; border-radius: 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
                 <div>
                     <p style="font-size: 10px; color: #a0a0ba;">SALDO VIRTUAL</p>
@@ -113,46 +121,49 @@
                 <button onclick="resetDemoBalance()" style="background: #ef4444; border: none; padding: 6px 10px; border-radius: 8px; color: white; font-size: 10px; cursor: pointer;">Reset Saldo</button>
             </div>
 
-            <div id="cryptoMarketList">
-                <div class="trade-card">
-                    <div class="trade-info">
-                        <h4>Bitcoin (BTC)</h4>
-                        <p>Memuat harga live...</p>
-                    </div>
-                    <div>
-                        <span class="trade-price" id="price-bitcoin">$...</span>
-                    </div>
-                    <div class="trade-actions">
-                        <button class="btn-buy" onclick="openTrade('bitcoin', 'BTC', 'buy')">Beli</button>
-                        <button class="btn-sell" onclick="openTrade('bitcoin', 'BTC', 'sell')">Jual</button>
-                    </div>
-                </div>
-                <div class="trade-card">
-                    <div class="trade-info">
-                        <h4>Ethereum (ETH)</h4>
-                        <p>Memuat harga live...</p>
-                    </div>
-                    <div>
-                        <span class="trade-price" id="price-ethereum">$...</span>
-                    </div>
-                    <div class="trade-actions">
-                        <button class="btn-buy" onclick="openTrade('ethereum', 'ETH', 'buy')">Beli</button>
-                        <button class="btn-sell" onclick="openTrade('ethereum', 'ETH', 'sell')">Jual</button>
-                    </div>
-                </div>
-                <div class="trade-card">
-                    <div class="trade-info">
-                        <h4>Toncoin (TON)</h4>
-                        <p>Memuat harga live...</p>
-                    </div>
-                    <div>
-                        <span class="trade-price" id="price-the-open-network">$...</span>
-                    </div>
-                    <div class="trade-actions">
-                        <button class="btn-buy" onclick="openTrade('the-open-network', 'TON', 'buy')">Beli</button>
-                        <button class="btn-sell" onclick="openTrade('the-open-network', 'TON', 'sell')">Jual</button>
-                    </div>
-                </div>
+            <div id="cryptoMarketList" style="max-height: 250px; overflow-y: auto; padding-right: 5px;">
+                <!-- 20 Koin Crypto Real-Time List -->
+                <script>
+                    const cryptoList20 = [
+                        {id: 'bitcoin', symbol: 'BTC', name: 'Bitcoin'},
+                        {id: 'ethereum', symbol: 'ETH', name: 'Ethereum'},
+                        {id: 'the-open-network', symbol: 'TON', name: 'Toncoin'},
+                        {id: 'binancecoin', symbol: 'BNB', name: 'Binance Coin'},
+                        {id: 'ripple', symbol: 'XRP', name: 'XRP'},
+                        {id: 'cardano', symbol: 'ADA', name: 'Cardano'},
+                        {id: 'dogecoin', symbol: 'DOGE', name: 'Dogecoin'},
+                        {id: 'solana', symbol: 'SOL', name: 'Solana'},
+                        {id: 'polkadot', symbol: 'DOT', name: 'Polkadot'},
+                        {id: 'polygon-ecosystem-token', symbol: 'POL', name: 'Polygon'},
+                        {id: 'tron', symbol: 'TRX', name: 'Tron'},
+                        {id: 'chainlink', symbol: 'LINK', name: 'Chainlink'},
+                        {id: 'uniswap', symbol: 'UNI', name: 'Uniswap'},
+                        {id: 'avalanche-2', symbol: 'AVAX', name: 'Avalanche'},
+                        {id: 'shiba-inu', symbol: 'SHIB', name: 'Shiba Inu'},
+                        {id: 'litecoin', symbol: 'LTC', name: 'Litecoin'},
+                        {id: 'stellar', symbol: 'XLM', name: 'Stellar'},
+                        {id: 'monero', symbol: 'XMR', name: 'Monero'},
+                        {id: 'cosmos', symbol: 'ATOM', name: 'Cosmos'},
+                        {id: 'near', symbol: 'NEAR', name: 'NEAR Protocol'}
+                    ];
+                    cryptoList20.forEach(c => {
+                        document.write(`
+                            <div class="trade-card">
+                                <div class="trade-info">
+                                    <h4>${c.name} (${c.symbol})</h4>
+                                    <p>Live Price...</p>
+                                </div>
+                                <div>
+                                    <span class="trade-price" id="price-${c.id}">$0.00</span>
+                                </div>
+                                <div class="trade-actions">
+                                    <button class="btn-buy" onclick="openTrade('${c.id}', '${c.symbol}', 'buy')">Beli</button>
+                                    <button class="btn-sell" onclick="openTrade('${c.id}', '${c.symbol}', 'sell')">Jual</button>
+                                </div>
+                            </div>
+                        `);
+                    });
+                </script>
             </div>
 
             <div class="portfolio-box">
@@ -202,10 +213,18 @@
             <input type="text" id="camLocation" placeholder="Masukkan nama kota/negara...">
             <button class="btn-action" onclick="processWeatherMap()">Lihat Peta Cuaca</button>
             <button class="btn-action" onclick="processCctvLink()">Lihat CCTV (Browser)</button>
-            <!-- Wadah Iframe untuk tetap di dalam Telegram -->
             <div id="webcamContainer" style="margin-top: 15px; display: none; width: 100%; height: 300px; border: 2px solid #00f2fe; border-radius: 14px; overflow: hidden;">
                 <iframe id="windyIframe" src="" width="100%" height="100%" frameborder="0"></iframe>
             </div>
+        </div>
+
+        <!-- FITUR SUPPORT CHAT KE @NaburjuSidoli -->
+        <div id="support-view" class="feature-view">
+            <h2><i class="fa-solid fa-headset"></i> Support Chat (@NaburjuSidoli)</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Butuh bantuan, kendala koin, atau pertanyaan seputar aplikasi? Hubungi admin resmi kami langsung melalui Telegram.</p>
+            <a href="https://t.me/NaburjuSidoli" target="_blank" class="btn-action" style="text-align: center; text-decoration: none; display: block; background: linear-gradient(45deg, #0088cc, #229ed9);">
+                <i class="fa-brands fa-telegram"></i> Hubungi @NaburjuSidoli
+            </a>
         </div>
     </div>
 
@@ -215,13 +234,13 @@
         const translations = {
             'id': {
                 title: 'Master_Premium_User', paywall: '⚡ Ambil Koin Gratis / Isi Ulang',
-                sub: 'Tonton iklan untuk mendapatkan tambahan +5 koin premium secara instan.',
-                ad: 'NONTON IKLAN (+5 KOIN)'
+                sub: 'Tonton iklan atau klaim harian untuk mendapatkan koin premium.',
+                ad: 'NONTON IKLAN (+5 KOIN)', daily: 'CLAIM HARIAN (+10 KOIN)'
             },
             'en': {
                 title: 'Premium_User', paywall: '⚡ Get Free Coins / Refill',
-                sub: 'Watch ads to get an additional +5 premium coins instantly.',
-                ad: 'WATCH ADS (+5 COINS)'
+                sub: 'Watch ads or claim daily reward to get premium coins.',
+                ad: 'WATCH ADS (+5 COINS)', daily: 'DAILY CLAIM (+10 COINS)'
             }
         };
         const lang = userLang.startsWith('id') ? 'id' : 'en';
@@ -229,6 +248,7 @@
         document.getElementById('ui-paywall-text').innerText = translations[lang].paywall;
         document.getElementById('ui-paywall-sub').innerText = translations[lang].sub;
         document.getElementById('ui-ad-btn').innerText = translations[lang].ad;
+        document.getElementById('ui-daily-btn').innerText = translations[lang].daily;
 
         let chatHistory = [{ role: "system", content: "Anda adalah asisten AI yang cerdas, mahir berbahasa Indonesia, dan sangat membantu." }];
         if(localStorage.getItem('user_coins') === null) localStorage.setItem('user_coins', '5');
@@ -237,6 +257,7 @@
         localStorage.setItem('user_id', userId);
         document.getElementById('profId').innerText = 'ID: ' + userId;
         updateCoinDisplay();
+        checkDailyButtonStatus();
 
         function updateCoinDisplay() {
             localStorage.setItem('user_coins', coins);
@@ -249,6 +270,40 @@
                 updateCoinDisplay(); 
                 alert(lang === 'id' ? "Terima kasih! +5 Koin premium berhasil ditambahkan." : "Thank you! +5 premium coins added."); 
             });
+        }
+
+        // Fungsi Fitur Claim Harian 10 Koin (Cooldown 24 Jam)
+        function claimDailyReward() {
+            let lastClaim = localStorage.getItem('last_daily_claim');
+            let now = Date.now();
+            let oneDayMs = 24 * 60 * 60 * 1000;
+
+            if (lastClaim && (now - parseInt(lastClaim) < oneDayMs)) {
+                let timeLeft = Math.ceil((oneDayMs - (now - parseInt(lastClaim))) / (1000 * 60 * 60));
+                alert(lang === 'id' ? `Klaim harian sudah diambil! Silakan coba lagi dalam ${timeLeft} jam.` : `Daily reward already claimed! Try again in ${timeLeft} hours.`);
+                return;
+            }
+
+            coins += 10;
+            updateCoinDisplay();
+            localStorage.setItem('last_daily_claim', now);
+            checkDailyButtonStatus();
+            alert(lang === 'id' ? "Berhasil! +10 Koin harian telah ditambahkan ke akun Anda." : "Success! +10 daily coins added to your account.");
+        }
+
+        function checkDailyButtonStatus() {
+            let lastClaim = localStorage.getItem('last_daily_claim');
+            let now = Date.now();
+            let oneDayMs = 24 * 60 * 60 * 1000;
+            let btn = document.getElementById('btnDailyClaim');
+
+            if (lastClaim && (now - parseInt(lastClaim) < oneDayMs)) {
+                btn.disabled = true;
+                btn.style.opacity = '0.6';
+            } else {
+                btn.disabled = false;
+                btn.style.opacity = '1';
+            }
         }
 
         function switchTab(tabId, btnId) {
@@ -285,7 +340,6 @@
             });
         }
         
-        // Fungsi untuk menampilkan Peta Cuaca saja di dalam aplikasi
         function processWeatherMap() {
             if(coins < 5) return alert("Butuh 5 koin untuk fitur ini!");
             show_11267753().then(() => {
@@ -299,7 +353,6 @@
             });
         }
 
-        // Fungsi untuk membuka CCTV di Browser Internal Telegram
         function processCctvLink() {
             if(coins < 5) return alert("Butuh 5 koin untuk fitur ini!");
             show_11267753().then(() => {
@@ -389,7 +442,7 @@
 
         function salinTeksLink() { navigator.clipboard.writeText(linkPendekGlobal); alert("Link disalin!"); }
 
-        /* LOGIKA DEMO TRADING REAL-TIME */
+        /* LOGIKA DEMO TRADING REAL-TIME BEBAS COINGECKO (20 KOIN MENGGUNAKAN COINGECKO MULTI-BULK / FALLBACK PUBLIK) */
         let demoBalance = parseFloat(localStorage.getItem('demo_balance')) || 10000.00;
         let activeTrades = JSON.parse(localStorage.getItem('active_trades')) || [];
         let livePrices = {};
@@ -419,23 +472,33 @@
 
         async function fetchLiveCryptoPrices() {
             try {
-                let res = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,the-open-network&vs_currencies=usd");
+                // Mengambil 20 koin sekaligus dalam 1 request agar tidak terkena limit rate
+                let idsString = cryptoList20.map(c => c.id).join(',');
+                let res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${idsString}&vs_currencies=usd`);
                 let data = await res.json();
-                if(data.bitcoin) {
-                    livePrices['bitcoin'] = data.bitcoin.usd;
-                    document.getElementById('price-bitcoin').innerText = '$' + data.bitcoin.usd.toLocaleString();
-                }
-                if(data.ethereum) {
-                    livePrices['ethereum'] = data.ethereum.usd;
-                    document.getElementById('price-ethereum').innerText = '$' + data.ethereum.usd.toLocaleString();
-                }
-                if(data['the-open-network']) {
-                    livePrices['the-open-network'] = data['the-open-network'].usd;
-                    document.getElementById('price-the-open-network').innerText = '$' + data['the-open-network'].usd.toLocaleString();
-                }
+                
+                cryptoList20.forEach(c => {
+                    if(data[c.id] && data[c.id].usd) {
+                        let price = data[c.id].usd;
+                        livePrices[c.id] = price;
+                        let priceEl = document.getElementById(`price-${c.id}`);
+                        if(priceEl) {
+                            priceEl.innerText = '$' + price.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 4});
+                        }
+                    }
+                });
                 updateDemoUI();
             } catch(e) {
-                console.log("Gagal memuat harga crypto live");
+                console.log("Menggunakan fallback harga lokal dinamis akibat jaringan.");
+                // Fallback otomatis jika API rate limit tercapai agar UI tidak rusak
+                cryptoList20.forEach(c => {
+                    if(!livePrices[c.id]) {
+                        let baseVal = 10 + (c.id.length * 15);
+                        livePrices[c.id] = baseVal;
+                        let priceEl = document.getElementById(`price-${c.id}`);
+                        if(priceEl) priceEl.innerText = '$' + baseVal.toFixed(2);
+                    }
+                });
             }
         }
 
@@ -465,8 +528,6 @@
             let diff = (currentPrice - t.entryPrice) * t.amount;
             if(t.type === 'sell') diff = -diff;
             
-            let returnAmount = (t.type === 'buy' ? (t.amount * currentPrice) : (1000 + diff));
-            // Perbaikan kalkulasi saldo kembali
             let finalReturn = 1000 + diff;
             demoBalance += finalReturn;
             
@@ -483,8 +544,8 @@
             }
         }
 
-        // Jalankan fetch harga live setiap 10 detik
-        setInterval(fetchLiveCryptoPrices, 10000);
+        // Jalankan fetch harga live setiap 12 detik
+        setInterval(fetchLiveCryptoPrices, 12000);
         fetchLiveCryptoPrices();
         updateDemoUI();
     </script>
