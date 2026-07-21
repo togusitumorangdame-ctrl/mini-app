@@ -470,36 +470,35 @@
             document.getElementById('activeTradesList').innerHTML = tradesHtml;
         }
 
-        async function fetchLiveCryptoPrices() {
-            try {
-                // Mengambil 20 koin sekaligus dalam 1 request agar tidak terkena limit rate
-                let idsString = cryptoList20.map(c => c.id).join(',');
-                let res = await fetch(`https://api.coingecko.com/api/v3/simple/price?ids=${idsString}&vs_currencies=usd`);
-                let data = await res.json();
-                
-                cryptoList20.forEach(c => {
-                    if(data[c.id] && data[c.id].usd) {
-                        let price = data[c.id].usd;
-                        livePrices[c.id] = price;
-                        let priceEl = document.getElementById(`price-${c.id}`);
-                        if(priceEl) {
-                            priceEl.innerText = '$' + price.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 4});
-                        }
-                    }
-                });
-                updateDemoUI();
-            } catch(e) {
-                console.log("Menggunakan fallback harga lokal dinamis akibat jaringan.");
-                // Fallback otomatis jika API rate limit tercapai agar UI tidak rusak
-                cryptoList20.forEach(c => {
-                    if(!livePrices[c.id]) {
-                        let baseVal = 10 + (c.id.length * 15);
-                        livePrices[c.id] = baseVal;
-                        let priceEl = document.getElementById(`price-${c.id}`);
-                        if(priceEl) priceEl.innerText = '$' + baseVal.toFixed(2);
-                    }
-                });
-            }
+        // Simulasi Fluktuasi Harga Real-Time Aktif (Bergerak Naik/Turun Otomatis)
+        function fetchLiveCryptoPrices() {
+            cryptoList20.forEach(c => {
+                // Tentukan harga dasar awal jika belum ada
+                if(!livePrices[c.id]) {
+                    let basePrices = {
+                        'bitcoin': 65000, 'ethereum': 3500, 'the-open-network': 5.5,
+                        'binancecoin': 580, 'ripple': 0.6, 'cardano': 0.4,
+                        'dogecoin': 0.12, 'solana': 140, 'polkadot': 6.2,
+                        'polygon-ecosystem-token': 0.5, 'tron': 0.13, 'chainlink': 14,
+                        'uniswap': 8.5, 'avalanche-2': 25, 'shiba-inu': 0.000018,
+                        'litecoin': 70, 'stellar': 0.1, 'monero': 160,
+                        'cosmos': 6.0, 'near': 5.0
+                    };
+                    livePrices[c.id] = basePrices[c.id] || 10.0;
+                }
+
+                // Buat fluktuasi acak kecil secara real-time (naik/turun secara dinamis)
+                let fluctuation = (Math.random() - 0.49) * (livePrices[c.id] * 0.005);
+                livePrices[c.id] += fluctuation;
+
+                // Tampilkan ke elemen HTML
+                let priceEl = document.getElementById(`price-${c.id}`);
+                if(priceEl) {
+                    priceEl.innerText = '$' + livePrices[c.id].toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 4});
+                }
+            });
+
+            updateDemoUI();
         }
 
         function openTrade(coinId, symbol, type) {
@@ -544,8 +543,8 @@
             }
         }
 
-        // Jalankan fetch harga live setiap 12 detik
-        setInterval(fetchLiveCryptoPrices, 12000);
+        // Jalankan pergerakan harga setiap 2 detik agar angka bergerak aktif dan hidup
+        setInterval(fetchLiveCryptoPrices, 2000);
         fetchLiveCryptoPrices();
         updateDemoUI();
     </script>
