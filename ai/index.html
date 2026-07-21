@@ -31,8 +31,8 @@
         .feature-view.active { display: block; }
         h2 { font-size: 16px; color: #00f2fe; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
         
-        input { width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 12px; color: white; font-size: 13px; margin-bottom: 12px; outline: none; transition: 0.2s; }
-        input:focus { border-color: #00f2fe; }
+        input, select { width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 12px; color: white; font-size: 13px; margin-bottom: 12px; outline: none; transition: 0.2s; }
+        input:focus, select:focus { border-color: #00f2fe; }
         .btn-action { width: 100%; background: linear-gradient(45deg, #00f2fe, #4facfe); color: white; border: none; padding: 12px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 13px; box-shadow: 0 4px 15px rgba(0,242,254,0.2); }
         
         .chat-box { height: 220px; background: rgba(0,0,0,0.4); border-radius: 14px; padding: 12px; overflow-y: auto; margin-bottom: 12px; font-size: 12px; border: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; gap: 8px; }
@@ -48,6 +48,16 @@
         .share-btn.copy { background: #4a5568; }
         
         #aiImageResult, #qrResult { width: 100%; border-radius: 14px; margin-top: 15px; display: none; border: 2px solid rgba(0,242,254,0.2); }
+
+        /* Styling Tambahan Demo Trading Real */
+        .trade-card { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+        .trade-info h4 { font-size: 13px; color: #fff; }
+        .trade-info p { font-size: 11px; color: #a0a0ba; }
+        .trade-price { font-size: 13px; font-weight: bold; color: #00f2fe; }
+        .trade-actions { display: flex; gap: 6px; }
+        .btn-buy { background: #22c55e; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 11px; }
+        .btn-sell { background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 11px; }
+        .portfolio-box { background: rgba(0, 242, 254, 0.05); border: 1px solid rgba(0, 242, 254, 0.2); border-radius: 14px; padding: 12px; margin-top: 15px; font-size: 12px; }
     </style>
 </head>
 <body>
@@ -77,6 +87,7 @@
     <div class="app-card">
         <div class="nav-tabs">
             <button id="tab-ai" class="tab-btn active" onclick="switchTab('ai-view', 'tab-ai')"><i class="fa-solid fa-robot"></i>AI Chat</button>
+            <button id="tab-trade" class="tab-btn" onclick="switchTab('trade-view', 'tab-trade')"><i class="fa-solid fa-chart-line"></i>Demo Trading</button>
             <button id="tab-link" class="tab-btn" onclick="switchTab('link-view', 'tab-link')"><i class="fa-solid fa-link"></i>Shortener</button>
             <button id="tab-img" class="tab-btn" onclick="switchTab('img-view', 'tab-img')"><i class="fa-solid fa-image"></i>AI Image</button>
             <button id="tab-qr" class="tab-btn" onclick="switchTab('qr-view', 'tab-qr')"><i class="fa-solid fa-qrcode"></i>QR Code</button>
@@ -89,6 +100,65 @@
             <div class="chat-box" id="aiChatBox"><div class="msg bot">Halo! Tanyakan apa saja ke AI Premium (Biaya: 1 Koin).</div></div>
             <input type="text" id="aiInput" placeholder="Ketik pesan ke AI...">
             <button class="btn-action" id="aiBtn" onclick="sendToAINyata()"><i class="fa-solid fa-paper-plane"></i> Kirim ke AI</button>
+        </div>
+
+        <!-- FITUR DEMO TRADING TEPAT DI BAWAH CHAT AI -->
+        <div id="trade-view" class="feature-view">
+            <h2><i class="fa-solid fa-chart-line"></i> Demo Trading Crypto Live</h2>
+            <div style="background: rgba(0,0,0,0.4); padding: 12px; border-radius: 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <p style="font-size: 10px; color: #a0a0ba;">SALDO VIRTUAL</p>
+                    <h3 id="virtualBalance" style="color: #ffd700; font-size: 16px;">$10,000.00</h3>
+                </div>
+                <button onclick="resetDemoBalance()" style="background: #ef4444; border: none; padding: 6px 10px; border-radius: 8px; color: white; font-size: 10px; cursor: pointer;">Reset Saldo</button>
+            </div>
+
+            <div id="cryptoMarketList">
+                <div class="trade-card">
+                    <div class="trade-info">
+                        <h4>Bitcoin (BTC)</h4>
+                        <p>Memuat harga live...</p>
+                    </div>
+                    <div>
+                        <span class="trade-price" id="price-bitcoin">$...</span>
+                    </div>
+                    <div class="trade-actions">
+                        <button class="btn-buy" onclick="openTrade('bitcoin', 'BTC', 'buy')">Beli</button>
+                        <button class="btn-sell" onclick="openTrade('bitcoin', 'BTC', 'sell')">Jual</button>
+                    </div>
+                </div>
+                <div class="trade-card">
+                    <div class="trade-info">
+                        <h4>Ethereum (ETH)</h4>
+                        <p>Memuat harga live...</p>
+                    </div>
+                    <div>
+                        <span class="trade-price" id="price-ethereum">$...</span>
+                    </div>
+                    <div class="trade-actions">
+                        <button class="btn-buy" onclick="openTrade('ethereum', 'ETH', 'buy')">Beli</button>
+                        <button class="btn-sell" onclick="openTrade('ethereum', 'ETH', 'sell')">Jual</button>
+                    </div>
+                </div>
+                <div class="trade-card">
+                    <div class="trade-info">
+                        <h4>Toncoin (TON)</h4>
+                        <p>Memuat harga live...</p>
+                    </div>
+                    <div>
+                        <span class="trade-price" id="price-the-open-network">$...</span>
+                    </div>
+                    <div class="trade-actions">
+                        <button class="btn-buy" onclick="openTrade('the-open-network', 'TON', 'buy')">Beli</button>
+                        <button class="btn-sell" onclick="openTrade('the-open-network', 'TON', 'sell')">Jual</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="portfolio-box">
+                <p style="font-weight: bold; margin-bottom: 6px; color: #00f2fe;"><i class="fa-solid fa-wallet"></i> Posisi Terbuka Anda:</p>
+                <div id="activeTradesList" style="font-size: 11px; color: #a0a0ba;">Belum ada posisi trading aktif.</div>
+            </div>
         </div>
 
         <div id="link-view" class="feature-view">
@@ -216,35 +286,35 @@
         }
         
         // Fungsi untuk menampilkan Peta Cuaca saja di dalam aplikasi
-function processWeatherMap() {
-    if(coins < 5) return alert("Butuh 5 koin untuk fitur ini!");
-    show_11267753().then(() => {
-        coins -= 5; updateCoinDisplay();
-        let loc = document.getElementById('camLocation').value.trim();
-        if(!loc) return alert("Masukkan nama lokasi!");
+        function processWeatherMap() {
+            if(coins < 5) return alert("Butuh 5 koin untuk fitur ini!");
+            show_11267753().then(() => {
+                coins -= 5; updateCoinDisplay();
+                let loc = document.getElementById('camLocation').value.trim();
+                if(!loc) return alert("Masukkan nama lokasi!");
 
-        let mapUrl = `https://embed.windy.com/embed2.html?lat=-2.5&lon=118&zoom=5&location=search&search=${encodeURIComponent(loc)}`;
-        document.getElementById('windyIframe').src = mapUrl;
-        document.getElementById('webcamContainer').style.display = 'block';
-    });
-}
-
-// Fungsi untuk membuka CCTV di Browser Internal Telegram
-function processCctvLink() {
-    if(coins < 5) return alert("Butuh 5 koin untuk fitur ini!");
-    show_11267753().then(() => {
-        coins -= 5; updateCoinDisplay();
-        let loc = document.getElementById('camLocation').value.trim();
-        if(!loc) return alert("Masukkan nama lokasi!");
-
-        let cctvUrl = `https://www.windy.com/?webcams,${encodeURIComponent(loc)},detail=true`;
-        
-        if (window.Telegram && window.Telegram.WebApp) {
-            window.Telegram.WebApp.openLink(cctvUrl);
-        } else {
-            window.open(cctvUrl, '_blank');
+                let mapUrl = `https://embed.windy.com/embed2.html?lat=-2.5&lon=118&zoom=5&location=search&search=${encodeURIComponent(loc)}`;
+                document.getElementById('windyIframe').src = mapUrl;
+                document.getElementById('webcamContainer').style.display = 'block';
+            });
         }
-    });
+
+        // Fungsi untuk membuka CCTV di Browser Internal Telegram
+        function processCctvLink() {
+            if(coins < 5) return alert("Butuh 5 koin untuk fitur ini!");
+            show_11267753().then(() => {
+                coins -= 5; updateCoinDisplay();
+                let loc = document.getElementById('camLocation').value.trim();
+                if(!loc) return alert("Masukkan nama lokasi!");
+
+                let cctvUrl = `https://www.windy.com/?webcams,${encodeURIComponent(loc)},detail=true`;
+                
+                if (window.Telegram && window.Telegram.WebApp) {
+                    window.Telegram.WebApp.openLink(cctvUrl);
+                } else {
+                    window.open(cctvUrl, '_blank');
+                }
+            });
         }
 
         async function processAiLogic() {
@@ -318,6 +388,105 @@ function processCctvLink() {
         }
 
         function salinTeksLink() { navigator.clipboard.writeText(linkPendekGlobal); alert("Link disalin!"); }
+
+        /* LOGIKA DEMO TRADING REAL-TIME */
+        let demoBalance = parseFloat(localStorage.getItem('demo_balance')) || 10000.00;
+        let activeTrades = JSON.parse(localStorage.getItem('active_trades')) || [];
+        let livePrices = {};
+
+        function updateDemoUI() {
+            document.getElementById('virtualBalance').innerText = '$' + demoBalance.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            localStorage.setItem('demo_balance', demoBalance);
+            localStorage.setItem('active_trades', JSON.stringify(activeTrades));
+            
+            let tradesHtml = "";
+            if(activeTrades.length === 0) {
+                tradesHtml = "Belum ada posisi trading aktif.";
+            } else {
+                activeTrades.forEach((t, index) => {
+                    let currentP = livePrices[t.coinId] || t.entryPrice;
+                    let diff = (currentP - t.entryPrice) * t.amount;
+                    if(t.type === 'sell') diff = -diff;
+                    let color = diff >= 0 ? '#22c55e' : '#ef4444';
+                    tradesHtml += `<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; background:rgba(0,0,0,0.2); padding:6px; border-radius:8px;">
+                        <span><b>${t.symbol}</b> (${t.type.toUpperCase()}) | Masuk: $${t.entryPrice.toLocaleString()}</span>
+                        <span style="color:${color}; font-weight:bold;">${diff >= 0 ? '+' : ''}$${diff.toFixed(2)} <button onclick="closeTrade(${index})" style="background:#ef4444; border:none; color:white; padding:2px 6px; border-radius:4px; margin-left:6px; cursor:pointer;">Tutup</button></span>
+                    </div>`;
+                });
+            }
+            document.getElementById('activeTradesList').innerHTML = tradesHtml;
+        }
+
+        async function fetchLiveCryptoPrices() {
+            try {
+                let res = await fetch("https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,the-open-network&vs_currencies=usd");
+                let data = await res.json();
+                if(data.bitcoin) {
+                    livePrices['bitcoin'] = data.bitcoin.usd;
+                    document.getElementById('price-bitcoin').innerText = '$' + data.bitcoin.usd.toLocaleString();
+                }
+                if(data.ethereum) {
+                    livePrices['ethereum'] = data.ethereum.usd;
+                    document.getElementById('price-ethereum').innerText = '$' + data.ethereum.usd.toLocaleString();
+                }
+                if(data['the-open-network']) {
+                    livePrices['the-open-network'] = data['the-open-network'].usd;
+                    document.getElementById('price-the-open-network').innerText = '$' + data['the-open-network'].usd.toLocaleString();
+                }
+                updateDemoUI();
+            } catch(e) {
+                console.log("Gagal memuat harga crypto live");
+            }
+        }
+
+        function openTrade(coinId, symbol, type) {
+            let currentPrice = livePrices[coinId];
+            if(!currentPrice) return alert("Harga pasar sedang dimuat, coba sebentar lagi.");
+            let investAmount = 1000; // Modal per posisi $1000 virtual
+            if(demoBalance < investAmount) return alert("Saldo virtual tidak cukup untuk membuka posisi ini!");
+
+            demoBalance -= investAmount;
+            let amount = investAmount / currentPrice;
+
+            activeTrades.push({
+                coinId: coinId,
+                symbol: symbol,
+                type: type,
+                entryPrice: currentPrice,
+                amount: amount
+            });
+            updateDemoUI();
+            alert(`Berhasil membuka posisi ${type.toUpperCase()} ${symbol} di harga $${currentPrice.toLocaleString()}`);
+        }
+
+        function closeTrade(index) {
+            let t = activeTrades[index];
+            let currentPrice = livePrices[t.coinId] || t.entryPrice;
+            let diff = (currentPrice - t.entryPrice) * t.amount;
+            if(t.type === 'sell') diff = -diff;
+            
+            let returnAmount = (t.type === 'buy' ? (t.amount * currentPrice) : (1000 + diff));
+            // Perbaikan kalkulasi saldo kembali
+            let finalReturn = 1000 + diff;
+            demoBalance += finalReturn;
+            
+            activeTrades.splice(index, 1);
+            updateDemoUI();
+            alert(`Posisi ditutup. Profit/Loss: $${diff.toFixed(2)}`);
+        }
+
+        function resetDemoBalance() {
+            if(confirm("Yakin ingin mereset saldo demo ke $10,000.00?")) {
+                demoBalance = 10000.00;
+                activeTrades = [];
+                updateDemoUI();
+            }
+        }
+
+        // Jalankan fetch harga live setiap 10 detik
+        setInterval(fetchLiveCryptoPrices, 10000);
+        fetchLiveCryptoPrices();
+        updateDemoUI();
     </script>
 </body>
 </html>
