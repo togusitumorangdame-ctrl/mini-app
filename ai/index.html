@@ -322,9 +322,9 @@
             document.getElementById('refCount').innerText = `${myRefCount} Orang`;
             document.getElementById('refEarnedCoins').innerText = myRefCoins;
 
-            // Tautan referral bersih menggunakan token anonim
-            let cleanRefLink = window.location.origin + window.location.pathname + '?ref=' + userAnonToken;
-            document.getElementById('refLinkInput').value = cleanRefLink;
+            // Mengarahkan link referral langsung ke Bot Telegram Anda
+            let telegramBotLink = "https://t.me/Miner_scrapper_bot?start=" + userAnonToken;
+            document.getElementById('refLinkInput').value = telegramBotLink;
         });
 
         function updateCoinDisplay() {
