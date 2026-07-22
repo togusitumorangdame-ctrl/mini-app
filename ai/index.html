@@ -287,21 +287,27 @@
         updateCoinDisplay();
         checkDailyButtonStatus();
 
-        // Inisialisasi Sistem Referral & Deteksi Tautan Masuk
+        // Sistem Referral Anonim & Token Acak
         window.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const refCode = urlParams.get('ref');
             
-            // Jika pengguna membuka link referral teman dan belum pernah klaim sebelumnya
-            if (refCode && refCode !== userId && !localStorage.getItem('has_claimed_ref')) {
+            // Generate atau ambil token referral anonim unik pengguna (misal: kode 6 karakter acak)
+            let userAnonToken = localStorage.getItem('user_anon_token');
+            if (!userAnonToken) {
+                userAnonToken = 'usr_' + Math.random().toString(36.substring(2, 8));
+                localStorage.setItem('user_anon_token', userAnonToken);
+            }
+
+            // Validasi jika pengguna baru bergabung lewat link teman
+            if (refCode && refCode !== userAnonToken && !localStorage.getItem('has_claimed_ref')) {
                 let currentCoins = parseInt(localStorage.getItem('user_coins')) || 10;
-                currentCoins += 30; // Bonus 30 koin untuk pengguna baru yang join via referral
+                currentCoins += 30; // Bonus 30 koin
                 coins = currentCoins;
                 updateCoinDisplay();
                 localStorage.setItem('has_claimed_ref', 'true');
-                localStorage.setItem('referred_by', refCode);
                 
-                // Simpan pencatatan ke pemilik referral melalui localStorage lintas sesi simulasi nyata
+                // Catat ke pemilik referral
                 let refOwnerCountKey = 'ref_count_' + refCode;
                 let refOwnerCoinsKey = 'ref_coins_' + refCode;
                 let existingCount = parseInt(localStorage.getItem(refOwnerCountKey)) || 0;
@@ -309,18 +315,19 @@
                 localStorage.setItem(refOwnerCountKey, existingCount + 1);
                 localStorage.setItem(refOwnerCoinsKey, existingEarned + 30);
 
-                alert(lang === 'id' ? "Selamat! Anda bergabung melalui tautan referral dan mendapatkan bonus +30 Koin!" : "Welcome! You joined via a referral link and received +30 Bonus Coins!");
+                alert(lang === 'id' ? "Selamat! Bonus +30 Koin referral berhasil diklaim!" : "Welcome! +30 Referral bonus claimed!");
             }
 
-            // Muat statistik referral pengguna sendiri
-            let myRefCount = localStorage.getItem('ref_count_' + userId) || 0;
-            let myRefCoins = localStorage.getItem('ref_coins_' + userId) || 0;
+            // Muat statistik referral
+            let myRefCount = localStorage.getItem('ref_count_' + userAnonToken) || 0;
+            let myRefCoins = localStorage.getItem('ref_coins_' + userAnonToken) || 0;
             document.getElementById('refCount').innerText = `${myRefCount} Orang`;
             document.getElementById('refEarnedCoins').innerText = myRefCoins;
 
-            // Generate link referral unik milik pengguna
-            let generatedRefLink = window.location.origin + window.location.pathname + '?ref=' + userId;
-            document.getElementById('refLinkInput').value = generatedRefLink;
+            // Samarkan URL agar menggunakan format bersih/netral (atau gunakan domain pendek/pribadi Anda)
+            // Menggunakan parameter 'ref' yang bersih dari nama akun
+            let cleanRefLink = window.location.origin + window.location.pathname + '?ref=' + userAnonToken;
+            document.getElementById('refLinkInput').value = cleanRefLink;
         });
 
         function updateCoinDisplay() {
@@ -436,13 +443,13 @@
             });
         }
 
-        // Logika Salin Link Referral
+        // Logika Salin Link Referral Anonim yang Menarik & Mengajak
         function copyReferralLink() {
-            let copyText = document.getElementById("refLinkInput");
-            copyText.select();
-            copyText.setSelectionRange(0, 99999);
-            navigator.clipboard.writeText(copyText.value);
-            alert("Link referral berhasil disalin! Bagikan ke teman untuk mendapatkan bonus ketika mereka bergabung.");
+             let rawLink = document.getElementById("refLinkInput").value;
+             let promoText = `🔥 Mau dapat koin dan akses fitur AI gratis?\n\nGabung sekarang melalui tautan eksklusif ini:\n${rawLink}`;
+    
+    navigator.clipboard.writeText(promoText);
+    alert(lang === 'id' ? "Link & pesan promosi berhasil disalin! Silakan bagikan ke teman." : "Link & promo copied! Share it with friends.");
         }
 
         // Logika OSINT Nyata: Social Footprint Mapper
