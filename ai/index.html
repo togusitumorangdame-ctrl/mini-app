@@ -287,15 +287,15 @@
         updateCoinDisplay();
         checkDailyButtonStatus();
 
-        // Sistem Referral Anonim & Token Acak
+        // Sistem Referral Anonim yang Aman & Bebas Error
         window.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const refCode = urlParams.get('ref');
             
-            // Generate atau ambil token referral anonim unik pengguna (misal: kode 6 karakter acak)
+            // Generate atau ambil token referral anonim unik pengguna secara aman
             let userAnonToken = localStorage.getItem('user_anon_token');
             if (!userAnonToken) {
-                userAnonToken = 'usr_' + Math.random().toString(36.substring(2, 8));
+                userAnonToken = 'usr_' + Math.random().toString(36).substring(2, 8);
                 localStorage.setItem('user_anon_token', userAnonToken);
             }
 
@@ -314,8 +314,6 @@
                 let existingEarned = parseInt(localStorage.getItem(refOwnerCoinsKey)) || 0;
                 localStorage.setItem(refOwnerCountKey, existingCount + 1);
                 localStorage.setItem(refOwnerCoinsKey, existingEarned + 30);
-
-                alert(lang === 'id' ? "Selamat! Bonus +30 Koin referral berhasil diklaim!" : "Welcome! +30 Referral bonus claimed!");
             }
 
             // Muat statistik referral
@@ -324,8 +322,7 @@
             document.getElementById('refCount').innerText = `${myRefCount} Orang`;
             document.getElementById('refEarnedCoins').innerText = myRefCoins;
 
-            // Samarkan URL agar menggunakan format bersih/netral (atau gunakan domain pendek/pribadi Anda)
-            // Menggunakan parameter 'ref' yang bersih dari nama akun
+            // Tautan referral bersih menggunakan token anonim
             let cleanRefLink = window.location.origin + window.location.pathname + '?ref=' + userAnonToken;
             document.getElementById('refLinkInput').value = cleanRefLink;
         });
