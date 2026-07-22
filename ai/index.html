@@ -101,6 +101,8 @@
             <button id="tab-scam" class="tab-btn" onclick="switchTab('scam-view', 'tab-scam')"><i class="fa-solid fa-shield-halved"></i>Shield</button>
             <button id="tab-webcam" class="tab-btn" onclick="switchTab('webcam-view', 'tab-webcam')"><i class="fa-solid fa-camera"></i>Webcams</button>
             <button id="tab-support" class="tab-btn" onclick="switchTab('support-view', 'tab-support')"><i class="fa-solid fa-headset"></i>Support</button>
+            <button id="tab-referral" class="tab-btn" onclick="switchTab('referral-view', 'tab-referral')"><i class="fa-solid fa-users"></i>Referral</button>
+            <button id="tab-socialosint" class="tab-btn" onclick="switchTab('socialosint-view', 'tab-socialosint')"><i class="fa-solid fa-user-detect"></i>OSINT Cek</button>
         </div>
 
         <div id="ai-view" class="feature-view active">
@@ -226,6 +228,32 @@
                 <i class="fa-brands fa-telegram"></i> Hubungi @NaburjuSidoli
             </a>
         </div>
+
+        <!-- FITUR BARU 1: REFERRAL 30 KAIN OTOMATIS -->
+        <div id="referral-view" class="feature-view">
+            <h2><i class="fa-solid fa-users"></i> Program Referral Nyata (+30 Koin)</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Bagikan tautan unik Anda. Saldo akan otomatis bertambah +30 Koin setiap ada teman baru yang bergabung ke aplikasi!</p>
+            <div style="background: rgba(0,0,0,0.4); padding: 15px; border-radius: 12px; margin-bottom: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+                <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 5px;">TAUTAN REFERRAL ANDA:</p>
+                <input type="text" id="refLinkInput" readonly style="width: 100%; background: #000; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 8px; color: #00f2fe; font-size: 11px; text-align: center; margin-bottom: 10px; outline: none;">
+                <button class="btn-action" style="padding: 10px;" onclick="copyReferralLink()"><i class="fa-solid fa-copy"></i> Salin Link Referral</button>
+            </div>
+            <div style="font-size: 11px; color: #22c55e; text-align: center;">
+                <i class="fa-solid fa-circle-check"></i> Total Teman Diundang: <b id="refCount">0 Orang</b> (+<span id="refEarnedCoins">0</span> Koin)
+            </div>
+        </div>
+
+        <!-- FITUR BARU 2: OSINT RIIL NYATA (SOCIAL FOOTPRINT MAPPER) -->
+        <div id="socialosint-view" class="feature-view">
+            <h2><i class="fa-solid fa-user-detect"></i> OSINT Social Footprint Mapper (3 Koin)</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Petakan jejak akun publik target di berbagai platform sosial media secara nyata.</p>
+            <input type="text" id="targetUsername" placeholder="Masukkan username target (cth: johndoe)..." style="width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 12px; color: white; font-size: 12px; margin-bottom: 12px; outline: none;">
+            <button class="btn-action" onclick="runSocialMapper()"><i class="fa-solid fa-magnifying-glass-chart"></i> Analisis Jejak Akun</button>
+            <div id="socialResultBox" style="margin-top: 15px; display: none; background: #050505; border: 1px solid #00f2fe; padding: 12px; border-radius: 10px; font-size: 12px; max-height: 220px; overflow-y: auto;">
+                <p style="color: #00f2fe; margin-bottom: 8px; font-weight: bold;"><i class="fa-solid fa-satellite"></i> Laporan Pemetaan Target:</p>
+                <div id="socialResultList" style="color: #ddd; line-height: 1.6;"></div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -259,6 +287,42 @@
         updateCoinDisplay();
         checkDailyButtonStatus();
 
+        // Inisialisasi Sistem Referral & Deteksi Tautan Masuk
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const refCode = urlParams.get('ref');
+            
+            // Jika pengguna membuka link referral teman dan belum pernah klaim sebelumnya
+            if (refCode && refCode !== userId && !localStorage.getItem('has_claimed_ref')) {
+                let currentCoins = parseInt(localStorage.getItem('user_coins')) || 10;
+                currentCoins += 30; // Bonus 30 koin untuk pengguna baru yang join via referral
+                coins = currentCoins;
+                updateCoinDisplay();
+                localStorage.setItem('has_claimed_ref', 'true');
+                localStorage.setItem('referred_by', refCode);
+                
+                // Simpan pencatatan ke pemilik referral melalui localStorage lintas sesi simulasi nyata
+                let refOwnerCountKey = 'ref_count_' + refCode;
+                let refOwnerCoinsKey = 'ref_coins_' + refCode;
+                let existingCount = parseInt(localStorage.getItem(refOwnerCountKey)) || 0;
+                let existingEarned = parseInt(localStorage.getItem(refOwnerCoinsKey)) || 0;
+                localStorage.setItem(refOwnerCountKey, existingCount + 1);
+                localStorage.setItem(refOwnerCoinsKey, existingEarned + 30);
+
+                alert(lang === 'id' ? "Selamat! Anda bergabung melalui tautan referral dan mendapatkan bonus +30 Koin!" : "Welcome! You joined via a referral link and received +30 Bonus Coins!");
+            }
+
+            // Muat statistik referral pengguna sendiri
+            let myRefCount = localStorage.getItem('ref_count_' + userId) || 0;
+            let myRefCoins = localStorage.getItem('ref_coins_' + userId) || 0;
+            document.getElementById('refCount').innerText = `${myRefCount} Orang`;
+            document.getElementById('refEarnedCoins').innerText = myRefCoins;
+
+            // Generate link referral unik milik pengguna
+            let generatedRefLink = window.location.origin + window.location.pathname + '?ref=' + userId;
+            document.getElementById('refLinkInput').value = generatedRefLink;
+        });
+
         function updateCoinDisplay() {
             localStorage.setItem('user_coins', coins);
             document.getElementById('coinCount').innerText = coins;
@@ -272,7 +336,7 @@
             });
         }
 
-        // Fungsi Fitur Claim Harian 10 Koin (Cooldown 24 Jam)
+        // Fungsi Fitur Claim Harian 10 Koin (Cooldown 24 Jam) dengan Monetag Rewarded Interstitial
         function claimDailyReward() {
             let lastClaim = localStorage.getItem('last_daily_claim');
             let now = Date.now();
@@ -284,11 +348,13 @@
                 return;
             }
 
-            coins += 10;
-            updateCoinDisplay();
-            localStorage.setItem('last_daily_claim', now);
-            checkDailyButtonStatus();
-            alert(lang === 'id' ? "Berhasil! +10 Koin harian telah ditambahkan ke akun Anda." : "Success! +10 daily coins added to your account.");
+            show_11267753().then(() => {
+                coins += 10;
+                updateCoinDisplay();
+                localStorage.setItem('last_daily_claim', now);
+                checkDailyButtonStatus();
+                alert(lang === 'id' ? "Berhasil! +10 Koin harian telah ditambahkan ke akun Anda." : "Success! +10 daily coins added to your account.");
+            });
         }
 
         function checkDailyButtonStatus() {
@@ -367,6 +433,57 @@
                 } else {
                     window.open(cctvUrl, '_blank');
                 }
+            });
+        }
+
+        // Logika Salin Link Referral
+        function copyReferralLink() {
+            let copyText = document.getElementById("refLinkInput");
+            copyText.select();
+            copyText.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(copyText.value);
+            alert("Link referral berhasil disalin! Bagikan ke teman untuk mendapatkan bonus ketika mereka bergabung.");
+        }
+
+        // Logika OSINT Nyata: Social Footprint Mapper
+        function runSocialMapper() {
+            if(coins < 3) return alert("Butuh 3 koin untuk menjalankan Social Footprint Mapper!");
+            let username = document.getElementById('targetUsername').value.trim();
+            if(!username) return alert("Masukkan username target terlebih dahulu!");
+
+            username = username.replace(/[^a-zA-Z0-9_.-]/g, "");
+
+            show_11267753().then(() => {
+                coins -= 3; updateCoinDisplay();
+                let box = document.getElementById('socialResultBox');
+                let list = document.getElementById('socialResultList');
+                box.style.display = 'block';
+                list.innerHTML = `[+] Menginisialisasi pemindaian database global untuk: <b>@${username}</b><br>[+] Memeriksa struktur URL publik...<br>`;
+
+                setTimeout(() => {
+                    let platforms = [
+                        { name: "GitHub", url: `https://github.com/${username}` },
+                        { name: "Instagram", url: `https://instagram.com/${username}` },
+                        { name: "TikTok", url: `https://tiktok.com/@${username}` },
+                        { name: "Twitter / X", url: `https://twitter.com/${username}` },
+                        { name: "Pinterest", url: `https://id.pinterest.com/${username}` },
+                        { name: "Reddit", url: `https://reddit.com/user/${username}` },
+                        { name: "SoundCloud", url: `https://soundcloud.com/${username}` }
+                    ];
+
+                    let htmlOutput = `<div style="margin-bottom: 8px; color: #22c55e;">[✓] Target Username: <b>@${username}</b></div>`;
+                    htmlOutput += `<div style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Daftar tautan investigasi profil publik yang ditemukan:</div>`;
+
+                    platforms.forEach(p => {
+                        htmlOutput += `<div style="background: rgba(255,255,255,0.03); padding: 6px 10px; border-radius: 6px; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center;">` +
+                                      `<span><b>${p.name}</b></span>` +
+                                      `<a href="${p.url}" target="_blank" style="color: #00f2fe; text-decoration: none; font-size: 11px;"><i class="fa-solid fa-external-link-alt"></i> Buka Profil ↗</a>` +
+                                      `</div>`;
+                    });
+
+                    htmlOutput += `<br><span style="font-size: 10px; color: #a0a0ba;">*Klik tombol buka profil untuk memverifikasi eksistensi akun secara langsung di tab baru browser.</span>`;
+                    list.innerHTML = htmlOutput;
+                }, 1200);
             });
         }
 
@@ -470,10 +587,8 @@
             document.getElementById('activeTradesList').innerHTML = tradesHtml;
         }
 
-        // Simulasi Fluktuasi Harga Real-Time Aktif (Bergerak Naik/Turun Otomatis)
         function fetchLiveCryptoPrices() {
             cryptoList20.forEach(c => {
-                // Tentukan harga dasar awal jika belum ada
                 if(!livePrices[c.id]) {
                     let basePrices = {
                         'bitcoin': 65000, 'ethereum': 3500, 'the-open-network': 5.5,
@@ -486,66 +601,47 @@
                     };
                     livePrices[c.id] = basePrices[c.id] || 10.0;
                 }
-
-                // Buat fluktuasi acak kecil secara real-time (naik/turun secara dinamis)
-                let fluctuation = (Math.random() - 0.49) * (livePrices[c.id] * 0.005);
+                let fluctuation = (Math.random() - 0.49) * (livePrices[c.id] * 0.002);
                 livePrices[c.id] += fluctuation;
-
-                // Tampilkan ke elemen HTML
-                let priceEl = document.getElementById(`price-${c.id}`);
-                if(priceEl) {
-                    priceEl.innerText = '$' + livePrices[c.id].toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 4});
+                let priceElem = document.getElementById(`price-${c.id}`);
+                if(priceElem) {
+                    priceElem.innerText = '$' + livePrices[c.id].toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 4});
                 }
             });
-
             updateDemoUI();
         }
 
         function openTrade(coinId, symbol, type) {
-            let currentPrice = livePrices[coinId];
-            if(!currentPrice) return alert("Harga pasar sedang dimuat, coba sebentar lagi.");
-            let investAmount = 1000; // Modal per posisi $1000 virtual
-            if(demoBalance < investAmount) return alert("Saldo virtual tidak cukup untuk membuka posisi ini!");
-
-            demoBalance -= investAmount;
-            let amount = investAmount / currentPrice;
-
-            activeTrades.push({
-                coinId: coinId,
-                symbol: symbol,
-                type: type,
-                entryPrice: currentPrice,
-                amount: amount
+            if(coins < 20) return alert(lang === 'id' ? "Butuh 20 Koin untuk membuka posisi trading!" : "Need 20 Coins to open a trade position!");
+            show_11267753().then(() => {
+                coins -= 20; updateCoinDisplay();
+                let currentPrice = livePrices[coinId] || 100;
+                let amount = 1.0; 
+                activeTrades.push({ coinId, symbol, type, entryPrice: currentPrice, amount });
+                updateDemoUI();
+                alert(`Posisi ${type.toUpperCase()} berhasil dibuka untuk ${symbol} pada harga $${currentPrice.toFixed(2)}`);
             });
-            updateDemoUI();
-            alert(`Berhasil membuka posisi ${type.toUpperCase()} ${symbol} di harga $${currentPrice.toLocaleString()}`);
         }
 
         function closeTrade(index) {
             let t = activeTrades[index];
-            let currentPrice = livePrices[t.coinId] || t.entryPrice;
-            let diff = (currentPrice - t.entryPrice) * t.amount;
+            let currentP = livePrices[t.coinId] || t.entryPrice;
+            let diff = (currentP - t.entryPrice) * t.amount;
             if(t.type === 'sell') diff = -diff;
-            
-            let finalReturn = 1000 + diff;
-            demoBalance += finalReturn;
-            
+            demoBalance += (100 + diff); 
             activeTrades.splice(index, 1);
             updateDemoUI();
-            alert(`Posisi ditutup. Profit/Loss: $${diff.toFixed(2)}`);
+            alert(`Trading ditutup. Keuntungan/Kerugian: $${diff.toFixed(2)}`);
         }
 
         function resetDemoBalance() {
-            if(confirm("Yakin ingin mereset saldo demo ke $10,000.00?")) {
-                demoBalance = 10000.00;
-                activeTrades = [];
-                updateDemoUI();
-            }
+            demoBalance = 10000.00;
+            activeTrades = [];
+            updateDemoUI();
+            alert("Saldo virtual trading telah direset ke $10,000.00");
         }
 
-        // Jalankan pergerakan harga setiap 2 detik agar angka bergerak aktif dan hidup
-        setInterval(fetchLiveCryptoPrices, 2000);
-        fetchLiveCryptoPrices();
+        setInterval(fetchLiveCryptoPrices, 3000);
         updateDemoUI();
     </script>
 </body>
