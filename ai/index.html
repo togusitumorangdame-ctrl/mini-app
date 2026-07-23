@@ -25,7 +25,7 @@
         
         .app-card { background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 25px; width: 100%; max-width: 500px; padding: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
         .nav-tabs { display: flex; justify-content: space-between; margin-bottom: 20px; background: rgba(0,0,0,0.3); padding: 5px; border-radius: 50px; gap: 4px; flex-wrap: wrap; }
-        .tab-btn { background: none; border: none; color: #a0a0ba; padding: 8px 4px; font-size: 9px; font-weight: 600; cursor: pointer; border-radius: 50px; flex: 1; text-align: center; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 55px; }
+        .tab-btn { background: none; border: none; color: #a0a0ba; padding: 8px 4px; font-size: 9px; font-weight: 600; cursor: pointer; border-radius: 50px; flex: 1; text-align: center; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 50px; }
         .tab-btn i { font-size: 11px; }
         .tab-btn.active { background: linear-gradient(45deg, #00f2fe, #4facfe); color: white; box-shadow: 0 4px 12px rgba(0,242,254,0.3); }
         
@@ -60,6 +60,13 @@
         .btn-buy { background: #22c55e; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 11px; }
         .btn-sell { background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 11px; }
         .portfolio-box { background: rgba(0, 242, 254, 0.05); border: 1px solid rgba(0, 242, 254, 0.2); border-radius: 14px; padding: 12px; margin-top: 15px; font-size: 12px; }
+
+        /* Styling Tambahan Scratch Card */
+        .scratch-container { display: flex; flex-direction: column; align-items: center; }
+        .card-frame { position: relative; width: 260px; height: 110px; margin: 10px auto 15px auto; border-radius: 12px; overflow: hidden; background: #222; border: 2px dashed #00f2fe; display: flex; align-items: center; justify-content: center; }
+        .hidden-prize { font-size: 22px; font-weight: bold; letter-spacing: 5px; }
+        canvas#scratchCanvas { position: absolute; top: 0; left: 0; cursor: pointer; touch-action: none; }
+        .scratch-notif { margin-top: 10px; font-size: 11px; min-height: 40px; color: #b0bec5; text-align: center; line-height: 1.4; }
     </style>
 </head>
 <body>
@@ -102,7 +109,8 @@
             <button id="tab-webcam" class="tab-btn" onclick="switchTab('webcam-view', 'tab-webcam')"><i class="fa-solid fa-camera"></i>Webcams</button>
             <button id="tab-support" class="tab-btn" onclick="switchTab('support-view', 'tab-support')"><i class="fa-solid fa-headset"></i>Support</button>
             <button id="tab-referral" class="tab-btn" onclick="switchTab('referral-view', 'tab-referral')"><i class="fa-solid fa-users"></i>Referral</button>
-            <button id="tab-socialosint" class="tab-btn" onclick="switchTab('socialosint-view', 'tab-socialosint')"><i class="fa-solid fa-user-detect"></i>OSINT Cek</button>
+            <button id="tab-socialosint" class="tab-btn" onclick="switchTab('socialosint-view', 'tab-socialosint')"><i class="fa-solid fa-user-detect"></i>OSINT</button>
+            <button id="tab-scratch" class="tab-btn" onclick="switchTab('scratch-view', 'tab-scratch'); initScratchCard();"><i class="fa-solid fa-ticket"></i>Scratch</button>
         </div>
 
         <div id="ai-view" class="feature-view active">
@@ -112,7 +120,7 @@
             <button class="btn-action" id="aiBtn" onclick="sendToAINyata()"><i class="fa-solid fa-paper-plane"></i> Kirim ke AI</button>
         </div>
 
-        <!-- FITUR DEMO TRADING 20 KIOS REAL-TIME -->
+        <!-- FITUR DEMO TRADING REAL-TIME -->
         <div id="trade-view" class="feature-view">
             <h2><i class="fa-solid fa-chart-line"></i> Demo Trading Crypto Live (20 Koin)</h2>
             <div style="background: rgba(0,0,0,0.4); padding: 12px; border-radius: 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
@@ -124,7 +132,6 @@
             </div>
 
             <div id="cryptoMarketList" style="max-height: 250px; overflow-y: auto; padding-right: 5px;">
-                <!-- 20 Koin Crypto Real-Time List -->
                 <script>
                     const cryptoList20 = [
                         {id: 'bitcoin', symbol: 'BTC', name: 'Bitcoin'},
@@ -220,7 +227,6 @@
             </div>
         </div>
 
-        <!-- FITUR SUPPORT CHAT KE @NaburjuSidoli -->
         <div id="support-view" class="feature-view">
             <h2><i class="fa-solid fa-headset"></i> Support Chat (@NaburjuSidoli)</h2>
             <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Butuh bantuan, kendala koin, atau pertanyaan seputar aplikasi? Hubungi admin resmi kami langsung melalui Telegram.</p>
@@ -229,7 +235,6 @@
             </a>
         </div>
 
-        <!-- FITUR BARU 1: REFERRAL 30 KAIN OTOMATIS -->
         <div id="referral-view" class="feature-view">
             <h2><i class="fa-solid fa-users"></i> Program Referral Nyata (+30 Koin)</h2>
             <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Bagikan tautan unik Anda. Saldo akan otomatis bertambah +30 Koin setiap ada teman baru yang bergabung ke aplikasi!</p>
@@ -243,7 +248,6 @@
             </div>
         </div>
 
-        <!-- FITUR BARU 2: OSINT RIIL NYATA (SOCIAL FOOTPRINT MAPPER) -->
         <div id="socialosint-view" class="feature-view">
             <h2><i class="fa-solid fa-user-detect"></i> OSINT Social Footprint Mapper (3 Koin)</h2>
             <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Petakan jejak akun publik target di berbagai platform sosial media secara nyata.</p>
@@ -252,6 +256,20 @@
             <div id="socialResultBox" style="margin-top: 15px; display: none; background: #050505; border: 1px solid #00f2fe; padding: 12px; border-radius: 10px; font-size: 12px; max-height: 220px; overflow-y: auto;">
                 <p style="color: #00f2fe; margin-bottom: 8px; font-weight: bold;"><i class="fa-solid fa-satellite"></i> Laporan Pemetaan Target:</p>
                 <div id="socialResultList" style="color: #ddd; line-height: 1.6;"></div>
+            </div>
+        </div>
+
+        <!-- FITUR BARU: KUPON GOSOK BERKAH (SCRATCH CARD) -->
+        <div id="scratch-view" class="feature-view">
+            <h2><i class="fa-solid fa-ticket"></i> Kupon Gosok Berkah (Modal: 10 Koin)</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Gosok area abu-abu di bawah untuk menguji peruntungan Anda!</p>
+            <div class="scratch-container">
+                <div class="card-frame">
+                    <div id="prize-text" class="hidden-prize">? ? ?</div>
+                    <canvas id="scratchCanvas" width="260" height="110"></canvas>
+                </div>
+                <button class="btn-action" onclick="mulaiKuponBaru()" style="background: linear-gradient(45deg, #ff9800, #ff5722);">Ambil Kupon Baru (10 Koin)</button>
+                <div class="scratch-notif" id="notifBox">Klik tombol di atas untuk memulai kupon gosok!</div>
             </div>
         </div>
     </div>
@@ -292,22 +310,19 @@
             const urlParams = new URLSearchParams(window.location.search);
             const refCode = urlParams.get('ref');
             
-            // Generate atau ambil token referral anonim unik pengguna secara aman
             let userAnonToken = localStorage.getItem('user_anon_token');
             if (!userAnonToken) {
                 userAnonToken = 'usr_' + Math.random().toString(36).substring(2, 8);
                 localStorage.setItem('user_anon_token', userAnonToken);
             }
 
-            // Validasi jika pengguna baru bergabung lewat link teman
             if (refCode && refCode !== userAnonToken && !localStorage.getItem('has_claimed_ref')) {
                 let currentCoins = parseInt(localStorage.getItem('user_coins')) || 10;
-                currentCoins += 30; // Bonus 30 koin
+                currentCoins += 30; 
                 coins = currentCoins;
                 updateCoinDisplay();
                 localStorage.setItem('has_claimed_ref', 'true');
                 
-                // Catat ke pemilik referral
                 let refOwnerCountKey = 'ref_count_' + refCode;
                 let refOwnerCoinsKey = 'ref_coins_' + refCode;
                 let existingCount = parseInt(localStorage.getItem(refOwnerCountKey)) || 0;
@@ -316,13 +331,11 @@
                 localStorage.setItem(refOwnerCoinsKey, existingEarned + 30);
             }
 
-            // Muat statistik referral
             let myRefCount = localStorage.getItem('ref_count_' + userAnonToken) || 0;
             let myRefCoins = localStorage.getItem('ref_coins_' + userAnonToken) || 0;
             document.getElementById('refCount').innerText = `${myRefCount} Orang`;
             document.getElementById('refEarnedCoins').innerText = myRefCoins;
 
-            // Mengarahkan link referral langsung ke Bot Telegram Anda
             let telegramBotLink = "https://t.me/Miner_scrapper_bot?start=" + userAnonToken;
             document.getElementById('refLinkInput').value = telegramBotLink;
         });
@@ -340,7 +353,6 @@
             });
         }
 
-        // Fungsi Fitur Claim Harian 10 Koin (Cooldown 24 Jam) dengan Monetag Rewarded Interstitial
         function claimDailyReward() {
             let lastClaim = localStorage.getItem('last_daily_claim');
             let now = Date.now();
@@ -440,16 +452,13 @@
             });
         }
 
-        // Logika Salin Link Referral Anonim yang Menarik & Mengajak
         function copyReferralLink() {
              let rawLink = document.getElementById("refLinkInput").value;
              let promoText = `🔥 Mau dapat koin dan akses fitur AI gratis?\n\nGabung sekarang melalui tautan eksklusif ini:\n${rawLink}`;
-    
              navigator.clipboard.writeText(promoText);
              alert(lang === 'id' ? "Link & pesan promosi berhasil disalin! Silakan bagikan ke teman." : "Link & promo copied! Share it with friends.");
         }
 
-        // Logika OSINT Nyata: Social Footprint Mapper
         function runSocialMapper() {
             if(coins < 3) return alert("Butuh 3 koin untuk menjalankan Social Footprint Mapper!");
             let username = document.getElementById('targetUsername').value.trim();
@@ -563,7 +572,125 @@
 
         function salinTeksLink() { navigator.clipboard.writeText(linkPendekGlobal); alert("Link disalin!"); }
 
-        /* LOGIKA DEMO TRADING REAL-TIME BEBAS COINGECKO (20 KOIN MENGGUNAKAN COINGECKO MULTI-BULK / FALLBACK PUBLIK) */
+        /* LOGIKA KUPON GOSOK (SCRATCH CARD) DENGAN ZONK CASHBACK & HAMPIR MENANG */
+        let canvasScratch, ctxScratch, prizeTextEl, notifBoxEl;
+        let isDrawingScratch = false;
+        let sudahDigosok = false;
+        let hasilKuponSaatIni = "";
+
+        function initScratchCard() {
+            canvasScratch = document.getElementById("scratchCanvas");
+            if (!canvasScratch) return;
+            ctxScratch = canvasScratch.getContext("2d");
+            prizeTextEl = document.getElementById("prize-text");
+            notifBoxEl = document.getElementById("notifBox");
+
+            // Event Listener Mouse & Touch
+            canvasScratch.onmousedown = (e) => { isDrawingScratch = true; scratchAction(e); };
+            canvasScratch.onmousemove = scratchAction;
+            window.onmouseup = () => { isDrawingScratch = false; };
+
+            canvasScratch.ontouchstart = (e) => { isDrawingScratch = true; scratchAction(e); e.preventDefault(); };
+            canvasScratch.ontouchmove = (e) => { scratchAction(e); e.preventDefault(); };
+            window.ontouchend = () => { isDrawingScratch = false; };
+
+            mulaiKuponBaru();
+        }
+
+        function resetKanvasVisual() {
+            ctxScratch.fillStyle = "#888888";
+            ctxScratch.fillRect(0, 0, canvasScratch.width, canvasScratch.height);
+            ctxScratch.fillStyle = "#333333";
+            ctxScratch.font = "bold 15px Poppins, sans-serif";
+            ctxScratch.textAlign = "center";
+            ctxScratch.fillText("GOSOK DI SINI", canvasScratch.width / 2, canvasScratch.height / 2 + 5);
+        }
+
+        function tentukanHasilKupon() {
+            const rand = Math.random();
+            // 50% Zonk (Cashback), 30% Hampir Menang, 20% Menang Kecil
+            if (rand < 0.50) {
+                hasilKuponSaatIni = "ZONK";
+                prizeTextEl.innerText = "🍒 🍋 🔔";
+            } else if (rand < 0.80) {
+                hasilKuponSaatIni = "HAMPIR";
+                prizeTextEl.innerText = "⭐ ⭐ ❌"; // 2 Sama, 1 Beda
+            } else {
+                hasilKuponSaatIni = "MENANG";
+                prizeTextEl.innerText = "💰 💰 💰"; // 3 Sama
+            }
+        }
+
+        function mulaiKuponBaru() {
+            const modalMain = 10;
+            if (coins < modalMain) {
+                notifBoxEl.innerText = "Koin Anda tidak cukup! Silakan ambil koin gratis di atas.";
+                return;
+            }
+
+            coins -= modalMain;
+            updateCoinDisplay();
+            sudahDigosok = false;
+            notifBoxEl.innerText = "Kupon baru aktif! Silakan gosok area abu-abu di atas.";
+            
+            tentukanHasilKupon();
+            resetKanvasVisual();
+        }
+
+        function getPos(e) {
+            const rect = canvasScratch.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            return { x: clientX - rect.left, y: clientY - rect.top };
+        }
+
+        function scratchAction(e) {
+            if (!isDrawingScratch || sudahDigosok) return;
+            const pos = getPos(e);
+            
+            ctxScratch.globalCompositeOperation = "destination-out";
+            ctxScratch.beginPath();
+            ctxScratch.arc(pos.x, pos.y, 22, 0, Math.PI * 2);
+            ctxScratch.fill();
+
+            cekTransparansiKanvas();
+        }
+
+        function cekTransparansiKanvas() {
+            if (sudahDigosok) return;
+            
+            const imageData = ctxScratch.getImageData(0, 0, canvasScratch.width, canvasScratch.height);
+            let pixelsTerhapus = 0;
+            const totalPixels = imageData.data.length / 4;
+
+            for (let i = 3; i < imageData.data.length; i += 4) {
+                if (imageData.data[i] === 0) pixelsTerhapus++;
+            }
+
+            if (pixelsTerhapus / totalPixels > 0.40) {
+                ctxScratch.clearRect(0, 0, canvasScratch.width, canvasScratch.height);
+                sudahDigosok = true;
+                eksekusiHasilAkhir();
+            }
+        }
+
+        function eksekusiHasilAkhir() {
+            if (hasilKuponSaatIni === "ZONK") {
+                const cashback = 3; // Zonk tapi modal dikembalikan 30%
+                coins += cashback;
+                updateCoinDisplay();
+                notifBoxEl.innerHTML = `<b style="color:#ff5252;">ZONK!</b> Tapi tenang, modal Anda dikembalikan 30% (+${cashback} Koin).`;
+            } else if (hasilKuponSaatIni === "HAMPIR") {
+                notifBoxEl.innerHTML = `<b style="color:#ffc107;">HAMPIR MENANG!</b> 2 Gambar sama, kurang sedikit lagi nih. Coba kupon berikutnya!`;
+            } else if (hasilKuponSaatIni === "MENANG") {
+                const hadiah = 20;
+                coins += hadiah;
+                updateCoinDisplay();
+                notifBoxEl.innerHTML = `<b style="color:#22c55e;">🎉 SELAMAT!</b> Anda mendapatkan Kemenangan Kecil (+${hadiah} Koin)!`;
+            }
+        }
+
+        /* LOGIKA DEMO TRADING REAL-TIME */
         let demoBalance = parseFloat(localStorage.getItem('demo_balance')) || 10000.00;
         let activeTrades = JSON.parse(localStorage.getItem('active_trades')) || [];
         let livePrices = {};
