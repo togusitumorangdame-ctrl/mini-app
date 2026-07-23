@@ -598,6 +598,9 @@
         }
 
         function resetKanvasVisual() {
+            // WAJIB ditambahkan di baris paling atas fungsi ini:
+            ctxScratch.globalCompositeOperation = "source-over";
+
             ctxScratch.fillStyle = "#888888";
             ctxScratch.fillRect(0, 0, canvasScratch.width, canvasScratch.height);
             ctxScratch.fillStyle = "#333333";
