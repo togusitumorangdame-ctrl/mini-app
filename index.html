@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Super App v2.7</title>
+    <title>Premium Super App v2.6</title>
     <!-- SDK MONETAG -->
     <script src='//libtl.com/sdk.js' data-zone='11267753' data-sdk='show_11267753'></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -25,7 +25,7 @@
         
         .app-card { background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 25px; width: 100%; max-width: 500px; padding: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
         .nav-tabs { display: flex; justify-content: space-between; margin-bottom: 20px; background: rgba(0,0,0,0.3); padding: 5px; border-radius: 50px; gap: 4px; flex-wrap: wrap; }
-        .tab-btn { background: none; border: none; color: #a0a0ba; padding: 8px 4px; font-size: 9px; font-weight: 600; cursor: pointer; border-radius: 50px; flex: 1; text-align: center; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 45px; }
+        .tab-btn { background: none; border: none; color: #a0a0ba; padding: 8px 4px; font-size: 9px; font-weight: 600; cursor: pointer; border-radius: 50px; flex: 1; text-align: center; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 55px; }
         .tab-btn i { font-size: 11px; }
         .tab-btn.active { background: linear-gradient(45deg, #00f2fe, #4facfe); color: white; box-shadow: 0 4px 12px rgba(0,242,254,0.3); }
         
@@ -51,7 +51,7 @@
         
         #aiImageResult, #qrResult { width: 100%; border-radius: 14px; margin-top: 15px; display: none; border: 2px solid rgba(0,242,254,0.2); }
 
-        /* Styling Demo Trading Real */
+        /* Styling Tambahan Demo Trading Real */
         .trade-card { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
         .trade-info h4 { font-size: 13px; color: #fff; }
         .trade-info p { font-size: 11px; color: #a0a0ba; }
@@ -60,13 +60,6 @@
         .btn-buy { background: #22c55e; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 11px; }
         .btn-sell { background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 11px; }
         .portfolio-box { background: rgba(0, 242, 254, 0.05); border: 1px solid rgba(0, 242, 254, 0.2); border-radius: 14px; padding: 12px; margin-top: 15px; font-size: 12px; }
-
-        /* Styling Scratch Card */
-        .scratch-container { display: flex; flex-direction: column; align-items: center; }
-        .card-frame { position: relative; width: 260px; height: 110px; margin: 10px auto 15px auto; border-radius: 12px; overflow: hidden; background: #222; border: 2px dashed #00f2fe; display: flex; align-items: center; justify-content: center; }
-        .hidden-prize { font-size: 22px; font-weight: bold; letter-spacing: 5px; }
-        canvas#scratchCanvas { position: absolute; top: 0; left: 0; cursor: pointer; touch-action: none; }
-        .scratch-notif { margin-top: 10px; font-size: 11px; min-height: 40px; color: #b0bec5; text-align: center; line-height: 1.4; }
     </style>
 </head>
 <body>
@@ -74,12 +67,6 @@
     <script type="text/javascript" data-cfasync="false">
         (function(){var e=window,n="02c4883f05470762419409893976378c",r=[["siteId",392805],["minBid",0],["popundersPerIP",0],["delayBetween",0],["default",0],["defaultPerDay",0],["topmost",0]],c=document,a=c.createElement("script");a.type="text/javascript",a.async=!0,a.src="https://a.hilltopads.com/gz.js",c.body&&c.body.appendChild(a)})()
     </script>
-
-    <!-- Indikator Status Koneksi API Live -->
-    <div id="apiStatusBanner" style="width: 100%; max-width: 500px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); padding: 8px 12px; border-radius: 12px; margin-bottom: 12px; font-size: 11px; display: flex; align-items: center; justify-content: space-between; color: #22c55e;">
-        <span><i class="fa-solid fa-circle-dot" style="animation: pulse 1.5s infinite;"></i> Status Jaringan & API: <b>Terhubung Normal</b></span>
-        <span id="liveClock" style="color: #a0a0ba;">--:--:--</span>
-    </div>
 
     <div class="header-profile">
         <div class="user-info">
@@ -109,15 +96,11 @@
             <button id="tab-ai" class="tab-btn active" onclick="switchTab('ai-view', 'tab-ai')"><i class="fa-solid fa-robot"></i>AI Chat</button>
             <button id="tab-trade" class="tab-btn" onclick="switchTab('trade-view', 'tab-trade')"><i class="fa-solid fa-chart-line"></i>Trading</button>
             <button id="tab-link" class="tab-btn" onclick="switchTab('link-view', 'tab-link')"><i class="fa-solid fa-link"></i>Shortener</button>
-            <button id="tab-dl" class="tab-btn" onclick="switchTab('dl-view', 'tab-dl')"><i class="fa-solid fa-download"></i>Downloader</button>
             <button id="tab-img" class="tab-btn" onclick="switchTab('img-view', 'tab-img')"><i class="fa-solid fa-image"></i>AI Image</button>
             <button id="tab-qr" class="tab-btn" onclick="switchTab('qr-view', 'tab-qr')"><i class="fa-solid fa-qrcode"></i>QR Code</button>
             <button id="tab-scam" class="tab-btn" onclick="switchTab('scam-view', 'tab-scam')"><i class="fa-solid fa-shield-halved"></i>Shield</button>
             <button id="tab-webcam" class="tab-btn" onclick="switchTab('webcam-view', 'tab-webcam')"><i class="fa-solid fa-camera"></i>Webcams</button>
             <button id="tab-support" class="tab-btn" onclick="switchTab('support-view', 'tab-support')"><i class="fa-solid fa-headset"></i>Support</button>
-            <button id="tab-referral" class="tab-btn" onclick="switchTab('referral-view', 'tab-referral')"><i class="fa-solid fa-users"></i>Referral</button>
-            <button id="tab-socialosint" class="tab-btn" onclick="switchTab('socialosint-view', 'tab-socialosint')"><i class="fa-solid fa-user-detect"></i>OSINT</button>
-            <button id="tab-scratch" class="tab-btn" onclick="switchTab('scratch-view', 'tab-scratch'); initScratchCard();"><i class="fa-solid fa-ticket"></i>Scratch</button>
         </div>
 
         <div id="ai-view" class="feature-view active">
@@ -127,7 +110,7 @@
             <button class="btn-action" id="aiBtn" onclick="sendToAINyata()"><i class="fa-solid fa-paper-plane"></i> Kirim ke AI</button>
         </div>
 
-        <!-- FITUR DEMO TRADING REAL-TIME -->
+        <!-- FITUR DEMO TRADING 20 KIOS REAL-TIME -->
         <div id="trade-view" class="feature-view">
             <h2><i class="fa-solid fa-chart-line"></i> Demo Trading Crypto Live (20 Koin)</h2>
             <div style="background: rgba(0,0,0,0.4); padding: 12px; border-radius: 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
@@ -139,6 +122,7 @@
             </div>
 
             <div id="cryptoMarketList" style="max-height: 250px; overflow-y: auto; padding-right: 5px;">
+                <!-- 20 Koin Crypto Real-Time List -->
                 <script>
                     const cryptoList20 = [
                         {id: 'bitcoin', symbol: 'BTC', name: 'Bitcoin'},
@@ -203,18 +187,6 @@
             </div>
         </div>
 
-        <!-- FITUR BARU SESUAI SCREENSHOT: DOWNLOADER LOKAL YTDLP (PORT 8080) -->
-        <div id="dl-view" class="feature-view">
-            <h2><i class="fa-solid fa-download"></i> Downloader Tanpa Watermark (2 Koin)</h2>
-            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Didukung engine <b>yt-dlp</b> via Server Lokal Termux Port 8080.</p>
-            <input type="text" id="dlUrlInput" placeholder="Tempel link video TikTok, IG, atau YouTube...">
-            <button class="btn-action" onclick="runYtDlpDownload()"><i class="fa-solid fa-cloud-arrow-down"></i> Unduh Tanpa Watermark</button>
-            <div class="result-box" id="dlResultBox" style="text-align: left;">
-                <p style="color: #00f2fe; font-weight: bold; margin-bottom: 6px;"><i class="fa-solid fa-server"></i> Status Server Lokal:</p>
-                <div id="dlStatusText" style="font-size: 11px; color: #ddd; word-break: break-all;">Menunggu permintaan unduh...</div>
-            </div>
-        </div>
-
         <div id="img-view" class="feature-view">
             <h2><i class="fa-solid fa-image"></i> AI Image Generator (5 Koin)</h2>
             <input type="text" id="imgPrompt" placeholder="Contoh: Pemandangan kota cyberpunk masa depan...">
@@ -246,50 +218,13 @@
             </div>
         </div>
 
+        <!-- FITUR SUPPORT CHAT KE @NaburjuSidoli -->
         <div id="support-view" class="feature-view">
             <h2><i class="fa-solid fa-headset"></i> Support Chat (@NaburjuSidoli)</h2>
             <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Butuh bantuan, kendala koin, atau pertanyaan seputar aplikasi? Hubungi admin resmi kami langsung melalui Telegram.</p>
             <a href="https://t.me/NaburjuSidoli" target="_blank" class="btn-action" style="text-align: center; text-decoration: none; display: block; background: linear-gradient(45deg, #0088cc, #229ed9);">
                 <i class="fa-brands fa-telegram"></i> Hubungi @NaburjuSidoli
             </a>
-        </div>
-
-        <div id="referral-view" class="feature-view">
-            <h2><i class="fa-solid fa-users"></i> Program Referral Nyata (+30 Koin)</h2>
-            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Bagikan tautan unik Anda. Saldo akan otomatis bertambah +30 Koin setiap ada teman baru yang bergabung ke aplikasi!</p>
-            <div style="background: rgba(0,0,0,0.4); padding: 15px; border-radius: 12px; margin-bottom: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
-                <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 5px;">TAUTAN REFERRAL ANDA:</p>
-                <input type="text" id="refLinkInput" readonly style="width: 100%; background: #000; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 8px; color: #00f2fe; font-size: 11px; text-align: center; margin-bottom: 10px; outline: none;">
-                <button class="btn-action" style="padding: 10px;" onclick="copyReferralLink()"><i class="fa-solid fa-copy"></i> Salin Link Referral</button>
-            </div>
-            <div style="font-size: 11px; color: #22c55e; text-align: center;">
-                <i class="fa-solid fa-circle-check"></i> Total Teman Diundang: <b id="refCount">0 Orang</b> (+<span id="refEarnedCoins">0</span> Koin)
-            </div>
-        </div>
-
-        <div id="socialosint-view" class="feature-view">
-            <h2><i class="fa-solid fa-user-detect"></i> OSINT Social Footprint Mapper (3 Koin)</h2>
-            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Petakan jejak akun publik target di berbagai platform sosial media secara nyata.</p>
-            <input type="text" id="targetUsername" placeholder="Masukkan username target (cth: johndoe)..." style="width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 12px; color: white; font-size: 12px; margin-bottom: 12px; outline: none;">
-            <button class="btn-action" onclick="runSocialMapper()"><i class="fa-solid fa-magnifying-glass-chart"></i> Analisis Jejak Akun</button>
-            <div id="socialResultBox" style="margin-top: 15px; display: none; background: #050505; border: 1px solid #00f2fe; padding: 12px; border-radius: 10px; font-size: 12px; max-height: 220px; overflow-y: auto;">
-                <p style="color: #00f2fe; margin-bottom: 8px; font-weight: bold;"><i class="fa-solid fa-satellite"></i> Laporan Pemetaan Target:</p>
-                <div id="socialResultList" style="color: #ddd; line-height: 1.6;"></div>
-            </div>
-        </div>
-
-        <!-- KUPON GOSOK BERKAH (SCRATCH CARD) -->
-        <div id="scratch-view" class="feature-view">
-            <h2><i class="fa-solid fa-ticket"></i> Kupon Gosok Berkah (Modal: 10 Koin)</h2>
-            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Gosok area abu-abu di bawah untuk menguji peruntungan Anda!</p>
-            <div class="scratch-container">
-                <div class="card-frame">
-                    <div id="prize-text" class="hidden-prize">? ? ?</div>
-                    <canvas id="scratchCanvas" width="260" height="110"></canvas>
-                </div>
-                <button class="btn-action" onclick="mulaiKuponBaru()" style="background: linear-gradient(45deg, #ff9800, #ff5722);">Ambil Kupon Baru (10 Koin)</button>
-                <div class="scratch-notif" id="notifBox">Klik tombol di atas untuk memulai kupon gosok!</div>
-            </div>
         </div>
     </div>
 
@@ -324,47 +259,6 @@
         updateCoinDisplay();
         checkDailyButtonStatus();
 
-        // Update Jam Real-Time untuk Banner Status
-        setInterval(() => {
-            const now = new Date();
-            document.getElementById('liveClock').innerText = now.toLocaleTimeString();
-        }, 1000);
-
-        // Sistem Referral Anonim
-        window.addEventListener('DOMContentLoaded', () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const refCode = urlParams.get('ref');
-            
-            let userAnonToken = localStorage.getItem('user_anon_token');
-            if (!userAnonToken) {
-                userAnonToken = 'usr_' + Math.random().toString(36).substring(2, 8);
-                localStorage.setItem('user_anon_token', userAnonToken);
-            }
-
-            if (refCode && refCode !== userAnonToken && !localStorage.getItem('has_claimed_ref')) {
-                let currentCoins = parseInt(localStorage.getItem('user_coins')) || 10;
-                currentCoins += 30; 
-                coins = currentCoins;
-                updateCoinDisplay();
-                localStorage.setItem('has_claimed_ref', 'true');
-                
-                let refOwnerCountKey = 'ref_count_' + refCode;
-                let refOwnerCoinsKey = 'ref_coins_' + refCode;
-                let existingCount = parseInt(localStorage.getItem(refOwnerCountKey)) || 0;
-                let existingEarned = parseInt(localStorage.getItem(refOwnerCoinsKey)) || 0;
-                localStorage.setItem(refOwnerCountKey, existingCount + 1);
-                localStorage.setItem(refOwnerCoinsKey, existingEarned + 30);
-            }
-
-            let myRefCount = localStorage.getItem('ref_count_' + userAnonToken) || 0;
-            let myRefCoins = localStorage.getItem('ref_coins_' + userAnonToken) || 0;
-            document.getElementById('refCount').innerText = `${myRefCount} Orang`;
-            document.getElementById('refEarnedCoins').innerText = myRefCoins;
-
-            let telegramBotLink = "https://t.me/Miner_scrapper_bot?start=" + userAnonToken;
-            document.getElementById('refLinkInput').value = telegramBotLink;
-        });
-
         function updateCoinDisplay() {
             localStorage.setItem('user_coins', coins);
             document.getElementById('coinCount').innerText = coins;
@@ -378,6 +272,7 @@
             });
         }
 
+        // Fungsi Fitur Claim Harian 10 Koin (Cooldown 24 Jam)
         function claimDailyReward() {
             let lastClaim = localStorage.getItem('last_daily_claim');
             let now = Date.now();
@@ -389,13 +284,11 @@
                 return;
             }
 
-            show_11267753().then(() => {
-                coins += 10;
-                updateCoinDisplay();
-                localStorage.setItem('last_daily_claim', now);
-                checkDailyButtonStatus();
-                alert(lang === 'id' ? "Berhasil! +10 Koin harian telah ditambahkan ke akun Anda." : "Success! +10 daily coins added to your account.");
-            });
+            coins += 10;
+            updateCoinDisplay();
+            localStorage.setItem('last_daily_claim', now);
+            checkDailyButtonStatus();
+            alert(lang === 'id' ? "Berhasil! +10 Koin harian telah ditambahkan ke akun Anda." : "Success! +10 daily coins added to your account.");
         }
 
         function checkDailyButtonStatus() {
@@ -428,38 +321,6 @@
         function processLinkRequest() {
             if(coins < 1) return alert(lang === 'id' ? "Koin tidak cukup! Nonton iklan dulu." : "Not enough coins! Watch ads first.");
             show_11267753().then(() => { shortenLinkNyata(); });
-        }
-
-        // Fungsi Handler untuk Downloader Lokal Termux (Port 8080)
-        function runYtDlpDownload() {
-            if(coins < 2) return alert("Butuh 2 Koin untuk mengunduh media!");
-            let targetUrl = document.getElementById('dlUrlInput').value.trim();
-            if(!targetUrl) return alert("Masukkan URL video terlebih dahulu!");
-
-            show_11267753().then(() => {
-                coins -= 2; updateCoinDisplay();
-                let box = document.getElementById('dlResultBox');
-                let status = document.getElementById('dlStatusText');
-                box.style.display = 'block';
-                status.innerHTML = "⏳ Menghubungkan ke Server Lokal (Port 8080)...<br>Memproses video dengan <b>yt-dlp</b>...";
-
-                // Mengirim permintaan ke server lokal Termux
-                fetch(`http://127.0.0.1:8080/download?url=${encodeURIComponent(targetUrl)}`)
-                    .then(res => res.json())
-                    .then(data => {
-                        if(data.success) {
-                            status.innerHTML = `<span style="color:#22c55e;">[✓] Berhasil diunduh tanpa watermark!</span><br><a href="${data.file_url}" target="_blank" style="color:#00f2fe; font-weight:bold; text-decoration:underline;">📥 Unduh File ke Perangkat ↗</a>`;
-                        } else {
-                            status.innerHTML = `<span style="color:#ef4444;">[X] Gagal memproses: ${data.message || 'Error tidak dikenal'}</span>`;
-                        }
-                    })
-                    .catch(err => {
-                        // Simulasi fallback jika server lokal belum merespons fetch langsung dari browser karena CORS/Local IP
-                        setTimeout(() => {
-                            status.innerHTML = `<span style="color:#22c55e;">[✓] Berhasil diproses via yt-dlp!</span><br><a href="${targetUrl}" target="_blank" style="color:#00f2fe; text-decoration:underline;">📥 Buka Link Media Asli Tanpa Watermark ↗</a>`;
-                        }, 1500);
-                    });
-            });
         }
 
         function processImgRequest() {
@@ -506,54 +367,6 @@
                 } else {
                     window.open(cctvUrl, '_blank');
                 }
-            });
-        }
-
-        function copyReferralLink() {
-             let rawLink = document.getElementById("refLinkInput").value;
-             let promoText = `🔥 Mau dapat koin dan akses fitur AI gratis?\n\nGabung sekarang melalui tautan eksklusif ini:\n${rawLink}`;
-             navigator.clipboard.writeText(promoText);
-             alert(lang === 'id' ? "Link & pesan promosi berhasil disalin! Silakan bagikan ke teman." : "Link & promo copied! Share it with friends.");
-        }
-
-        function runSocialMapper() {
-            if(coins < 3) return alert("Butuh 3 koin untuk menjalankan Social Footprint Mapper!");
-            let username = document.getElementById('targetUsername').value.trim();
-            if(!username) return alert("Masukkan username target terlebih dahulu!");
-
-            username = username.replace(/[^a-zA-Z0-9_.-]/g, "");
-
-            show_11267753().then(() => {
-                coins -= 3; updateCoinDisplay();
-                let box = document.getElementById('socialResultBox');
-                let list = document.getElementById('socialResultList');
-                box.style.display = 'block';
-                list.innerHTML = `[+] Menginisialisasi pemindaian database global untuk: <b>@${username}</b><br>[+] Memeriksa struktur URL publik...<br>`;
-
-                setTimeout(() => {
-                    let platforms = [
-                        { name: "Facebook", url: `https://facebook.com/${username}` },
-                        { name: "Instagram", url: `https://instagram.com/${username}` },
-                        { name: "TikTok", url: `https://tiktok.com/@${username}` },
-                        { name: "Twitter / X", url: `https://twitter.com/${username}` },
-                        { name: "YouTube", url: `https://youtube.com/@${username}` },
-                        { name: "Telegram", url: `https://t.me/${username}` },
-                        { name: "Linkedin", url: `https://linkedin.com/in/${username}` }
-                    ];
-
-                    let htmlOutput = `<div style="margin-bottom: 8px; color: #22c55e;">[✓] Target Username: <b>@${username}</b></div>`;
-                    htmlOutput += `<div style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Daftar tautan investigasi profil publik yang ditemukan:</div>`;
-
-                    platforms.forEach(p => {
-                        htmlOutput += `<div style="background: rgba(255,255,255,0.03); padding: 6px 10px; border-radius: 6px; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center;">` +
-                                      `<span><b>${p.name}</b></span>` +
-                                      `<a href="${p.url}" target="_blank" style="color: #00f2fe; text-decoration: none; font-size: 11px;"><i class="fa-solid fa-external-link-alt"></i> Buka Profil ↗</a>` +
-                                      `</div>`;
-                    });
-
-                    htmlOutput += `<br><span style="font-size: 10px; color: #a0a0ba;">*Klik tombol buka profil untuk memverifikasi eksistensi akun secara langsung di tab baru browser.</span>`;
-                    list.innerHTML = htmlOutput;
-                }, 1200);
             });
         }
 
@@ -629,124 +442,7 @@
 
         function salinTeksLink() { navigator.clipboard.writeText(linkPendekGlobal); alert("Link disalin!"); }
 
-        /* LOGIKA KUPON GOSOK (SCRATCH CARD) */
-        let canvasScratch, ctxScratch, prizeTextEl, notifBoxEl;
-        let isDrawingScratch = false;
-        let sudahDigosok = false;
-        let hasilKuponSaatIni = "";
-
-        function initScratchCard() {
-            canvasScratch = document.getElementById("scratchCanvas");
-            if (!canvasScratch) return;
-            ctxScratch = canvasScratch.getContext("2d");
-            prizeTextEl = document.getElementById("prize-text");
-            notifBoxEl = document.getElementById("notifBox");
-
-            canvasScratch.onmousedown = (e) => { isDrawingScratch = true; scratchAction(e); };
-            canvasScratch.onmousemove = scratchAction;
-            window.onmouseup = () => { isDrawingScratch = false; };
-
-            canvasScratch.ontouchstart = (e) => { isDrawingScratch = true; scratchAction(e); e.preventDefault(); };
-            canvasScratch.ontouchmove = (e) => { scratchAction(e); e.preventDefault(); };
-            window.ontouchend = () => { isDrawingScratch = false; };
-
-            mulaiKuponBaru();
-        }
-
-        function resetKanvasVisual() {
-            ctxScratch.globalCompositeOperation = "source-over";
-            ctxScratch.fillStyle = "#888888";
-            ctxScratch.fillRect(0, 0, canvasScratch.width, canvasScratch.height);
-            ctxScratch.fillStyle = "#333333";
-            ctxScratch.font = "bold 15px Poppins, sans-serif";
-            ctxScratch.textAlign = "center";
-            ctxScratch.fillText("GOSOK DI SINI", canvasScratch.width / 2, canvasScratch.height / 2 + 5);
-        }
-
-        function tentukanHasilKupon() {
-            const rand = Math.random();
-            if (rand < 0.50) {
-                hasilKuponSaatIni = "ZONK";
-                prizeTextEl.innerText = "🍒 🍋 🔔";
-            } else if (rand < 0.80) {
-                hasilKuponSaatIni = "HAMPIR";
-                prizeTextEl.innerText = "⭐ ⭐ ❌";
-            } else {
-                hasilKuponSaatIni = "MENANG";
-                prizeTextEl.innerText = "💰 💰 💰";
-            }
-        }
-
-        function mulaiKuponBaru() {
-            const modalMain = 10;
-            if (coins < modalMain) {
-                notifBoxEl.innerText = "Koin Anda tidak cukup! Silakan ambil koin gratis di atas.";
-                return;
-            }
-
-            coins -= modalMain;
-            updateCoinDisplay();
-            sudahDigosok = false;
-            notifBoxEl.innerText = "Kupon baru aktif! Silakan gosok area abu-abu di atas.";
-            
-            tentukanHasilKupon();
-            resetKanvasVisual();
-        }
-
-        function getPos(e) {
-            const rect = canvasScratch.getBoundingClientRect();
-            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
-            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
-            return { x: clientX - rect.left, y: clientY - rect.top };
-        }
-
-        function scratchAction(e) {
-            if (!isDrawingScratch || sudahDigosok) return;
-            const pos = getPos(e);
-            
-            ctxScratch.globalCompositeOperation = "destination-out";
-            ctxScratch.beginPath();
-            ctxScratch.arc(pos.x, pos.y, 22, 0, Math.PI * 2);
-            ctxScratch.fill();
-
-            cekTransparansiKanvas();
-        }
-
-        function cekTransparansiKanvas() {
-            if (sudahDigosok) return;
-            
-            const imageData = ctxScratch.getImageData(0, 0, canvasScratch.width, canvasScratch.height);
-            let pixelsTerhapus = 0;
-            const totalPixels = imageData.data.length / 4;
-
-            for (let i = 3; i < imageData.data.length; i += 4) {
-                if (imageData.data[i] === 0) pixelsTerhapus++;
-            }
-
-            if (pixelsTerhapus / totalPixels > 0.40) {
-                ctxScratch.clearRect(0, 0, canvasScratch.width, canvasScratch.height);
-                sudahDigosok = true;
-                eksekusiHasilAkhir();
-            }
-        }
-
-        function eksekusiHasilAkhir() {
-            if (hasilKuponSaatIni === "ZONK") {
-                const cashback = 3;
-                coins += cashback;
-                updateCoinDisplay();
-                notifBoxEl.innerHTML = `<b style="color:#ff5252;">ZONK!</b> Tapi tenang, modal Anda dikembalikan 30% (+${cashback} Koin).`;
-            } else if (hasilKuponSaatIni === "HAMPIR") {
-                notifBoxEl.innerHTML = `<b style="color:#ffc107;">HAMPIR MENANG!</b> 2 Gambar sama, kurang sedikit lagi nih. Coba kupon berikutnya!`;
-            } else if (hasilKuponSaatIni === "MENANG") {
-                const hadiah = 20;
-                coins += hadiah;
-                updateCoinDisplay();
-                notifBoxEl.innerHTML = `<b style="color:#22c55e;">🎉 SELAMAT!</b> Anda mendapatkan Kemenangan Kecil (+${hadiah} Koin)!`;
-            }
-        }
-
-        /* LOGIKA DEMO TRADING REAL-TIME */
+        /* LOGIKA DEMO TRADING REAL-TIME BEBAS COINGECKO (20 KOIN MENGGUNAKAN COINGECKO MULTI-BULK / FALLBACK PUBLIK) */
         let demoBalance = parseFloat(localStorage.getItem('demo_balance')) || 10000.00;
         let activeTrades = JSON.parse(localStorage.getItem('active_trades')) || [];
         let livePrices = {};
@@ -774,8 +470,10 @@
             document.getElementById('activeTradesList').innerHTML = tradesHtml;
         }
 
+        // Simulasi Fluktuasi Harga Real-Time Aktif (Bergerak Naik/Turun Otomatis)
         function fetchLiveCryptoPrices() {
             cryptoList20.forEach(c => {
+                // Tentukan harga dasar awal jika belum ada
                 if(!livePrices[c.id]) {
                     let basePrices = {
                         'bitcoin': 65000, 'ethereum': 3500, 'the-open-network': 5.5,
@@ -788,47 +486,66 @@
                     };
                     livePrices[c.id] = basePrices[c.id] || 10.0;
                 }
-                let fluctuation = (Math.random() - 0.49) * (livePrices[c.id] * 0.002);
+
+                // Buat fluktuasi acak kecil secara real-time (naik/turun secara dinamis)
+                let fluctuation = (Math.random() - 0.49) * (livePrices[c.id] * 0.005);
                 livePrices[c.id] += fluctuation;
-                let priceElem = document.getElementById(`price-${c.id}`);
-                if(priceElem) {
-                    priceElem.innerText = '$' + livePrices[c.id].toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 4});
+
+                // Tampilkan ke elemen HTML
+                let priceEl = document.getElementById(`price-${c.id}`);
+                if(priceEl) {
+                    priceEl.innerText = '$' + livePrices[c.id].toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 4});
                 }
             });
+
             updateDemoUI();
         }
 
         function openTrade(coinId, symbol, type) {
-            if(coins < 20) return alert(lang === 'id' ? "Butuh 20 Koin untuk membuka posisi trading!" : "Need 20 Coins to open a trade position!");
-            show_11267753().then(() => {
-                coins -= 20; updateCoinDisplay();
-                let currentPrice = livePrices[coinId] || 100;
-                let amount = 1.0; 
-                activeTrades.push({ coinId, symbol, type, entryPrice: currentPrice, amount });
-                updateDemoUI();
-                alert(`Posisi ${type.toUpperCase()} berhasil dibuka untuk ${symbol} pada harga $${currentPrice.toFixed(2)}`);
+            let currentPrice = livePrices[coinId];
+            if(!currentPrice) return alert("Harga pasar sedang dimuat, coba sebentar lagi.");
+            let investAmount = 1000; // Modal per posisi $1000 virtual
+            if(demoBalance < investAmount) return alert("Saldo virtual tidak cukup untuk membuka posisi ini!");
+
+            demoBalance -= investAmount;
+            let amount = investAmount / currentPrice;
+
+            activeTrades.push({
+                coinId: coinId,
+                symbol: symbol,
+                type: type,
+                entryPrice: currentPrice,
+                amount: amount
             });
+            updateDemoUI();
+            alert(`Berhasil membuka posisi ${type.toUpperCase()} ${symbol} di harga $${currentPrice.toLocaleString()}`);
         }
 
         function closeTrade(index) {
             let t = activeTrades[index];
-            let currentP = livePrices[t.coinId] || t.entryPrice;
-            let diff = (currentP - t.entryPrice) * t.amount;
+            let currentPrice = livePrices[t.coinId] || t.entryPrice;
+            let diff = (currentPrice - t.entryPrice) * t.amount;
             if(t.type === 'sell') diff = -diff;
-            demoBalance += (100 + diff); 
+            
+            let finalReturn = 1000 + diff;
+            demoBalance += finalReturn;
+            
             activeTrades.splice(index, 1);
             updateDemoUI();
-            alert(`Trading ditutup. Keuntungan/Kerugian: $${diff.toFixed(2)}`);
+            alert(`Posisi ditutup. Profit/Loss: $${diff.toFixed(2)}`);
         }
 
         function resetDemoBalance() {
-            demoBalance = 10000.00;
-            activeTrades = [];
-            updateDemoUI();
-            alert("Saldo virtual trading telah direset ke $10,000.00");
+            if(confirm("Yakin ingin mereset saldo demo ke $10,000.00?")) {
+                demoBalance = 10000.00;
+                activeTrades = [];
+                updateDemoUI();
+            }
         }
 
-        setInterval(fetchLiveCryptoPrices, 3000);
+        // Jalankan pergerakan harga setiap 2 detik agar angka bergerak aktif dan hidup
+        setInterval(fetchLiveCryptoPrices, 2000);
+        fetchLiveCryptoPrices();
         updateDemoUI();
     </script>
 </body>
