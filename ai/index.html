@@ -420,6 +420,16 @@
             document.getElementById(btnId).classList.add('active');
         }
 
+        function sendToAINyata() {
+            if(coins < 1) return alert(lang === 'id' ? "Koin tidak cukup! Nonton iklan dulu." : "Not enough coins! Watch ads first.");
+            processAiLogic();
+        }
+
+        function processLinkRequest() {
+            if(coins < 1) return alert(lang === 'id' ? "Koin tidak cukup! Nonton iklan dulu." : "Not enough coins! Watch ads first.");
+            show_11267753().then(() => { shortenLinkNyata(); });
+        }
+
         function runYtDlpDownload() {
     if(coins < 2) return alert("Butuh 2 Koin untuk mengunduh media!");
     let targetUrl = document.getElementById('dlUrlInput').value.trim();
@@ -462,11 +472,6 @@
             status.innerHTML = `<span style="color:#ef4444;">[X] Gagal terhubung ke Termux/Pinggy!</span>`;
         });
     });
-        }
-
-        function processImgRequest() {
-            if(coins < 5) return alert(lang === 'id' ? "Butuh 5 koin untuk fitur ini!" : "Need 5 coins for this feature!");
-            show_11267753().then(() => { generateImageNyata(); });
         }
 
         function processQrRequest() {
