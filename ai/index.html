@@ -430,8 +430,7 @@
             show_11267753().then(() => { shortenLinkNyata(); });
         }
 
-        // Fungsi Handler untuk Downloader Lokal Termux (Port 8080)
-function runYtDlpDownload() {
+        function runYtDlpDownload() {
     if(coins < 2) return alert("Butuh 2 Koin untuk mengunduh media!");
     let targetUrl = document.getElementById('dlUrlInput').value.trim();
     if(!targetUrl) return alert("Masukkan URL video terlebih dahulu!");
@@ -474,7 +473,7 @@ function runYtDlpDownload() {
                 status.innerHTML = `<span style="color:#ef4444;">[X] Gagal terhubung ke Server Termux Port 8080. Pastikan script Python core_bot.py sedang aktif di Termux!</span>`;
             });
     });
-}
+ }
 
         function processImgRequest() {
             if(coins < 5) return alert(lang === 'id' ? "Butuh 5 koin untuk fitur ini!" : "Need 5 coins for this feature!");
