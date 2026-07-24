@@ -442,14 +442,16 @@
         box.style.display = 'block';
         status.innerHTML = "⏳ Menghubungkan ke Server Lokal Termux...<br>Sedang memproses video tanpa watermark...";
 
-        fetch(`http://127.0.0.1:8080/download?url=${encodeURIComponent(targetUrl)}`, {
-            method: 'GET',
-            mode: 'cors'
-        })
+        let tunnelUrl = "https://nmdyh-114-122-36-146.run.pinggy-free.link";
+
+    fetch(`${tunnelUrl}/download?url=${encodeURIComponent(targetUrl)}`, {
+        method: 'GET',
+        mode: 'cors'
+    })
         .then(res => res.json())
         .then(data => {
             if(data.status === "success" || data.success === true) {
-                let fileUrl = data.file_url;
+                let fileUrl = tunnelUrl + "/file/" + data.filename;
                 let fileName = data.filename || "video_clean.mp4";
 
                 status.innerHTML = `
