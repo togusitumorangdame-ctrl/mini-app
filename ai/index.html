@@ -431,36 +431,50 @@
         }
 
         // Fungsi Handler untuk Downloader Lokal Termux (Port 8080)
-        function runYtDlpDownload() {
-            if(coins < 2) return alert("Butuh 2 Koin untuk mengunduh media!");
-            let targetUrl = document.getElementById('dlUrlInput').value.trim();
-            if(!targetUrl) return alert("Masukkan URL video terlebih dahulu!");
+function runYtDlpDownload() {
+    if(coins < 2) return alert("Butuh 2 Koin untuk mengunduh media!");
+    let targetUrl = document.getElementById('dlUrlInput').value.trim();
+    if(!targetUrl) return alert("Masukkan URL video terlebih dahulu!");
 
-            show_11267753().then(() => {
-                coins -= 2; updateCoinDisplay();
-                let box = document.getElementById('dlResultBox');
-                let status = document.getElementById('dlStatusText');
-                box.style.display = 'block';
-                status.innerHTML = "⏳ Menghubungkan ke Server Lokal (Port 8080)...<br>Memproses video dengan <b>yt-dlp</b>...";
+    // Menjalankan sistem iklan terlebih dahulu sebelum proses unduh
+    show_11267753().then(() => {
+        coins -= 2; updateCoinDisplay();
+        let box = document.getElementById('dlResultBox');
+        let status = document.getElementById('dlStatusText');
+        box.style.display = 'block';
+        status.innerHTML = "⏳ Menghubungkan ke Server Lokal (Port 8080)...<br>Sedang memproses video tanpa watermark...";
 
-                // Mengirim permintaan ke server lokal Termux
-                fetch(`http://127.0.0.1:8080/download?url=${encodeURIComponent(targetUrl)}`)
-                    .then(res => res.json())
-                    .then(data => {
-                        if(data.success) {
-                            status.innerHTML = `<span style="color:#22c55e;">[✓] Berhasil diunduh tanpa watermark!</span><br><a href="${data.file_url}" target="_blank" style="color:#00f2fe; font-weight:bold; text-decoration:underline;">📥 Unduh File ke Perangkat ↗</a>`;
-                        } else {
-                            status.innerHTML = `<span style="color:#ef4444;">[X] Gagal memproses: ${data.message || 'Error tidak dikenal'}</span>`;
-                        }
-                    })
-                    .catch(err => {
-                        // Simulasi fallback jika server lokal belum merespons fetch langsung dari browser karena CORS/Local IP
-                        setTimeout(() => {
-                            status.innerHTML = `<span style="color:#22c55e;">[✓] Berhasil diproses via yt-dlp!</span><br><a href="${targetUrl}" target="_blank" style="color:#00f2fe; text-decoration:underline;">📥 Buka Link Media Asli Tanpa Watermark ↗</a>`;
-                        }, 1500);
-                    });
+        // Mengirim permintaan ke server lokal Termux
+        fetch(`http://127.0.0.1:8080/download?url=${encodeURIComponent(targetUrl)}`)
+            .then(res => res.json())
+            .then(data => {
+                if(data.status === "success" || data.success === true) {
+                    let fileUrl = data.file_url;
+                    let fileName = data.filename || "video_tanpa_watermark.mp4";
+
+                    status.innerHTML = `
+                        <span style="color:#22c55e;">[✓] ${data.message}</span><br>
+                        <a href="${fileUrl}" download="${fileName}" class="btn-action" style="display:inline-block; margin-top:10px; padding:10px 15px; background:#22c55e; color:#fff; border-radius:8px; text-decoration:none; text-align:center;">
+                            📥 KLIK DI SINI UNTUK SIMPAN KE HP
+                        </a>
+                    `;
+
+                    // Otomatis memicu unduhan file ke memori HP
+                    let aTag = document.createElement('a');
+                    aTag.href = fileUrl;
+                    aTag.download = fileName;
+                    document.body.appendChild(aTag);
+                    aTag.click();
+                    document.body.removeChild(aTag);
+                } else {
+                    status.innerHTML = `<span style="color:#ef4444;">[X] Gagal memproses: ${data.message || 'Error tidak dikenal'}</span>`;
+                }
+            })
+            .catch(err => {
+                status.innerHTML = `<span style="color:#ef4444;">[X] Gagal terhubung ke Server Termux Port 8080. Pastikan script Python core_bot.py sedang aktif di Termux!</span>`;
             });
-        }
+    });
+}
 
         function processImgRequest() {
             if(coins < 5) return alert(lang === 'id' ? "Butuh 5 koin untuk fitur ini!" : "Need 5 coins for this feature!");
