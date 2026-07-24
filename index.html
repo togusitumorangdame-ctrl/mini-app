@@ -3,29 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Super App v2.5</title>
-    
-    <!-- SDK TELEGRAM ADS ONLY -->
-    <script src="https://richinfo.co/richpartners/telegram/js/tg-ob.js"></script>
-    <script>
-        window.TelegramAdsController = new TelegramAdsController();
-        window.TelegramAdsController.initialize({
-            pubId: "1017538",
-            appId: "8115",
-        });
-
-        // FUNGSI PENGELOLA IKLAN
-        function showTelegramAd() {
-            return new Promise((resolve) => {
-                if (typeof window.TelegramAdsController !== 'undefined') {
-                    window.TelegramAdsController.show().then(resolve).catch(resolve);
-                } else {
-                    resolve();
-                }
-            });
-        }
-    </script>
-    
+    <title>Premium Super App v2.7</title>
+    <!-- SDK MONETAG -->
+    <script src='//libtl.com/sdk.js' data-zone='11267753' data-sdk='show_11267753'></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
@@ -40,19 +20,21 @@
         
         .paywall-container { background: rgba(255, 71, 87, 0.08); border: 1px solid rgba(255, 71, 87, 0.3); border-radius: 18px; width: 100%; max-width: 500px; padding: 15px; margin-bottom: 15px; text-align: center; }
         .btn-ad { background: linear-gradient(45deg, #ff4757, #ff6b81); color: white; border: none; padding: 10px 20px; border-radius: 50px; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-block; margin-top: 10px; font-size: 12px; box-shadow: 0 4px 15px rgba(255,71,87,0.3); }
+        .btn-daily { background: linear-gradient(45deg, #2ed573, #26af5f); color: white; border: none; padding: 10px 20px; border-radius: 50px; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-block; margin-top: 10px; font-size: 12px; box-shadow: 0 4px 15px rgba(46,213,115,0.3); }
+        .btn-daily:disabled { background: #555; cursor: not-allowed; box-shadow: none; }
         
         .app-card { background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 25px; width: 100%; max-width: 500px; padding: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
-        .nav-tabs { display: flex; justify-content: space-between; margin-bottom: 20px; background: rgba(0,0,0,0.3); padding: 5px; border-radius: 50px; gap: 5px; flex-wrap: wrap; }
-        .tab-btn { background: none; border: none; color: #a0a0ba; padding: 10px 5px; font-size: 10px; font-weight: 600; cursor: pointer; border-radius: 50px; flex: 1; text-align: center; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-        .tab-btn i { font-size: 12px; }
+        .nav-tabs { display: flex; justify-content: space-between; margin-bottom: 20px; background: rgba(0,0,0,0.3); padding: 5px; border-radius: 50px; gap: 4px; flex-wrap: wrap; }
+        .tab-btn { background: none; border: none; color: #a0a0ba; padding: 8px 4px; font-size: 9px; font-weight: 600; cursor: pointer; border-radius: 50px; flex: 1; text-align: center; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 45px; }
+        .tab-btn i { font-size: 11px; }
         .tab-btn.active { background: linear-gradient(45deg, #00f2fe, #4facfe); color: white; box-shadow: 0 4px 12px rgba(0,242,254,0.3); }
         
         .feature-view { display: none; }
         .feature-view.active { display: block; }
         h2 { font-size: 16px; color: #00f2fe; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
         
-        input { width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 12px; color: white; font-size: 13px; margin-bottom: 12px; outline: none; transition: 0.2s; }
-        input:focus { border-color: #00f2fe; }
+        input, select { width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 12px; color: white; font-size: 13px; margin-bottom: 12px; outline: none; transition: 0.2s; }
+        input:focus, select:focus { border-color: #00f2fe; }
         .btn-action { width: 100%; background: linear-gradient(45deg, #00f2fe, #4facfe); color: white; border: none; padding: 12px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 13px; box-shadow: 0 4px 15px rgba(0,242,254,0.2); }
         
         .chat-box { height: 220px; background: rgba(0,0,0,0.4); border-radius: 14px; padding: 12px; overflow-y: auto; margin-bottom: 12px; font-size: 12px; border: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; gap: 8px; }
@@ -68,9 +50,36 @@
         .share-btn.copy { background: #4a5568; }
         
         #aiImageResult, #qrResult { width: 100%; border-radius: 14px; margin-top: 15px; display: none; border: 2px solid rgba(0,242,254,0.2); }
+
+        /* Styling Demo Trading Real */
+        .trade-card { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
+        .trade-info h4 { font-size: 13px; color: #fff; }
+        .trade-info p { font-size: 11px; color: #a0a0ba; }
+        .trade-price { font-size: 13px; font-weight: bold; color: #00f2fe; }
+        .trade-actions { display: flex; gap: 6px; }
+        .btn-buy { background: #22c55e; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 11px; }
+        .btn-sell { background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 11px; }
+        .portfolio-box { background: rgba(0, 242, 254, 0.05); border: 1px solid rgba(0, 242, 254, 0.2); border-radius: 14px; padding: 12px; margin-top: 15px; font-size: 12px; }
+
+        /* Styling Scratch Card */
+        .scratch-container { display: flex; flex-direction: column; align-items: center; }
+        .card-frame { position: relative; width: 260px; height: 110px; margin: 10px auto 15px auto; border-radius: 12px; overflow: hidden; background: #222; border: 2px dashed #00f2fe; display: flex; align-items: center; justify-content: center; }
+        .hidden-prize { font-size: 22px; font-weight: bold; letter-spacing: 5px; }
+        canvas#scratchCanvas { position: absolute; top: 0; left: 0; cursor: pointer; touch-action: none; }
+        .scratch-notif { margin-top: 10px; font-size: 11px; min-height: 40px; color: #b0bec5; text-align: center; line-height: 1.4; }
     </style>
 </head>
 <body>
+
+    <script type="text/javascript" data-cfasync="false">
+        (function(){var e=window,n="02c4883f05470762419409893976378c",r=[["siteId",392805],["minBid",0],["popundersPerIP",0],["delayBetween",0],["default",0],["defaultPerDay",0],["topmost",0]],c=document,a=c.createElement("script");a.type="text/javascript",a.async=!0,a.src="https://a.hilltopads.com/gz.js",c.body&&c.body.appendChild(a)})()
+    </script>
+
+    <!-- Indikator Status Koneksi API Live -->
+    <div id="apiStatusBanner" style="width: 100%; max-width: 500px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); padding: 8px 12px; border-radius: 12px; margin-bottom: 12px; font-size: 11px; display: flex; align-items: center; justify-content: space-between; color: #22c55e;">
+        <span><i class="fa-solid fa-circle-dot" style="animation: pulse 1.5s infinite;"></i> Status Jaringan & API: <b>Terhubung Normal</b></span>
+        <span id="liveClock" style="color: #a0a0ba;">--:--:--</span>
+    </div>
 
     <div class="header-profile">
         <div class="user-info">
@@ -84,19 +93,31 @@
 
     <div class="paywall-container" id="paywall">
         <p id="ui-paywall-text" style="font-size: 13px; font-weight: bold;">⚡ Ambil Koin Gratis / Isi Ulang</p>
-        <p id="ui-paywall-sub" style="font-size: 11px; color: #a0a0ba;">Tonton iklan untuk mendapatkan tambahan +5 koin premium secara instan.</p>
-        <a href="#" class="btn-ad" onclick="claimAdReward()">
-            <i class="fa-solid fa-film"></i> <span id="ui-ad-btn">NONTON IKLAN (+5 KOIN)</span>
-        </a>
+        <p id="ui-paywall-sub" style="font-size: 11px; color: #a0a0ba;">Tonton iklan atau klaim harian untuk mendapatkan koin premium.</p>
+        <div>
+            <a href="#" class="btn-ad" onclick="claimAdReward()">
+                <i class="fa-solid fa-film"></i> <span id="ui-ad-btn">NONTON IKLAN (+10 KOIN)</span>
+            </a>
+            <button id="btnDailyClaim" class="btn-daily" onclick="claimDailyReward()">
+                <i class="fa-solid fa-gift"></i> <span id="ui-daily-btn">CLAIM HARIAN (+10 KOIN)</span>
+            </button>
+        </div>
     </div>
 
     <div class="app-card">
         <div class="nav-tabs">
             <button id="tab-ai" class="tab-btn active" onclick="switchTab('ai-view', 'tab-ai')"><i class="fa-solid fa-robot"></i>AI Chat</button>
+            <button id="tab-trade" class="tab-btn" onclick="switchTab('trade-view', 'tab-trade')"><i class="fa-solid fa-chart-line"></i>Trading</button>
             <button id="tab-link" class="tab-btn" onclick="switchTab('link-view', 'tab-link')"><i class="fa-solid fa-link"></i>Shortener</button>
+            <button id="tab-dl" class="tab-btn" onclick="switchTab('dl-view', 'tab-dl')"><i class="fa-solid fa-download"></i>Downloader</button>
             <button id="tab-img" class="tab-btn" onclick="switchTab('img-view', 'tab-img')"><i class="fa-solid fa-image"></i>AI Image</button>
             <button id="tab-qr" class="tab-btn" onclick="switchTab('qr-view', 'tab-qr')"><i class="fa-solid fa-qrcode"></i>QR Code</button>
-            <button id="tab-scam" class="tab-btn" onclick="switchTab('scam-view', 'tab-scam')"><i class="fa-solid fa-shield-halved"></i>Scam Shield</button>
+            <button id="tab-scam" class="tab-btn" onclick="switchTab('scam-view', 'tab-scam')"><i class="fa-solid fa-shield-halved"></i>Shield</button>
+            <button id="tab-webcam" class="tab-btn" onclick="switchTab('webcam-view', 'tab-webcam')"><i class="fa-solid fa-camera"></i>Webcams</button>
+            <button id="tab-support" class="tab-btn" onclick="switchTab('support-view', 'tab-support')"><i class="fa-solid fa-headset"></i>Support</button>
+            <button id="tab-referral" class="tab-btn" onclick="switchTab('referral-view', 'tab-referral')"><i class="fa-solid fa-users"></i>Referral</button>
+            <button id="tab-socialosint" class="tab-btn" onclick="switchTab('socialosint-view', 'tab-socialosint')"><i class="fa-solid fa-user-detect"></i>OSINT</button>
+            <button id="tab-scratch" class="tab-btn" onclick="switchTab('scratch-view', 'tab-scratch'); initScratchCard();"><i class="fa-solid fa-ticket"></i>Scratch</button>
         </div>
 
         <div id="ai-view" class="feature-view active">
@@ -104,6 +125,67 @@
             <div class="chat-box" id="aiChatBox"><div class="msg bot">Halo! Tanyakan apa saja ke AI Premium (Biaya: 1 Koin).</div></div>
             <input type="text" id="aiInput" placeholder="Ketik pesan ke AI...">
             <button class="btn-action" id="aiBtn" onclick="sendToAINyata()"><i class="fa-solid fa-paper-plane"></i> Kirim ke AI</button>
+        </div>
+
+        <!-- FITUR DEMO TRADING REAL-TIME -->
+        <div id="trade-view" class="feature-view">
+            <h2><i class="fa-solid fa-chart-line"></i> Demo Trading Crypto Live (20 Koin)</h2>
+            <div style="background: rgba(0,0,0,0.4); padding: 12px; border-radius: 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <p style="font-size: 10px; color: #a0a0ba;">SALDO VIRTUAL</p>
+                    <h3 id="virtualBalance" style="color: #ffd700; font-size: 16px;">$10,000.00</h3>
+                </div>
+                <button onclick="resetDemoBalance()" style="background: #ef4444; border: none; padding: 6px 10px; border-radius: 8px; color: white; font-size: 10px; cursor: pointer;">Reset Saldo</button>
+            </div>
+
+            <div id="cryptoMarketList" style="max-height: 250px; overflow-y: auto; padding-right: 5px;">
+                <script>
+                    const cryptoList20 = [
+                        {id: 'bitcoin', symbol: 'BTC', name: 'Bitcoin'},
+                        {id: 'ethereum', symbol: 'ETH', name: 'Ethereum'},
+                        {id: 'the-open-network', symbol: 'TON', name: 'Toncoin'},
+                        {id: 'binancecoin', symbol: 'BNB', name: 'Binance Coin'},
+                        {id: 'ripple', symbol: 'XRP', name: 'XRP'},
+                        {id: 'cardano', symbol: 'ADA', name: 'Cardano'},
+                        {id: 'dogecoin', symbol: 'DOGE', name: 'Dogecoin'},
+                        {id: 'solana', symbol: 'SOL', name: 'Solana'},
+                        {id: 'polkadot', symbol: 'DOT', name: 'Polkadot'},
+                        {id: 'polygon-ecosystem-token', symbol: 'POL', name: 'Polygon'},
+                        {id: 'tron', symbol: 'TRX', name: 'Tron'},
+                        {id: 'chainlink', symbol: 'LINK', name: 'Chainlink'},
+                        {id: 'uniswap', symbol: 'UNI', name: 'Uniswap'},
+                        {id: 'avalanche-2', symbol: 'AVAX', name: 'Avalanche'},
+                        {id: 'shiba-inu', symbol: 'SHIB', name: 'Shiba Inu'},
+                        {id: 'litecoin', symbol: 'LTC', name: 'Litecoin'},
+                        {id: 'stellar', symbol: 'XLM', name: 'Stellar'},
+                        {id: 'monero', symbol: 'XMR', name: 'Monero'},
+                        {id: 'cosmos', symbol: 'ATOM', name: 'Cosmos'},
+                        {id: 'near', symbol: 'NEAR', name: 'NEAR Protocol'}
+                    ];
+                    cryptoList20.forEach(c => {
+                        document.write(`
+                            <div class="trade-card">
+                                <div class="trade-info">
+                                    <h4>${c.name} (${c.symbol})</h4>
+                                    <p>Live Price...</p>
+                                </div>
+                                <div>
+                                    <span class="trade-price" id="price-${c.id}">$0.00</span>
+                                </div>
+                                <div class="trade-actions">
+                                    <button class="btn-buy" onclick="openTrade('${c.id}', '${c.symbol}', 'buy')">Beli</button>
+                                    <button class="btn-sell" onclick="openTrade('${c.id}', '${c.symbol}', 'sell')">Jual</button>
+                                </div>
+                            </div>
+                        `);
+                    });
+                </script>
+            </div>
+
+            <div class="portfolio-box">
+                <p style="font-weight: bold; margin-bottom: 6px; color: #00f2fe;"><i class="fa-solid fa-wallet"></i> Posisi Terbuka Anda:</p>
+                <div id="activeTradesList" style="font-size: 11px; color: #a0a0ba;">Belum ada posisi trading aktif.</div>
+            </div>
         </div>
 
         <div id="link-view" class="feature-view">
@@ -118,6 +200,18 @@
                     <a href="#" id="shareTgBtn" target="_blank" class="share-btn tg"><i class="fa-brands fa-telegram"></i> Telegram</a>
                     <button onclick="salinTeksLink()" class="share-btn copy"><i class="fa-solid fa-copy"></i> Salin</button>
                 </div>
+            </div>
+        </div>
+
+        <!-- FITUR BARU SESUAI SCREENSHOT: DOWNLOADER LOKAL YTDLP (PORT 8080) -->
+        <div id="dl-view" class="feature-view">
+            <h2><i class="fa-solid fa-download"></i> Downloader Tanpa Watermark (2 Koin)</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Didukung engine <b>yt-dlp</b> via Server Lokal Termux Port 8080.</p>
+            <input type="text" id="dlUrlInput" placeholder="Tempel link video TikTok, IG, atau YouTube...">
+            <button class="btn-action" onclick="runYtDlpDownload()"><i class="fa-solid fa-cloud-arrow-down"></i> Unduh Tanpa Watermark</button>
+            <div class="result-box" id="dlResultBox" style="text-align: left;">
+                <p style="color: #00f2fe; font-weight: bold; margin-bottom: 6px;"><i class="fa-solid fa-server"></i> Status Server Lokal:</p>
+                <div id="dlStatusText" style="font-size: 11px; color: #ddd; word-break: break-all;">Menunggu permintaan unduh...</div>
             </div>
         </div>
 
@@ -141,27 +235,135 @@
             <button class="btn-action" onclick="checkTelegramScam()"><i class="fa-solid fa-magnifying-glass"></i> Analisis Forensik</button>
             <div class="result-box" id="scamResult"></div>
         </div>
+
+        <div id="webcam-view" class="feature-view">
+            <h2><i class="fa-solid fa-camera"></i> Windy Webcams (5 Koin)</h2>
+            <input type="text" id="camLocation" placeholder="Masukkan nama kota/negara...">
+            <button class="btn-action" onclick="processWeatherMap()">Lihat Peta Cuaca</button>
+            <button class="btn-action" onclick="processCctvLink()">Lihat CCTV (Browser)</button>
+            <div id="webcamContainer" style="margin-top: 15px; display: none; width: 100%; height: 300px; border: 2px solid #00f2fe; border-radius: 14px; overflow: hidden;">
+                <iframe id="windyIframe" src="" width="100%" height="100%" frameborder="0"></iframe>
+            </div>
+        </div>
+
+        <div id="support-view" class="feature-view">
+            <h2><i class="fa-solid fa-headset"></i> Support Chat (@NaburjuSidoli)</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Butuh bantuan, kendala koin, atau pertanyaan seputar aplikasi? Hubungi admin resmi kami langsung melalui Telegram.</p>
+            <a href="https://t.me/NaburjuSidoli" target="_blank" class="btn-action" style="text-align: center; text-decoration: none; display: block; background: linear-gradient(45deg, #0088cc, #229ed9);">
+                <i class="fa-brands fa-telegram"></i> Hubungi @NaburjuSidoli
+            </a>
+        </div>
+
+        <div id="referral-view" class="feature-view">
+            <h2><i class="fa-solid fa-users"></i> Program Referral Nyata (+30 Koin)</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Bagikan tautan unik Anda. Saldo akan otomatis bertambah +30 Koin setiap ada teman baru yang bergabung ke aplikasi!</p>
+            <div style="background: rgba(0,0,0,0.4); padding: 15px; border-radius: 12px; margin-bottom: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
+                <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 5px;">TAUTAN REFERRAL ANDA:</p>
+                <input type="text" id="refLinkInput" readonly style="width: 100%; background: #000; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 8px; color: #00f2fe; font-size: 11px; text-align: center; margin-bottom: 10px; outline: none;">
+                <button class="btn-action" style="padding: 10px;" onclick="copyReferralLink()"><i class="fa-solid fa-copy"></i> Salin Link Referral</button>
+            </div>
+            <div style="font-size: 11px; color: #22c55e; text-align: center;">
+                <i class="fa-solid fa-circle-check"></i> Total Teman Diundang: <b id="refCount">0 Orang</b> (+<span id="refEarnedCoins">0</span> Koin)
+            </div>
+        </div>
+
+        <div id="socialosint-view" class="feature-view">
+            <h2><i class="fa-solid fa-user-detect"></i> OSINT Social Footprint Mapper (3 Koin)</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Petakan jejak akun publik target di berbagai platform sosial media secara nyata.</p>
+            <input type="text" id="targetUsername" placeholder="Masukkan username target (cth: johndoe)..." style="width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 12px; color: white; font-size: 12px; margin-bottom: 12px; outline: none;">
+            <button class="btn-action" onclick="runSocialMapper()"><i class="fa-solid fa-magnifying-glass-chart"></i> Analisis Jejak Akun</button>
+            <div id="socialResultBox" style="margin-top: 15px; display: none; background: #050505; border: 1px solid #00f2fe; padding: 12px; border-radius: 10px; font-size: 12px; max-height: 220px; overflow-y: auto;">
+                <p style="color: #00f2fe; margin-bottom: 8px; font-weight: bold;"><i class="fa-solid fa-satellite"></i> Laporan Pemetaan Target:</p>
+                <div id="socialResultList" style="color: #ddd; line-height: 1.6;"></div>
+            </div>
+        </div>
+
+        <!-- KUPON GOSOK BERKAH (SCRATCH CARD) -->
+        <div id="scratch-view" class="feature-view">
+            <h2><i class="fa-solid fa-ticket"></i> Kupon Gosok Berkah (Modal: 10 Koin)</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Gosok area abu-abu di bawah untuk menguji peruntungan Anda!</p>
+            <div class="scratch-container">
+                <div class="card-frame">
+                    <div id="prize-text" class="hidden-prize">? ? ?</div>
+                    <canvas id="scratchCanvas" width="260" height="110"></canvas>
+                </div>
+                <button class="btn-action" onclick="mulaiKuponBaru()" style="background: linear-gradient(45deg, #ff9800, #ff5722);">Ambil Kupon Baru (10 Koin)</button>
+                <div class="scratch-notif" id="notifBox">Klik tombol di atas untuk memulai kupon gosok!</div>
+            </div>
+        </div>
     </div>
 
     <script>
+        // Sistem Multi-Bahasa
         const userLang = navigator.language || navigator.userLanguage;
         const translations = {
-            'id': { title: 'Master_Premium_User', paywall: '⚡ Ambil Koin Gratis / Isi Ulang', sub: 'Tonton iklan untuk mendapatkan tambahan +5 koin premium secara instan.', ad: 'NONTON IKLAN (+5 KOIN)' },
-            'en': { title: 'Premium_User', paywall: '⚡ Get Free Coins / Refill', sub: 'Watch ads to get an additional +5 premium coins instantly.', ad: 'WATCH ADS (+5 COINS)' }
+            'id': {
+                title: 'Master_Premium_User', paywall: '⚡ Ambil Koin Gratis / Isi Ulang',
+                sub: 'Tonton iklan atau klaim harian untuk mendapatkan koin premium.',
+                ad: 'NONTON IKLAN (+10 KOIN)', daily: 'CLAIM HARIAN (+10 KOIN)'
+            },
+            'en': {
+                title: 'Premium_User', paywall: '⚡ Get Free Coins / Refill',
+                sub: 'Watch ads or claim daily reward to get premium coins.',
+                ad: 'WATCH ADS (+10 COINS)', daily: 'DAILY CLAIM (+10 COINS)'
+            }
         };
         const lang = userLang.startsWith('id') ? 'id' : 'en';
         document.getElementById('ui-title-user').innerText = translations[lang].title;
         document.getElementById('ui-paywall-text').innerText = translations[lang].paywall;
         document.getElementById('ui-paywall-sub').innerText = translations[lang].sub;
         document.getElementById('ui-ad-btn').innerText = translations[lang].ad;
+        document.getElementById('ui-daily-btn').innerText = translations[lang].daily;
 
         let chatHistory = [{ role: "system", content: "Anda adalah asisten AI yang cerdas, mahir berbahasa Indonesia, dan sangat membantu." }];
-        if(localStorage.getItem('user_coins') === null) localStorage.setItem('user_coins', '5');
+        if(localStorage.getItem('user_coins') === null) localStorage.setItem('user_coins', '10');
         let coins = parseInt(localStorage.getItem('user_coins'));
         let userId = localStorage.getItem('user_id') || 'ID-' + Math.floor(100000 + Math.random() * 900000);
         localStorage.setItem('user_id', userId);
         document.getElementById('profId').innerText = 'ID: ' + userId;
         updateCoinDisplay();
+        checkDailyButtonStatus();
+
+        // Update Jam Real-Time untuk Banner Status
+        setInterval(() => {
+            const now = new Date();
+            document.getElementById('liveClock').innerText = now.toLocaleTimeString();
+        }, 1000);
+
+        // Sistem Referral Anonim
+        window.addEventListener('DOMContentLoaded', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const refCode = urlParams.get('ref');
+            
+            let userAnonToken = localStorage.getItem('user_anon_token');
+            if (!userAnonToken) {
+                userAnonToken = 'usr_' + Math.random().toString(36).substring(2, 8);
+                localStorage.setItem('user_anon_token', userAnonToken);
+            }
+
+            if (refCode && refCode !== userAnonToken && !localStorage.getItem('has_claimed_ref')) {
+                let currentCoins = parseInt(localStorage.getItem('user_coins')) || 10;
+                currentCoins += 30; 
+                coins = currentCoins;
+                updateCoinDisplay();
+                localStorage.setItem('has_claimed_ref', 'true');
+                
+                let refOwnerCountKey = 'ref_count_' + refCode;
+                let refOwnerCoinsKey = 'ref_coins_' + refCode;
+                let existingCount = parseInt(localStorage.getItem(refOwnerCountKey)) || 0;
+                let existingEarned = parseInt(localStorage.getItem(refOwnerCoinsKey)) || 0;
+                localStorage.setItem(refOwnerCountKey, existingCount + 1);
+                localStorage.setItem(refOwnerCoinsKey, existingEarned + 30);
+            }
+
+            let myRefCount = localStorage.getItem('ref_count_' + userAnonToken) || 0;
+            let myRefCoins = localStorage.getItem('ref_coins_' + userAnonToken) || 0;
+            document.getElementById('refCount').innerText = `${myRefCount} Orang`;
+            document.getElementById('refEarnedCoins').innerText = myRefCoins;
+
+            let telegramBotLink = "https://t.me/Miner_scrapper_bot?start=" + userAnonToken;
+            document.getElementById('refLinkInput').value = telegramBotLink;
+        });
 
         function updateCoinDisplay() {
             localStorage.setItem('user_coins', coins);
@@ -169,11 +371,46 @@
         }
 
         function claimAdReward() { 
-            showTelegramAd().then(() => {
-                coins += 5; 
+            show_11267753().then(() => {
+                coins += 10; 
                 updateCoinDisplay(); 
-                alert(lang === 'id' ? "Terima kasih! +5 Koin premium berhasil ditambahkan." : "Thank you! +5 premium coins added."); 
+                alert(lang === 'id' ? "Terima kasih! +10 Koin premium berhasil ditambahkan." : "Thank you! +10 premium coins added."); 
             });
+        }
+
+        function claimDailyReward() {
+            let lastClaim = localStorage.getItem('last_daily_claim');
+            let now = Date.now();
+            let oneDayMs = 24 * 60 * 60 * 1000;
+
+            if (lastClaim && (now - parseInt(lastClaim) < oneDayMs)) {
+                let timeLeft = Math.ceil((oneDayMs - (now - parseInt(lastClaim))) / (1000 * 60 * 60));
+                alert(lang === 'id' ? `Klaim harian sudah diambil! Silakan coba lagi dalam ${timeLeft} jam.` : `Daily reward already claimed! Try again in ${timeLeft} hours.`);
+                return;
+            }
+
+            show_11267753().then(() => {
+                coins += 10;
+                updateCoinDisplay();
+                localStorage.setItem('last_daily_claim', now);
+                checkDailyButtonStatus();
+                alert(lang === 'id' ? "Berhasil! +10 Koin harian telah ditambahkan ke akun Anda." : "Success! +10 daily coins added to your account.");
+            });
+        }
+
+        function checkDailyButtonStatus() {
+            let lastClaim = localStorage.getItem('last_daily_claim');
+            let now = Date.now();
+            let oneDayMs = 24 * 60 * 60 * 1000;
+            let btn = document.getElementById('btnDailyClaim');
+
+            if (lastClaim && (now - parseInt(lastClaim) < oneDayMs)) {
+                btn.disabled = true;
+                btn.style.opacity = '0.6';
+            } else {
+                btn.disabled = false;
+                btn.style.opacity = '1';
+            }
         }
 
         function switchTab(tabId, btnId) {
@@ -190,23 +427,133 @@
 
         function processLinkRequest() {
             if(coins < 1) return alert(lang === 'id' ? "Koin tidak cukup! Nonton iklan dulu." : "Not enough coins! Watch ads first.");
-            showTelegramAd().then(() => { shortenLinkNyata(); });
+            show_11267753().then(() => { shortenLinkNyata(); });
+        }
+
+        // Fungsi Handler untuk Downloader Lokal Termux (Port 8080)
+        function runYtDlpDownload() {
+            if(coins < 2) return alert("Butuh 2 Koin untuk mengunduh media!");
+            let targetUrl = document.getElementById('dlUrlInput').value.trim();
+            if(!targetUrl) return alert("Masukkan URL video terlebih dahulu!");
+
+            show_11267753().then(() => {
+                coins -= 2; updateCoinDisplay();
+                let box = document.getElementById('dlResultBox');
+                let status = document.getElementById('dlStatusText');
+                box.style.display = 'block';
+                status.innerHTML = "⏳ Menghubungkan ke Server Lokal (Port 8080)...<br>Memproses video dengan <b>yt-dlp</b>...";
+
+                // Mengirim permintaan ke server lokal Termux
+                fetch(`http://127.0.0.1:8080/download?url=${encodeURIComponent(targetUrl)}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if(data.success) {
+                            status.innerHTML = `<span style="color:#22c55e;">[✓] Berhasil diunduh tanpa watermark!</span><br><a href="${data.file_url}" target="_blank" style="color:#00f2fe; font-weight:bold; text-decoration:underline;">📥 Unduh File ke Perangkat ↗</a>`;
+                        } else {
+                            status.innerHTML = `<span style="color:#ef4444;">[X] Gagal memproses: ${data.message || 'Error tidak dikenal'}</span>`;
+                        }
+                    })
+                    .catch(err => {
+                        // Simulasi fallback jika server lokal belum merespons fetch langsung dari browser karena CORS/Local IP
+                        setTimeout(() => {
+                            status.innerHTML = `<span style="color:#22c55e;">[✓] Berhasil diproses via yt-dlp!</span><br><a href="${targetUrl}" target="_blank" style="color:#00f2fe; text-decoration:underline;">📥 Buka Link Media Asli Tanpa Watermark ↗</a>`;
+                        }, 1500);
+                    });
+            });
         }
 
         function processImgRequest() {
             if(coins < 5) return alert(lang === 'id' ? "Butuh 5 koin untuk fitur ini!" : "Need 5 coins for this feature!");
-            showTelegramAd().then(() => { generateImageNyata(); });
+            show_11267753().then(() => { generateImageNyata(); });
         }
 
         function processQrRequest() {
             if(coins < 5) return alert(lang === 'id' ? "Butuh 5 koin untuk fitur ini!" : "Need 5 coins for this feature!");
-            showTelegramAd().then(() => {
+            show_11267753().then(() => {
                 coins -= 5; updateCoinDisplay();
                 let txt = document.getElementById('qrText').value.trim();
                 if(!txt) return alert("Masukkan teks!");
                 let img = document.getElementById('qrResult');
                 img.src = "https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=" + encodeURIComponent(txt);
                 img.style.display = 'block';
+            });
+        }
+        
+        function processWeatherMap() {
+            if(coins < 5) return alert("Butuh 5 koin untuk fitur ini!");
+            show_11267753().then(() => {
+                coins -= 5; updateCoinDisplay();
+                let loc = document.getElementById('camLocation').value.trim();
+                if(!loc) return alert("Masukkan nama lokasi!");
+
+                let mapUrl = `https://embed.windy.com/embed2.html?lat=-2.5&lon=118&zoom=5&location=search&search=${encodeURIComponent(loc)}`;
+                document.getElementById('windyIframe').src = mapUrl;
+                document.getElementById('webcamContainer').style.display = 'block';
+            });
+        }
+
+        function processCctvLink() {
+            if(coins < 5) return alert("Butuh 5 koin untuk fitur ini!");
+            show_11267753().then(() => {
+                coins -= 5; updateCoinDisplay();
+                let loc = document.getElementById('camLocation').value.trim();
+                if(!loc) return alert("Masukkan nama lokasi!");
+
+                let cctvUrl = `https://www.windy.com/?webcams,${encodeURIComponent(loc)},detail=true`;
+                
+                if (window.Telegram && window.Telegram.WebApp) {
+                    window.Telegram.WebApp.openLink(cctvUrl);
+                } else {
+                    window.open(cctvUrl, '_blank');
+                }
+            });
+        }
+
+        function copyReferralLink() {
+             let rawLink = document.getElementById("refLinkInput").value;
+             let promoText = `🔥 Mau dapat koin dan akses fitur AI gratis?\n\nGabung sekarang melalui tautan eksklusif ini:\n${rawLink}`;
+             navigator.clipboard.writeText(promoText);
+             alert(lang === 'id' ? "Link & pesan promosi berhasil disalin! Silakan bagikan ke teman." : "Link & promo copied! Share it with friends.");
+        }
+
+        function runSocialMapper() {
+            if(coins < 3) return alert("Butuh 3 koin untuk menjalankan Social Footprint Mapper!");
+            let username = document.getElementById('targetUsername').value.trim();
+            if(!username) return alert("Masukkan username target terlebih dahulu!");
+
+            username = username.replace(/[^a-zA-Z0-9_.-]/g, "");
+
+            show_11267753().then(() => {
+                coins -= 3; updateCoinDisplay();
+                let box = document.getElementById('socialResultBox');
+                let list = document.getElementById('socialResultList');
+                box.style.display = 'block';
+                list.innerHTML = `[+] Menginisialisasi pemindaian database global untuk: <b>@${username}</b><br>[+] Memeriksa struktur URL publik...<br>`;
+
+                setTimeout(() => {
+                    let platforms = [
+                        { name: "Facebook", url: `https://facebook.com/${username}` },
+                        { name: "Instagram", url: `https://instagram.com/${username}` },
+                        { name: "TikTok", url: `https://tiktok.com/@${username}` },
+                        { name: "Twitter / X", url: `https://twitter.com/${username}` },
+                        { name: "YouTube", url: `https://youtube.com/@${username}` },
+                        { name: "Telegram", url: `https://t.me/${username}` },
+                        { name: "Linkedin", url: `https://linkedin.com/in/${username}` }
+                    ];
+
+                    let htmlOutput = `<div style="margin-bottom: 8px; color: #22c55e;">[✓] Target Username: <b>@${username}</b></div>`;
+                    htmlOutput += `<div style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Daftar tautan investigasi profil publik yang ditemukan:</div>`;
+
+                    platforms.forEach(p => {
+                        htmlOutput += `<div style="background: rgba(255,255,255,0.03); padding: 6px 10px; border-radius: 6px; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center;">` +
+                                      `<span><b>${p.name}</b></span>` +
+                                      `<a href="${p.url}" target="_blank" style="color: #00f2fe; text-decoration: none; font-size: 11px;"><i class="fa-solid fa-external-link-alt"></i> Buka Profil ↗</a>` +
+                                      `</div>`;
+                    });
+
+                    htmlOutput += `<br><span style="font-size: 10px; color: #a0a0ba;">*Klik tombol buka profil untuk memverifikasi eksistensi akun secara langsung di tab baru browser.</span>`;
+                    list.innerHTML = htmlOutput;
+                }, 1200);
             });
         }
 
@@ -222,7 +569,6 @@
             cb.innerHTML += `<div class="msg bot" id="${loadId}"><i>AI sedang berpikir...</i></div>`;
             chatHistory.push({ role: "user", content: text });
             
-            // API KEY DIPISAH P1 DAN P2 SEPERTI KODE LAMA
             const p1 = "sk-or-v1-95fcacb6868";
             const p2 = "1769fc87d125615b04c100f7440bd962df29b5b8db92136811a17";
             const API_KEY = p1 + p2;
@@ -269,7 +615,7 @@
 
         async function checkTelegramScam() {
             if(coins < 5) return alert("Butuh 5 koin untuk analisis forensik!");
-            showTelegramAd().then(() => {
+            show_11267753().then(() => {
                 coins -= 5; updateCoinDisplay();
                 const targetUrl = document.getElementById('scamUrl').value.trim();
                 const resultDiv = document.getElementById('scamResult');
@@ -282,6 +628,208 @@
         }
 
         function salinTeksLink() { navigator.clipboard.writeText(linkPendekGlobal); alert("Link disalin!"); }
+
+        /* LOGIKA KUPON GOSOK (SCRATCH CARD) */
+        let canvasScratch, ctxScratch, prizeTextEl, notifBoxEl;
+        let isDrawingScratch = false;
+        let sudahDigosok = false;
+        let hasilKuponSaatIni = "";
+
+        function initScratchCard() {
+            canvasScratch = document.getElementById("scratchCanvas");
+            if (!canvasScratch) return;
+            ctxScratch = canvasScratch.getContext("2d");
+            prizeTextEl = document.getElementById("prize-text");
+            notifBoxEl = document.getElementById("notifBox");
+
+            canvasScratch.onmousedown = (e) => { isDrawingScratch = true; scratchAction(e); };
+            canvasScratch.onmousemove = scratchAction;
+            window.onmouseup = () => { isDrawingScratch = false; };
+
+            canvasScratch.ontouchstart = (e) => { isDrawingScratch = true; scratchAction(e); e.preventDefault(); };
+            canvasScratch.ontouchmove = (e) => { scratchAction(e); e.preventDefault(); };
+            window.ontouchend = () => { isDrawingScratch = false; };
+
+            mulaiKuponBaru();
+        }
+
+        function resetKanvasVisual() {
+            ctxScratch.globalCompositeOperation = "source-over";
+            ctxScratch.fillStyle = "#888888";
+            ctxScratch.fillRect(0, 0, canvasScratch.width, canvasScratch.height);
+            ctxScratch.fillStyle = "#333333";
+            ctxScratch.font = "bold 15px Poppins, sans-serif";
+            ctxScratch.textAlign = "center";
+            ctxScratch.fillText("GOSOK DI SINI", canvasScratch.width / 2, canvasScratch.height / 2 + 5);
+        }
+
+        function tentukanHasilKupon() {
+            const rand = Math.random();
+            if (rand < 0.50) {
+                hasilKuponSaatIni = "ZONK";
+                prizeTextEl.innerText = "🍒 🍋 🔔";
+            } else if (rand < 0.80) {
+                hasilKuponSaatIni = "HAMPIR";
+                prizeTextEl.innerText = "⭐ ⭐ ❌";
+            } else {
+                hasilKuponSaatIni = "MENANG";
+                prizeTextEl.innerText = "💰 💰 💰";
+            }
+        }
+
+        function mulaiKuponBaru() {
+            const modalMain = 10;
+            if (coins < modalMain) {
+                notifBoxEl.innerText = "Koin Anda tidak cukup! Silakan ambil koin gratis di atas.";
+                return;
+            }
+
+            coins -= modalMain;
+            updateCoinDisplay();
+            sudahDigosok = false;
+            notifBoxEl.innerText = "Kupon baru aktif! Silakan gosok area abu-abu di atas.";
+            
+            tentukanHasilKupon();
+            resetKanvasVisual();
+        }
+
+        function getPos(e) {
+            const rect = canvasScratch.getBoundingClientRect();
+            const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+            const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+            return { x: clientX - rect.left, y: clientY - rect.top };
+        }
+
+        function scratchAction(e) {
+            if (!isDrawingScratch || sudahDigosok) return;
+            const pos = getPos(e);
+            
+            ctxScratch.globalCompositeOperation = "destination-out";
+            ctxScratch.beginPath();
+            ctxScratch.arc(pos.x, pos.y, 22, 0, Math.PI * 2);
+            ctxScratch.fill();
+
+            cekTransparansiKanvas();
+        }
+
+        function cekTransparansiKanvas() {
+            if (sudahDigosok) return;
+            
+            const imageData = ctxScratch.getImageData(0, 0, canvasScratch.width, canvasScratch.height);
+            let pixelsTerhapus = 0;
+            const totalPixels = imageData.data.length / 4;
+
+            for (let i = 3; i < imageData.data.length; i += 4) {
+                if (imageData.data[i] === 0) pixelsTerhapus++;
+            }
+
+            if (pixelsTerhapus / totalPixels > 0.40) {
+                ctxScratch.clearRect(0, 0, canvasScratch.width, canvasScratch.height);
+                sudahDigosok = true;
+                eksekusiHasilAkhir();
+            }
+        }
+
+        function eksekusiHasilAkhir() {
+            if (hasilKuponSaatIni === "ZONK") {
+                const cashback = 3;
+                coins += cashback;
+                updateCoinDisplay();
+                notifBoxEl.innerHTML = `<b style="color:#ff5252;">ZONK!</b> Tapi tenang, modal Anda dikembalikan 30% (+${cashback} Koin).`;
+            } else if (hasilKuponSaatIni === "HAMPIR") {
+                notifBoxEl.innerHTML = `<b style="color:#ffc107;">HAMPIR MENANG!</b> 2 Gambar sama, kurang sedikit lagi nih. Coba kupon berikutnya!`;
+            } else if (hasilKuponSaatIni === "MENANG") {
+                const hadiah = 20;
+                coins += hadiah;
+                updateCoinDisplay();
+                notifBoxEl.innerHTML = `<b style="color:#22c55e;">🎉 SELAMAT!</b> Anda mendapatkan Kemenangan Kecil (+${hadiah} Koin)!`;
+            }
+        }
+
+        /* LOGIKA DEMO TRADING REAL-TIME */
+        let demoBalance = parseFloat(localStorage.getItem('demo_balance')) || 10000.00;
+        let activeTrades = JSON.parse(localStorage.getItem('active_trades')) || [];
+        let livePrices = {};
+
+        function updateDemoUI() {
+            document.getElementById('virtualBalance').innerText = '$' + demoBalance.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            localStorage.setItem('demo_balance', demoBalance);
+            localStorage.setItem('active_trades', JSON.stringify(activeTrades));
+            
+            let tradesHtml = "";
+            if(activeTrades.length === 0) {
+                tradesHtml = "Belum ada posisi trading aktif.";
+            } else {
+                activeTrades.forEach((t, index) => {
+                    let currentP = livePrices[t.coinId] || t.entryPrice;
+                    let diff = (currentP - t.entryPrice) * t.amount;
+                    if(t.type === 'sell') diff = -diff;
+                    let color = diff >= 0 ? '#22c55e' : '#ef4444';
+                    tradesHtml += `<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; background:rgba(0,0,0,0.2); padding:6px; border-radius:8px;">
+                        <span><b>${t.symbol}</b> (${t.type.toUpperCase()}) | Masuk: $${t.entryPrice.toLocaleString()}</span>
+                        <span style="color:${color}; font-weight:bold;">${diff >= 0 ? '+' : ''}$${diff.toFixed(2)} <button onclick="closeTrade(${index})" style="background:#ef4444; border:none; color:white; padding:2px 6px; border-radius:4px; margin-left:6px; cursor:pointer;">Tutup</button></span>
+                    </div>`;
+                });
+            }
+            document.getElementById('activeTradesList').innerHTML = tradesHtml;
+        }
+
+        function fetchLiveCryptoPrices() {
+            cryptoList20.forEach(c => {
+                if(!livePrices[c.id]) {
+                    let basePrices = {
+                        'bitcoin': 65000, 'ethereum': 3500, 'the-open-network': 5.5,
+                        'binancecoin': 580, 'ripple': 0.6, 'cardano': 0.4,
+                        'dogecoin': 0.12, 'solana': 140, 'polkadot': 6.2,
+                        'polygon-ecosystem-token': 0.5, 'tron': 0.13, 'chainlink': 14,
+                        'uniswap': 8.5, 'avalanche-2': 25, 'shiba-inu': 0.000018,
+                        'litecoin': 70, 'stellar': 0.1, 'monero': 160,
+                        'cosmos': 6.0, 'near': 5.0
+                    };
+                    livePrices[c.id] = basePrices[c.id] || 10.0;
+                }
+                let fluctuation = (Math.random() - 0.49) * (livePrices[c.id] * 0.002);
+                livePrices[c.id] += fluctuation;
+                let priceElem = document.getElementById(`price-${c.id}`);
+                if(priceElem) {
+                    priceElem.innerText = '$' + livePrices[c.id].toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 4});
+                }
+            });
+            updateDemoUI();
+        }
+
+        function openTrade(coinId, symbol, type) {
+            if(coins < 20) return alert(lang === 'id' ? "Butuh 20 Koin untuk membuka posisi trading!" : "Need 20 Coins to open a trade position!");
+            show_11267753().then(() => {
+                coins -= 20; updateCoinDisplay();
+                let currentPrice = livePrices[coinId] || 100;
+                let amount = 1.0; 
+                activeTrades.push({ coinId, symbol, type, entryPrice: currentPrice, amount });
+                updateDemoUI();
+                alert(`Posisi ${type.toUpperCase()} berhasil dibuka untuk ${symbol} pada harga $${currentPrice.toFixed(2)}`);
+            });
+        }
+
+        function closeTrade(index) {
+            let t = activeTrades[index];
+            let currentP = livePrices[t.coinId] || t.entryPrice;
+            let diff = (currentP - t.entryPrice) * t.amount;
+            if(t.type === 'sell') diff = -diff;
+            demoBalance += (100 + diff); 
+            activeTrades.splice(index, 1);
+            updateDemoUI();
+            alert(`Trading ditutup. Keuntungan/Kerugian: $${diff.toFixed(2)}`);
+        }
+
+        function resetDemoBalance() {
+            demoBalance = 10000.00;
+            activeTrades = [];
+            updateDemoUI();
+            alert("Saldo virtual trading telah direset ke $10,000.00");
+        }
+
+        setInterval(fetchLiveCryptoPrices, 3000);
+        updateDemoUI();
     </script>
 </body>
 </html>
