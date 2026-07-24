@@ -420,83 +420,46 @@
             document.getElementById(btnId).classList.add('active');
         }
 
-        // Fungsi Handler Downloader dengan Auto-Fallback Tunnel
         function runYtDlpDownload() {
-            if(coins < 2) return alert("Butuh 2 Koin untuk mengunduh media!");
-            let targetUrl = document.getElementById('dlUrlInput').value.trim();
-            if(!targetUrl) return alert("Masukkan URL video terlebih dahulu!");
+    if(coins < 2) return alert("Butuh 2 Koin untuk mengunduh media!");
+    let targetUrl = document.getElementById('dlUrlInput').value.trim();
+    if(!targetUrl) return alert("Masukkan URL video terlebih dahulu!");
 
     show_11267753().then(() => {
         coins -= 2; updateCoinDisplay();
         let box = document.getElementById('dlResultBox');
         let status = document.getElementById('dlStatusText');
         box.style.display = 'block';
-        status.innerHTML = "⏳ Menghubungkan ke Server Downloader...<br>Sedang memproses video...";
+        status.innerHTML = "⏳ Sedang memproses video...";
 
-        // URL Pinggy aktif Anda saat ini
         let pinggyUrl = "https://nmdyh-114-122-36-146.run.pinggy-free.link";
-        let localUrl = "http://127.0.0.1:8080";
 
-        // Coba tembak via Pinggy terlebih dahulu agar bebas dari blokir HTTPS
-        fetch(`${pinggyUrl}/download?url=${encodeURIComponent(targetUrl)}`, {
-            method: 'GET',
-            mode: 'cors'
-        })
+        fetch(`${pinggyUrl}/download?url=${encodeURIComponent(targetUrl)}`)
         .then(res => res.json())
         .then(data => {
-            handleDownloadSuccess(data, pinggyUrl, status);
+            if(data.status === "success" || data.success === true) {
+                let fileUrl = pinggyUrl + "/file/" + data.filename;
+                let fileName = data.filename || "video_clean.mp4";
+
+                status.innerHTML = `
+                    <span style="color:#22c55e;">[✓] ${data.message}</span><br>
+                    <a href="${fileUrl}" download="${fileName}" class="btn-action" style="display:inline-block; margin-top:10px; padding:10px 15px; background:#22c55e; color:#fff; border-radius:8px; text-decoration:none;">
+                        📥 KLIK DI SINI UNTukan SIMPAN KE HP
+                    </a>
+                `;
+
+                let aTag = document.createElement('a');
+                aTag.href = fileUrl;
+                aTag.download = fileName;
+                document.body.appendChild(aTag);
+                aTag.click();
+                document.body.removeChild(aTag);
+            } else {
+                status.innerHTML = `<span style="color:#ef4444;">[X] Gagal: ${data.message || 'Error'}</span>`;
+            }
         })
         .catch(err => {
-            // Jika Pinggy gagal, coba fallback ke lokal (jika diakses via browser lokal)
-            fetch(`${localUrl}/download?url=${encodeURIComponent(targetUrl)}`, {
-                method: 'GET',
-                mode: 'cors'
-            })
-            .then(res => res.json())
-            .then(data => {
-                handleDownloadSuccess(data, localUrl, status);
-            })
-            .catch(finalErr => {
-                status.innerHTML = `<span style="color:#ef4444;">[X] Gagal terhubung ke Server Termux. Pastikan Termux & Pinggy aktif dan link Pinggy sudah diperbarui!</span>`;
-            });
-        });
-    });
-}
-
-function handleDownloadSuccess(data, baseUrl, statusElem) {
-    if(data.status === "success" || data.success === true) {
-        let fileUrl = baseUrl + "/file/" + data.filename;
-        let fileName = data.filename || "video_clean.mp4";
-
-        statusElem.innerHTML = `
-            <span style="color:#22c55e;">[✓] ${data.message}</span><br>
-            <a href="${fileUrl}" download="${fileName}" class="btn-action" style="display:inline-block; margin-top:10px; padding:10px 15px; background:#22c55e; color:#fff; border-radius:8px; text-decoration:none; text-align:center;">
-                📥 KLIK DI SINI UNTUK SIMPAN KE HP
-            </a>
-        `;
-
-        let aTag = document.createElement('a');
-        aTag.href = fileUrl;
-        aTag.download = fileName;
-        document.body.appendChild(aTag);
-        aTag.click();
-        document.body.removeChild(aTag);
-    } else {
-        statusElem.innerHTML = `<span style="color:#ef4444;">[X] Gagal memproses: ${data.message || 'Error'}</span>`;
-    }
-}
-
-        function processLinkRequest() {
-            if(coins < 1) return alert(lang === 'id' ? "Koin tidak cukup! Nonton iklan dulu." : "Not enough coins! Watch ads first.");
-            show_11267753().then(() => { shortenLinkNyata(); });
-        }
-
-        function runYtDlpDownload() {
-    if(coins < 2) return alert("Butuh 2 Koin untuk mengunduh media!");
-    let targetUrl = document.getElementById('dlUrlInput').value.trim();
-    if(!targetUrl) return alert("Masukkan URL video terlebih dahulu!");
-
-    show_11267753().then(() =>  Termux...<br>Se). Pastikan membuka Web App via HTTP lokal atau gunakan Termux browser!</span>`;
+            status.innerHTML = `<span style="color:#ef4444;">[X] Gagal terhubung ke Termux/Pinggy!</span>`;
         });
     });
         }
