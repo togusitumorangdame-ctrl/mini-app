@@ -430,43 +430,26 @@
             show_11267753().then(() => { shortenLinkNyata(); });
         }
 
-        // Fungsi Handler untuk Downloader Lokal Termux (Port 8080)
-        function runYtDlpDownload() {
-            if(coins < 2) return alert("Butuh 2 Koin untuk mengunduh media!");
-            let targetUrl = document.getElementById('dlUrlInput').value.trim();
-            if(!targetUrl) return alert("Masukkan URL video terlebih dahulu!");
+        // Fungsi Jembatan Downloader Publik
+function runYtDlpDownload() {
+    if(coins < 2) return alert("Butuh 2 Koin untuk mengunduh media!");
+    let targetUrl = document.getElementById('dlUrlInput').value.trim();
+    if(!targetUrl) return alert("Masukkan URL video terlebih dahulu!");
 
-            show_11267753().then(() => {
-                coins -= 2; updateCoinDisplay();
-                let box = document.getElementById('dlResultBox');
-                let status = document.getElementById('dlStatusText');
-                box.style.display = 'block';
-                status.innerHTML = "⏳ Menghubungkan ke Server Lokal (Port 8080)...<br>Memproses video dengan <b>yt-dlp</b>...";
+    coins -= 2; 
+    updateCoinDisplay();
 
-                // Mengirim permintaan ke server lokal Termux
-                fetch(`https://acjes-114-122-36-146.run.pinggy-free.link/download?url=${encodeURIComponent(targetUrl)}`)
-                    .then(res => res.json())
-                    .then(data => {
-                        if (data.status === "success" || data.success === true) {
-                    let fileUrl = "https://nmdyh-114-122-36-146.run.pinggy-free.link/file/" + data.filename;
-                    let fileName = data.filename || "video_clean.mp4";
+    let status = document.getElementById('dlStatusText');
+    let box = document.getElementById('dlResultBox');
+    box.style.display = 'block';
+    status.innerHTML = `<span style="color:#22c55e;">[✓] Mengarahkan ke penyedia unduhan resmi...</span>`;
 
-                    status.innerHTML = `
-                        <span style="color:#22c55e;">[✓] ${data.message}</span><br>
-                        <a href="${fileUrl}" download="${fileName}" class="btn-action" style="display:inline-block; margin-top:10px; padding:10px 15px; background:#22c55e; color:#fff; border-radius:8px; text-decoration:none;">
-                            📥 KLIK DI SINI UNTUK SIMPAN KE HP
-                        </a>
-                    `;
+    let downloadServiceUrl = "https://ssstik.io/id?url=" + encodeURIComponent(targetUrl);
 
-                    let aTag = document.createElement('a');
-                    aTag.href = fileUrl;
-                    aTag.download = fileName;
-                    document.body.appendChild(aTag);
-                    aTag.click();
-                    document.body.removeChild(aTag);
-                } else {
-                    status.innerHTML = `<span style="color:#ef4444;">[X] Gagal memproses: ${data.message || 'Error'}</span>`;
-        }
+    setTimeout(() => {
+        window.open(downloadServiceUrl, '_blank');
+    }, 1000);
+}
 
         function processImgRequest() {
             if(coins < 5) return alert(lang === 'id' ? "Butuh 5 koin untuk fitur ini!" : "Need 5 coins for this feature!");
