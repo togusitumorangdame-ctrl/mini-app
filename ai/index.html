@@ -430,48 +430,47 @@
             show_11267753().then(() => { shortenLinkNyata(); });
         }
 
+        // Fungsi Handler untuk Downloader Lokal Termux (Port 8080)
         function runYtDlpDownload() {
-    if(coins < 2) return alert("Butuh 2 Koin untuk mengunduh media!");
-    let targetUrl = document.getElementById('dlUrlInput').value.trim();
-    if(!targetUrl) return alert("Masukkan URL video terlebih dahulu!");
+            if(coins < 2) return alert("Butuh 2 Koin untuk mengunduh media!");
+            let targetUrl = document.getElementById('dlUrlInput').value.trim();
+            if(!targetUrl) return alert("Masukkan URL video terlebih dahulu!");
 
-    show_11267753().then(() => {
-        coins -= 2; updateCoinDisplay();
-        let box = document.getElementById('dlResultBox');
-        let status = document.getElementById('dlStatusText');
-        box.style.display = 'block';
-        status.innerHTML = "⏳ Sedang memproses video...";
+            show_11267753().then(() => {
+                coins -= 2; updateCoinDisplay();
+                let box = document.getElementById('dlResultBox');
+                let status = document.getElementById('dlStatusText');
+                box.style.display = 'block';
+                status.innerHTML = "⏳ Menghubungkan ke Server Lokal (Port 8080)...<br>Memproses video dengan <b>yt-dlp</b>...";
 
-        let pinggyUrl = "https://nmdyh-114-122-36-146.run.pinggy-free.link";
+                // Mengirim permintaan ke server lokal Termux
+                fetch(`https://nmdyh-114-122-36-146.run.pinggy-free.link/download?url=${encodeURIComponent(targetUrl)}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (data.status === "success" || data.success === true) {
+                    let fileUrl = "https://nmdyh-114-122-36-146.run.pinggy-free.link/file/" + data.filename;
+                    let fileName = data.filename || "video_clean.mp4";
 
-        fetch(`${pinggyUrl}/download?url=${encodeURIComponent(targetUrl)}`)
-        .then(res => res.json())
-        .then(data => {
-            if(data.status === "success" || data.success === true) {
-                let fileUrl = pinggyUrl + "/file/" + data.filename;
-                let fileName = data.filename || "video_clean.mp4";
+                    status.innerHTML = `
+                        <span style="color:#22c55e;">[✓] ${data.message}</span><br>
+                        <a href="${fileUrl}" download="${fileName}" class="btn-action" style="display:inline-block; margin-top:10px; padding:10px 15px; background:#22c55e; color:#fff; border-radius:8px; text-decoration:none;">
+                            📥 KLIK DI SINI UNTUK SIMPAN KE HP
+                        </a>
+                    `;
 
-                status.innerHTML = `
-                    <span style="color:#22c55e;">[✓] ${data.message}</span><br>
-                    <a href="${fileUrl}" download="${fileName}" class="btn-action" style="display:inline-block; margin-top:10px; padding:10px 15px; background:#22c55e; color:#fff; border-radius:8px; text-decoration:none;">
-                        📥 KLIK DI SINI UNTukan SIMPAN KE HP
-                    </a>
-                `;
+                    let aTag = document.createElement('a');
+                    aTag.href = fileUrl;
+                    aTag.download = fileName;
+                    document.body.appendChild(aTag);
+                    aTag.click();
+                    document.body.removeChild(aTag);
+                } else {
+                    status.innerHTML = `<span style="color:#ef4444;">[X] Gagal memproses: ${data.message || 'Error'}</span>`;
+        }
 
-                let aTag = document.createElement('a');
-                aTag.href = fileUrl;
-                aTag.download = fileName;
-                document.body.appendChild(aTag);
-                aTag.click();
-                document.body.removeChild(aTag);
-            } else {
-                status.innerHTML = `<span style="color:#ef4444;">[X] Gagal: ${data.message || 'Error'}</span>`;
-            }
-        })
-        .catch(err => {
-            status.innerHTML = `<span style="color:#ef4444;">[X] Gagal terhubung ke Termux/Pinggy!</span>`;
-        });
-    });
+        function processImgRequest() {
+            if(coins < 5) return alert(lang === 'id' ? "Butuh 5 koin untuk fitur ini!" : "Need 5 coins for this feature!");
+            show_11267753().then(() => { generateImageNyata(); });
         }
 
         function processQrRequest() {
@@ -481,7 +480,7 @@
                 let txt = document.getElementById('qrText').value.trim();
                 if(!txt) return alert("Masukkan teks!");
                 let img = document.getElementById('qrResult');
-                img.src = "https://api.qrserver.com/v1/create-qr-code/?size=500x500&data=" + encodeURIComponent(txt);
+                img.src = "https://api.qrserver.com/v1/create-qr-code/?sizata=" + encodeURIComponent(txt);
                 img.style.display = 'block';
             });
         }
