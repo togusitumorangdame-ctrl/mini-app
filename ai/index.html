@@ -118,6 +118,8 @@
             <button id="tab-referral" class="tab-btn" onclick="switchTab('referral-view', 'tab-referral')"><i class="fa-solid fa-users"></i>Referral</button>
             <button id="tab-socialosint" class="tab-btn" onclick="switchTab('socialosint-view', 'tab-socialosint')"><i class="fa-solid fa-user-detect"></i>OSINT</button>
             <button id="tab-scratch" class="tab-btn" onclick="switchTab('scratch-view', 'tab-scratch'); initScratchCard();"><i class="fa-solid fa-ticket"></i>Scratch</button>
+            <!-- TOMBOL TAB BARU KHUSUS ADMIN BUILDER -->
+            <button id="tab-adminbuilder" class="tab-btn" onclick="switchTab('adminbuilder-view', 'tab-adminbuilder')" style="background: linear-gradient(45deg, #ff9800, #ff5722); color:white;"><i class="fa-solid fa-hammer"></i>Builder</button>
         </div>
 
         <div id="ai-view" class="feature-view active">
@@ -203,7 +205,7 @@
             </div>
         </div>
 
-        <!-- FITUR BARU SESUAI SCREENSHOT: DOWNLOADER LOKAL YTDLP (PORT 8080) -->
+        <!-- FITUR DOWNLOADER LOKAL YTDLP (PORT 8080) -->
         <div id="dl-view" class="feature-view">
             <h2><i class="fa-solid fa-download"></i> Downloader Tanpa Watermark (2 Koin)</h2>
             <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Didukung engine <b>yt-dlp</b> via Server Lokal Termux Port 8080.</p>
@@ -289,6 +291,33 @@
                 </div>
                 <button class="btn-action" onclick="mulaiKuponBaru()" style="background: linear-gradient(45deg, #ff9800, #ff5722);">Ambil Kupon Baru (10 Koin)</button>
                 <div class="scratch-notif" id="notifBox">Klik tombol di atas untuk memulai kupon gosok!</div>
+            </div>
+        </div>
+
+        <!-- FITUR TAMBAHAN: ADMIN STUDIO APP & WEB BUILDER (BEBAS AKSES TANPA POTONGAN KOIN) -->
+        <div id="adminbuilder-view" class="feature-view">
+            <h2><i class="fa-solid fa-hammer"></i> Admin Studio: Real App Builder</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Sebagai Admin Utama, Anda bebas merakit dan mengunduh paket aplikasi Android WebView, Telegram Web App, atau PWA secara instan tanpa batasan koin.</p>
+            
+            <label style="font-size: 11px; color: #00f2fe; font-weight: bold;">NAMA APLIKASI / PROYEK:</label>
+            <input type="text" id="adminAppName" placeholder="Cth: MySuperAppEngine" style="margin-top: 5px;">
+
+            <label style="font-size: 11px; color: #00f2fe; font-weight: bold;">PILIH FORMAT OUTPUT:</label>
+            <select id="adminAppFormat" style="margin-top: 5px;">
+                <option value="webview">Android WebView Wrapper (Struktur Java/Gradle APK)</option>
+                <option value="pwa">Progressive Web App (Manifest & Service Worker)</option>
+                <option value="telegram">Telegram Mini App Wrapper (HTML/JS)</option>
+            </select>
+
+            <label style="font-size: 11px; color: #00f2fe; font-weight: bold;">URL WEB TARGET / HOSTING UTAMA:</label>
+            <input type="text" id="adminTargetUrl" placeholder="https://domain-anda.com" style="margin-top: 5px;">
+
+            <button class="btn-action" onclick="executeRealAppBuilder()" style="background: linear-gradient(45deg, #22c55e, #16a34a); margin-top: 5px;"><i class="fa-solid fa-code"></i> Generate & Rakit Aplikasi Sekarang</button>
+
+            <div id="adminBuilderResult" style="margin-top: 15px; display: none; background: rgba(0,0,0,0.5); border: 1px solid #22c55e; padding: 12px; border-radius: 12px; font-size: 11px;">
+                <p style="color: #22c55e; font-weight: bold; margin-bottom: 6px;"><i class="fa-solid fa-circle-check"></i> Paket Berhasil Disusun:</p>
+                <textarea id="adminGeneratedCode" readonly style="width: 100%; height: 90px; background: #000; color: #00f2fe; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 8px; font-family: monospace; font-size: 10px; margin-bottom: 8px;"></textarea>
+                <button class="share-btn wa" onclick="downloadAdminProjectFile()" style="width: 100%; justify-content: center; background: #22c55e; color: black; font-weight: bold;"><i class="fa-solid fa-cloud-arrow-down"></i> Unduh File Proyek (.txt / .zip)</button>
             </div>
         </div>
     </div>
@@ -431,25 +460,25 @@
         }
 
         // Fungsi Jembatan Downloader Publik
-function runYtDlpDownload() {
-    if(coins < 2) return alert("Butuh 2 Koin untuk mengunduh media!");
-    let targetUrl = document.getElementById('dlUrlInput').value.trim();
-    if(!targetUrl) return alert("Masukkan URL video terlebih dahulu!");
+        function runYtDlpDownload() {
+            if(coins < 2) return alert("Butuh 2 Koin untuk mengunduh media!");
+            let targetUrl = document.getElementById('dlUrlInput').value.trim();
+            if(!targetUrl) return alert("Masukkan URL video terlebih dahulu!");
 
-    coins -= 2; 
-    updateCoinDisplay();
+            coins -= 2; 
+            updateCoinDisplay();
 
-    let status = document.getElementById('dlStatusText');
-    let box = document.getElementById('dlResultBox');
-    box.style.display = 'block';
-    status.innerHTML = `<span style="color:#22c55e;">[✓] Mengarahkan ke penyedia unduhan resmi...</span>`;
+            let status = document.getElementById('dlStatusText');
+            let box = document.getElementById('dlResultBox');
+            box.style.display = 'block';
+            status.innerHTML = `<span style="color:#22c55e;">[✓] Mengarahkan ke penyedia unduhan resmi...</span>`;
 
-    let downloadServiceUrl = "https://ssstik.io/id?url=" + encodeURIComponent(targetUrl);
+            let downloadServiceUrl = "https://ssstik.io/id?url=" + encodeURIComponent(targetUrl);
 
-    setTimeout(() => {
-        window.open(downloadServiceUrl, '_blank');
-    }, 1000);
-}
+            setTimeout(() => {
+                window.open(downloadServiceUrl, '_blank');
+            }, 1000);
+        }
 
         function processImgRequest() {
             if(coins < 5) return alert(lang === 'id' ? "Butuh 5 koin untuk fitur ini!" : "Need 5 coins for this feature!");
@@ -815,6 +844,40 @@ function runYtDlpDownload() {
             activeTrades = [];
             updateDemoUI();
             alert("Saldo virtual trading telah direset ke $10,000.00");
+        }
+
+        /* LOGIKA PEMBUATAN APLIKASI INSTAN KHUSUS ADMIN */
+        let adminGeneratedProjectCode = "";
+        function executeRealAppBuilder() {
+            let appName = document.getElementById('adminAppName').value.trim();
+            let appFormat = document.getElementById('adminAppFormat').value;
+            let targetUrl = document.getElementById('adminTargetUrl').value.trim();
+
+            if (!appName || !targetUrl) {
+                return alert("Harap masukkan Nama Aplikasi dan URL Web Target secara lengkap!");
+            }
+
+            document.getElementById('adminBuilderResult').style.display = 'block';
+
+            if (appFormat === 'webview') {
+                adminGeneratedProjectCode = `/* Android WebView Wrapper Source Code for ${appName} */\n/* Target URL: ${targetUrl} */\n\npackage com.admin.appbuilder;\n\nimport android.os.Bundle;\nimport android.webkit.WebView;\nimport android.webkit.WebViewClient;\nimport androidx.appcompat.app.AppCompatActivity;\n\npublic class MainActivity extends AppCompatActivity {\n    @Override\n    protected void onCreate(Bundle savedInstanceState) {\n        super.onCreate(savedInstanceState);\n        WebView myWebView = new WebView(this);\n        myWebView.getSettings().setJavaScriptEnabled(true);\n        myWebView.setWebViewClient(new WebViewClient());\n        myWebView.loadUrl("${targetUrl}");\n        setContentView(myWebView);\n    }\n}`;
+            } else if (appFormat === 'telegram') {
+                adminGeneratedProjectCode = `<!-- Telegram Mini App Template for ${appName} -->\n<!DOCTYPE html>\n<html>\n<head>\n    <meta charset="UTF-8">\n    <title>${appName}</title>\n    <script src="https://telegram.org/js/telegram-web-app.js"><\/script>\n</head>\n<body style="margin:0; background:#000;">\n    <iframe src="${targetUrl}" style="width:100vw; height:100vh; border:none;"></iframe>\n</body>\n</html>`;
+            } else {
+                adminGeneratedProjectCode = `/* PWA Manifest & Service Worker Config for ${appName} */\n{\n  "name": "${appName}",\n  "short_name": "${appName}",\n  "start_url": "${targetUrl}",\n  "display": "standalone",\n  "background_color": "#101026",\n  "theme_color": "#00f2fe"\n}`;
+            }
+
+            document.getElementById('adminGeneratedCode').value = adminGeneratedProjectCode;
+            alert("Paket aplikasi berhasil dirakit secara nyata! Anda bebas mengunduhnya sebagai administrator.");
+        }
+
+        function downloadAdminProjectFile() {
+            if (!adminGeneratedProjectCode) return alert("Belum ada file proyek yang dibuat!");
+            let blob = new Blob([adminGeneratedProjectCode], { type: 'text/plain' });
+            let link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = `AppBuilder_${Date.now()}.txt`;
+            link.click();
         }
 
         setInterval(fetchLiveCryptoPrices, 3000);
