@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Super App v2.7</title>
+    <title>Premium Super App v2.8</title>
     <!-- SDK MONETAG -->
     <script src='//libtl.com/sdk.js' data-zone='11267753' data-sdk='show_11267753'></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -118,7 +118,7 @@
             <button id="tab-referral" class="tab-btn" onclick="switchTab('referral-view', 'tab-referral')"><i class="fa-solid fa-users"></i>Referral</button>
             <button id="tab-socialosint" class="tab-btn" onclick="switchTab('socialosint-view', 'tab-socialosint')"><i class="fa-solid fa-user-detect"></i>OSINT</button>
             <button id="tab-scratch" class="tab-btn" onclick="switchTab('scratch-view', 'tab-scratch'); initScratchCard();"><i class="fa-solid fa-ticket"></i>Scratch</button>
-            <!-- TOMBOL TAB BARU KHUSUS ADMIN BUILDER -->
+            <!-- TOMBOL TAB BARU INSTANT APP BUILDER NYATA -->
             <button id="tab-adminbuilder" class="tab-btn" onclick="switchTab('adminbuilder-view', 'tab-adminbuilder')" style="background: linear-gradient(45deg, #ff9800, #ff5722); color:white;"><i class="fa-solid fa-hammer"></i>Builder</button>
         </div>
 
@@ -294,32 +294,45 @@
             </div>
         </div>
 
-        <!-- FITUR TAMBAHAN: ADMIN STUDIO APP & WEB BUILDER (BEBAS AKSES TANPA POTONGAN KOIN) -->
+        <!-- FITUR PEMBUAT APLIKASI INSTAN NYATA (INSTANT APP BUILDER) -->
         <div id="adminbuilder-view" class="feature-view">
-            <h2><i class="fa-solid fa-hammer"></i> Admin Studio: Real App Builder</h2>
-            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Sebagai Admin Utama, Anda bebas merakit dan mengunduh paket aplikasi Android WebView, Telegram Web App, atau PWA secara instan tanpa batasan koin.</p>
+            <h2><i class="fa-solid fa-hammer"></i> Instant App & Web Generator</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Ubah URL web atau buat aplikasi web mandiri secara instan dan langsung jadi saat ini juga!</p>
             
-            <label style="font-size: 11px; color: #00f2fe; font-weight: bold;">NAMA APLIKASI / PROYEK:</label>
-            <input type="text" id="adminAppName" placeholder="Cth: MySuperAppEngine" style="margin-top: 5px;">
+            <label style="font-size: 11px; color: #00f2fe; font-weight: bold;">NAMA APLIKASI ANDA:</label>
+            <input type="text" id="adminAppName" placeholder="Cth: TokoKu Store" style="margin-top: 5px;">
 
-            <label style="font-size: 11px; color: #00f2fe; font-weight: bold;">PILIH FORMAT OUTPUT:</label>
+            <label style="font-size: 11px; color: #00f2fe; font-weight: bold;">PILIH JENIS APLIKASI:</label>
             <select id="adminAppFormat" style="margin-top: 5px;">
-                <option value="webview">Android WebView Wrapper (Struktur Java/Gradle APK)</option>
-                <option value="pwa">Progressive Web App (Manifest & Service Worker)</option>
-                <option value="telegram">Telegram Mini App Wrapper (HTML/JS)</option>
+                <option value="webview">Aplikasi WebView / Wrapper Link URL</option>
+                <option value="landing">Landing Page / Toko Online Instan</option>
+                <option value="calculator">Aplikasi Alat / Kalkulator Pintar</option>
             </select>
 
-            <label style="font-size: 11px; color: #00f2fe; font-weight: bold;">URL WEB TARGET / HOSTING UTAMA:</label>
-            <input type="text" id="adminTargetUrl" placeholder="https://domain-anda.com" style="margin-top: 5px;">
+            <label style="font-size: 11px; color: #00f2fe; font-weight: bold;">MASUKKAN URL WEBSITE ATAU KONTEN UTAMA:</label>
+            <input type="text" id="adminTargetUrl" placeholder="https://contoh.com" style="margin-top: 5px;">
 
-            <button class="btn-action" onclick="executeRealAppBuilder()" style="background: linear-gradient(45deg, #22c55e, #16a34a); margin-top: 5px;"><i class="fa-solid fa-code"></i> Generate & Rakit Aplikasi Sekarang</button>
+            <button class="btn-action" onclick="executeRealAppBuilder()" style="background: linear-gradient(45deg, #22c55e, #16a34a); margin-top: 5px;"><i class="fa-solid fa-bolt"></i> Generate & Jalankan Aplikasi Sekarang</button>
 
-            <div id="adminBuilderResult" style="margin-top: 15px; display: none; background: rgba(0,0,0,0.5); border: 1px solid #22c55e; padding: 12px; border-radius: 12px; font-size: 11px;">
-                <p style="color: #22c55e; font-weight: bold; margin-bottom: 6px;"><i class="fa-solid fa-circle-check"></i> Paket Berhasil Disusun:</p>
-                <textarea id="adminGeneratedCode" readonly style="width: 100%; height: 90px; background: #000; color: #00f2fe; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 8px; font-family: monospace; font-size: 10px; margin-bottom: 8px;"></textarea>
-                <button class="share-btn wa" onclick="downloadAdminProjectFile()" style="width: 100%; justify-content: center; background: #22c55e; color: black; font-weight: bold;"><i class="fa-solid fa-cloud-arrow-down"></i> Unduh File Proyek (.txt / .zip)</button>
+            <div id="adminBuilderResult" style="margin-top: 15px; display: none; background: rgba(0,0,0,0.6); border: 1px solid #22c55e; padding: 15px; border-radius: 12px; text-align: center;">
+                <p style="color: #22c55e; font-weight: bold; margin-bottom: 8px;"><i class="fa-solid fa-circle-check"></i> Aplikasi Berhasil Dibuat Instan!</p>
+                <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Aplikasi Anda kini sudah aktif dan bisa diuji coba langsung atau langsung diunduh ke HP.</p>
+                
+                <div style="display: flex; gap: 8px; flex-direction: column;">
+                    <button class="btn-action" onclick="previewGeneratedApp()" style="background: linear-gradient(45deg, #00f2fe, #4facfe);"><i class="fa-solid fa-play"></i> Buka / Jalankan Aplikasi Ini</button>
+                    <button class="share-btn wa" onclick="downloadAdminProjectFile()" style="width: 100%; justify-content: center; background: #22c55e; color: black; font-weight: bold; padding: 12px; border-radius: 12px;"><i class="fa-solid fa-cloud-arrow-down"></i> Unduh File Aplikasi (.html)</button>
+                </div>
             </div>
         </div>
+    </div>
+
+    <!-- MODAL LIVE PREVIEW APLIKASI YANG DIBUAT SECARA NYATA -->
+    <div id="appPreviewModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9999; flex-direction:column; padding:15px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; background:#111; padding:10px; border-radius:10px;">
+            <h3 id="previewTitleModal" style="color:#00f2fe; font-size:14px;">Preview Aplikasi</h3>
+            <button onclick="closeAppPreview()" style="background:#ef4444; border:none; color:white; padding:6px 12px; border-radius:8px; cursor:pointer; font-weight:bold;">Tutup [X]</button>
+        </div>
+        <div id="previewContentArea" style="flex:1; background:#fff; border-radius:12px; overflow:hidden; width:100%;"></div>
     </div>
 
     <script>
@@ -459,7 +472,6 @@
             show_11267753().then(() => { shortenLinkNyata(); });
         }
 
-        // Fungsi Jembatan Downloader Publik
         function runYtDlpDownload() {
             if(coins < 2) return alert("Butuh 2 Koin untuk mengunduh media!");
             let targetUrl = document.getElementById('dlUrlInput').value.trim();
@@ -492,7 +504,7 @@
                 let txt = document.getElementById('qrText').value.trim();
                 if(!txt) return alert("Masukkan teks!");
                 let img = document.getElementById('qrResult');
-                img.src = "https://api.qrserver.com/v1/create-qr-code/?sizata=" + encodeURIComponent(txt);
+                img.src = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + encodeURIComponent(txt);
                 img.style.display = 'block';
             });
         }
@@ -846,37 +858,58 @@
             alert("Saldo virtual trading telah direset ke $10,000.00");
         }
 
-        /* LOGIKA PEMBUATAN APLIKASI INSTAN KHUSUS ADMIN */
-        let adminGeneratedProjectCode = "";
+        /* LOGIKA NYATA PEMBUAT APLIKASI INSTAN (INSTANT APP BUILDER) */
+        let compiledAppHtmlCode = "";
+
         function executeRealAppBuilder() {
             let appName = document.getElementById('adminAppName').value.trim();
             let appFormat = document.getElementById('adminAppFormat').value;
             let targetUrl = document.getElementById('adminTargetUrl').value.trim();
 
-            if (!appName || !targetUrl) {
-                return alert("Harap masukkan Nama Aplikasi dan URL Web Target secara lengkap!");
+            if (!appName) {
+                return alert("Harap masukkan Nama Aplikasi Anda terlebih dahulu!");
+            }
+
+            // Generate Aplikasi secara nyata berdasarkan pilihan pengguna
+            if (appFormat === 'webview') {
+                if (!targetUrl.startsWith('http')) {
+                    return alert("Untuk jenis WebView, masukkan URL website yang valid dengan awalan https://");
+                }
+                compiledAppHtmlCode = `<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${appName}</title></head><body style="margin:0;overflow:hidden;background:#000;"><iframe src="${targetUrl}" style="width:100vw;height:100vh;border:none;"></iframe></body></html>`;
+            } else if (appFormat === 'landing') {
+                compiledAppHtmlCode = `<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${appName}</title><style>body{font-family:sans-serif;background:#0f172a;color:#fff;text-align:center;padding:40px;}h1{color:#38bdf8;}.btn{background:#22c55e;color:#fff;padding:12px 24px;text-decoration:none;border-radius:8px;display:inline-block;margin-top:20px;font-weight:bold;}</style></head><body><h1>Selamat Datang di ${appName}</h1><p>Ini adalah halaman web/aplikasi instan Anda yang siap digunakan secara nyata.</p><a class="btn" href="${targetUrl || '#'}" target="_blank">Kunjungi Tautan Utama</a></body></html>`;
+            } else {
+                compiledAppHtmlCode = `<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${appName} - Kalkulator</title><style>body{font-family:sans-serif;background:#1e293b;color:#fff;display:flex;justify-content:center;align-items:center;height:100vh;margin:0;}.box{background:#0f172a;padding:20px;border-radius:12px;width:300px;text-align:center;}input,button{width:100%;padding:10px;margin:8px 0;border-radius:8px;border:none;}input{background:#334155;color:#fff;}button{background:#00f2fe;font-weight:bold;cursor:pointer;}</style></head><body><div class="box"><h2>${appName}</h2><input type="number" id="n1" placeholder="Angka 1"><input type="number" id="n2" placeholder="Angka 2"><button onclick="calc()">Jumlahkan (+)</button><h3 id="res">Hasil: 0</h3></div><script>function calc(){let a=parseFloat(document.getElementById('n1').value)||0;let b=parseFloat(document.getElementById('n2').value)||0;document.getElementById('res').innerText='Hasil: '+(a+b);}<\/script></body></html>`;
             }
 
             document.getElementById('adminBuilderResult').style.display = 'block';
+            document.getElementById('previewTitleModal').innerText = "Preview: " + appName;
+            alert("Aplikasi berhasil dirakit secara nyata dan instan! Anda bisa langsung menjalankan atau mengunduhnya.");
+        }
 
-            if (appFormat === 'webview') {
-                adminGeneratedProjectCode = `/* Android WebView Wrapper Source Code for ${appName} */\n/* Target URL: ${targetUrl} */\n\npackage com.admin.appbuilder;\n\nimport android.os.Bundle;\nimport android.webkit.WebView;\nimport android.webkit.WebViewClient;\nimport androidx.appcompat.app.AppCompatActivity;\n\npublic class MainActivity extends AppCompatActivity {\n    @Override\n    protected void onCreate(Bundle savedInstanceState) {\n        super.onCreate(savedInstanceState);\n        WebView myWebView = new WebView(this);\n        myWebView.getSettings().setJavaScriptEnabled(true);\n        myWebView.setWebViewClient(new WebViewClient());\n        myWebView.loadUrl("${targetUrl}");\n        setContentView(myWebView);\n    }\n}`;
-            } else if (appFormat === 'telegram') {
-                adminGeneratedProjectCode = `<!-- Telegram Mini App Template for ${appName} -->\n<!DOCTYPE html>\n<html>\n<head>\n    <meta charset="UTF-8">\n    <title>${appName}</title>\n    <script src="https://telegram.org/js/telegram-web-app.js"><\/script>\n</head>\n<body style="margin:0; background:#000;">\n    <iframe src="${targetUrl}" style="width:100vw; height:100vh; border:none;"></iframe>\n</body>\n</html>`;
-            } else {
-                adminGeneratedProjectCode = `/* PWA Manifest & Service Worker Config for ${appName} */\n{\n  "name": "${appName}",\n  "short_name": "${appName}",\n  "start_url": "${targetUrl}",\n  "display": "standalone",\n  "background_color": "#101026",\n  "theme_color": "#00f2fe"\n}`;
-            }
+        function previewGeneratedApp() {
+            if (!compiledAppHtmlCode) return alert("Belum ada aplikasi yang digenerate!");
+            let previewArea = document.getElementById('previewContentArea');
+            previewArea.innerHTML = `<iframe id="liveAppFrame" style="width:100%; height:100%; border:none;"></iframe>`;
+            document.getElementById('appPreviewModal').style.display = 'flex';
+            
+            let frameDoc = document.getElementById('liveAppFrame').contentWindow.document;
+            frameDoc.open();
+            frameDoc.write(compiledAppHtmlCode);
+            frameDoc.close();
+        }
 
-            document.getElementById('adminGeneratedCode').value = adminGeneratedProjectCode;
-            alert("Paket aplikasi berhasil dirakit secara nyata! Anda bebas mengunduhnya sebagai administrator.");
+        function closeAppPreview() {
+            document.getElementById('appPreviewModal').style.display = 'none';
+            document.getElementById('previewContentArea').innerHTML = "";
         }
 
         function downloadAdminProjectFile() {
-            if (!adminGeneratedProjectCode) return alert("Belum ada file proyek yang dibuat!");
-            let blob = new Blob([adminGeneratedProjectCode], { type: 'text/plain' });
+            if (!compiledAppHtmlCode) return alert("Belum ada aplikasi yang dibuat!");
+            let blob = new Blob([compiledAppHtmlCode], { type: 'text/html' });
             let link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
-            link.download = `AppBuilder_${Date.now()}.txt`;
+            link.download = `Aplikasi_${Date.now()}.html`;
             link.click();
         }
 
