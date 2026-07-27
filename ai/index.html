@@ -77,7 +77,7 @@
 
     <!-- Indikator Status Koneksi API Live -->
     <div id="apiStatusBanner" style="width: 100%; max-width: 500px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); padding: 8px 12px; border-radius: 12px; margin-bottom: 12px; font-size: 11px; display: flex; align-items: center; justify-content: space-between; color: #22c55e;">
-        <span><i class="fa-solid fa-circle-dot" style="animation: pulse 1.5s infinite;"></i> Status Jaringan & API: <b>Terhubung Normal</b></span>
+        <span><i class="fa-solid fa-circle-dot"></i> Status Jaringan & API: <b>Terhubung Normal</b></span>
         <span id="liveClock" style="color: #a0a0ba;">--:--:--</span>
     </div>
 
@@ -118,8 +118,6 @@
             <button id="tab-referral" class="tab-btn" onclick="switchTab('referral-view', 'tab-referral')"><i class="fa-solid fa-users"></i>Referral</button>
             <button id="tab-socialosint" class="tab-btn" onclick="switchTab('socialosint-view', 'tab-socialosint')"><i class="fa-solid fa-user-detect"></i>OSINT</button>
             <button id="tab-scratch" class="tab-btn" onclick="switchTab('scratch-view', 'tab-scratch'); initScratchCard();"><i class="fa-solid fa-ticket"></i>Scratch</button>
-            <!-- TAB BARU APP BUILDER NYATA -->
-            <button id="tab-builder" class="tab-btn" onclick="switchTab('builder-view', 'tab-builder')"><i class="fa-solid fa-hammer"></i>App Builder</button>
         </div>
 
         <div id="ai-view" class="feature-view active">
@@ -140,49 +138,7 @@
                 <button onclick="resetDemoBalance()" style="background: #ef4444; border: none; padding: 6px 10px; border-radius: 8px; color: white; font-size: 10px; cursor: pointer;">Reset Saldo</button>
             </div>
 
-            <div id="cryptoMarketList" style="max-height: 250px; overflow-y: auto; padding-right: 5px;">
-                <script>
-                    const cryptoList20 = [
-                        {id: 'bitcoin', symbol: 'BTC', name: 'Bitcoin'},
-                        {id: 'ethereum', symbol: 'ETH', name: 'Ethereum'},
-                        {id: 'the-open-network', symbol: 'TON', name: 'Toncoin'},
-                        {id: 'binancecoin', symbol: 'BNB', name: 'Binance Coin'},
-                        {id: 'ripple', symbol: 'XRP', name: 'XRP'},
-                        {id: 'cardano', symbol: 'ADA', name: 'Cardano'},
-                        {id: 'dogecoin', symbol: 'DOGE', name: 'Dogecoin'},
-                        {id: 'solana', symbol: 'SOL', name: 'Solana'},
-                        {id: 'polkadot', symbol: 'DOT', name: 'Polkadot'},
-                        {id: 'polygon-ecosystem-token', symbol: 'POL', name: 'Polygon'},
-                        {id: 'tron', symbol: 'TRX', name: 'Tron'},
-                        {id: 'chainlink', symbol: 'LINK', name: 'Chainlink'},
-                        {id: 'uniswap', symbol: 'UNI', name: 'Uniswap'},
-                        {id: 'avalanche-2', symbol: 'AVAX', name: 'Avalanche'},
-                        {id: 'shiba-inu', symbol: 'SHIB', name: 'Shiba Inu'},
-                        {id: 'litecoin', symbol: 'LTC', name: 'Litecoin'},
-                        {id: 'stellar', symbol: 'XLM', name: 'Stellar'},
-                        {id: 'monero', symbol: 'XMR', name: 'Monero'},
-                        {id: 'cosmos', symbol: 'ATOM', name: 'Cosmos'},
-                        {id: 'near', symbol: 'NEAR', name: 'NEAR Protocol'}
-                    ];
-                    cryptoList20.forEach(c => {
-                        document.write(`
-                            <div class="trade-card">
-                                <div class="trade-info">
-                                    <h4>${c.name} (${c.symbol})</h4>
-                                    <p>Live Price...</p>
-                                </div>
-                                <div>
-                                    <span class="trade-price" id="price-${c.id}">$0.00</span>
-                                </div>
-                                <div class="trade-actions">
-                                    <button class="btn-buy" onclick="openTrade('${c.id}', '${c.symbol}', 'buy')">Beli</button>
-                                    <button class="btn-sell" onclick="openTrade('${c.id}', '${c.symbol}', 'sell')">Jual</button>
-                                </div>
-                            </div>
-                        `);
-                    });
-                </script>
-            </div>
+            <div id="cryptoMarketList" style="max-height: 250px; overflow-y: auto; padding-right: 5px;"></div>
 
             <div class="portfolio-box">
                 <p style="font-weight: bold; margin-bottom: 6px; color: #00f2fe;"><i class="fa-solid fa-wallet"></i> Posisi Terbuka Anda:</p>
@@ -205,7 +161,7 @@
             </div>
         </div>
 
-        <!-- FITUR BARU SESUAI SCREENSHOT: DOWNLOADER LOKAL YTDLP (PORT 8080) -->
+        <!-- DOWNLOADER -->
         <div id="dl-view" class="feature-view">
             <h2><i class="fa-solid fa-download"></i> Downloader Tanpa Watermark (2 Koin)</h2>
             <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Didukung engine <b>yt-dlp</b> via Server Lokal Termux Port 8080.</p>
@@ -280,7 +236,7 @@
             </div>
         </div>
 
-        <!-- KUPON GOSOK BERKAH (SCRATCH CARD) -->
+        <!-- KUPON GOSOK BERKAH -->
         <div id="scratch-view" class="feature-view">
             <h2><i class="fa-solid fa-ticket"></i> Kupon Gosok Berkah (Modal: 10 Koin)</h2>
             <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Gosok area abu-abu di bawah untuk menguji peruntungan Anda!</p>
@@ -293,33 +249,58 @@
                 <div class="scratch-notif" id="notifBox">Klik tombol di atas untuk memulai kupon gosok!</div>
             </div>
         </div>
-
-        <!-- FITUR BARU: APP BUILDER REAL & GENERATE APLIKASI RIL -->
-        <div id="builder-view" class="feature-view">
-            <h2><i class="fa-solid fa-hammer"></i> Real App Builder (Modal: 15 Koin)</h2>
-            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Buat aplikasi web mandiri Anda sendiri secara instan! Masukkan detail aplikasi di bawah ini, sistem akan merakit kode sumber dan menghasilkan file aplikasi ril (.html) yang siap diunduh dan dijalankan.</p>
-            
-            <input type="text" id="builderAppName" placeholder="Nama Aplikasi Anda (Cth: TokoKu Store)...">
-            <input type="text" id="builderAppDesc" placeholder="Deskripsi Singkat / Slogan Aplikasi...">
-            <select id="builderAppTemplate">
-                <option value="landing">Template: Landing Page & Katalog Produk</option>
-                <option value="tools">Template: Utilitas Kalkulator & Konversi</option>
-                <option value="notes">Template: Catatan & To-Do List Pribadi</option>
-            </select>
-            
-            <button class="btn-action" onclick="generateRealApp()" style="background: linear-gradient(45deg, #10b981, #059669);"><i class="fa-solid fa-code"></i> Build & Generate Aplikasi Ril</button>
-            
-            <div class="result-box" id="builderResultBox" style="text-align: left;">
-                <p style="color: #22c55e; font-weight: bold; margin-bottom: 6px;"><i class="fa-solid fa-circle-check"></i> Aplikasi Berhasil Dibangun!</p>
-                <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;" id="builderSuccessInfo">File siap diunduh ke perangkat Anda.</p>
-                <div class="share-group">
-                    <button onclick="downloadBuiltApp()" class="share-btn" style="background: #25d366; width: 100%; justify-content: center;"><i class="fa-solid fa-download"></i> Unduh File Aplikasi (.html)</button>
-                </div>
-            </div>
-        </div>
     </div>
 
     <script>
+        // Render daftar crypto market secara bersih tanpa document.write
+        const cryptoList20 = [
+            {id: 'bitcoin', symbol: 'BTC', name: 'Bitcoin'},
+            {id: 'ethereum', symbol: 'ETH', name: 'Ethereum'},
+            {id: 'the-open-network', symbol: 'TON', name: 'Toncoin'},
+            {id: 'binancecoin', symbol: 'BNB', name: 'Binance Coin'},
+            {id: 'ripple', symbol: 'XRP', name: 'XRP'},
+            {id: 'cardano', symbol: 'ADA', name: 'Cardano'},
+            {id: 'dogecoin', symbol: 'DOGE', name: 'Dogecoin'},
+            {id: 'solana', symbol: 'SOL', name: 'Solana'},
+            {id: 'polkadot', symbol: 'DOT', name: 'Polkadot'},
+            {id: 'polygon-ecosystem-token', symbol: 'POL', name: 'Polygon'},
+            {id: 'tron', symbol: 'TRX', name: 'Tron'},
+            {id: 'chainlink', symbol: 'LINK', name: 'Chainlink'},
+            {id: 'uniswap', symbol: 'UNI', name: 'Uniswap'},
+            {id: 'avalanche-2', symbol: 'AVAX', name: 'Avalanche'},
+            {id: 'shiba-inu', symbol: 'SHIB', name: 'Shiba Inu'},
+            {id: 'litecoin', symbol: 'LTC', name: 'Litecoin'},
+            {id: 'stellar', symbol: 'XLM', name: 'Stellar'},
+            {id: 'monero', symbol: 'XMR', name: 'Monero'},
+            {id: 'cosmos', symbol: 'ATOM', name: 'Cosmos'},
+            {id: 'near', symbol: 'NEAR', name: 'NEAR Protocol'}
+        ];
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const marketListEl = document.getElementById('cryptoMarketList');
+            if(marketListEl) {
+                let htmlContent = "";
+                cryptoList20.forEach(c => {
+                    htmlContent += `
+                        <div class="trade-card">
+                            <div class="trade-info">
+                                <h4>${c.name} (${c.symbol})</h4>
+                                <p>Live Price...</p>
+                            </div>
+                            <div>
+                                <span class="trade-price" id="price-${c.id}">$0.00</span>
+                            </div>
+                            <div class="trade-actions">
+                                <button class="btn-buy" onclick="openTrade('${c.id}', '${c.symbol}', 'buy')">Beli</button>
+                                <button class="btn-sell" onclick="openTrade('${c.id}', '${c.symbol}', 'sell')">Jual</button>
+                            </div>
+                        </div>
+                    `;
+                });
+                marketListEl.innerHTML = htmlContent;
+            }
+        });
+
         // Sistem Multi-Bahasa
         const userLang = navigator.language || navigator.userLanguage;
         const translations = {
@@ -456,7 +437,6 @@
             show_11267753().then(() => { shortenLinkNyata(); });
         }
 
-        // Fungsi Jembatan Downloader Publik
         function runYtDlpDownload() {
             if(coins < 2) return alert("Butuh 2 Koin untuk mengunduh media!");
             let targetUrl = document.getElementById('dlUrlInput').value.trim();
@@ -489,7 +469,7 @@
                 let txt = document.getElementById('qrText').value.trim();
                 if(!txt) return alert("Masukkan teks!");
                 let img = document.getElementById('qrResult');
-                img.src = "https://api.qrserver.com/v1/create-qr-code/?sizata=" + encodeURIComponent(txt);
+                img.src = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + encodeURIComponent(txt);
                 img.style.display = 'block';
             });
         }
@@ -604,6 +584,7 @@
             cb.scrollTop = cb.scrollHeight;
         }
 
+        let linkPendekGlobal = "";
         async function shortenLinkNyata() {
             let longUrl = document.getElementById('longUrl').value.trim();
             if (longUrl === "") return;
@@ -761,108 +742,16 @@
             }
         }
 
-        /* LOGIKA APP BUILDER NYATA UNTUK MENGHASILKAN APLIKASI RIL */
-        let generatedAppFileContent = "";
-        let generatedAppFileName = "my-app.html";
-
-        function generateRealApp() {
-            if (coins < 15) {
-                alert("Butuh 15 Koin untuk menggunakan Real App Builder!");
-                return;
-            }
-
-            let appName = document.getElementById('builderAppName').value.trim();
-            let appDesc = document.getElementById('builderAppDesc').value.trim();
-            let templateType = document.getElementById('builderAppTemplate').value;
-
-            if (!appName) {
-                alert("Silakan masukkan Nama Aplikasi Anda terlebih dahulu!");
-                return;
-            }
-
-            show_11267753().then(() => {
-                coins -= 15;
-                updateCoinDisplay();
-
-                generatedAppFileName = appName.toLowerCase().replace(/[^a-z0-9]/g, '_') + ".html";
-
-                // Membangun template kode ril aplikasi yang fungsional
-                generatedAppFileContent = `<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${appName}</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * { box-sizing: border-box; margin:0; padding:0; font-family:'Poppins',sans-serif; }
-        body { background: #0f172a; color: #f8fafc; padding: 20px; display: flex; justify-content: center; min-height: 100vh; }
-        .container { width: 100%; max-width: 480px; background: #1e293b; padding: 24px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); border: 1px solid #334155; }
-        h1 { color: #38bdf8; font-size: 22px; margin-bottom: 8px; text-align: center; }
-        p.desc { text-align: center; color: #94a3b8; font-size: 13px; margin-bottom: 20px; }
-        .card { background: #0f172a; padding: 16px; border-radius: 12px; margin-bottom: 14px; border: 1px solid #334155; }
-        input, button { width: 100%; padding: 12px; border-radius: 8px; border: none; font-size: 14px; margin-top: 8px; outline: none; }
-        input { background: #1e293b; color: #fff; border: 1px solid #475569; }
-        button { background: #38bdf8; color: #0f172a; font-weight: bold; cursor: pointer; transition: 0.2s; }
-        button:hover { background: #0ea5e9; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        <h1><i class="fa-solid fa-mobile-screen-button"></i> ${appName}</h1>
-        <p class="desc">${appDesc || 'Aplikasi mandiri buatanku sendiri.'}</p>
-        
-        <div class="card">
-            <h3><i class="fa-solid fa-star" style="color:#fbbf24;"></i> Selamat Datang!</h3>
-            <p style="font-size: 12px; color: #cbd5e1; margin-top: 6px;">Aplikasi ini berhasil dirakit secara nyata dan siap digunakan di perangkat apa pun.</p>
-        </div>
-
-        <div class="card">
-            <h4 style="font-size: 14px; color: #38bdf8; margin-bottom: 6px;">Interaksi Pengguna</h4>
-            <input type="text" id="userInput" placeholder="Ketik sesuatu di sini...">
-            <button onclick="handleAction()">Kirim / Simpan</button>
-            <p id="outputResult" style="font-size: 12px; color: #22c55e; margin-top: 10px;"></p>
-        </div>
-    </div>
-    <script>
-        function handleAction() {
-            let val = document.getElementById('userInput').value;
-            if(!val) return alert('Mohon isi teks terlebih dahulu!');
-            document.getElementById('outputResultinnerText' || 'outputResult').innerText = "Berhasil diproses: " + val;
-            alert('Aksi berhasil dijalankan pada aplikasi ${appName}!');
-        }
-    </script>
-</body>
-</html>`;
-
-                document.getElementById('builderSuccessInfo').innerText = `File ril: ${generatedAppFileName} berhasil dikompilasi!`;
-                document.getElementById('builderResultBox').style.display = 'block';
-                alert("Sukses! Aplikasi ril Anda telah berhasil dibangun.");
-            });
-        }
-
-        function downloadBuiltApp() {
-            if (!generatedAppFileContent) {
-                alert("Belum ada aplikasi yang dibangun!");
-                return;
-            }
-            let blob = new Blob([generatedAppFileContent], { type: 'text/html' });
-            let link = document.createElement('a');
-            link.href = URL.createObjectURL(blob);
-            link.download = generatedAppFileName;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-        }
-
         /* LOGIKA DEMO TRADING REAL-TIME */
         let demoBalance = parseFloat(localStorage.getItem('demo_balance')) || 10000.00;
         let activeTrades = JSON.parse(localStorage.getItem('active_trades')) || [];
         let livePrices = {};
 
         function updateDemoUI() {
-            document.getElementById('virtualBalance').innerText = '$' + demoBalance.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            const virtualBalEl = document.getElementById('virtualBalance');
+            if(virtualBalEl) {
+                virtualBalEl.innerText = '$' + demoBalance.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            }
             localStorage.setItem('demo_balance', demoBalance);
             localStorage.setItem('active_trades', JSON.stringify(activeTrades));
             
@@ -881,7 +770,8 @@
                     </div>`;
                 });
             }
-            document.getElementById('activeTradesList').innerHTML = tradesHtml;
+            const activeTradesEl = document.getElementById('activeTradesList');
+            if(activeTradesEl) activeTradesEl.innerHTML = tradesHtml;
         }
 
         function fetchLiveCryptoPrices() {
