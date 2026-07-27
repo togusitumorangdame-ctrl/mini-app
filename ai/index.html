@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Super App v2.7</title>
+    <title>Premium Super App v2.8</title>
     <!-- SDK MONETAG -->
     <script src='//libtl.com/sdk.js' data-zone='11267753' data-sdk='show_11267753'></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -25,7 +25,7 @@
         
         .app-card { background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 25px; width: 100%; max-width: 500px; padding: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
         .nav-tabs { display: flex; justify-content: space-between; margin-bottom: 20px; background: rgba(0,0,0,0.3); padding: 5px; border-radius: 50px; gap: 4px; flex-wrap: wrap; }
-        .tab-btn { background: none; border: none; color: #a0a0ba; padding: 8px 4px; font-size: 9px; font-weight: 600; cursor: pointer; border-radius: 50px; flex: 1; text-align: center; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 45px; }
+        .tab-btn { background: none; border: none; color: #a0a0ba; padding: 8px 4px; font-size: 8.5px; font-weight: 600; cursor: pointer; border-radius: 50px; flex: 1; text-align: center; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 40px; }
         .tab-btn i { font-size: 11px; }
         .tab-btn.active { background: linear-gradient(45deg, #00f2fe, #4facfe); color: white; box-shadow: 0 4px 12px rgba(0,242,254,0.3); }
         
@@ -33,8 +33,8 @@
         .feature-view.active { display: block; }
         h2 { font-size: 16px; color: #00f2fe; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
         
-        input, select { width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 12px; color: white; font-size: 13px; margin-bottom: 12px; outline: none; transition: 0.2s; }
-        input:focus, select:focus { border-color: #00f2fe; }
+        input, select, textarea { width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 12px; color: white; font-size: 13px; margin-bottom: 12px; outline: none; transition: 0.2s; }
+        input:focus, select:focus, textarea:focus { border-color: #00f2fe; }
         .btn-action { width: 100%; background: linear-gradient(45deg, #00f2fe, #4facfe); color: white; border: none; padding: 12px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 13px; box-shadow: 0 4px 15px rgba(0,242,254,0.2); }
         
         .chat-box { height: 220px; background: rgba(0,0,0,0.4); border-radius: 14px; padding: 12px; overflow-y: auto; margin-bottom: 12px; font-size: 12px; border: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; gap: 8px; }
@@ -51,7 +51,6 @@
         
         #aiImageResult, #qrResult { width: 100%; border-radius: 14px; margin-top: 15px; display: none; border: 2px solid rgba(0,242,254,0.2); }
 
-        /* Styling Demo Trading Real */
         .trade-card { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
         .trade-info h4 { font-size: 13px; color: #fff; }
         .trade-info p { font-size: 11px; color: #a0a0ba; }
@@ -61,7 +60,6 @@
         .btn-sell { background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 11px; }
         .portfolio-box { background: rgba(0, 242, 254, 0.05); border: 1px solid rgba(0, 242, 254, 0.2); border-radius: 14px; padding: 12px; margin-top: 15px; font-size: 12px; }
 
-        /* Styling Scratch Card */
         .scratch-container { display: flex; flex-direction: column; align-items: center; }
         .card-frame { position: relative; width: 260px; height: 110px; margin: 10px auto 15px auto; border-radius: 12px; overflow: hidden; background: #222; border: 2px dashed #00f2fe; display: flex; align-items: center; justify-content: center; }
         .hidden-prize { font-size: 22px; font-weight: bold; letter-spacing: 5px; }
@@ -75,7 +73,6 @@
         (function(){var e=window,n="02c4883f05470762419409893976378c",r=[["siteId",392805],["minBid",0],["popundersPerIP",0],["delayBetween",0],["default",0],["defaultPerDay",0],["topmost",0]],c=document,a=c.createElement("script");a.type="text/javascript",a.async=!0,a.src="https://a.hilltopads.com/gz.js",c.body&&c.body.appendChild(a)})()
     </script>
 
-    <!-- Indikator Status Koneksi API Live -->
     <div id="apiStatusBanner" style="width: 100%; max-width: 500px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); padding: 8px 12px; border-radius: 12px; margin-bottom: 12px; font-size: 11px; display: flex; align-items: center; justify-content: space-between; color: #22c55e;">
         <span><i class="fa-solid fa-circle-dot"></i> Status Jaringan & API: <b>Terhubung Normal</b></span>
         <span id="liveClock" style="color: #a0a0ba;">--:--:--</span>
@@ -112,6 +109,7 @@
             <button id="tab-dl" class="tab-btn" onclick="switchTab('dl-view', 'tab-dl')"><i class="fa-solid fa-download"></i>Downloader</button>
             <button id="tab-img" class="tab-btn" onclick="switchTab('img-view', 'tab-img')"><i class="fa-solid fa-image"></i>AI Image</button>
             <button id="tab-qr" class="tab-btn" onclick="switchTab('qr-view', 'tab-qr')"><i class="fa-solid fa-qrcode"></i>QR Code</button>
+            <button id="tab-appbuilder" class="tab-btn" onclick="switchTab('appbuilder-view', 'tab-appbuilder')"><i class="fa-solid fa-hammer"></i>Builder</button>
             <button id="tab-scam" class="tab-btn" onclick="switchTab('scam-view', 'tab-scam')"><i class="fa-solid fa-shield-halved"></i>Shield</button>
             <button id="tab-webcam" class="tab-btn" onclick="switchTab('webcam-view', 'tab-webcam')"><i class="fa-solid fa-camera"></i>Webcams</button>
             <button id="tab-support" class="tab-btn" onclick="switchTab('support-view', 'tab-support')"><i class="fa-solid fa-headset"></i>Support</button>
@@ -127,7 +125,6 @@
             <button class="btn-action" id="aiBtn" onclick="sendToAINyata()"><i class="fa-solid fa-paper-plane"></i> Kirim ke AI</button>
         </div>
 
-        <!-- FITUR DEMO TRADING REAL-TIME -->
         <div id="trade-view" class="feature-view">
             <h2><i class="fa-solid fa-chart-line"></i> Demo Trading Crypto Live (20 Koin)</h2>
             <div style="background: rgba(0,0,0,0.4); padding: 12px; border-radius: 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
@@ -137,9 +134,7 @@
                 </div>
                 <button onclick="resetDemoBalance()" style="background: #ef4444; border: none; padding: 6px 10px; border-radius: 8px; color: white; font-size: 10px; cursor: pointer;">Reset Saldo</button>
             </div>
-
             <div id="cryptoMarketList" style="max-height: 250px; overflow-y: auto; padding-right: 5px;"></div>
-
             <div class="portfolio-box">
                 <p style="font-weight: bold; margin-bottom: 6px; color: #00f2fe;"><i class="fa-solid fa-wallet"></i> Posisi Terbuka Anda:</p>
                 <div id="activeTradesList" style="font-size: 11px; color: #a0a0ba;">Belum ada posisi trading aktif.</div>
@@ -161,7 +156,6 @@
             </div>
         </div>
 
-        <!-- DOWNLOADER -->
         <div id="dl-view" class="feature-view">
             <h2><i class="fa-solid fa-download"></i> Downloader Tanpa Watermark (2 Koin)</h2>
             <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Didukung engine <b>yt-dlp</b> via Server Lokal Termux Port 8080.</p>
@@ -185,6 +179,20 @@
             <input type="text" id="qrText" placeholder="Masukkan URL atau teks untuk QR...">
             <button class="btn-action" onclick="processQrRequest()"><i class="fa-solid fa-qrcode"></i> Buat QR Code</button>
             <img id="qrResult" src="" alt="Hasil QR Code">
+        </div>
+
+        <!-- FITUR BARU: APP BUILDER -->
+        <div id="appbuilder-view" class="feature-view">
+            <h2><i class="fa-solid fa-hammer"></i> AI App Builder (15 Koin)</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Buat aplikasi web instan berdasarkan deskripsi Anda secara otomatis!</p>
+            <input type="text" id="appNameInput" placeholder="Nama Aplikasi (cth: Kalkulator Crypto)">
+            <textarea id="appDescInput" rows="3" placeholder="Jelaskan fitur & fungsi aplikasi yang ingin dibuat..."></textarea>
+            <button class="btn-action" onclick="runAppBuilder()"><i class="fa-solid fa-code"></i> Buat Aplikasi Sekarang</button>
+            <div class="result-box" id="appBuilderResultBox" style="text-align: left;">
+                <p style="color: #00f2fe; font-weight: bold; margin-bottom: 6px;"><i class="fa-solid fa-circle-check"></i> Kode Sumber Aplikasi:</p>
+                <textarea id="generatedAppCode" rows="6" readonly style="font-size: 10px; font-family: monospace; background: #000; color: #00f2fe; width: 100%; border-radius: 8px; padding: 8px; border: 1px solid rgba(255,255,255,0.1);"></textarea>
+                <button class="share-btn copy" style="width: 100%; margin-top: 8px; justify-content: center;" onclick="copyAppCode()"><i class="fa-solid fa-copy"></i> Salin Kode Aplikasi</button>
+            </div>
         </div>
 
         <div id="scam-view" class="feature-view">
@@ -236,7 +244,6 @@
             </div>
         </div>
 
-        <!-- KUPON GOSOK BERKAH -->
         <div id="scratch-view" class="feature-view">
             <h2><i class="fa-solid fa-ticket"></i> Kupon Gosok Berkah (Modal: 10 Koin)</h2>
             <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Gosok area abu-abu di bawah untuk menguji peruntungan Anda!</p>
@@ -252,7 +259,6 @@
     </div>
 
     <script>
-        // Render daftar crypto market secara bersih tanpa document.write
         const cryptoList20 = [
             {id: 'bitcoin', symbol: 'BTC', name: 'Bitcoin'},
             {id: 'ethereum', symbol: 'ETH', name: 'Ethereum'},
@@ -301,7 +307,6 @@
             }
         });
 
-        // Sistem Multi-Bahasa
         const userLang = navigator.language || navigator.userLanguage;
         const translations = {
             'id': {
@@ -331,13 +336,11 @@
         updateCoinDisplay();
         checkDailyButtonStatus();
 
-        // Update Jam Real-Time untuk Banner Status
         setInterval(() => {
             const now = new Date();
             document.getElementById('liveClock').innerText = now.toLocaleTimeString();
         }, 1000);
 
-        // Sistem Referral Anonim
         window.addEventListener('DOMContentLoaded', () => {
             const urlParams = new URLSearchParams(window.location.search);
             const refCode = urlParams.get('ref');
@@ -450,10 +453,8 @@
             box.style.display = 'block';
             status.innerHTML = `<span style="color:#22c55e;">[✓] Mengarahkan ke penyedia unduhan resmi...</span>`;
 
-            let downloadServiceUrl = "https://ssstik.io/id?url=" + encodeURIComponent(targetUrl);
-
             setTimeout(() => {
-                window.open(downloadServiceUrl, '_blank');
+                window.open("https://ssstik.io/id?url=" + encodeURIComponent(targetUrl), '_blank');
             }, 1000);
         }
 
@@ -473,7 +474,32 @@
                 img.style.display = 'block';
             });
         }
-        
+
+        // FUNGSI UTAMA APP BUILDER
+        function runAppBuilder() {
+            if(coins < 15) return alert("Butuh 15 Koin untuk membuat aplikasi instan!");
+            let appName = document.getElementById('appNameInput').value.trim();
+            let appDesc = document.getElementById('appDescInput').value.trim();
+            if(!appName || !appDesc) return alert("Harap isi Nama dan Deskripsi Aplikasi!");
+
+            show_11267753().then(() => {
+                coins -= 15;
+                updateCoinDisplay();
+
+                let generatedCode = `<!DOCTYPE html>\n<html lang="id">\n<head>\n    <meta charset="UTF-8">\n    <title>${appName}</title>\n    <style>body{background:#111;color:#fff;font-family:sans-serif;text-align:center;padding:50px;}</style>\n</head>\n<body>\n    <h1>${appName}</h1>\n    <p>Deskripsi: ${appDesc}</p>\n    <p style="color:#00f2fe;">Dibuat otomatis menggunakan Super App Builder.</p>\n</body>\n</html>`;
+
+                document.getElementById('generatedAppCode').value = generatedCode;
+                document.getElementById('appBuilderResultBox').style.display = 'block';
+                alert("Berhasil! Aplikasi instan Anda telah dibuat.");
+            });
+        }
+
+        function copyAppCode() {
+            let codeBox = document.getElementById('generatedAppCode');
+            navigator.clipboard.writeText(codeBox.value);
+            alert("Kode aplikasi berhasil disalin!");
+        }
+
         function processWeatherMap() {
             if(coins < 5) return alert("Butuh 5 koin untuk fitur ini!");
             show_11267753().then(() => {
@@ -495,7 +521,6 @@
                 if(!loc) return alert("Masukkan nama lokasi!");
 
                 let cctvUrl = `https://www.windy.com/?webcams,${encodeURIComponent(loc)},detail=true`;
-                
                 if (window.Telegram && window.Telegram.WebApp) {
                     window.Telegram.WebApp.openLink(cctvUrl);
                 } else {
@@ -537,16 +562,12 @@
                     ];
 
                     let htmlOutput = `<div style="margin-bottom: 8px; color: #22c55e;">[✓] Target Username: <b>@${username}</b></div>`;
-                    htmlOutput += `<div style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Daftar tautan investigasi profil publik yang ditemukan:</div>`;
-
                     platforms.forEach(p => {
                         htmlOutput += `<div style="background: rgba(255,255,255,0.03); padding: 6px 10px; border-radius: 6px; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center;">` +
                                       `<span><b>${p.name}</b></span>` +
                                       `<a href="${p.url}" target="_blank" style="color: #00f2fe; text-decoration: none; font-size: 11px;"><i class="fa-solid fa-external-link-alt"></i> Buka Profil ↗</a>` +
                                       `</div>`;
                     });
-
-                    htmlOutput += `<br><span style="font-size: 10px; color: #a0a0ba;">*Klik tombol buka profil untuk memverifikasi eksistensi akun secara langsung di tab baru browser.</span>`;
                     list.innerHTML = htmlOutput;
                 }, 1200);
             });
@@ -625,7 +646,6 @@
 
         function salinTeksLink() { navigator.clipboard.writeText(linkPendekGlobal); alert("Link disalin!"); }
 
-        /* LOGIKA KUPON GOSOK (SCRATCH CARD) */
         let canvasScratch, ctxScratch, prizeTextEl, notifBoxEl;
         let isDrawingScratch = false;
         let sudahDigosok = false;
@@ -742,7 +762,6 @@
             }
         }
 
-        /* LOGIKA DEMO TRADING REAL-TIME */
         let demoBalance = parseFloat(localStorage.getItem('demo_balance')) || 10000.00;
         let activeTrades = JSON.parse(localStorage.getItem('active_trades')) || [];
         let livePrices = {};
@@ -799,7 +818,7 @@
         }
 
         function openTrade(coinId, symbol, type) {
-            if(coins < 20) return alert(lang === 'id' ? "Butuh 20 Koin untuk membuka posisi trading!" : "Need 20 Coins to open a trade position!");
+            if(coins < 20) return alert("Butuh 20 Koin untuk membuka posisi trading!");
             show_11267753().then(() => {
                 coins -= 20; updateCoinDisplay();
                 let currentPrice = livePrices[coinId] || 100;
