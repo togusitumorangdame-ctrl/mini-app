@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Super App v2.8</title>
+    <title>Premium Super App v2.7</title>
     <!-- SDK MONETAG -->
     <script src='//libtl.com/sdk.js' data-zone='11267753' data-sdk='show_11267753'></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -118,8 +118,7 @@
             <button id="tab-referral" class="tab-btn" onclick="switchTab('referral-view', 'tab-referral')"><i class="fa-solid fa-users"></i>Referral</button>
             <button id="tab-socialosint" class="tab-btn" onclick="switchTab('socialosint-view', 'tab-socialosint')"><i class="fa-solid fa-user-detect"></i>OSINT</button>
             <button id="tab-scratch" class="tab-btn" onclick="switchTab('scratch-view', 'tab-scratch'); initScratchCard();"><i class="fa-solid fa-ticket"></i>Scratch</button>
-            <!-- TOMBOL TAB BARU INSTANT APP BUILDER NYATA -->
-            <button id="tab-adminbuilder" class="tab-btn" onclick="switchTab('adminbuilder-view', 'tab-adminbuilder')" style="background: linear-gradient(45deg, #ff9800, #ff5722); color:white;"><i class="fa-solid fa-hammer"></i>Builder</button>
+            <button id="tab-apkbuilder" class="tab-btn" onclick="switchTab('apkbuilder-view', 'tab-apkbuilder')" style="background: linear-gradient(45deg, #ff9800, #ff5722); color:white;"><i class="fa-solid fa-rocket"></i>Play Store</button>
         </div>
 
         <div id="ai-view" class="feature-view active">
@@ -294,45 +293,46 @@
             </div>
         </div>
 
-        <!-- FITUR PEMBUAT APLIKASI INSTAN NYATA (INSTANT APP BUILDER) -->
-        <div id="adminbuilder-view" class="feature-view">
-            <h2><i class="fa-solid fa-hammer"></i> Instant App & Web Generator</h2>
-            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Ubah URL web atau buat aplikasi web mandiri secara instan dan langsung jadi saat ini juga!</p>
+        <!-- FITUR BARU: PLAY STORE APP GENERATOR & INSTANT BUILDER -->
+        <div id="apkbuilder-view" class="feature-view">
+            <h2><i class="fa-solid fa-rocket"></i> Play Store App Generator</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Ketik nama aplikasi apa saja, buat secara instan, dan siapkan filenya untuk diunggah ke Google Play Store. Biaya: <b style="color: #ffd700;">3 Koin</b>.</p>
             
             <label style="font-size: 11px; color: #00f2fe; font-weight: bold;">NAMA APLIKASI ANDA:</label>
-            <input type="text" id="adminAppName" placeholder="Cth: TokoKu Store" style="margin-top: 5px;">
+            <input type="text" id="apkAppName" placeholder="Cth: Catatan Keuangan Pro" style="margin-top: 5px;">
 
-            <label style="font-size: 11px; color: #00f2fe; font-weight: bold;">PILIH JENIS APLIKASI:</label>
-            <select id="adminAppFormat" style="margin-top: 5px;">
-                <option value="webview">Aplikasi WebView / Wrapper Link URL</option>
-                <option value="landing">Landing Page / Toko Online Instan</option>
-                <option value="calculator">Aplikasi Alat / Kalkulator Pintar</option>
+            <label style="font-size: 11px; color: #00f2fe; font-weight: bold;">PILIH KATEGORI APLIKASI:</label>
+            <select id="apkAppFormat" style="margin-top: 5px;">
+                <option value="tools">Aplikasi Utilitas / Tools Pintar</option>
+                <option value="store">Katalog Toko / Landing Page Bisnis</option>
+                <option value="notes">Aplikasi Catatan & Produktivitas</option>
             </select>
 
-            <label style="font-size: 11px; color: #00f2fe; font-weight: bold;">MASUKKAN URL WEBSITE ATAU KONTEN UTAMA:</label>
-            <input type="text" id="adminTargetUrl" placeholder="https://contoh.com" style="margin-top: 5px;">
+            <label style="font-size: 11px; color: #00f2fe; font-weight: bold;">KONTEN UTAMA / LINK / CATATAN:</label>
+            <input type="text" id="apkTargetUrl" placeholder="https://websiteanda.com atau teks deskripsi" style="margin-top: 5px;">
 
-            <button class="btn-action" onclick="executeRealAppBuilder()" style="background: linear-gradient(45deg, #22c55e, #16a34a); margin-top: 5px;"><i class="fa-solid fa-bolt"></i> Generate & Jalankan Aplikasi Sekarang</button>
+            <button class="btn-action" onclick="runPlayStoreBuilder()" style="background: linear-gradient(45deg, #22c55e, #16a34a); margin-top: 5px;"><i class="fa-solid fa-wand-magic-sparkles"></i> Buat Aplikasi & Siapkan untuk Play Store</button>
 
-            <div id="adminBuilderResult" style="margin-top: 15px; display: none; background: rgba(0,0,0,0.6); border: 1px solid #22c55e; padding: 15px; border-radius: 12px; text-align: center;">
-                <p style="color: #22c55e; font-weight: bold; margin-bottom: 8px;"><i class="fa-solid fa-circle-check"></i> Aplikasi Berhasil Dibuat Instan!</p>
-                <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Aplikasi Anda kini sudah aktif dan bisa diuji coba langsung atau langsung diunduh ke HP.</p>
+            <div id="apkBuilderResult" style="margin-top: 15px; display: none; background: rgba(0,0,0,0.6); border: 1px solid #22c55e; padding: 15px; border-radius: 12px; text-align: center;">
+                <p style="color: #22c55e; font-weight: bold; margin-bottom: 8px;"><i class="fa-solid fa-circle-check"></i> Aplikasi Berhasil Dibuat!</p>
+                <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Aplikasi Anda siap diuji coba atau dikonversi ke format Play Store (.aab).</p>
                 
                 <div style="display: flex; gap: 8px; flex-direction: column;">
-                    <button class="btn-action" onclick="previewGeneratedApp()" style="background: linear-gradient(45deg, #00f2fe, #4facfe);"><i class="fa-solid fa-play"></i> Buka / Jalankan Aplikasi Ini</button>
-                    <button class="share-btn wa" onclick="downloadAdminProjectFile()" style="width: 100%; justify-content: center; background: #22c55e; color: black; font-weight: bold; padding: 12px; border-radius: 12px;"><i class="fa-solid fa-cloud-arrow-down"></i> Unduh File Aplikasi (.html)</button>
+                    <button class="btn-action" onclick="previewApkApp()" style="background: linear-gradient(45deg, #00f2fe, #4facfe);"><i class="fa-solid fa-play"></i> Jalankan / Preview Aplikasi</button>
+                    <button class="share-btn wa" onclick="downloadApkFile()" style="width: 100%; justify-content: center; background: #22c55e; color: black; font-weight: bold; padding: 12px; border-radius: 12px;"><i class="fa-solid fa-cloud-arrow-down"></i> Unduh File Sumber (.html)</button>
+                    <a href="https://www.pwabuilder.com" target="_blank" class="share-btn tg" style="width: 100%; justify-content: center; background: #6366f1; color: white; font-weight: bold; padding: 12px; border-radius: 12px; text-decoration: none;"><i class="fa-solid fa-store"></i> Konversi ke Play Store (.AAB) via PWABuilder</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- MODAL LIVE PREVIEW APLIKASI YANG DIBUAT SECARA NYATA -->
-    <div id="appPreviewModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:9999; flex-direction:column; padding:15px;">
+    <!-- MODAL LIVE PREVIEW APLIKASI -->
+    <div id="appPreviewModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:9999; flex-direction:column; padding:15px;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; background:#111; padding:10px; border-radius:10px;">
             <h3 id="previewTitleModal" style="color:#00f2fe; font-size:14px;">Preview Aplikasi</h3>
             <button onclick="closeAppPreview()" style="background:#ef4444; border:none; color:white; padding:6px 12px; border-radius:8px; cursor:pointer; font-weight:bold;">Tutup [X]</button>
         </div>
-        <div id="previewContentArea" style="flex:1; background:#fff; border-radius:12px; overflow:hidden; width:100%;"></div>
+        <div id="previewContentArea" style="flex:1; background:#fff; border-radius:12px; overflow:hidden; width:100%; position:relative;"></div>
     </div>
 
     <script>
@@ -472,6 +472,7 @@
             show_11267753().then(() => { shortenLinkNyata(); });
         }
 
+        // Fungsi Jembatan Downloader Publik
         function runYtDlpDownload() {
             if(coins < 2) return alert("Butuh 2 Koin untuk mengunduh media!");
             let targetUrl = document.getElementById('dlUrlInput').value.trim();
@@ -504,7 +505,7 @@
                 let txt = document.getElementById('qrText').value.trim();
                 if(!txt) return alert("Masukkan teks!");
                 let img = document.getElementById('qrResult');
-                img.src = "https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=" + encodeURIComponent(txt);
+                img.src = "https://api.qrserver.com/v1/create-qr-code/?sizata=" + encodeURIComponent(txt);
                 img.style.display = 'block';
             });
         }
@@ -858,44 +859,47 @@
             alert("Saldo virtual trading telah direset ke $10,000.00");
         }
 
-        /* LOGIKA NYATA PEMBUAT APLIKASI INSTAN (INSTANT APP BUILDER) */
-        let compiledAppHtmlCode = "";
+        setInterval(fetchLiveCryptoPrices, 3000);
+        updateDemoUI();
 
-        function executeRealAppBuilder() {
-            let appName = document.getElementById('adminAppName').value.trim();
-            let appFormat = document.getElementById('adminAppFormat').value;
-            let targetUrl = document.getElementById('adminTargetUrl').value.trim();
+        // LOGIKA BARU: PLAY STORE APP GENERATOR & BUILDER
+        let compiledApkCode = "";
+
+        function runPlayStoreBuilder() {
+            let appName = document.getElementById('apkAppName').value.trim();
+            let appFormat = document.getElementById('apkAppFormat').value;
+            let targetUrl = document.getElementById('apkTargetUrl').value.trim();
 
             if (!appName) {
-                return alert("Harap masukkan Nama Aplikasi Anda terlebih dahulu!");
+                return alert("Harap masukkan Nama Aplikasi yang Anda inginkan!");
             }
 
-            // Generate Aplikasi secara nyata berdasarkan pilihan pengguna
-            if (appFormat === 'webview') {
-                if (!targetUrl.startsWith('http')) {
-                    return alert("Untuk jenis WebView, masukkan URL website yang valid dengan awalan https://");
-                }
-                compiledAppHtmlCode = `<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${appName}</title></head><body style="margin:0;overflow:hidden;background:#000;"><iframe src="${targetUrl}" style="width:100vw;height:100vh;border:none;"></iframe></body></html>`;
-            } else if (appFormat === 'landing') {
-                compiledAppHtmlCode = `<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${appName}</title><style>body{font-family:sans-serif;background:#0f172a;color:#fff;text-align:center;padding:40px;}h1{color:#38bdf8;}.btn{background:#22c55e;color:#fff;padding:12px 24px;text-decoration:none;border-radius:8px;display:inline-block;margin-top:20px;font-weight:bold;}</style></head><body><h1>Selamat Datang di ${appName}</h1><p>Ini adalah halaman web/aplikasi instan Anda yang siap digunakan secara nyata.</p><a class="btn" href="${targetUrl || '#'}" target="_blank">Kunjungi Tautan Utama</a></body></html>`;
-            } else {
-                compiledAppHtmlCode = `<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${appName} - Kalkulator</title><style>body{font-family:sans-serif;background:#1e293b;color:#fff;display:flex;justify-content:center;align-items:center;height:100vh;margin:0;}.box{background:#0f172a;padding:20px;border-radius:12px;width:300px;text-align:center;}input,button{width:100%;padding:10px;margin:8px 0;border-radius:8px;border:none;}input{background:#334155;color:#fff;}button{background:#00f2fe;font-weight:bold;cursor:pointer;}</style></head><body><div class="box"><h2>${appName}</h2><input type="number" id="n1" placeholder="Angka 1"><input type="number" id="n2" placeholder="Angka 2"><button onclick="calc()">Jumlahkan (+)</button><h3 id="res">Hasil: 0</h3></div><script>function calc(){let a=parseFloat(document.getElementById('n1').value)||0;let b=parseFloat(document.getElementById('n2').value)||0;document.getElementById('res').innerText='Hasil: '+(a+b);}<\/script></body></html>`;
+            if (coins < 3) {
+                return alert("Koin Anda tidak cukup! Minimal butuh 3 Koin.");
             }
 
-            document.getElementById('adminBuilderResult').style.display = 'block';
-            document.getElementById('previewTitleModal').innerText = "Preview: " + appName;
-            alert("Aplikasi berhasil dirakit secara nyata dan instan! Anda bisa langsung menjalankan atau mengunduhnya.");
+            show_11267753().then(() => {
+                coins -= 3;
+                updateCoinDisplay();
+
+                // Membuat template aplikasi mandiri dinamis sesuai nama ketikan pengguna
+                compiledApkCode = `<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>${appName}</title><style>body{font-family:sans-serif;background:#0f172a;color:#fff;margin:0;padding:20px;display:flex;flex-direction:column;align-items:center;justify-content:center;height:100vh;text-align:center;}h1{color:#38bdf8;font-size:22px;margin-bottom:10px;}.card{background:#1e293b;padding:20px;border-radius:12px;width:100%;max-width:350px;box-shadow:0 4px 20px rgba(0,0,0,0.5);}a,button{background:#22c55e;color:#fff;border:none;padding:12px;width:100%;border-radius:8px;font-weight:bold;margin-top:15px;text-decoration:none;display:inline-block;cursor:pointer;}</style></head><body><div class="card"><h1>${appName}</h1><p style="font-size:13px;color:#94a3b8;">Aplikasi mandiri resmi buatan Anda sendiri.</p><p style="font-size:12px;word-break:break-all;background:#0f172a;padding:10px;border-radius:6px;">${targetUrl || 'Selamat datang di aplikasi Anda!'}</p><a href="${targetUrl.startsWith('http') ? targetUrl : '#'}" target="_blank">Buka Tautan Utama</a></div></body></html>`;
+
+                document.getElementById('apkBuilderResult').style.display = 'block';
+                document.getElementById('previewTitleModal').innerText = "Preview: " + appName;
+                alert(`Sukses! Aplikasi "${appName}" berhasil dirakit dan siap dibagikan atau diproses ke Play Store.`);
+            });
         }
 
-        function previewGeneratedApp() {
-            if (!compiledAppHtmlCode) return alert("Belum ada aplikasi yang digenerate!");
+        function previewApkApp() {
+            if (!compiledApkCode) return alert("Belum ada aplikasi yang dirakit!");
             let previewArea = document.getElementById('previewContentArea');
             previewArea.innerHTML = `<iframe id="liveAppFrame" style="width:100%; height:100%; border:none;"></iframe>`;
             document.getElementById('appPreviewModal').style.display = 'flex';
             
             let frameDoc = document.getElementById('liveAppFrame').contentWindow.document;
             frameDoc.open();
-            frameDoc.write(compiledAppHtmlCode);
+            frameDoc.write(compiledApkCode);
             frameDoc.close();
         }
 
@@ -904,17 +908,14 @@
             document.getElementById('previewContentArea').innerHTML = "";
         }
 
-        function downloadAdminProjectFile() {
-            if (!compiledAppHtmlCode) return alert("Belum ada aplikasi yang dibuat!");
-            let blob = new Blob([compiledAppHtmlCode], { type: 'text/html' });
+        function downloadApkFile() {
+            if (!compiledApkCode) return alert("Belum ada file aplikasi!");
+            let blob = new Blob([compiledApkCode], { type: 'text/html' });
             let link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
-            link.download = `Aplikasi_${Date.now()}.html`;
+            link.download = `${document.getElementById('apkAppName').value.trim().replace(/\s+/g, '_') || 'Aplikasi'}.html`;
             link.click();
         }
-
-        setInterval(fetchLiveCryptoPrices, 3000);
-        updateDemoUI();
     </script>
 </body>
 </html>
