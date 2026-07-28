@@ -65,6 +65,12 @@
         .hidden-prize { font-size: 22px; font-weight: bold; letter-spacing: 5px; }
         canvas#scratchCanvas { position: absolute; top: 0; left: 0; cursor: pointer; touch-action: none; }
         .scratch-notif { margin-top: 10px; font-size: 11px; min-height: 40px; color: #b0bec5; text-align: center; line-height: 1.4; }
+
+        /* STYLING PIANO PAD */
+        .piano-container { display: flex; justify-content: center; position: relative; height: 180px; background: #1a1a2e; border-radius: 12px; padding: 10px; border: 1px solid #00f2fe; margin-top: 10px; user-select: none; }
+        .piano-key { position: relative; background: #fff; border: 1px solid #ccc; border-radius: 0 0 8px 8px; cursor: pointer; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 10px; color: #333; font-size: 10px; font-weight: bold; flex: 1; height: 100%; transition: background 0.1s; }
+        .piano-key.active, .piano-key:active { background: #00f2fe; color: #fff; }
+        .piano-key.black { position: absolute; background: #111; color: #fff; border-radius: 0 0 6px 6px; height: 60%; z-index: 2; width: 10%; font-size: 8px; }
     </style>
 </head>
 <body>
@@ -117,8 +123,8 @@
             <button id="tab-socialosint" class="tab-btn" onclick="switchTab('socialosint-view', 'tab-socialosint')"><i class="fa-solid fa-user-detect"></i>OSINT</button>
             <button id="tab-scratch" class="tab-btn" onclick="switchTab('scratch-view', 'tab-scratch'); initScratchCard();"><i class="fa-solid fa-ticket"></i>Scratch</button>
             
-            <!-- 5 FITUR BARU REAL DENGAN TARIF 3 KOIN -->
-            <button id="tab-f1" class="tab-btn" onclick="switchTab('f1-view', 'tab-f1')"><i class="fa-solid fa-terminal"></i>ASCII Cam</button>
+            <!-- FITUR PIANO PENGGANTI ASCII CAM -->
+            <button id="tab-f1" class="tab-btn" onclick="switchTab('f1-view', 'tab-f1')"><i class="fa-solid fa-music"></i>Piano</button>
             <button id="tab-f2" class="tab-btn" onclick="switchTab('f2-view', 'tab-f2')"><i class="fa-solid fa-atom"></i>Particles</button>
             <button id="tab-f3" class="tab-btn" onclick="switchTab('f3-view', 'tab-f3')"><i class="fa-solid fa-brain"></i>BrainWave</button>
             <button id="tab-f4" class="tab-btn" onclick="switchTab('f4-view', 'tab-f4')"><i class="fa-solid fa-water"></i>FluidSim</button>
@@ -276,15 +282,22 @@
             </div>
         </div>
 
-        <!-- 1. WEBCAM ASCII ART CONVERTER (Tarif: 3 Koin) -->
+        <!-- 1. INTERACTIVE PIANO PAD (Tarif: 3 Koin) -->
         <div id="f1-view" class="feature-view">
-            <h2><i class="fa-solid fa-terminal"></i> Webcam ASCII Art (3 Koin)</h2>
-            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Ubah tangkapan kamera langsung menjadi seni teks karakter secara real-time.</p>
-            <button class="btn-action" onclick="startAsciiCam()">Nyalakan Kamera ASCII</button>
-            <div style="margin-top: 12px; background: #000; border: 1px solid #00f2fe; border-radius: 12px; padding: 8px; text-align: center;">
-                <video id="asciiVideo" autoplay playsinline style="display:none;"></video>
-                <canvas id="asciiCanvas" style="width: 100%; height: 200px; display: block; border-radius: 8px; background: #050505;"></canvas>
-                <pre id="asciiOutput" style="font-size: 6px; line-height: 6px; color: #00f2fe; overflow: hidden; margin-top: 6px;"></pre>
+            <h2><i class="fa-solid fa-music"></i> Interactive Piano Pad (3 Koin)</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Ketuk tuts piano di bawah untuk menghasilkan melodi nada nyata.</p>
+            <button class="btn-action" onclick="unlockPiano()">Aktifkan Piano Pad (3 Koin)</button>
+            <div class="piano-container" id="pianoBox" style="opacity: 0.5; pointer-events: none;">
+                <div class="piano-key" onmousedown="playPianoNote(261.63, this)">C</div>
+                <div class="piano-key black" style="left: 12.5%;" onmousedown="playPianoNote(277.18, this)">C#</div>
+                <div class="piano-key" onmousedown="playPianoNote(293.66, this)">D</div>
+                <div class="piano-key black" style="left: 27.5%;" onmousedown="playPianoNote(311.13, this)">D#</div>
+                <div class="piano-key" onmousedown="playPianoNote(329.63, this)">E</div>
+                <div class="piano-key" onmousedown="playPianoNote(349.23, this)">F</div>
+                <div class="piano-key black" style="left: 57.5%;" onmousedown="playPianoNote(369.99, this)">F#</div>
+                <div class="piano-key" onmousedown="playPianoNote(392.00, this)">G</div>
+                <div class="piano-key black" style="left: 72.5%;" onmousedown="playPianoNote(415.30, this)">G#</div>
+                <div class="piano-key" onmousedown="playPianoNote(440.00, this)">A</div>
             </div>
         </div>
 
@@ -561,12 +574,10 @@
                 updateCoinDisplay();
 
                 let descLower = appDesc.toLowerCase();
-                let iconClass = "fa-solid fa-wand-magic-sparkles";
                 let customBodyContent = "";
                 let customScriptContent = "";
 
                 if(descLower.includes('game') || descLower.includes('tebak') || descLower.includes('kuis') || descLower.includes('permainan')) {
-                    iconClass = "fa-solid fa-gamepad";
                     customBodyContent = `
                         <div class="card glass" style="text-align: center;">
                             <h3 style="font-size: 14px; color: #38bdf8; margin-bottom: 5px;">${appName}</h3>
@@ -602,7 +613,6 @@
                             document.getElementById('ansGame').value = '';
                         }`;
                 } else if(descLower.includes('dompet') || descLower.includes('uang') || descLower.includes('saldo') || descLower.includes('keuangan')) {
-                    iconClass = "fa-solid fa-wallet";
                     customBodyContent = `
                         <div class="card glass">
                             <h3 style="font-size: 14px; color: #38bdf8; margin-bottom: 5px;">${appName}</h3>
@@ -628,7 +638,6 @@
                             document.getElementById('nominal').value = '';
                         }`;
                 } else {
-                    iconClass = "fa-solid alt fa-rocket";
                     customBodyContent = `
                         <div class="card glass" style="text-align: center;">
                             <h3 style="font-size: 14px; color: #38bdf8; margin-bottom: 5px;">${appName}</h3>
@@ -1052,55 +1061,42 @@
         setInterval(fetchLiveCryptoPrices, 3000);
         updateDemoUI();
 
-        // --- SKRIP 5 FITUR BARU REAL (TERINTEGRASI SISTEM 3 KOIN) ---
+        // --- SKRIP FITUR PIANO & FITUR LAINNYA ---
 
-        // 1. Webcam ASCII Art Real
-        let asciiStream = null;
-        function startAsciiCam() {
-            if(coins < 3) return alert("Butuh 3 Koin untuk menjalankan Webcam ASCII!");
+        let pianoAudioCtx = null;
+        function unlockPiano() {
+            if(coins < 3) return alert("Butuh 3 Koin untuk membuka Piano Pad!");
             show_11267753().then(() => {
                 coins -= 3; updateCoinDisplay();
-                const video = document.getElementById('asciiVideo');
-                const canvas = document.getElementById('asciiCanvas');
-                const ctx = canvas.getContext('2d');
-                const output = document.getElementById('asciiOutput');
-                
-                if (!asciiStream) {
-                    navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
-                        asciiStream = stream;
-                        video.srcObject = stream;
-                        video.play();
-                        requestAnimationFrame(renderAscii);
-                    }).catch(err => { alert("Gagal mengakses kamera: " + err); });
-                } else {
-                    requestAnimationFrame(renderAscii);
-                }
-
-                function renderAscii() {
-                    if (video.paused || video.ended) return;
-                    ctx.drawImage(video, 0, 0, 60, 35);
-                    const imgData = ctx.getImageData(0, 0, 60, 35).data;
-                    const asciiChars = "@#W$9876543210?!abc;:+=-,._ ";
-                    let asciiStr = "";
-                    for (let y = 0; y < 35; y++) {
-                        for (let x = 0; x < 60; x++) {
-                            const offset = (y * 60 + x) * 4;
-                            const r = imgData[offset];
-                            const g = imgData[offset + 1];
-                            const b = imgData[offset + 2];
-                            const avg = (r + g + b) / 3;
-                            const charIdx = Math.floor((avg / 255) * (asciiChars.length - 1));
-                            asciiStr += asciiChars[charIdx];
-                        }
-                        asciiStr += "\n";
-                    }
-                    output.innerText = asciiStr;
-                    requestAnimationFrame(renderAscii);
-                }
+                pianoAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                document.getElementById('pianoBox').style.opacity = '1';
+                document.getElementById('pianoBox').style.pointerEvents = 'auto';
+                alert("Piano Pad berhasil diaktifkan! Silakan mainkan nada.");
             });
         }
 
-        // 2. Quantum Particle Life Real
+        function playPianoNote(frequency, element) {
+            if (!pianoAudioCtx) return;
+            let osc = pianoAudioCtx.createOscillator();
+            let gainNode = pianoAudioCtx.createGain();
+            
+            osc.type = 'triangle';
+            osc.frequency.setValueAtTime(frequency, pianoAudioCtx.currentTime);
+            
+            gainNode.gain.setValueAtTime(0.5, pianoAudioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.001, pianoAudioCtx.currentTime + 0.8);
+            
+            osc.connect(gainNode);
+            gainNode.connect(pianoAudioCtx.destination);
+            
+            osc.start();
+            osc.stop(pianoAudioCtx.currentTime + 0.8);
+
+            element.classList.add('active');
+            setTimeout(() => { element.classList.remove('active'); }, 200);
+        }
+
+        // Quantum Particle Life Real
         function startParticleSim() {
             if(coins < 3) return alert("Butuh 3 Koin untuk menjalankan Simulasi Partikel!");
             show_11267753().then(() => {
@@ -1144,7 +1140,7 @@
             });
         }
 
-        // 3. Mind Frequency Pad Real (Web Audio API)
+        // Mind Frequency Pad Real (Web Audio API)
         let audioCtx = null;
         let oscillator = null;
         let isAudioPlaying = false;
@@ -1179,7 +1175,7 @@
             document.getElementById('audioStatusText').style.color = '#22c55e';
         }
 
-        // 4. Interactive Fluid Dynamics Real
+        // Interactive Fluid Dynamics Real
         function startFluidSim() {
             if(coins < 3) return alert("Butuh 3 Koin untuk menjalankan Simulasi Cairan!");
             show_11267753().then(() => {
@@ -1212,7 +1208,7 @@
             });
         }
 
-        // 5. Cyber City Flythrough Real (WebGL / Canvas 3D)
+        // Cyber City Flythrough Real (WebGL / Canvas 3D)
         function startCyberCityFly() {
             if(coins < 3) return alert("Butuh 3 Koin untuk menjalankan Cyber City Flythrough!");
             show_11267753().then(() => {
