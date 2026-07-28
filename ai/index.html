@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Super App v2.8</title>
+    <title>Premium Super App v2.9</title>
     <!-- SDK MONETAG -->
     <script src='//libtl.com/sdk.js' data-zone='11267753' data-sdk='show_11267753'></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -66,11 +66,13 @@
         canvas#scratchCanvas { position: absolute; top: 0; left: 0; cursor: pointer; touch-action: none; }
         .scratch-notif { margin-top: 10px; font-size: 11px; min-height: 40px; color: #b0bec5; text-align: center; line-height: 1.4; }
 
-        /* STYLING PIANO PAD */
-        .piano-container { display: flex; justify-content: center; position: relative; height: 180px; background: #1a1a2e; border-radius: 12px; padding: 10px; border: 1px solid #00f2fe; margin-top: 10px; user-select: none; }
-        .piano-key { position: relative; background: #fff; border: 1px solid #ccc; border-radius: 0 0 8px 8px; cursor: pointer; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 10px; color: #333; font-size: 10px; font-weight: bold; flex: 1; height: 100%; transition: background 0.1s; }
-        .piano-key.active, .piano-key:active { background: #00f2fe; color: #fff; }
-        .piano-key.black { position: absolute; background: #111; color: #fff; border-radius: 0 0 6px 6px; height: 60%; z-index: 2; width: 10%; font-size: 8px; }
+        /* REALISTIC PIANO KEYBOARD STYLING */
+        .real-piano-wrapper { background: #12121a; border: 2px solid #2a2a3d; border-radius: 16px; padding: 15px 10px; margin-top: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.7); }
+        .real-piano-keys { position: relative; display: flex; height: 160px; background: #000; border-radius: 8px; overflow: hidden; user-select: none; }
+        .white-key { flex: 1; background: linear-gradient(to bottom, #eeeeee 0%, #ffffff 100%); border: 1px solid #b5b5b5; border-radius: 0 0 6px 6px; cursor: pointer; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 12px; color: #555; font-size: 11px; font-weight: 600; z-index: 1; transition: background 0.08s, box-shadow 0.08s; box-shadow: inset 0 -4px 6px rgba(0,0,0,0.15); }
+        .white-key:active, .white-key.active { background: linear-gradient(to bottom, #00f2fe 0%, #4facfe 100%); color: #fff; box-shadow: inset 0 2px 4px rgba(0,0,0,0.3); }
+        .black-key { position: absolute; width: 6.2%; height: 60%; background: linear-gradient(to bottom, #333333 0%, #0d0d0d 100%); border-left: 1px solid #555; border-right: 1px solid #555; border-bottom: 2px solid #000; border-radius: 0 0 5px 5px; cursor: pointer; z-index: 3; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 8px; color: #aaa; font-size: 8px; transition: background 0.08s; box-shadow: 0 4px 6px rgba(0,0,0,0.5); }
+        .black-key:active, .black-key.active { background: linear-gradient(to bottom, #00f2fe 0%, #0284c7 100%); color: #fff; }
     </style>
 </head>
 <body>
@@ -123,7 +125,7 @@
             <button id="tab-socialosint" class="tab-btn" onclick="switchTab('socialosint-view', 'tab-socialosint')"><i class="fa-solid fa-user-detect"></i>OSINT</button>
             <button id="tab-scratch" class="tab-btn" onclick="switchTab('scratch-view', 'tab-scratch'); initScratchCard();"><i class="fa-solid fa-ticket"></i>Scratch</button>
             
-            <!-- FITUR PIANO PENGGANTI ASCII CAM -->
+            <!-- FITUR PIANO ASLI & LAINNYA -->
             <button id="tab-f1" class="tab-btn" onclick="switchTab('f1-view', 'tab-f1')"><i class="fa-solid fa-music"></i>Piano</button>
             <button id="tab-f2" class="tab-btn" onclick="switchTab('f2-view', 'tab-f2')"><i class="fa-solid fa-atom"></i>Particles</button>
             <button id="tab-f3" class="tab-btn" onclick="switchTab('f3-view', 'tab-f3')"><i class="fa-solid fa-brain"></i>BrainWave</button>
@@ -194,7 +196,6 @@
             <img id="qrResult" src="" alt="Hasil QR Code">
         </div>
 
-        <!-- FITUR PROFESSIONAL AI APP BUILDER (Tarif: 3 Koin) -->
         <div id="appbuilder-view" class="feature-view">
             <h2><i class="fa-solid fa-hammer"></i> AI App Builder Profesional (3 Koin)</h2>
             <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Hasilkan aplikasi web instan yang lengkap dengan antarmuka dan logika kustom secara otomatis!</p>
@@ -282,22 +283,32 @@
             </div>
         </div>
 
-        <!-- 1. INTERACTIVE PIANO PAD (Tarif: 3 Koin) -->
+        <!-- 1. REALISTIC KEYBOARD PIANO PAD (Tarif: 3 Koin) -->
         <div id="f1-view" class="feature-view">
-            <h2><i class="fa-solid fa-music"></i> Interactive Piano Pad (3 Koin)</h2>
-            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Ketuk tuts piano di bawah untuk menghasilkan melodi nada nyata.</p>
-            <button class="btn-action" onclick="unlockPiano()">Aktifkan Piano Pad (3 Koin)</button>
-            <div class="piano-container" id="pianoBox" style="opacity: 0.5; pointer-events: none;">
-                <div class="piano-key" onmousedown="playPianoNote(261.63, this)">C</div>
-                <div class="piano-key black" style="left: 12.5%;" onmousedown="playPianoNote(277.18, this)">C#</div>
-                <div class="piano-key" onmousedown="playPianoNote(293.66, this)">D</div>
-                <div class="piano-key black" style="left: 27.5%;" onmousedown="playPianoNote(311.13, this)">D#</div>
-                <div class="piano-key" onmousedown="playPianoNote(329.63, this)">E</div>
-                <div class="piano-key" onmousedown="playPianoNote(349.23, this)">F</div>
-                <div class="piano-key black" style="left: 57.5%;" onmousedown="playPianoNote(369.99, this)">F#</div>
-                <div class="piano-key" onmousedown="playPianoNote(392.00, this)">G</div>
-                <div class="piano-key black" style="left: 72.5%;" onmousedown="playPianoNote(415.30, this)">G#</div>
-                <div class="piano-key" onmousedown="playPianoNote(440.00, this)">A</div>
+            <h2><i class="fa-solid fa-music"></i> Real Acoustic Piano Keyboard (3 Koin)</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Sentuh tuts keyboard profesional di bawah untuk menghasilkan melodi piano asli bersuara jernih.</p>
+            <button class="btn-action" onclick="unlockPiano()">Aktifkan Keyboard Piano (3 Koin)</button>
+            
+            <div class="real-piano-wrapper" id="pianoBox" style="opacity: 0.5; pointer-events: none;">
+                <div class="real-piano-keys">
+                    <!-- Tuts Putih C4 - C5 (8 Tuts Putih) -->
+                    <div class="white-key" onmousedown="playRealPiano(261.63, this)">C4</div>
+                    <div class="white-key" onmousedown="playRealPiano(293.66, this)">D4</div>
+                    <div class="white-key" onmousedown="playRealPiano(329.63, this)">E4</div>
+                    <div class="white-key" onmousedown="playRealPiano(349.23, this)">F4</div>
+                    <div class="white-key" onmousedown="playRealPiano(392.00, this)">G4</div>
+                    <div class="white-key" onmousedown="playRealPiano(440.00, this)">A4</div>
+                    <div class="white-key" onmousedown="playRealPiano(493.88, this)">B4</div>
+                    <div class="white-key" onmousedown="playRealPiano(523.25, this)">C5</div>
+
+                    <!-- Tuts Hitam (5 Tuts Hitam Proporsional) -->
+                    <div class="black-key" style="left: 9.5%;" onmousedown="playRealPiano(277.18, this)">C#</div>
+                    <div class="black-key" style="left: 22.0%;" onmousedown="playRealPiano(311.13, this)">D#</div>
+                    <!-- Jeda gap F -->
+                    <div class="black-key" style="left: 47.0%;" onmousedown="playRealPiano(369.99, this)">F#</div>
+                    <div class="black-key" style="left: 59.5%;" onmousedown="playRealPiano(415.30, this)">G#</div>
+                    <div class="black-key" style="left: 72.0%;" onmousedown="playRealPiano(466.16, this)">A#</div>
+                </div>
             </div>
         </div>
 
@@ -1061,39 +1072,40 @@
         setInterval(fetchLiveCryptoPrices, 3000);
         updateDemoUI();
 
-        // --- SKRIP FITUR PIANO & FITUR LAINNYA ---
+        // --- SKRIP PIANO KEYBOARD ASLI & FITUR INTERAKTIF ---
 
         let pianoAudioCtx = null;
         function unlockPiano() {
-            if(coins < 3) return alert("Butuh 3 Koin untuk membuka Piano Pad!");
+            if(coins < 3) return alert("Butuh 3 Koin untuk membuka Keyboard Piano!");
             show_11267753().then(() => {
                 coins -= 3; updateCoinDisplay();
                 pianoAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 document.getElementById('pianoBox').style.opacity = '1';
                 document.getElementById('pianoBox').style.pointerEvents = 'auto';
-                alert("Piano Pad berhasil diaktifkan! Silakan mainkan nada.");
+                alert("Keyboard Piano berhasil diaktifkan! Silakan mainkan nada.");
             });
         }
 
-        function playPianoNote(frequency, element) {
+        function playRealPiano(frequency, element) {
             if (!pianoAudioCtx) return;
             let osc = pianoAudioCtx.createOscillator();
             let gainNode = pianoAudioCtx.createGain();
             
+            // Menggunakan tipe 'triangle' dengan envelope harmonik agar menyerupai instrumen akustik
             osc.type = 'triangle';
             osc.frequency.setValueAtTime(frequency, pianoAudioCtx.currentTime);
             
-            gainNode.gain.setValueAtTime(0.5, pianoAudioCtx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.001, pianoAudioCtx.currentTime + 0.8);
+            gainNode.gain.setValueAtTime(0.6, pianoAudioCtx.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.0001, pianoAudioCtx.currentTime + 1.2);
             
             osc.connect(gainNode);
             gainNode.connect(pianoAudioCtx.destination);
             
             osc.start();
-            osc.stop(pianoAudioCtx.currentTime + 0.8);
+            osc.stop(pianoAudioCtx.currentTime + 1.2);
 
             element.classList.add('active');
-            setTimeout(() => { element.classList.remove('active'); }, 200);
+            setTimeout(() => { element.classList.remove('active'); }, 180);
         }
 
         // Quantum Particle Life Real
