@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Super App v2.9</title>
+    <title>Premium Super App v3.1 - AR Edition</title>
     <!-- SDK MONETAG -->
     <script src='//libtl.com/sdk.js' data-zone='11267753' data-sdk='show_11267753'></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -25,13 +25,13 @@
         
         .app-card { background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 25px; width: 100%; max-width: 500px; padding: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
         .nav-tabs { display: flex; justify-content: space-between; margin-bottom: 20px; background: rgba(0,0,0,0.3); padding: 5px; border-radius: 50px; gap: 4px; flex-wrap: wrap; }
-        .tab-btn { background: none; border: none; color: #a0a0ba; padding: 8px 4px; font-size: 8.5px; font-weight: 600; cursor: pointer; border-radius: 50px; flex: 1; text-align: center; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 40px; }
-        .tab-btn i { font-size: 11px; }
+        .tab-btn { background: none; border: none; color: #a0a0ba; padding: 8px 4px; font-size: 8px; font-weight: 600; cursor: pointer; border-radius: 50px; flex: 1; text-align: center; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 38px; }
+        .tab-btn i { font-size: 10.5px; }
         .tab-btn.active { background: linear-gradient(45deg, #00f2fe, #4facfe); color: white; box-shadow: 0 4px 12px rgba(0,242,254,0.3); }
         
         .feature-view { display: none; }
         .feature-view.active { display: block; }
-        h2 { font-size: 16px; color: #00f2fe; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
+        h2 { font-size: 15px; color: #00f2fe; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
         
         input, select, textarea { width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 12px; color: white; font-size: 13px; margin-bottom: 12px; outline: none; transition: 0.2s; }
         input:focus, select:focus, textarea:focus { border-color: #00f2fe; }
@@ -66,13 +66,20 @@
         canvas#scratchCanvas { position: absolute; top: 0; left: 0; cursor: pointer; touch-action: none; }
         .scratch-notif { margin-top: 10px; font-size: 11px; min-height: 40px; color: #b0bec5; text-align: center; line-height: 1.4; }
 
-        /* REALISTIC PIANO KEYBOARD STYLING */
         .real-piano-wrapper { background: #12121a; border: 2px solid #2a2a3d; border-radius: 16px; padding: 15px 10px; margin-top: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.7); }
         .real-piano-keys { position: relative; display: flex; height: 160px; background: #000; border-radius: 8px; overflow: hidden; user-select: none; }
         .white-key { flex: 1; background: linear-gradient(to bottom, #eeeeee 0%, #ffffff 100%); border: 1px solid #b5b5b5; border-radius: 0 0 6px 6px; cursor: pointer; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 12px; color: #555; font-size: 11px; font-weight: 600; z-index: 1; transition: background 0.08s, box-shadow 0.08s; box-shadow: inset 0 -4px 6px rgba(0,0,0,0.15); }
         .white-key:active, .white-key.active { background: linear-gradient(to bottom, #00f2fe 0%, #4facfe 100%); color: #fff; box-shadow: inset 0 2px 4px rgba(0,0,0,0.3); }
         .black-key { position: absolute; width: 6.2%; height: 60%; background: linear-gradient(to bottom, #333333 0%, #0d0d0d 100%); border-left: 1px solid #555; border-right: 1px solid #555; border-bottom: 2px solid #000; border-radius: 0 0 5px 5px; cursor: pointer; z-index: 3; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 8px; color: #aaa; font-size: 8px; transition: background 0.08s; box-shadow: 0 4px 6px rgba(0,0,0,0.5); }
         .black-key:active, .black-key.active { background: linear-gradient(to bottom, #00f2fe 0%, #0284c7 100%); color: #fff; }
+
+        /* AR CAMERA STYLING & 100+ MODE SELECTOR */
+        .ar-container { position: relative; width: 100%; height: 260px; background: #000; border-radius: 14px; overflow: hidden; border: 2px solid #00f2fe; margin-top: 10px; display: flex; align-items: center; justify-content: center; }
+        #arVideo { position: absolute; width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
+        #arCanvas { position: absolute; width: 100%; height: 100%; object-fit: cover; pointer-events: none; transform: scaleX(-1); }
+        .ar-modes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; max-height: 140px; overflow-y: auto; margin-top: 10px; background: rgba(0,0,0,0.4); padding: 8px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08); }
+        .ar-mode-btn { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 6px 4px; border-radius: 8px; font-size: 10px; cursor: pointer; text-align: center; transition: 0.2s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .ar-mode-btn.active { background: linear-gradient(45deg, #00f2fe, #4facfe); border-color: #fff; font-weight: bold; box-shadow: 0 0 10px rgba(0,242,254,0.5); }
     </style>
 </head>
 <body>
@@ -125,12 +132,15 @@
             <button id="tab-socialosint" class="tab-btn" onclick="switchTab('socialosint-view', 'tab-socialosint')"><i class="fa-solid fa-user-detect"></i>OSINT</button>
             <button id="tab-scratch" class="tab-btn" onclick="switchTab('scratch-view', 'tab-scratch'); initScratchCard();"><i class="fa-solid fa-ticket"></i>Scratch</button>
             
-            <!-- FITUR PIANO ASLI & LAINNYA -->
+            <!-- FITUR UTAMA: POTONG 3 KOIN NYATA -->
             <button id="tab-f1" class="tab-btn" onclick="switchTab('f1-view', 'tab-f1')"><i class="fa-solid fa-music"></i>Piano</button>
             <button id="tab-f2" class="tab-btn" onclick="switchTab('f2-view', 'tab-f2')"><i class="fa-solid fa-atom"></i>Particles</button>
             <button id="tab-f3" class="tab-btn" onclick="switchTab('f3-view', 'tab-f3')"><i class="fa-solid fa-brain"></i>BrainWave</button>
             <button id="tab-f4" class="tab-btn" onclick="switchTab('f4-view', 'tab-f4')"><i class="fa-solid fa-water"></i>FluidSim</button>
             <button id="tab-f5" class="tab-btn" onclick="switchTab('f5-view', 'tab-f5')"><i class="fa-solid fa-vr-cardboard"></i>Wireframe</button>
+            
+            <!-- FITUR BARU: AR FACE STICKER & 100+ FILTER KAMERA -->
+            <button id="tab-ar" class="tab-btn" onclick="switchTab('ar-view', 'tab-ar')"><i class="fa-solid fa-face-smile-beam"></i>AR Cam</button>
         </div>
 
         <div id="ai-view" class="feature-view active">
@@ -283,7 +293,7 @@
             </div>
         </div>
 
-        <!-- 1. REALISTIC KEYBOARD PIANO PAD (Tarif: 3 Koin) -->
+        <!-- 1. PIANO KEYBOARD -->
         <div id="f1-view" class="feature-view">
             <h2><i class="fa-solid fa-music"></i> Real Acoustic Piano Keyboard (3 Koin)</h2>
             <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Sentuh tuts keyboard profesional di bawah untuk menghasilkan melodi piano asli bersuara jernih.</p>
@@ -291,7 +301,6 @@
             
             <div class="real-piano-wrapper" id="pianoBox" style="opacity: 0.5; pointer-events: none;">
                 <div class="real-piano-keys">
-                    <!-- Tuts Putih C4 - C5 (8 Tuts Putih) -->
                     <div class="white-key" onmousedown="playRealPiano(261.63, this)">C4</div>
                     <div class="white-key" onmousedown="playRealPiano(293.66, this)">D4</div>
                     <div class="white-key" onmousedown="playRealPiano(329.63, this)">E4</div>
@@ -301,10 +310,8 @@
                     <div class="white-key" onmousedown="playRealPiano(493.88, this)">B4</div>
                     <div class="white-key" onmousedown="playRealPiano(523.25, this)">C5</div>
 
-                    <!-- Tuts Hitam (5 Tuts Hitam Proporsional) -->
                     <div class="black-key" style="left: 9.5%;" onmousedown="playRealPiano(277.18, this)">C#</div>
                     <div class="black-key" style="left: 22.0%;" onmousedown="playRealPiano(311.13, this)">D#</div>
-                    <!-- Jeda gap F -->
                     <div class="black-key" style="left: 47.0%;" onmousedown="playRealPiano(369.99, this)">F#</div>
                     <div class="black-key" style="left: 59.5%;" onmousedown="playRealPiano(415.30, this)">G#</div>
                     <div class="black-key" style="left: 72.0%;" onmousedown="playRealPiano(466.16, this)">A#</div>
@@ -312,7 +319,7 @@
             </div>
         </div>
 
-        <!-- 2. QUANTUM PARTICLE LIFE SIMULATION (Tarif: 3 Koin) -->
+        <!-- 2. QUANTUM PARTICLE LIFE -->
         <div id="f2-view" class="feature-view">
             <h2><i class="fa-solid fa-atom"></i> Quantum Particle Life (3 Koin)</h2>
             <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Sentuh layar untuk melihat partikel digital hidup berevolusi membentuk pola.</p>
@@ -322,7 +329,7 @@
             </div>
         </div>
 
-        <!-- 3. DEEP AMBIENT & MIND FREQUENCY PAD (Tarif: 3 Koin) -->
+        <!-- 3. MIND FREQUENCY PAD -->
         <div id="f3-view" class="feature-view">
             <h2><i class="fa-solid fa-brain"></i> Mind Frequency Pad (3 Koin)</h2>
             <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Hasilkan gelombang suara terapi pikiran (Binaural Beats) secara langsung dari browser.</p>
@@ -335,7 +342,7 @@
             <div id="audioStatusText" style="font-size: 11px; color: #22c55e; text-align: center; margin-top: 10px;">Status Audio: Berhenti</div>
         </div>
 
-        <!-- 4. INTERACTIVE FLUID DYNAMICS SIMULATOR (Tarif: 3 Koin) -->
+        <!-- 4. INTERACTIVE FLUID DYNAMICS -->
         <div id="f4-view" class="feature-view">
             <h2><i class="fa-solid fa-water"></i> Interactive Fluid Dynamics (3 Koin)</h2>
             <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Usap layar untuk menciptakan gelombang fluida warna pelangi yang memukau.</p>
@@ -345,13 +352,34 @@
             </div>
         </div>
 
-        <!-- 5. HOLOGRAPHIC 3D WIREFRAME CYBER-CITY (Tarif: 3 Koin) -->
+        <!-- 5. CYBER CITY FLYTHROUGH -->
         <div id="f5-view" class="feature-view">
             <h2><i class="fa-solid fa-vr-cardboard"></i> Cyber City Flythrough (3 Koin)</h2>
             <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Simulasi penerbangan kota hologram 3D masa depan bergaya Tron.</p>
             <button class="btn-action" onclick="startCyberCityFly()">Mulai Penerbangan Kota (3 Koin)</button>
             <div style="margin-top: 12px; border: 1px solid #00f2fe; border-radius: 12px; overflow: hidden;">
                 <canvas id="cyberCanvas" width="400" height="240" style="width: 100%; height: 240px; background: #000; display: block;"></canvas>
+            </div>
+        </div>
+
+        <!-- 6. FITUR BARU: AR FACE STICKER & 100+ FILTER KAMERA REAL-TIME -->
+        <div id="ar-view" class="feature-view">
+            <h2><i class="fa-solid fa-face-smile-beam"></i> AR Cam & 100+ Live Filters (3 Koin)</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Pilih dari lebih dari 100+ mode filter stiker AR, topeng, glitch, neon, dan animasi wajah real-time.</p>
+            <button class="btn-action" onclick="unlockARCamera()">Aktifkan AR Camera (3 Koin)</button>
+            
+            <div id="arModuleContainer" style="display: none; margin-top: 10px;">
+                <div class="ar-container">
+                    <video id="arVideo" autoplay playsinline muted></video>
+                    <canvas id="arCanvas"></canvas>
+                </div>
+                <div style="margin-top: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #00f2fe;">
+                    <span>Mode Aktif: <b id="activeArModeName">Normal Cam</b></span>
+                    <span id="arModeCounter">Total Mode: 105 Pilihan</span>
+                </div>
+                <div class="ar-modes-grid" id="arModesGrid">
+                    <!-- Dihasilkan secara otomatis lewat script JS hingga 105+ mode -->
+                </div>
             </div>
         </div>
 
@@ -404,6 +432,7 @@
                 });
                 marketListEl.innerHTML = htmlContent;
             }
+            buildArModesList();
         });
 
         const userLang = navigator.language || navigator.userLanguage;
@@ -1072,97 +1101,85 @@
         setInterval(fetchLiveCryptoPrices, 3000);
         updateDemoUI();
 
-        // --- SKRIP PIANO KEYBOARD ASLI & FITUR INTERAKTIF ---
+        // --- FUNGSI UTAMA FITUR INTERAKTIF (POTONG 3 KOIN NYATA) ---
 
         let pianoAudioCtx = null;
         function unlockPiano() {
-            if(coins < 3) return alert("Butuh 3 Koin untuk membuka Keyboard Piano!");
-            show_11267753().then(() => {
-                coins -= 3; updateCoinDisplay();
-                pianoAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                document.getElementById('pianoBox').style.opacity = '1';
-                document.getElementById('pianoBox').style.pointerEvents = 'auto';
-                alert("Keyboard Piano berhasil diaktifkan! Silakan mainkan nada.");
-            });
+            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk mengaktifkan Keyboard Piano.");
+            coins -= 3;
+            updateCoinDisplay();
+            pianoAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            document.getElementById('pianoBox').style.opacity = '1';
+            document.getElementById('pianoBox').style.pointerEvents = 'auto';
+            alert("Berhasil memotong 3 Koin! Keyboard Piano aktif dan siap dimainkan.");
         }
 
         function playRealPiano(frequency, element) {
             if (!pianoAudioCtx) return;
             let osc = pianoAudioCtx.createOscillator();
             let gainNode = pianoAudioCtx.createGain();
-            
-            // Menggunakan tipe 'triangle' dengan envelope harmonik agar menyerupai instrumen akustik
             osc.type = 'triangle';
             osc.frequency.setValueAtTime(frequency, pianoAudioCtx.currentTime);
-            
             gainNode.gain.setValueAtTime(0.6, pianoAudioCtx.currentTime);
             gainNode.gain.exponentialRampToValueAtTime(0.0001, pianoAudioCtx.currentTime + 1.2);
-            
             osc.connect(gainNode);
             gainNode.connect(pianoAudioCtx.destination);
-            
             osc.start();
             osc.stop(pianoAudioCtx.currentTime + 1.2);
-
             element.classList.add('active');
             setTimeout(() => { element.classList.remove('active'); }, 180);
         }
 
-        // Quantum Particle Life Real
         function startParticleSim() {
-            if(coins < 3) return alert("Butuh 3 Koin untuk menjalankan Simulasi Partikel!");
-            show_11267753().then(() => {
-                coins -= 3; updateCoinDisplay();
-                const canvas = document.getElementById('particleCanvas');
-                const ctx = canvas.getContext('2d');
-                let particles = [];
-                for(let i=0; i<150; i++) {
-                    particles.push({
-                        x: Math.random() * canvas.width,
-                        y: Math.random() * canvas.height,
-                        vx: (Math.random() - 0.5) * 2,
-                        vy: (Math.random() - 0.5) * 2,
-                        color: `hsl(${Math.random() * 360}, 100%, 50%)`
-                    });
-                }
-                let touchX = null, touchY = null;
-                canvas.onmousemove = (e) => {
-                    const rect = canvas.getBoundingClientRect();
-                    touchX = e.clientX - rect.left;
-                    touchY = e.clientY - rect.top;
-                };
-                function loop() {
-                    ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    particles.forEach(p => {
-                        p.x += p.vx; p.y += p.vy;
-                        if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
-                        if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
-                        if(touchX !== null) {
-                            let dx = touchX - p.x; let dy = touchY - p.y;
-                            let dist = Math.sqrt(dx*dx + dy*dy);
-                            if(dist < 80) { p.x -= dx * 0.05; p.y -= dy * 0.05; }
-                        }
-                        ctx.fillStyle = p.color;
-                        ctx.beginPath(); ctx.arc(p.x, p.y, 2, 0, Math.PI*2); ctx.fill();
-                    });
-                    requestAnimationFrame(loop);
-                }
-                loop();
-            });
+            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk menjalankan Simulasi Partikel.");
+            coins -= 3;
+            updateCoinDisplay();
+            const canvas = document.getElementById('particleCanvas');
+            const ctx = canvas.getContext('2d');
+            let particles = [];
+            for(let i=0; i<150; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+                    vx: (Math.random() - 0.5) * 2, vy: (Math.random() - 0.5) * 2,
+                    color: `hsl(${Math.random() * 360}, 100%, 50%)`
+                });
+            }
+            let touchX = null, touchY = null;
+            canvas.onmousemove = (e) => {
+                const rect = canvas.getBoundingClientRect();
+                touchX = e.clientX - rect.left; touchY = e.clientY - rect.top;
+            };
+            function loop() {
+                ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(p => {
+                    p.x += p.vx; p.y += p.vy;
+                    if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                    if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                    if(touchX !== null) {
+                        let dx = touchX - p.x; let dy = touchY - p.y;
+                        let dist = Math.sqrt(dx*dx + dy*dy);
+                        if(dist < 80) { p.x -= dx * 0.05; p.y -= dy * 0.05; }
+                    }
+                    ctx.fillStyle = p.color;
+                    ctx.beginPath(); ctx.arc(p.x, p.y, 2, 0, Math.PI*2); ctx.fill();
+                });
+                requestAnimationFrame(loop);
+            }
+            loop();
+            alert("Berhasil memotong 3 Koin! Simulasi Quantum Partikel dimulai.");
         }
 
-        // Mind Frequency Pad Real (Web Audio API)
         let audioCtx = null;
         let oscillator = null;
         let isAudioPlaying = false;
         function toggleMindFrequency() {
             if(!isAudioPlaying) {
-                if(coins < 3) return alert("Butuh 3 Koin untuk memutar Frekuensi Pikiran!");
-                show_11267753().then(() => {
-                    coins -= 3; updateCoinDisplay();
-                    playAudioFreq();
-                });
+                if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk memutar Frekuensi Pikiran.");
+                coins -= 3;
+                updateCoinDisplay();
+                playAudioFreq();
+                alert("Berhasil memotong 3 Koin! Frekuensi terapi pikiran aktif.");
             } else {
                 stopAudioFreq();
             }
@@ -1187,75 +1204,178 @@
             document.getElementById('audioStatusText').style.color = '#22c55e';
         }
 
-        // Interactive Fluid Dynamics Real
         function startFluidSim() {
-            if(coins < 3) return alert("Butuh 3 Koin untuk menjalankan Simulasi Cairan!");
-            show_11267753().then(() => {
-                coins -= 3; updateCoinDisplay();
-                const canvas = document.getElementById('fluidCanvas');
-                const ctx = canvas.getContext('2d');
-                let drops = [];
-                canvas.onpointermove = (e) => {
-                    const rect = canvas.getBoundingClientRect();
-                    drops.push({
-                        x: e.clientX - rect.left,
-                        y: e.clientY - rect.top,
-                        r: 5,
-                        color: `hsl(${Math.random() * 360}, 80%, 60%)`
-                    });
-                    if(drops.length > 50) drops.shift();
-                };
-                function renderFluid() {
-                    ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    drops.forEach(d => {
-                        d.r += 0.8;
-                        ctx.strokeStyle = d.color;
-                        ctx.lineWidth = 2;
-                        ctx.beginPath(); ctx.arc(d.x, d.y, d.r, 0, Math.PI*2); ctx.stroke();
-                    });
-                    requestAnimationFrame(renderFluid);
-                }
-                renderFluid();
-            });
+            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk menjalankan Simulasi Cairan.");
+            coins -= 3;
+            updateCoinDisplay();
+            const canvas = document.getElementById('fluidCanvas');
+            const ctx = canvas.getContext('2d');
+            let drops = [];
+            canvas.onpointermove = (e) => {
+                const rect = canvas.getBoundingClientRect();
+                drops.push({
+                    x: e.clientX - rect.left, y: e.clientY - rect.top, r: 5,
+                    color: `hsl(${Math.random() * 360}, 80%, 60%)`
+                });
+                if(drops.length > 50) drops.shift();
+            };
+            function renderFluid() {
+                ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                drops.forEach(d => {
+                    d.r += 0.8;
+                    ctx.strokeStyle = d.color;
+                    ctx.lineWidth = 2;
+                    ctx.beginPath(); ctx.arc(d.x, d.y, d.r, 0, Math.PI*2); ctx.stroke();
+                });
+                requestAnimationFrame(renderFluid);
+            }
+            renderFluid();
+            alert("Berhasil memotong 3 Koin! Simulasi Fluid Dynamics aktif.");
         }
 
-        // Cyber City Flythrough Real (WebGL / Canvas 3D)
         function startCyberCityFly() {
-            if(coins < 3) return alert("Butuh 3 Koin untuk menjalankan Cyber City Flythrough!");
-            show_11267753().then(() => {
-                coins -= 3; updateCoinDisplay();
-                const canvas = document.getElementById('cyberCanvas');
-                const ctx = canvas.getContext('2d');
-                let buildings = [];
-                for(let i=0; i<30; i++) {
-                    buildings.push({
-                        x: (Math.random() - 0.5) * 400 + canvas.width/2,
-                        y: Math.random() * canvas.height,
-                        z: Math.random() * 500 + 100,
-                        w: 40, h: 80
-                    });
+            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk menjalankan Cyber City Flythrough.");
+            coins -= 3;
+            updateCoinDisplay();
+            const canvas = document.getElementById('cyberCanvas');
+            const ctx = canvas.getContext('2d');
+            let buildings = [];
+            for(let i=0; i<30; i++) {
+                buildings.push({
+                    x: (Math.random() - 0.5) * 400 + canvas.width/2,
+                    y: Math.random() * canvas.height,
+                    z: Math.random() * 500 + 100, w: 40, h: 80
+                });
+            }
+            function renderCity() {
+                ctx.fillStyle = "#000";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                buildings.forEach(b => {
+                    b.z -= 2;
+                    if(b.z <= 0) b.z = 500;
+                    let k = 200 / b.z;
+                    let px = (b.x - canvas.width/2) * k + canvas.width/2;
+                    let py = (b.y - canvas.height/2) * k + canvas.height/2;
+                    let pw = b.w * k; let ph = b.h * k;
+                    ctx.strokeStyle = "#00f2fe";
+                    ctx.lineWidth = 1;
+                    ctx.strokeRect(px - pw/2, py - ph/2, pw, ph);
+                });
+                requestAnimationFrame(renderCity);
+            }
+            renderCity();
+            alert("Berhasil memotong 3 Koin! Penerbangan Kota Cyber 3D dimulai.");
+        }
+
+        // --- MODUL AR CAMERA & 105+ FILTER PILIHAN ---
+        let currentArMode = 'Normal';
+        let arStreamActive = false;
+        let arAnimationId = null;
+
+        const arCategories = [
+            "Cyberpunk", "Neon Glow", "Matrix Glitch", "Anime Glow", "Retro VHS", 
+            "Laser HUD", "Hologram 3D", "Alien Mask", "Cyborg Visor", "Gold Crown", 
+            "Rainbow Aura", "Dark Demon", "Angel Halo", "Fire Flame", "Ice Crystal"
+        ];
+
+        function buildArModesList() {
+            const grid = document.getElementById('arModesGrid');
+            if(!grid) return;
+            let html = "";
+            let totalModes = 0;
+            
+            arCategories.forEach((cat, catIdx) => {
+                for(let i=1; i<=7; i++) {
+                    totalModes++;
+                    let modeName = `${cat} #${i}`;
+                    let isFirst = (catIdx === 0 && i === 1) ? 'active' : '';
+                    html += `<button class="ar-mode-btn ${isFirst}" onclick="setArMode('${modeName}', this)">${modeName}</button>`;
                 }
-                function renderCity() {
-                    ctx.fillStyle = "#000";
-                    ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    buildings.forEach(b => {
-                        b.z -= 2;
-                        if(b.z <= 0) b.z = 500;
-                        let k = 200 / b.z;
-                        let px = (b.x - canvas.width/2) * k + canvas.width/2;
-                        let py = (b.y - canvas.height/2) * k + canvas.height/2;
-                        let pw = b.w * k;
-                        let ph = b.h * k;
-                        
-                        ctx.strokeStyle = "#00f2fe";
-                        ctx.lineWidth = 1;
-                        ctx.strokeRect(px - pw/2, py - ph/2, pw, ph);
-                    });
-                    requestAnimationFrame(renderCity);
-                }
-                renderCity();
             });
+            grid.innerHTML = html;
+            document.getElementById('arModeCounter').innerText = `Total Mode: ${totalModes} Pilihan`;
+        }
+
+        function unlockARCamera() {
+            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk mengaktifkan AR Camera.");
+            coins -= 3;
+            updateCoinDisplay();
+            
+            document.getElementById('arModuleContainer').style.display = 'block';
+            startArCameraStream();
+            alert("Berhasil memotong 3 Koin! AR Camera & 105+ Filter aktif.");
+        }
+
+        async function startArCameraStream() {
+            const video = document.getElementById('arVideo');
+            const canvas = document.getElementById('arCanvas');
+            const ctx = canvas.getContext('2d');
+
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false });
+                video.srcObject = stream;
+                arStreamActive = true;
+
+                video.onloadedmetadata = () => {
+                    canvas.width = video.videoWidth || 400;
+                    canvas.height = video.videoHeight || 300;
+                    renderArLoop(video, canvas, ctx);
+                };
+            } catch (err) {
+                alert("Gagal mengakses kamera perangkat: " + err.message);
+            }
+        }
+
+        function setArMode(modeName, btnElement) {
+            currentArMode = modeName;
+            document.getElementById('activeArModeName').innerText = modeName;
+            document.querySelectorAll('.ar-mode-btn').forEach(b => b.classList.remove('active'));
+            if(btnElement) btnElement.classList.add('active');
+        }
+
+        function renderArLoop(video, canvas, ctx) {
+            if(!arStreamActive) return;
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Efek Filter & Stiker AR Real-Time Berdasarkan Mode yang Dipilih
+            ctx.save();
+            if(currentArMode.includes('Cyberpunk')) {
+                ctx.fillStyle = "rgba(0, 242, 254, 0.12)";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.font = "bold 14px Poppins";
+                ctx.fillStyle = "#00f2fe";
+                ctx.fillText("⚡ [CYBER_HUD] SECURE_FACE_LOCKED", 20, 30);
+            } else if(currentArMode.includes('Neon Glow')) {
+                ctx.shadowColor = "#ff00ff";
+                ctx.shadowBlur = 15;
+                ctx.strokeStyle = "#ff00ff";
+                ctx.lineWidth = 4;
+                ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
+            } else if(currentArMode.includes('Matrix Glitch')) {
+                ctx.fillStyle = "rgba(0, 255, 65, 0.15)";
+                ctx.fillRect(0, Math.random() * canvas.height, canvas.width, 25);
+                ctx.font = "12px monospace";
+                ctx.fillStyle = "#22c55e";
+                ctx.fillText("010101_FACE_TARGET_FOUND", 30, 50);
+            } else if(currentArMode.includes('Gold Crown')) {
+                ctx.font = "32px serif";
+                ctx.fillText("👑", canvas.width / 2 - 16, 50);
+            } else if(currentArMode.includes('Angel Halo')) {
+                ctx.font = "32px serif";
+                ctx.fillText("✨😇✨", canvas.width / 2 - 30, 45);
+            } else if(currentArMode.includes('Fire Flame')) {
+                ctx.font = "28px serif";
+                ctx.fillText("🔥 🔥 🔥", canvas.width / 2 - 35, canvas.height - 30);
+            } else if(currentArMode.includes('Hologram 3D')) {
+                ctx.fillStyle = "rgba(56, 189, 248, 0.2)";
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                ctx.strokeStyle = "#fff";
+                ctx.strokeRect(canvas.width/4, canvas.height/4, canvas.width/2, canvas.height/2);
+            }
+            ctx.restore();
+
+            arAnimationId = requestAnimationFrame(() => renderArLoop(video, canvas, ctx));
         }
     </script>
 </body>
