@@ -502,132 +502,93 @@
                 let customBodyContent = "";
                 let customScriptContent = "";
 
-                // --- DETEKSI KECERDASAN BUATAN BERDASARKAN DESKRIPSI APLIKASI ---
-                
-                // 1. KATEGORI: KEUANGAN / DOMPET / BANKING
-                if(descLower.includes('dompet') || descLower.includes('keuangan') || descLower.includes('uang') || descLower.includes('saldo') || descLower.includes('deposit')) {
+                // --- 1. JIKA KATEGORI: GAME / TEBAK KATA / PERMAINAN ---
+                if(descLower.includes('game') || descLower.includes('tebak') || descLower.includes('kuis') || descLower.includes('permainan')) {
+                    iconClass = "fa-solid fa-gamepad";
+                    customBodyContent = `
+                        <div class="card glass" style="text-align: center;">
+                            <h3 style="font-size: 14px; color: #38bdf8; margin-bottom: 5px;">${appName}</h3>
+                            <p style="font-size: 10px; color: #94a3b8; margin-bottom: 12px;">${appDesc}</p>
+                            <div style="background: rgba(15, 23, 42, 0.8); padding: 12px; border-radius: 12px; border: 1px solid rgba(56, 189, 248, 0.2); margin-bottom: 12px;">
+                                <span style="font-size: 10px; color: #cbd5e1;">PETUNJUK SOAL:</span>
+                                <p style="font-size: 11px; color: #fff; margin: 4px 0;">Hewan berbulu, suka mengeong, hewan peliharaan.</p>
+                                <span style="font-size: 10px; color: #f59e0b;">Nyawa: <span id="nyawaGame">3</span></span>
+                            </div>
+                            <input type="text" id="ansGame" placeholder="Ketik jawaban..." style="margin-bottom: 8px;">
+                            <button class="btn-primary" onclick="mainkanGame()">Kirim Jawaban</button>
+                            <div id="hasilGame" style="font-size: 11px; margin-top: 10px; color: #cbd5e1;"></div>
+                        </div>`;
+                    customScriptContent = `
+                        let nyawa = 3;
+                        function mainkanGame() {
+                            let val = document.getElementById('ansGame').value.trim().toUpperCase();
+                            let out = document.getElementById('hasilGame');
+                            if(!val) return alert("Masukkan jawaban!");
+                            if(val === "KUCING") {
+                                out.innerHTML = "🎉 <b style='color:#22c55e;'>BENAR! Anda Menang!</b>";
+                            } else {
+                                nyawa--;
+                                document.getElementById('nyawaGame').innerText = nyawa;
+                                if(nyawa > 0) {
+                                    out.innerHTML = "❌ <b style='color:#ef4444;'>SALAH! Sisa nyawa: " + nyawa + "</b>";
+                                } else {
+                                    out.innerHTML = "💀 <b style='color:#ef4444;'>GAME OVER! Jawaban: KUCING</b>";
+                                    nyawa = 3;
+                                    document.getElementById('nyawaGame').innerText = nyawa;
+                                }
+                            }
+                            document.getElementById('ansGame').value = '';
+                        }`;
+                } 
+                // --- 2. JIKA KATEGORI: KEUANGAN / DOMPET ---
+                else if(descLower.includes('dompet') || descLower.includes('uang') || descLower.includes('saldo') || descLower.includes('keuangan')) {
                     iconClass = "fa-solid fa-wallet";
                     customBodyContent = `
                         <div class="card glass">
-                            <span style="font-size: 11px; color: #94a3b8;">Total Saldo Utama</span>
-                            <h2 id="valSaldo" style="font-size: 24px; color: #38bdf8; margin: 5px 0;">Rp 2.500.000</h2>
-                            <div style="display: flex; gap: 10px; margin-top: 15px;">
-                                <button class="btn-primary" onclick="aksiKeuangan('deposit')"><i class="fa-solid fa-plus"></i> Top Up</button>
-                                <button class="btn-secondary" onclick="aksiKeuangan('tarik')"><i class="fa-solid fa-arrow-up"></i> Kirim</button>
+                            <h3 style="font-size: 14px; color: #38bdf8; margin-bottom: 5px;">${appName}</h3>
+                            <div style="background: linear-gradient(135deg, #0ea5e9, #0369a1); padding: 12px; border-radius: 12px; text-align: center; margin: 10px 0;">
+                                <span style="font-size: 10px; color: #e0f2fe;">Saldo Anda</span>
+                                <h2 id="saldoku" style="font-size: 20px; color: #fff;">Rp 1.000.000</h2>
                             </div>
-                        </div>
-                        <div class="card glass" style="margin-top: 15px;">
-                            <h3 style="font-size: 13px; margin-bottom: 10px; color: #f1f5f9;"><i class="fa-solid fa-clock-rotate-left"></i> Riwayat Aktivitas</h3>
-                            <div id="logAktivitas">
-                                <div class="log-item"><span>Inisialisasi Akun</span><span style="color: #22c55e;">+Rp 2.500.000</span></div>
+                            <input type="number" id="nominal" placeholder="Nominal (Rp)..." style="margin-bottom: 8px;">
+                            <div style="display: flex; gap: 8px;">
+                                <button class="btn-primary" onclick="aksiDompet('tambah')">Top Up</button>
+                                <button class="btn-secondary" onclick="aksiDompet('kurang')">Kirim</button>
                             </div>
                         </div>`;
                     customScriptContent = `
-                        let saldo = 2500000;
-                        function aksiKeuangan(tipe) {
-                            let jumlah = prompt(tipe === 'deposit' ? "Masukkan jumlah deposit (Rp):" : "Masukkan jumlah transfer (Rp):");
-                            jumlah = parseInt(jumlah);
-                            if(!jumlah || jumlah <= 0) return alert("Nominal tidak valid!");
-                            if(tipe === 'tarik' && jumlah > saldo) return alert("Saldo tidak mencukupi!");
-                            
-                            saldo = tipe === 'deposit' ? saldo + jumlah : saldo - jumlah;
-                            document.getElementById('valSaldo').innerText = "Rp " + saldo.toLocaleString('id-ID');
-                            
-                            let warna = tipe === 'deposit' ? '#22c55e' : '#ef4444';
-                            let tanda = tipe === 'deposit' ? '+' : '-';
-                            document.getElementById('logAktivitas').innerHTML += \`<div class="log-item"><span>\${tipe.toUpperCase()}</span><span style="color: \${warna};">\${tanda}Rp \${jumlah.toLocaleString('id-ID')}</span></div>\`;
+                        let saldo = 1000000;
+                        function aksiDompet(tipe) {
+                            let val = parseInt(document.getElementById('nominal').value);
+                            if(!val || val <= 0) return alert("Masukkan nominal valid!");
+                            if(tipe === 'kurang' && val > saldo) return alert("Saldo tidak cukup!");
+                            saldo = tipe === 'tambah' ? saldo + val : saldo - val;
+                            document.getElementById('saldoku').innerText = "Rp " + saldo.toLocaleString('id-ID');
                             alert("Transaksi Berhasil!");
+                            document.getElementById('nominal').value = '';
                         }`;
                 } 
-                // 2. KATEGORI: CATATAN / TO-DO LIST / PRODUKTIVITAS
-                else if(descLower.includes('catatan') || descLower.includes('tugas') || descLower.includes('todo') || descLower.includes('note') || descLower.includes('rencana')) {
-                    iconClass = "fa-solid fa-clipboard-list";
-                    customBodyContent = `
-                        <div class="card glass">
-                            <input type="text" id="inputCatatan" placeholder="Tulis tugas atau catatan baru..." style="margin-bottom: 8px;">
-                            <button class="btn-primary" onclick="tambahCatatan()">Simpan Catatan</button>
-                        </div>
-                        <div class="card glass" style="margin-top: 15px;">
-                            <h3 style="font-size: 13px; margin-bottom: 10px; color: #f1f5f9;">Daftar Catatan</h3>
-                            <div id="listCatatan" style="max-height: 200px; overflow-y: auto;">
-                                <p style="font-size: 11px; color: #64748b; text-align: center;">Belum ada catatan tersimpan.</p>
-                            </div>
-                        </div>`;
-                    customScriptContent = `
-                        function tambahCatatan() {
-                            let val = document.getElementById('inputCatatan').value.trim();
-                            if(!val) return alert("Catatan tidak boleh kosong!");
-                            let container = document.getElementById('listCatatan');
-                            if(container.innerHTML.includes('Belum ada')) container.innerHTML = '';
-                            
-                            container.innerHTML += \`<div class="log-item" style="display:flex; justify-content:space-between; align-items:center;"><span>📌 \${val}</span><button onclick="this.parentElement.remove()" style="background:#ef4444; border:none; color:#fff; padding:3px 8px; border-radius:5px; font-size:9px; cursor:pointer;">Hapus</button></div>\`;
-                            document.getElementById('inputCatatan').value = '';
-                        }`;
-                } 
-                // 3. KATEGORI: KASIR / PENJUALAN / TOKO / POS
-                else if(descLower.includes('kasir') || descLower.includes('toko') || descLower.includes('jual') || descLower.includes('produk') || descLower.includes('pos')) {
-                    iconClass = "fa-solid fa-cash-register";
-                    customBodyContent = `
-                        <div class="card glass">
-                            <h3 style="font-size: 13px; margin-bottom: 8px; color: #38bdf8;">Kasir Pintar</h3>
-                            <input type="text" id="namaBarang" placeholder="Nama Produk/Barang..." style="margin-bottom: 6px;">
-                            <input type="number" id="hargaBarang" placeholder="Harga (Rp)..." style="margin-bottom: 8px;">
-                            <button class="btn-primary" onclick="tambahItemKasir()">Tambah ke Keranjang</button>
-                        </div>
-                        <div class="card glass" style="margin-top: 15px;">
-                            <div style="display:flex; justify-content:space-between; font-size:12px; margin-bottom:8px;"><b>Total Bayar:</b> <b id="totalKasir" style="color:#38bdf8;">Rp 0</b></div>
-                            <div id="listKeranjang" style="max-height: 120px; overflow-y: auto; font-size:11px; margin-bottom:10px; color:#cbd5e1;">Keranjang kosong</div>
-                            <button class="btn-secondary" onclick="checkoutKasir()">Bayar Sekarang</button>
-                        </div>`;
-                    customScriptContent = `
-                        let totalBelanja = 0;
-                        function tambahItemKasir() {
-                            let nama = document.getElementById('namaBarang').value.trim();
-                            let harga = parseInt(document.getElementById('hargaBarang').value);
-                            if(!nama || !harga) return alert("Isi nama dan harga produk!");
-                            
-                            let keranjang = document.getElementById('listKeranjang');
-                            if(keranjang.innerText === 'Keranjang kosong') keranjang.innerHTML = '';
-                            
-                            keranjang.innerHTML += \`<div style="display:flex; justify-content:space-between; padding:4px 0; border-bottom:1px solid rgba(255,255,255,0.05);"><span>\${nama}</span><span>Rp \${harga.toLocaleString('id-ID')}</span></div>\`;
-                            totalBelanja += harga;
-                            document.getElementById('totalKasir').innerText = "Rp " + totalBelanja.toLocaleString('id-ID');
-                            document.getElementById('namaBarang').value = '';
-                            document.getElementById('hargaBarang').value = '';
-                        }
-                        function checkoutKasir() {
-                            if(totalBelanja === 0) return alert("Keranjang masih kosong!");
-                            alert("Pembayaran sebesar Rp " + totalBelanja.toLocaleString('id-ID') + " Berhasil Diproses!");
-                            totalBelanja = 0;
-                            document.getElementById('totalKasir').innerText = "Rp 0";
-                            document.getElementById('listKeranjang').innerHTML = "Keranjang kosong";
-                        }`;
-                } 
-                // 4. KATEGORI UMUM / CUSTOM APAPUN (Kecerdasan Universal)
+                // --- 3. KATEGORI UMUM / LAINNYA (DAPAT MERAKIT APA SAJA) ---
                 else {
-                    iconClass = "fa-solid fa-layer-group";
+                    iconClass = "fa-solid alt fa-rocket";
                     customBodyContent = `
-                        <div class="card glass" style="text-align: center; padding: 25px;">
-                            <i class="fa-solid fa-microchip" style="font-size: 38px; color: #38bdf8; margin-bottom: 12px;"></i>
-                            <h3 style="font-size: 15px; color: #fff; margin-bottom: 5px;">Sistem ${appName} Aktif</h3>
-                            <p style="font-size: 11px; color: #94a3b8; margin-bottom: 15px;">${appDesc}</p>
-                            <input type="text" id="userInputCustom" placeholder="Ketik perintah atau data di sini..." style="text-align:center; margin-bottom: 10px;">
-                            <button class="btn-primary" onclick="jalankanFiturCustom()">Eksekusi Fungsi AI</button>
-                        </div>
-                        <div class="card glass" style="margin-top: 15px;">
-                            <h4 style="font-size: 12px; color: #38bdf8; margin-bottom: 5px;">Log Output Sistem:</h4>
-                            <div id="outputCustom" style="font-size: 11px; color: #cbd5e1; min-height: 40px;">Menunggu input pengguna...</div>
+                        <div class="card glass" style="text-align: center;">
+                            <h3 style="font-size: 14px; color: #38bdf8; margin-bottom: 5px;">${appName}</h3>
+                            <p style="font-size: 10px; color: #94a3b8; margin-bottom: 12px;">${appDesc}</p>
+                            <input type="text" id="customInput" placeholder="Masukkan data/pesan..." style="margin-bottom: 8px;">
+                            <button class="btn-primary" onclick="prosesCustom()">Jalankan Aplikasi</button>
+                            <div id="customResult" style="font-size: 11px; margin-top: 10px; color: #cbd5e1; background: rgba(15,23,42,0.6); padding: 8px; border-radius: 8px;">Hasil akan muncul di sini...</div>
                         </div>`;
                     customScriptContent = `
-                        function jalankanFiturCustom() {
-                            let val = document.getElementById('userInputCustom').value.trim();
-                            if(!val) return alert("Masukkan teks terlebih dahulu!");
-                            document.getElementById('outputCustom').innerHTML = \`✅ Berhasil memproses permintaan: "<b>\${val}</b>" dengan modul ${appName}.\`;
-                            document.getElementById('userInputCustom').value = '';
+                        function prosesCustom() {
+                            let val = document.getElementById('customInput').value.trim();
+                            if(!val) return alert("Masukkan data terlebih dahulu!");
+                            document.getElementById('customResult').innerHTML = "✨ Berhasil memproses: '<b>" + val + "</b>' dengan sistem " + "${appName}";
+                            document.getElementById('customInput').value = '';
                         }`;
                 }
 
-                // --- TEMPLATE UTAMA DENGAN TAMPILAN MEWAH (GLASSMORPHISM) ---
+                // --- TEMPLATE TAMPILAN MEWAH (GLASSMORPHISM) ---
                 let generatedCode = `<!DOCTYPE html>
 <html lang="id">
 <head>
@@ -636,41 +597,19 @@
     <title>${appName}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * { box-sizing: border-box; font-family: 'Inter', 'Segoe UI', sans-serif; margin: 0; padding: 0; }
+        * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
         body { background: radial-gradient(circle at top, #1e1b4b, #0f172a); color: #f8fafc; padding: 15px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
         .app-wrapper { width: 100%; max-width: 400px; }
-        .app-header { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; background: rgba(30, 41, 59, 0.7); padding: 12px 16px; border-radius: 16px; border: 1px solid rgba(255,255,255,0.1); backdrop-filter: blur(10px); }
-        .app-header i { font-size: 20px; color: #38bdf8; background: rgba(56, 189, 248, 0.1); padding: 8px; border-radius: 10px; }
-        .app-header h1 { font-size: 15px; color: #fff; font-weight: 700; }
-        .app-header p { font-size: 10px; color: #94a3b8; }
-        
-        .card.glass { background: rgba(30, 41, 59, 0.6); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 16px; padding: 16px; backdrop-filter: blur(12px); box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3); }
-        
-        input, select { width: 100%; padding: 11px 14px; background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 10px; color: #fff; font-size: 12px; outline: none; transition: 0.3s; }
-        input:focus { border-color: #38bdf8; box-shadow: 0 0 10px rgba(56, 189, 248, 0.2); }
-        
-        button.btn-primary { background: linear-gradient(135deg, #0ea5e9, #2563eb); color: #fff; border: none; padding: 11px; width: 100%; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 12px; transition: 0.2s; box-shadow: 0 4px 12px rgba(14, 165, 233, 0.3); }
-        button.btn-primary:hover { opacity: 0.9; transform: translateY(-1px); }
-        
-        button.btn-secondary { background: rgba(255, 255, 255, 0.08); color: #f8fafc; border: 1px solid rgba(255, 255, 255, 0.1); padding: 11px; width: 100%; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 12px; transition: 0.2s; }
-        button.btn-secondary:hover { background: rgba(255, 255, 255, 0.15); }
-        
-        .log-item { font-size: 11px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; color: #cbd5e1; }
+        .card.glass { background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 16px; backdrop-filter: blur(12px); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); }
+        input { width: 100%; padding: 10px; background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: #fff; font-size: 12px; outline: none; }
+        button.btn-primary { background: linear-gradient(135deg, #0ea5e9, #2563eb); color: #fff; border: none; padding: 10px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; }
+        button.btn-secondary { background: rgba(255,255,255,0.1); color: #fff; border: none; padding: 10px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; }
     </style>
 </head>
 <body>
     <div class="app-wrapper">
-        <div class="app-header">
-            <i class="${iconClass}"></i>
-            <div>
-                <h1>${appName}</h1>
-                <p>${appDesc}</p>
-            </div>
-        </div>
-        
         ${customBodyContent}
     </div>
-
     <script>
         ${customScriptContent}
     <\/script>
@@ -684,9 +623,10 @@
                 iframe.srcdoc = generatedCode;
                 document.getElementById('appPreviewContainer').style.display = 'block';
 
-                alert("Luar Biasa! Aplikasi mewah '" + appName + "' berhasil dirakit sepenuhnya oleh AI.");
+                alert("Berhasil! Aplikasi '" + appName + "' telah dirakit dan siap dimainkan langsung di dalam aplikasi Anda.");
             });
         }
+
 
         function copyAppCode() {
             let codeBox = document.getElementById('generatedAppCode');
