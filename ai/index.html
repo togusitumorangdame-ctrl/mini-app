@@ -116,6 +116,13 @@
             <button id="tab-referral" class="tab-btn" onclick="switchTab('referral-view', 'tab-referral')"><i class="fa-solid fa-users"></i>Referral</button>
             <button id="tab-socialosint" class="tab-btn" onclick="switchTab('socialosint-view', 'tab-socialosint')"><i class="fa-solid fa-user-detect"></i>OSINT</button>
             <button id="tab-scratch" class="tab-btn" onclick="switchTab('scratch-view', 'tab-scratch'); initScratchCard();"><i class="fa-solid fa-ticket"></i>Scratch</button>
+            
+            <!-- 5 FITUR BARU REAL DENGAN TARIF 3 KOIN -->
+            <button id="tab-f1" class="tab-btn" onclick="switchTab('f1-view', 'tab-f1')"><i class="fa-solid fa-terminal"></i>ASCII Cam</button>
+            <button id="tab-f2" class="tab-btn" onclick="switchTab('f2-view', 'tab-f2')"><i class="fa-solid fa-atom"></i>Particles</button>
+            <button id="tab-f3" class="tab-btn" onclick="switchTab('f3-view', 'tab-f3')"><i class="fa-solid fa-brain"></i>BrainWave</button>
+            <button id="tab-f4" class="tab-btn" onclick="switchTab('f4-view', 'tab-f4')"><i class="fa-solid fa-water"></i>FluidSim</button>
+            <button id="tab-f5" class="tab-btn" onclick="switchTab('f5-view', 'tab-f5')"><i class="fa-solid fa-vr-cardboard"></i>Wireframe</button>
         </div>
 
         <div id="ai-view" class="feature-view active">
@@ -181,9 +188,9 @@
             <img id="qrResult" src="" alt="Hasil QR Code">
         </div>
 
-        <!-- FITUR PROFESSIONAL AI APP BUILDER -->
+        <!-- FITUR PROFESSIONAL AI APP BUILDER (Tarif: 3 Koin) -->
         <div id="appbuilder-view" class="feature-view">
-            <h2><i class="fa-solid fa-hammer"></i> AI App Builder Profesional (15 Koin)</h2>
+            <h2><i class="fa-solid fa-hammer"></i> AI App Builder Profesional (3 Koin)</h2>
             <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Hasilkan aplikasi web instan yang lengkap dengan antarmuka dan logika kustom secara otomatis!</p>
             <input type="text" id="appNameInput" placeholder="Nama Aplikasi (cth: Kalkulator BMI Pintar)">
             <textarea id="appDescInput" rows="3" placeholder="Jelaskan fitur & fungsi aplikasi yang ingin dibuat secara detail..."></textarea>
@@ -200,7 +207,7 @@
 
             <div id="appPreviewContainer" style="display: none; margin-top: 15px; background: rgba(0,0,0,0.6); border: 2px solid #00f2fe; border-radius: 14px; padding: 12px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                    <b style="color: #00f2fe; font-size: 12px;"><i class="fa-solid	fa-eye"></i> Live Preview Aplikasi</b>
+                    <b style="color: #00f2fe; font-size: 12px;"><i class="fa-solid fa-eye"></i> Live Preview Aplikasi</b>
                     <button onclick="closeAppPreview()" style="background: #ef4444; border: none; color: white; padding: 2px 8px; border-radius: 6px; font-size: 10px; cursor: pointer;">Tutup</button>
                 </div>
                 <iframe id="previewIframe" style="width: 100%; height: 220px; border: none; background: #fff; border-radius: 8px;"></iframe>
@@ -268,6 +275,62 @@
                 <div class="scratch-notif" id="notifBox">Klik tombol di atas untuk memulai kupon gosok!</div>
             </div>
         </div>
+
+        <!-- 1. WEBCAM ASCII ART CONVERTER (Tarif: 3 Koin) -->
+        <div id="f1-view" class="feature-view">
+            <h2><i class="fa-solid fa-terminal"></i> Webcam ASCII Art (3 Koin)</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Ubah tangkapan kamera langsung menjadi seni teks karakter secara real-time.</p>
+            <button class="btn-action" onclick="startAsciiCam()">Nyalakan Kamera ASCII</button>
+            <div style="margin-top: 12px; background: #000; border: 1px solid #00f2fe; border-radius: 12px; padding: 8px; text-align: center;">
+                <video id="asciiVideo" autoplay playsinline style="display:none;"></video>
+                <canvas id="asciiCanvas" style="width: 100%; height: 200px; display: block; border-radius: 8px; background: #050505;"></canvas>
+                <pre id="asciiOutput" style="font-size: 6px; line-height: 6px; color: #00f2fe; overflow: hidden; margin-top: 6px;"></pre>
+            </div>
+        </div>
+
+        <!-- 2. QUANTUM PARTICLE LIFE SIMULATION (Tarif: 3 Koin) -->
+        <div id="f2-view" class="feature-view">
+            <h2><i class="fa-solid fa-atom"></i> Quantum Particle Life (3 Koin)</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Sentuh layar untuk melihat partikel digital hidup berevolusi membentuk pola.</p>
+            <button class="btn-action" onclick="startParticleSim()">Mulai Simulasi Partikel (3 Koin)</button>
+            <div style="margin-top: 12px; position: relative; border: 1px solid #00f2fe; border-radius: 12px; overflow: hidden;">
+                <canvas id="particleCanvas" width="400" height="240" style="width: 100%; height: 240px; background: #000; display: block; touch-action: none;"></canvas>
+            </div>
+        </div>
+
+        <!-- 3. DEEP AMBIENT & MIND FREQUENCY PAD (Tarif: 3 Koin) -->
+        <div id="f3-view" class="feature-view">
+            <h2><i class="fa-solid fa-brain"></i> Mind Frequency Pad (3 Koin)</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Hasilkan gelombang suara terapi pikiran (Binaural Beats) secara langsung dari browser.</p>
+            <select id="freqSelect">
+                <option value="432">432 Hz - Frekuensi Relaksasi Semesta</option>
+                <option value="528">528 Hz - Frekuensi Pemulihan DNA</option>
+                <option value="285">285 Hz - Frekuensi Regenerasi Sel</option>
+            </select>
+            <button class="btn-action" onclick="toggleMindFrequency()">Putar / Hentikan Frekuensi (3 Koin)</button>
+            <div id="audioStatusText" style="font-size: 11px; color: #22c55e; text-align: center; margin-top: 10px;">Status Audio: Berhenti</div>
+        </div>
+
+        <!-- 4. INTERACTIVE FLUID DYNAMICS SIMULATOR (Tarif: 3 Koin) -->
+        <div id="f4-view" class="feature-view">
+            <h2><i class="fa-solid fa-water"></i> Interactive Fluid Dynamics (3 Koin)</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Usap layar untuk menciptakan gelombang fluida warna pelangi yang memukau.</p>
+            <button class="btn-action" onclick="startFluidSim()">Aktifkan Simulasi Cairan (3 Koin)</button>
+            <div style="margin-top: 12px; border: 1px solid #00f2fe; border-radius: 12px; overflow: hidden;">
+                <canvas id="fluidCanvas" width="400" height="240" style="width: 100%; height: 240px; background: #000; display: block; touch-action: none;"></canvas>
+            </div>
+        </div>
+
+        <!-- 5. HOLOGRAPHIC 3D WIREFRAME CYBER-CITY (Tarif: 3 Koin) -->
+        <div id="f5-view" class="feature-view">
+            <h2><i class="fa-solid fa-vr-cardboard"></i> Cyber City Flythrough (3 Koin)</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Simulasi penerbangan kota hologram 3D masa depan bergaya Tron.</p>
+            <button class="btn-action" onclick="startCyberCityFly()">Mulai Penerbangan Kota (3 Koin)</button>
+            <div style="margin-top: 12px; border: 1px solid #00f2fe; border-radius: 12px; overflow: hidden;">
+                <canvas id="cyberCanvas" width="400" height="240" style="width: 100%; height: 240px; background: #000; display: block;"></canvas>
+            </div>
+        </div>
+
     </div>
 
     <script>
@@ -487,14 +550,14 @@
             });
         }
 
-                function runAppBuilder() {
-            if(coins < 15) return alert("Butuh 15 Koin untuk membuat aplikasi instan profesional!");
+        function runAppBuilder() {
+            if(coins < 3) return alert("Butuh 3 Koin untuk membuat aplikasi instan profesional!");
             let appName = document.getElementById('appNameInput').value.trim();
             let appDesc = document.getElementById('appDescInput').value.trim();
             if(!appName || !appDesc) return alert("Harap isi Nama dan Deskripsi Aplikasi!");
 
             show_11267753().then(() => {
-                coins -= 15;
+                coins -= 3;
                 updateCoinDisplay();
 
                 let descLower = appDesc.toLowerCase();
@@ -502,7 +565,6 @@
                 let customBodyContent = "";
                 let customScriptContent = "";
 
-                // --- 1. JIKA KATEGORI: GAME / TEBAK KATA / PERMAINAN ---
                 if(descLower.includes('game') || descLower.includes('tebak') || descLower.includes('kuis') || descLower.includes('permainan')) {
                     iconClass = "fa-solid fa-gamepad";
                     customBodyContent = `
@@ -539,9 +601,7 @@
                             }
                             document.getElementById('ansGame').value = '';
                         }`;
-                } 
-                // --- 2. JIKA KATEGORI: KEUANGAN / DOMPET ---
-                else if(descLower.includes('dompet') || descLower.includes('uang') || descLower.includes('saldo') || descLower.includes('keuangan')) {
+                } else if(descLower.includes('dompet') || descLower.includes('uang') || descLower.includes('saldo') || descLower.includes('keuangan')) {
                     iconClass = "fa-solid fa-wallet";
                     customBodyContent = `
                         <div class="card glass">
@@ -567,9 +627,7 @@
                             alert("Transaksi Berhasil!");
                             document.getElementById('nominal').value = '';
                         }`;
-                } 
-                // --- 3. KATEGORI UMUM / LAINNYA (DAPAT MERAKIT APA SAJA) ---
-                else {
+                } else {
                     iconClass = "fa-solid alt fa-rocket";
                     customBodyContent = `
                         <div class="card glass" style="text-align: center;">
@@ -588,7 +646,6 @@
                         }`;
                 }
 
-                // --- TEMPLATE TAMPILAN MEWAH (GLASSMORPHISM) ---
                 let generatedCode = `<!DOCTYPE html>
 <html lang="id">
 <head>
@@ -994,6 +1051,204 @@
 
         setInterval(fetchLiveCryptoPrices, 3000);
         updateDemoUI();
+
+        // --- SKRIP 5 FITUR BARU REAL (TERINTEGRASI SISTEM 3 KOIN) ---
+
+        // 1. Webcam ASCII Art Real
+        let asciiStream = null;
+        function startAsciiCam() {
+            if(coins < 3) return alert("Butuh 3 Koin untuk menjalankan Webcam ASCII!");
+            show_11267753().then(() => {
+                coins -= 3; updateCoinDisplay();
+                const video = document.getElementById('asciiVideo');
+                const canvas = document.getElementById('asciiCanvas');
+                const ctx = canvas.getContext('2d');
+                const output = document.getElementById('asciiOutput');
+                
+                if (!asciiStream) {
+                    navigator.mediaDevices.getUserMedia({ video: true }).then(stream => {
+                        asciiStream = stream;
+                        video.srcObject = stream;
+                        video.play();
+                        requestAnimationFrame(renderAscii);
+                    }).catch(err => { alert("Gagal mengakses kamera: " + err); });
+                } else {
+                    requestAnimationFrame(renderAscii);
+                }
+
+                function renderAscii() {
+                    if (video.paused || video.ended) return;
+                    ctx.drawImage(video, 0, 0, 60, 35);
+                    const imgData = ctx.getImageData(0, 0, 60, 35).data;
+                    const asciiChars = "@#W$9876543210?!abc;:+=-,._ ";
+                    let asciiStr = "";
+                    for (let y = 0; y < 35; y++) {
+                        for (let x = 0; x < 60; x++) {
+                            const offset = (y * 60 + x) * 4;
+                            const r = imgData[offset];
+                            const g = imgData[offset + 1];
+                            const b = imgData[offset + 2];
+                            const avg = (r + g + b) / 3;
+                            const charIdx = Math.floor((avg / 255) * (asciiChars.length - 1));
+                            asciiStr += asciiChars[charIdx];
+                        }
+                        asciiStr += "\n";
+                    }
+                    output.innerText = asciiStr;
+                    requestAnimationFrame(renderAscii);
+                }
+            });
+        }
+
+        // 2. Quantum Particle Life Real
+        function startParticleSim() {
+            if(coins < 3) return alert("Butuh 3 Koin untuk menjalankan Simulasi Partikel!");
+            show_11267753().then(() => {
+                coins -= 3; updateCoinDisplay();
+                const canvas = document.getElementById('particleCanvas');
+                const ctx = canvas.getContext('2d');
+                let particles = [];
+                for(let i=0; i<150; i++) {
+                    particles.push({
+                        x: Math.random() * canvas.width,
+                        y: Math.random() * canvas.height,
+                        vx: (Math.random() - 0.5) * 2,
+                        vy: (Math.random() - 0.5) * 2,
+                        color: `hsl(${Math.random() * 360}, 100%, 50%)`
+                    });
+                }
+                let touchX = null, touchY = null;
+                canvas.onmousemove = (e) => {
+                    const rect = canvas.getBoundingClientRect();
+                    touchX = e.clientX - rect.left;
+                    touchY = e.clientY - rect.top;
+                };
+                function loop() {
+                    ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    particles.forEach(p => {
+                        p.x += p.vx; p.y += p.vy;
+                        if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
+                        if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
+                        if(touchX !== null) {
+                            let dx = touchX - p.x; let dy = touchY - p.y;
+                            let dist = Math.sqrt(dx*dx + dy*dy);
+                            if(dist < 80) { p.x -= dx * 0.05; p.y -= dy * 0.05; }
+                        }
+                        ctx.fillStyle = p.color;
+                        ctx.beginPath(); ctx.arc(p.x, p.y, 2, 0, Math.PI*2); ctx.fill();
+                    });
+                    requestAnimationFrame(loop);
+                }
+                loop();
+            });
+        }
+
+        // 3. Mind Frequency Pad Real (Web Audio API)
+        let audioCtx = null;
+        let oscillator = null;
+        let isAudioPlaying = false;
+        function toggleMindFrequency() {
+            if(!isAudioPlaying) {
+                if(coins < 3) return alert("Butuh 3 Koin untuk memutar Frekuensi Pikiran!");
+                show_11267753().then(() => {
+                    coins -= 3; updateCoinDisplay();
+                    playAudioFreq();
+                });
+            } else {
+                stopAudioFreq();
+            }
+        }
+        function playAudioFreq() {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            oscillator = audioCtx.createOscillator();
+            let freq = parseInt(document.getElementById('freqSelect').value);
+            oscillator.type = 'sine';
+            oscillator.frequency.setValueAtTime(freq, audioCtx.currentTime);
+            oscillator.connect(audioCtx.destination);
+            oscillator.start();
+            isAudioPlaying = true;
+            document.getElementById('audioStatusText').innerText = `Status Audio: Berjalan Aktif (${freq} Hz)`;
+            document.getElementById('audioStatusText').style.color = '#00f2fe';
+        }
+        function stopAudioFreq() {
+            if(oscillator) { oscillator.stop(); oscillator.disconnect(); }
+            if(audioCtx) { audioCtx.close(); }
+            isAudioPlaying = false;
+            document.getElementById('audioStatusText').innerText = "Status Audio: Berhenti";
+            document.getElementById('audioStatusText').style.color = '#22c55e';
+        }
+
+        // 4. Interactive Fluid Dynamics Real
+        function startFluidSim() {
+            if(coins < 3) return alert("Butuh 3 Koin untuk menjalankan Simulasi Cairan!");
+            show_11267753().then(() => {
+                coins -= 3; updateCoinDisplay();
+                const canvas = document.getElementById('fluidCanvas');
+                const ctx = canvas.getContext('2d');
+                let drops = [];
+                canvas.onpointermove = (e) => {
+                    const rect = canvas.getBoundingClientRect();
+                    drops.push({
+                        x: e.clientX - rect.left,
+                        y: e.clientY - rect.top,
+                        r: 5,
+                        color: `hsl(${Math.random() * 360}, 80%, 60%)`
+                    });
+                    if(drops.length > 50) drops.shift();
+                };
+                function renderFluid() {
+                    ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    drops.forEach(d => {
+                        d.r += 0.8;
+                        ctx.strokeStyle = d.color;
+                        ctx.lineWidth = 2;
+                        ctx.beginPath(); ctx.arc(d.x, d.y, d.r, 0, Math.PI*2); ctx.stroke();
+                    });
+                    requestAnimationFrame(renderFluid);
+                }
+                renderFluid();
+            });
+        }
+
+        // 5. Cyber City Flythrough Real (WebGL / Canvas 3D)
+        function startCyberCityFly() {
+            if(coins < 3) return alert("Butuh 3 Koin untuk menjalankan Cyber City Flythrough!");
+            show_11267753().then(() => {
+                coins -= 3; updateCoinDisplay();
+                const canvas = document.getElementById('cyberCanvas');
+                const ctx = canvas.getContext('2d');
+                let buildings = [];
+                for(let i=0; i<30; i++) {
+                    buildings.push({
+                        x: (Math.random() - 0.5) * 400 + canvas.width/2,
+                        y: Math.random() * canvas.height,
+                        z: Math.random() * 500 + 100,
+                        w: 40, h: 80
+                    });
+                }
+                function renderCity() {
+                    ctx.fillStyle = "#000";
+                    ctx.fillRect(0, 0, canvas.width, canvas.height);
+                    buildings.forEach(b => {
+                        b.z -= 2;
+                        if(b.z <= 0) b.z = 500;
+                        let k = 200 / b.z;
+                        let px = (b.x - canvas.width/2) * k + canvas.width/2;
+                        let py = (b.y - canvas.height/2) * k + canvas.height/2;
+                        let pw = b.w * k;
+                        let ph = b.h * k;
+                        
+                        ctx.strokeStyle = "#00f2fe";
+                        ctx.lineWidth = 1;
+                        ctx.strokeRect(px - pw/2, py - ph/2, pw, ph);
+                    });
+                    requestAnimationFrame(renderCity);
+                }
+                renderCity();
+            });
+        }
     </script>
 </body>
 </html>
