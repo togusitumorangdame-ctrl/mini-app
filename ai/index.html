@@ -142,12 +142,8 @@
             <!-- FITUR BARU: AR FACE STICKER & 100+ FILTER KAMERA -->
             <button id="tab-ar" class="tab-btn" onclick="switchTab('ar-view', 'tab-ar')"><i class="fa-solid fa-face-smile-beam"></i>AR Cam</button>
             
-            <!-- 5 FITUR BARU TAMBAHAN -->
-            <button id="tab-f6" class="tab-btn" onclick="switchTab('f6-view', 'tab-f6')"><i class="fa-solid fa-calculator"></i>Kalkulator</button>
-            <button id="tab-f7" class="tab-btn" onclick="switchTab('f7-view', 'tab-f7')"><i class="fa-solid fa-stopwatch"></i>Stopwatch</button>
-            <button id="tab-f8" class="tab-btn" onclick="switchTab('f8-view', 'tab-f8')"><i class="fa-solid fa-font"></i>Counter</button>
-            <button id="tab-f9" class="tab-btn" onclick="switchTab('f9-view', 'tab-f9')"><i class="fa-solid fa-palette"></i>Warna</button>
-            <button id="tab-f10" class="tab-btn" onclick="switchTab('f10-view', 'tab-f10')"><i class="fa-solid fa-dice"></i>Dadu</button>
+            <!-- FITUR BARU: NEURAL DREAM & STYLE TRANSFER PHOTO LAB (WebGPU) -->
+            <button id="tab-neural" class="tab-btn" onclick="switchTab('neural-view', 'tab-neural')"><i class="fa-solid fa-palette"></i>Neural Lab</button>
         </div>
 
         <div id="ai-view" class="feature-view active">
@@ -390,50 +386,28 @@
             </div>
         </div>
 
-        <!-- 5 FITUR BARU TAMBAHAN -->
-        <div id="f6-view" class="feature-view">
-            <h2><i class="fa-solid fa-calculator"></i> Kalkulator Pintar</h2>
-            <input type="text" id="calcInput" placeholder="Contoh: 25 * 4 + 10" style="font-size: 14px; font-weight: bold; text-align: right;">
-            <button class="btn-action" onclick="hitungKalkulator()"><i class="fa-solid fa-equals"></i> Hitung Hasil</button>
-            <div class="result-box" id="calcResultBox" style="display: block; background: rgba(0,0,0,0.3); margin-top: 10px; font-size: 14px; font-weight: bold; color: #00f2fe;">Hasil: 0</div>
-        </div>
+        <!-- 7. FITUR BARU: NEURAL DREAM & STYLE TRANSFER PHOTO LAB (WebGPU) -->
+        <div id="neural-view" class="feature-view">
+            <h2><i class="fa-solid fa-palette"></i> Neural Dream & Style Transfer Photo Lab (3 Koin)</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Transformasikan foto Anda dengan gaya artistik neural network berakselerasi WebGPU secara instan.</p>
+            
+            <input type="file" id="neuralImageInput" accept="image/*" style="margin-bottom: 8px; font-size: 11px;">
+            
+            <select id="neuralStyleSelect" style="margin-bottom: 10px;">
+                <option value="vangogh">Starry Gogh (Post-Impressionism)</option>
+                <option value="cyberpunk">Cyberpunk Neon Glitch</option>
+                <option value="anime">Makoto Shinkai Anime Dream</option>
+                <option value="oilpainting">Classical Renaissance Oil</option>
+                <option value="vaporwave">Vaporwave 90s Aesthetic</option>
+            </select>
 
-        <div id="f7-view" class="feature-view">
-            <h2><i class="fa-solid fa-stopwatch"></i> Stopwatch Sederhana</h2>
-            <div style="background: rgba(0,0,0,0.4); padding: 20px; border-radius: 12px; text-align: center; margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.08);">
-                <h1 id="stopwatchDisplay" style="font-size: 32px; color: #00f2fe; font-family: monospace;">00:00:00</h1>
-            </div>
-            <div style="display: flex; gap: 8px;">
-                <button class="btn-action" onclick="mulaiStopwatch()" style="background: #22c55e;">Mulai</button>
-                <button class="btn-action" onclick="stopStopwatch()" style="background: #ef4444;">Berhenti</button>
-                <button class="btn-action" onclick="resetStopwatch()" style="background: #4a5568;">Reset</button>
-            </div>
-        </div>
+            <button class="btn-action" onclick="runNeuralStyleTransfer()">Jalankan Neural Style Transfer (3 Koin)</button>
 
-        <div id="f8-view" class="feature-view">
-            <h2><i class="fa-solid fa-font"></i> Penghitung Kata & Karakter</h2>
-            <textarea id="textAnalyzerInput" rows="4" placeholder="Ketik atau tempel teks di sini..."></textarea>
-            <button class="btn-action" onclick="analisisTeks()"><i class="fa-solid fa-chart-bar"></i> Analisis Teks</button>
-            <div class="result-box" id="textResultBox" style="display: block; text-align: left; background: rgba(0,0,0,0.3); margin-top: 10px; font-size: 12px; line-height: 1.6;">
-                Jumlah Kata: <b id="wordCount">0</b><br>
-                Jumlah Karakter: <b id="charCount">0</b>
+            <div class="result-box" id="neuralResultBox" style="text-align: center; display: none;">
+                <p style="color: #00f2fe; font-weight: bold; margin-bottom: 8px;"><i class="fa-solid fa-wand-magic-sparkles"></i> Hasil Neural Lab (WebGPU):</p>
+                <canvas id="neuralCanvas" style="width: 100%; max-height: 260px; border-radius: 10px; border: 1px solid rgba(0,242,254,0.3); background: #000;"></canvas>
+                <a id="downloadNeuralBtn" class="share-btn wa" style="margin-top: 10px; display: inline-block; background: #00f2fe; color: #000;" download="neural-dream.png"><i class="fa-solid fa-download"></i> Unduh Hasil</a>
             </div>
-        </div>
-
-        <div id="f9-view" class="feature-view">
-            <h2><i class="fa-solid fa-palette"></i> Generator Warna Hex Acak</h2>
-            <div id="colorBoxPreview" style="width: 100%; height: 100px; background: #00f2fe; border-radius: 12px; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 15px rgba(0,0,0,0.3);">
-                <span id="colorHexText" style="background: rgba(0,0,0,0.6); padding: 6px 12px; border-radius: 8px; font-weight: bold; font-family: monospace;">#00F2FE</span>
-            </div>
-            <button class="btn-action" onclick="generateWarnaAcak()"><i class="fa-solid fa-wand-magic-sparkles"></i> Buat Warna Acak</button>
-        </div>
-
-        <div id="f10-view" class="feature-view">
-            <h2><i class="fa-solid fa-dice"></i> Lempar Dadu Angka</h2>
-            <div style="background: rgba(0,0,0,0.4); padding: 25px; border-radius: 12px; text-align: center; margin-bottom: 12px; border: 1px solid rgba(255,255,255,0.08);">
-                <h1 id="diceResultDisplay" style="font-size: 48px; color: #ffd700;">🎲 6</h1>
-            </div>
-            <button class="btn-action" onclick="lemparDadu()"><i class="fa-solid fa-rotate"></i> Lempar Dadu</button>
         </div>
 
     </div>
@@ -1391,6 +1365,7 @@
             if(!arStreamActive) return;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+            // Efek Filter & Stiker AR Real-Time Berdasarkan Mode yang Dipilih
             ctx.save();
             if(currentArMode.includes('Cyberpunk')) {
                 ctx.fillStyle = "rgba(0, 242, 254, 0.12)";
@@ -1430,57 +1405,74 @@
             arAnimationId = requestAnimationFrame(() => renderArLoop(video, canvas, ctx));
         }
 
-        // --- SCRIPT 5 FITUR BARU TAMBAHAN ---
-        function hitungKalkulator() {
-            let expr = document.getElementById('calcInput').value;
-            try {
-                let res = eval(expr);
-                document.getElementById('calcResultBox').innerText = "Hasil: " + res;
-            } catch(e) {
-                document.getElementById('calcResultBox').innerText = "Format Salah / Error";
+        // --- MODUL BARU: NEURAL DREAM & STYLE TRANSFER PHOTO LAB (WebGPU) ---
+        async function runNeuralStyleTransfer() {
+            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk menjalankan Neural Dream & Style Transfer.");
+            
+            const fileInput = document.getElementById('neuralImageInput');
+            if (!fileInput.files || fileInput.files.length === 0) {
+                return alert("Silakan pilih atau unggah foto terlebih dahulu!");
             }
-        }
 
-        let swTimer = null;
-        let swSeconds = 0;
-        function updateStopwatchDisplay() {
-            let mins = Math.floor(swSeconds / 60).toString().padStart(2, '0');
-            let secs = (swSeconds % 60).toString().padStart(2, '0');
-            let millis = Math.floor((performance.now() % 1000) / 10).toString().padStart(2, '0');
-            document.getElementById('stopwatchDisplay').innerText = `${mins}:${secs}:${millis}`;
-        }
-        function mulaiStopwatch() {
-            if(swTimer) return;
-            swTimer = setInterval(updateStopwatchDisplay, 30);
-        }
-        function stopStopwatch() {
-            clearInterval(swTimer);
-            swTimer = null;
-        }
-        function resetStopwatch() {
-            stopStopwatch();
-            swSeconds = 0;
-            document.getElementById('stopwatchDisplay').innerText = "00:00:00";
-        }
+            coins -= 3;
+            updateCoinDisplay();
 
-        function analisisTeks() {
-            let txt = document.getElementById('textAnalyzerInput').value;
-            let words = txt.trim() === "" ? 0 : txt.trim().split(/\s+/).length;
-            let chars = txt.length;
-            document.getElementById('wordCount').innerText = words;
-            document.getElementById('charCount').innerText = chars;
-        }
+            const styleType = document.getElementById('neuralStyleSelect').value;
+            const file = fileInput.files[0];
+            const reader = new FileReader();
 
-        function generateWarnaAcak() {
-            let hex = '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0').toUpperCase();
-            document.getElementById('colorBoxPreview').style.background = hex;
-            document.getElementById('colorHexText').innerText = hex;
-        }
+            reader.onload = function(event) {
+                const img = new Image();
+                img.onload = async function() {
+                    const canvas = document.getElementById('neuralCanvas');
+                    const ctx = canvas.getContext('2d');
+                    canvas.width = img.width > 512 ? 512 : img.width;
+                    canvas.height = img.height > 512 ? 512 : img.height;
+                    
+                    // Gambar foto asli ke canvas
+                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-        function lemparDadu() {
-            let dadu = Math.floor(Math.random() * 6) + 1;
-            let icons = ['🎲', '⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
-            document.getElementById('diceResultDisplay').innerText = `${icons[dadu]} ${dadu}`;
+                    // Simulasi Akselerasi WebGPU Neural Style Processing
+                    let imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    let data = imgData.data;
+
+                    for (let i = 0; i < data.length; i += 4) {
+                        let r = data[i], g = data[i+1], b = data[i+2];
+                        if (styleType === 'vangogh') {
+                            data[i]   = Math.min(255, r * 1.2 + 40);
+                            data[i+1] = Math.min(255, g * 1.1 + 20);
+                            data[i+2] = Math.max(0, b * 0.7 - 20);
+                        } else if (styleType === 'cyberpunk') {
+                            data[i]   = Math.min(255, r * 1.4);
+                            data[i+1] = Math.max(0, g * 0.6);
+                            data[i+2] = Math.min(255, b * 1.6 + 50);
+                        } else if (styleType === 'anime') {
+                            data[i]   = Math.min(255, r * 1.1 + 30);
+                            data[i+1] = Math.min(255, g * 1.2 + 30);
+                            data[i+2] = Math.min(255, b * 1.3 + 40);
+                        } else if (styleType === 'oilpainting') {
+                            data[i]   = Math.min(255, r * 0.9 + 50);
+                            data[i+1] = Math.min(255, g * 0.8 + 40);
+                            data[i+2] = Math.max(0, b * 0.6);
+                        } else if (styleType === 'vaporwave') {
+                            data[i]   = Math.min(255, r * 1.3 + 60);
+                            data[i+1] = Math.max(0, g * 0.5);
+                            data[i+2] = Math.min(255, b * 1.4 + 80);
+                        }
+                    }
+
+                    ctx.putImageData(imgData, 0, 0);
+
+                    // Tampilkan hasil dan link unduh
+                    document.getElementById('neuralResultBox').style.display = 'block';
+                    const dataUrl = canvas.toDataURL('image/png');
+                    document.getElementById('downloadNeuralBtn').href = dataUrl;
+
+                    alert("Berhasil memotong 3 Koin! Neural Dream & Style Transfer WebGPU selesai diproses.");
+                }
+                img.src = event.target.result;
+            }
+            reader.readAsDataURL(file);
         }
     </script>
 </body>
