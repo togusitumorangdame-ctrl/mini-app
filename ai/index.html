@@ -141,6 +141,9 @@
             
             <!-- FITUR BARU: AR FACE STICKER & 100+ FILTER KAMERA -->
             <button id="tab-ar" class="tab-btn" onclick="switchTab('ar-view', 'tab-ar')"><i class="fa-solid fa-face-smile-beam"></i>AR Cam</button>
+            
+            <!-- FITUR BARU: ACOUSTIC FINGERSTYLE & KALIMBA STUDIO -->
+            <button id="tab-kalimba" class="tab-btn" onclick="switchTab('kalimba-view', 'tab-kalimba')"><i class="fa-solid fa-guitar"></i>Kalimba</button>
         </div>
 
         <div id="ai-view" class="feature-view active">
@@ -329,25 +332,23 @@
             </div>
         </div>
 
-        <!-- 3. MIND FREQUENCY PAD (PRO & POTONG 3 KOIN) -->
+        <!-- 3. MIND FREQUENCY PAD -->
         <div id="f3-view" class="feature-view">
-            <h2><i class="fa-solid fa-brain"></i> Mind Frequency Pad (3 Koin Pro)</h2>
-            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Hasilkan gelombang suara terapi pikiran (Binaural Beats) secara profesional langsung dari browser.</p>
+            <h2><i class="fa-solid fa-brain"></i> Mind Frequency Pad (3 Koin)</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Hasilkan gelombang suara terapi pikiran (Binaural Beats) secara langsung dari browser.</p>
             <select id="freqSelect">
                 <option value="432">432 Hz - Frekuensi Relaksasi Semesta</option>
                 <option value="528">528 Hz - Frekuensi Pemulihan DNA</option>
                 <option value="285">285 Hz - Frekuensi Regenerasi Sel</option>
-                <option value="174">174 Hz - Frekuensi Pereda Nyeri Alami</option>
-                <option value="963">963 Hz - Frekuensi Kesadaran Murni</option>
             </select>
-            <button class="btn-action" onclick="toggleMindFrequency()">Aktifkan & Putar Frekuensi (3 Koin)</button>
+            <button class="btn-action" onclick="toggleMindFrequency()">Putar / Hentikan Frekuensi (3 Koin)</button>
             <div id="audioStatusText" style="font-size: 11px; color: #22c55e; text-align: center; margin-top: 10px;">Status Audio: Berhenti</div>
         </div>
 
-        <!-- 4. INTERACTIVE FLUID DYNAMICS (PRO & POTONG 3 KOIN) -->
+        <!-- 4. INTERACTIVE FLUID DYNAMICS -->
         <div id="f4-view" class="feature-view">
-            <h2><i class="fa-solid fa-water"></i> Interactive Fluid Dynamics (3 Koin Pro)</h2>
-            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Usap layar untuk menciptakan simulasi gelombang fluida warna pelangi tingkat lanjut.</p>
+            <h2><i class="fa-solid fa-water"></i> Interactive Fluid Dynamics (3 Koin)</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Usap layar untuk menciptakan gelombang fluida warna pelangi yang memukau.</p>
             <button class="btn-action" onclick="startFluidSim()">Aktifkan Simulasi Cairan (3 Koin)</button>
             <div style="margin-top: 12px; border: 1px solid #00f2fe; border-radius: 12px; overflow: hidden;">
                 <canvas id="fluidCanvas" width="400" height="240" style="width: 100%; height: 240px; background: #000; display: block; touch-action: none;"></canvas>
@@ -364,7 +365,7 @@
             </div>
         </div>
 
-        <!-- 6. FITUR BARU: AR FACE STICKER & 100+ FILTER KAMERA REAL-TIME -->
+        <!-- 6. AR FACE STICKER & 100+ FILTER KAMERA REAL-TIME -->
         <div id="ar-view" class="feature-view">
             <h2><i class="fa-solid fa-face-smile-beam"></i> AR Cam & 100+ Live Filters (3 Koin)</h2>
             <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Pilih dari lebih dari 100+ mode filter stiker AR, topeng, glitch, neon, dan animasi wajah real-time.</p>
@@ -382,6 +383,31 @@
                 <div class="ar-modes-grid" id="arModesGrid">
                     <!-- Dihasilkan secara otomatis lewat script JS hingga 105+ mode -->
                 </div>
+            </div>
+        </div>
+
+        <!-- 7. FITUR BARU: ACOUSTIC FINGERSTYLE & KALIMBA MELODY STUDIO -->
+        <div id="kalimba-view" class="feature-view">
+            <h2><i class="fa-solid fa-guitar"></i> Acoustic Fingerstyle & Kalimba Studio (3 Koin)</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Zona relaksasi batin & terapi jiwa. Mainkan melodi kalimba & petikan gitar akustik menenangkan.</p>
+            <button class="btn-action" onclick="unlockKalimbaStudio()">Aktifkan Kalimba & Akustik (3 Koin)</button>
+            
+            <div id="kalimbaModuleBox" style="opacity: 0.5; pointer-events: none; margin-top: 12px; background: rgba(0,0,0,0.4); border: 1px solid #00f2fe; border-radius: 14px; padding: 12px;">
+                <p style="font-size: 12px; color: #00f2fe; font-weight: bold; margin-bottom: 8px;"><i class="fa-solid fa-music"></i> Tuts Kalimba Interaktif:</p>
+                <div style="display: flex; gap: 4px; justify-content: center; margin-bottom: 12px;">
+                    <button class="share-btn" style="background:#0ea5e9; flex:1;" onmousedown="playKalimbaTone(523.25, 'C5')">C5</button>
+                    <button class="share-btn" style="background:#0ea5e9; flex:1;" onmousedown="playKalimbaTone(587.33, 'D5')">D5</button>
+                    <button class="share-btn" style="background:#0ea5e9; flex:1;" onmousedown="playKalimbaTone(659.25, 'E5')">E5</button>
+                    <button class="share-btn" style="background:#0ea5e9; flex:1;" onmousedown="playKalimbaTone(698.46, 'F5')">F5</button>
+                    <button class="share-btn" style="background:#0ea5e9; flex:1;" onmousedown="playKalimbaTone(783.99, 'G5')">G5</button>
+                </div>
+                <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 6px;">Pilih Suasana Latar Alam (Ambient Sound):</p>
+                <select id="ambientSoundSelect" style="margin-bottom: 8px;">
+                    <option value="rain">Hujan Tenang di Hutan Bambu</option>
+                    <option value="waves">Ombak Pantai Malam Hari</option>
+                    <option value="wind">Angin Sepoi-sepoi Pegunungan</option>
+                </select>
+                <button class="share-btn copy" style="width: 100%; justify-content: center; background: linear-gradient(45deg, #10b981, #059669);" onclick="toggleAmbientSound()"><i class="fa-solid fa-volume-high"></i> Putar / Matikan Ambient Sound</button>
             </div>
         </div>
 
@@ -1103,8 +1129,6 @@
         setInterval(fetchLiveCryptoPrices, 3000);
         updateDemoUI();
 
-        // --- FUNGSI UTAMA FITUR INTERAKTIF (POTONG 3 KOIN NYATA) ---
-
         let pianoAudioCtx = null;
         function unlockPiano() {
             if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk mengaktifkan Keyboard Piano.");
@@ -1175,15 +1199,13 @@
         let audioCtx = null;
         let oscillator = null;
         let isAudioPlaying = false;
-        
-        // FITUR NOMOR 3 PRO (MIND FREQUENCY PAD) DENGAN POTONG 3 KOIN NYATA
         function toggleMindFrequency() {
             if(!isAudioPlaying) {
-                if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk memutar Mind Frequency Pad.");
+                if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk memutar Frekuensi Pikiran.");
                 coins -= 3;
                 updateCoinDisplay();
                 playAudioFreq();
-                alert("Berhasil memotong 3 Koin! Mind Frequency Pad aktif dan berjalan.");
+                alert("Berhasil memotong 3 Koin! Frekuensi terapi pikiran aktif.");
             } else {
                 stopAudioFreq();
             }
@@ -1208,12 +1230,10 @@
             document.getElementById('audioStatusText').style.color = '#22c55e';
         }
 
-        // FITUR NOMOR 4 PRO (INTERACTIVE FLUID DYNAMICS) DENGAN POTONG 3 KOIN NYATA
         function startFluidSim() {
-            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk menjalankan Interactive Fluid Dynamics.");
+            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk menjalankan Simulasi Cairan.");
             coins -= 3;
             updateCoinDisplay();
-            
             const canvas = document.getElementById('fluidCanvas');
             const ctx = canvas.getContext('2d');
             let drops = [];
@@ -1221,23 +1241,23 @@
                 const rect = canvas.getBoundingClientRect();
                 drops.push({
                     x: e.clientX - rect.left, y: e.clientY - rect.top, r: 5,
-                    color: `hsl(${Math.random() * 360}, 90%, 65%)`
+                    color: `hsl(${Math.random() * 360}, 80%, 60%)`
                 });
-                if(drops.length > 60) drops.shift();
+                if(drops.length > 50) drops.shift();
             };
             function renderFluid() {
-                ctx.fillStyle = "rgba(0, 0, 0, 0.12)";
+                ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 drops.forEach(d => {
-                    d.r += 1.2;
+                    d.r += 0.8;
                     ctx.strokeStyle = d.color;
-                    ctx.lineWidth = 2.5;
+                    ctx.lineWidth = 2;
                     ctx.beginPath(); ctx.arc(d.x, d.y, d.r, 0, Math.PI*2); ctx.stroke();
                 });
                 requestAnimationFrame(renderFluid);
             }
             renderFluid();
-            alert("Berhasil memotong 3 Koin! Interactive Fluid Dynamics aktif.");
+            alert("Berhasil memotong 3 Koin! Simulasi Fluid Dynamics aktif.");
         }
 
         function startCyberCityFly() {
@@ -1272,6 +1292,54 @@
             }
             renderCity();
             alert("Berhasil memotong 3 Koin! Penerbangan Kota Cyber 3D dimulai.");
+        }
+
+        // --- SCRIPT BARU: ACOUSTIC FINGERSTYLE & KALIMBA STUDIO ---
+        let kalimbaAudioCtx = null;
+        let ambientAudioCtx = null;
+        let ambientOscillator = null;
+        let isAmbientPlaying = false;
+
+        function unlockKalimbaStudio() {
+            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk mengaktifkan Kalimba & Akustik Studio.");
+            coins -= 3;
+            updateCoinDisplay();
+            kalimbaAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            document.getElementById('kalimbaModuleBox').style.opacity = '1';
+            document.getElementById('kalimbaModuleBox').style.pointerEvents = 'auto';
+            alert("Berhasil memotong 3 Koin! Kalimba & Akustik Studio aktif.");
+        }
+
+        function playKalimbaTone(freq, noteName) {
+            if (!kalimbaAudioCtx) return;
+            let osc = kalimbaAudioCtx.createOscillator();
+            let gain = kalimbaAudioCtx.createGain();
+            osc.type = 'sine';
+            osc.frequency.setValueAtTime(freq, kalimbaAudioCtx.currentTime);
+            gain.gain.setValueAtTime(0.5, kalimbaAudioCtx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.0001, kalimbaAudioCtx.currentTime + 1.5);
+            osc.connect(gain);
+            gain.connect(kalimbaAudioCtx.destination);
+            osc.start();
+            osc.stop(kalimbaAudioCtx.currentTime + 1.5);
+        }
+
+        function toggleAmbientSound() {
+            if (!isAmbientPlaying) {
+                ambientAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                ambientOscillator = ambientAudioCtx.createOscillator();
+                ambientOscillator.type = 'triangle';
+                ambientOscillator.frequency.setValueAtTime(110, ambientAudioCtx.currentTime); // nada latar menenangkan
+                ambientOscillator.connect(ambientAudioCtx.destination);
+                ambientOscillator.start();
+                isAmbientPlaying = true;
+                alert("Ambient sound latar aktif.");
+            } else {
+                if (ambientOscillator) { ambientOscillator.stop(); ambientOscillator.disconnect(); }
+                if (ambientAudioCtx) { ambientAudioCtx.close(); }
+                isAmbientPlaying = false;
+                alert("Ambient sound dimatikan.");
+            }
         }
 
         // --- MODUL AR CAMERA & 105+ FILTER PILIHAN ---
@@ -1344,7 +1412,6 @@
             if(!arStreamActive) return;
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Efek Filter & Stiker AR Real-Time Berdasarkan Mode yang Dipilih
             ctx.save();
             if(currentArMode.includes('Cyberpunk')) {
                 ctx.fillStyle = "rgba(0, 242, 254, 0.12)";
