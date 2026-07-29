@@ -1325,44 +1325,51 @@
         }
 
         let currentAmbientAudio = null;
-let activeSoundId = null;
+let activeSoundName = null;
 
-// Daftar berbagai pilihan suara latar alam
+// Kamus suara latar dengan kunci yang sama persis seperti teks di antarmuka aplikasi Anda
 const ambientLibrary = {
-    rain_bamboo: "https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3", // Hujan Tenang di Hutan Bambu
-    forest_birds: "https://assets.mixkit.co/active_storage/sfx/polygon/forest-birds-1215.mp3", // Suasana Hutan & Burung
-    ocean_waves: "https://assets.mixkit.co/active_storage/sfx/1199/1199-preview.mp3", // Ombak Pantai Tenang
-    night_crickets: "https://assets.mixkit.co/active_storage/sfx/2655/2655-preview.mp3" // Malam Hari & Jangkrik
+    "Hujan Tenang di Hutan Bambu": "https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3",
+    "Suasana Hutan & Burung": "https://assets.mixkit.co/active_storage/sfx/polygon/forest-birds-1215.mp3",
+    "Ombak Pantai Tenang": "https://assets.mixkit.co/active_storage/sfx/1199/1199-preview.mp3",
+    "Malam Hari & Jangkrik": "https://assets.mixkit.co/active_storage/sfx/2655/2655-preview.mp3"
 };
 
-function toggleAmbientSound(soundKey) {
+function toggleAmbientSound() {
+    // Mengambil nilai teks yang sedang dipilih dari elemen dropdown/select di HTML Anda
+    const selectElement = document.querySelector('select, .ambient-dropdown, [name="ambientSelector"]'); // Sesuaikan selector elemen pilihan Anda jika perlu
+    
+    // Atau jika elemennya berupa teks aktif di layar, kita ambil nilainya:
+    // Contoh alternatif langsung membaca teks dari elemen yang aktif saat ini:
+    const soundKey = document.getElementById('selectedAmbientText') ? document.getElementById('selectedAmbientText').innerText : "Hujan Tenang di Hutan Bambu";
+
     // Jika tombol ditekan untuk mematikan suara yang sedang aktif
-    if (activeSoundId === soundKey && currentAmbientAudio && !currentAmbientAudio.paused) {
+    if (activeSoundName === soundKey && currentAmbientAudio && !currentAmbientAudio.paused) {
         currentAmbientAudio.pause();
         currentAmbientAudio.currentTime = 0;
-        activeSoundId = null;
+        activeSoundName = null;
         alert("Ambient sound dimatikan.");
         return;
     }
 
-    // Jika ada audio lain yang sedang berputar, hentikan terlebih dahulu
+    // Hentikan audio sebelumnya jika ada yang sedang berjalan
     if (currentAmbientAudio) {
         currentAmbientAudio.pause();
         currentAmbientAudio.currentTime = 0;
     }
 
-    // Periksa apakah pilihan suara tersedia di pustaka
+    // Validasi apakah pilihan teks tersedia di dalam kamus
     if (!ambientLibrary[soundKey]) {
         alert("Pilihan suara latar tidak ditemukan!");
         return;
     }
 
-    // Buat objek audio baru berdasarkan pilihan pengguna
+    // Buat dan putar objek audio baru
     currentAmbientAudio = new Audio(ambientLibrary[soundKey]);
     currentAmbientAudio.loop = true;
 
     currentAmbientAudio.play().then(() => {
-        activeSoundId = soundKey;
+        activeSoundName = soundKey;
         alert("Ambient sound aktif: " + soundKey);
     }).catch(error => {
         console.error("Gagal memutar audio ambient:", error);
