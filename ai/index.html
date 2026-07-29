@@ -1324,33 +1324,23 @@
             osc.stop(kalimbaAudioCtx.currentTime + 1.5);
         }
 
-        let ambientAudio = null;
-let isAmbientPlaying = false;
-
-function toggleAmbientSound() {
-    try {
-        if (!isAmbientPlaying) {
-            // Menggunakan sampel audio hujan online yang stabil
-            if (!ambientAudio) {
-                ambientAudio = new Audio('https://cdn.pixabay.com/download/audio/2021/08/09/audio_42157a552e.mp3?filename=light-rain-ambient-114354.mp3');
-                ambientAudio.loop = true;
-            }
-            ambientAudio.play().then(() => {
+        function toggleAmbientSound() {
+            if (!isAmbientPlaying) {
+                ambientAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                ambientOscillator = ambientAudioCtx.createOscillator();
+                ambientOscillator.type = 'triangle';
+                ambientOscillator.frequency.setValueAtTime(110, ambientAudioCtx.currentTime); // nada latar menenangkan
+                ambientOscillator.connect(ambientAudioCtx.destination);
+                ambientOscillator.start();
                 isAmbientPlaying = true;
-            }).catch(e => {
-                console.log("Audio play blocked or error:", e);
-            });
-        } else {
-            if (ambientAudio) {
-                ambientAudio.pause();
-                ambientAudio.currentTime = 0;
+                alert("Ambient sound latar aktif.");
+            } else {
+                if (ambientOscillator) { ambientOscillator.stop(); ambientOscillator.disconnect(); }
+                if (ambientAudioCtx) { ambientAudioCtx.close(); }
+                isAmbientPlaying = false;
+                alert("Ambient sound dimatikan.");
             }
-            isAmbientPlaying = false;
         }
-    } catch (err) {
-        console.error("Error pada toggleAmbientSound:", err);
-    }
-}
 
         // --- MODUL AR CAMERA & 105+ FILTER PILIHAN ---
         let currentArMode = 'Normal';
