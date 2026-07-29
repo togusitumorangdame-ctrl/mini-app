@@ -1324,57 +1324,61 @@
             osc.stop(kalimbaAudioCtx.currentTime + 1.5);
         }
 
-        let currentAmbientAudio = null;
-let activeSoundName = null;
-
-// Kamus suara latar dengan kunci yang sama persis seperti teks di antarmuka aplikasi Anda
-const ambientLibrary = {
-    "Hujan Tenang di Hutan Bambu": "https://assets.mixkit.co/active_storage/sfx/2869/2869-preview.mp3",
-    "Suasana Hutan & Burung": "https://assets.mixkit.co/active_storage/sfx/polygon/forest-birds-1215.mp3",
-    "Ombak Pantai Tenang": "https://assets.mixkit.co/active_storage/sfx/1199/1199-preview.mp3",
-    "Malam Hari & Jangkrik": "https://assets.mixkit.co/active_storage/sfx/2655/2655-preview.mp3"
-};
+        let ambientAudioCtx = null;
+let ambientNoiseNode = null;
+let isAmbientPlaying = false;
 
 function toggleAmbientSound() {
-    // Mengambil nilai teks yang sedang dipilih dari elemen dropdown/select di HTML Anda
-    const selectElement = document.querySelector('select, .ambient-dropdown, [name="ambientSelector"]'); // Sesuaikan selector elemen pilihan Anda jika perlu
-    
-    // Atau jika elemennya berupa teks aktif di layar, kita ambil nilainya:
-    // Contoh alternatif langsung membaca teks dari elemen yang aktif saat ini:
-    const soundKey = document.getElementById('selectedAmbientText') ? document.getElementById('selectedAmbientText').innerText : "Hujan Tenang di Hutan Bambu";
-
-    // Jika tombol ditekan untuk mematikan suara yang sedang aktif
-    if (activeSoundName === soundKey && currentAmbientAudio && !currentAmbientAudio.paused) {
-        currentAmbientAudio.pause();
-        currentAmbientAudio.currentTime = 0;
-        activeSoundName = null;
+    // Jika suara latar sedang menyala, matikan
+    if (isAmbientPlaying) {
+        if (ambientNoiseNode) {
+            ambientNoiseNode.stop();
+            ambientNoiseNode.disconnect();
+            ambientNoiseNode = null;
+        }
+        if (ambientAudioCtx && ambientAudioCtx.state !== 'closed') {
+            ambientAudioCtx.close();
+            ambientAudioCtx = null;
+        }
+        isAmbientPlaying = false;
         alert("Ambient sound dimatikan.");
         return;
     }
 
-    // Hentikan audio sebelumnya jika ada yang sedang berjalan
-    if (currentAmbientAudio) {
-        currentAmbientAudio.pause();
-        currentAmbientAudio.currentTime = 0;
+    // Jika belum menyala, buat generator suara hujan alami (White/Pink Noise)
+    try {
+        ambientAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        
+        // Membuat buffer suara acak (derau putih untuk mensimulasikan suara desir hujan/alam)
+        const bufferSize = 2 * ambientAudioCtx.sampleRate;
+        const noiseBuffer = ambientAudioCtx.createBuffer(1, bufferSize, ambientAudioCtx.sampleRate);
+        const output = noiseBuffer.getChannelData(0);
+        
+        for (let i = 0; i < bufferSize; i++) {
+            output[i] = Math.random() * 2 - 1; // Menghasilkan derau acak menyerupai suara hujan
+        }
+
+        ambientNoiseNode = ambientAudioCtx.createBufferSource();
+        ambientNoiseNode.buffer = noiseBuffer;
+        ambientNoiseNode.loop = true;
+
+        // Gunakan Filter Lowpass agar suaranya lembut menyerupai gemercik hujan tenang di hutan
+        const filter = ambientAudioCtx.createBiquadFilter();
+        filter.type = 'lowpass';
+        filter.frequency.value = 800; // Mengatur kehalusan nada derau hujan
+
+        // Hubungkan komponen audio
+        ambientNoiseNode.connect(filter);
+        filter.connect(ambientAudioCtx.destination);
+        
+        ambientNoiseNode.start();
+        isAmbientPlaying = true;
+        alert("Ambient sound aktif: Hujan Tenang di Hutan Bambu");
+
+    } catch (error) {
+        console.error("Gagal memutar ambient sound:", error);
+        alert("Gagal memutar suara latar alam.");
     }
-
-    // Validasi apakah pilihan teks tersedia di dalam kamus
-    if (!ambientLibrary[soundKey]) {
-        alert("Pilihan suara latar tidak ditemukan!");
-        return;
-    }
-
-    // Buat dan putar objek audio baru
-    currentAmbientAudio = new Audio(ambientLibrary[soundKey]);
-    currentAmbientAudio.loop = true;
-
-    currentAmbientAudio.play().then(() => {
-        activeSoundName = soundKey;
-        alert("Ambient sound aktif: " + soundKey);
-    }).catch(error => {
-        console.error("Gagal memutar audio ambient:", error);
-        alert("Gagal memutar suara latar. Periksa koneksi internet.");
-    });
 }
 
         // --- MODUL AR CAMERA & 105+ FILTER PILIHAN ---
