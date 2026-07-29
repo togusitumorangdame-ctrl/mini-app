@@ -1329,11 +1329,13 @@ let ambientNoiseNode = null;
 let isAmbientPlaying = false;
 
 function toggleAmbientSound() {
-    // Jika suara latar sedang menyala, matikan
+    // Jika suara latar sedang menyala, matikan total
     if (isAmbientPlaying) {
         if (ambientNoiseNode) {
-            ambientNoiseNode.stop();
-            ambientNoiseNode.disconnect();
+            try {
+                ambientNoiseNode.stop();
+                ambientNoiseNode.disconnect();
+            } catch (e) {}
             ambientNoiseNode = null;
         }
         if (ambientAudioCtx && ambientAudioCtx.state !== 'closed') {
@@ -1345,29 +1347,29 @@ function toggleAmbientSound() {
         return;
     }
 
-    // Jika belum menyala, buat generator suara hujan alami (White/Pink Noise)
+    // Buat generator suara hujan alami untuk menggantikan bunyi beep
     try {
         ambientAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
         
-        // Membuat buffer suara acak (derau putih untuk mensimulasikan suara desir hujan/alam)
-        const bufferSize = 2 * ambientAudioCtx.sampleRate;
+        // Membuat buffer derau putih sepanjang 5 detik yang di-loop mulus
+        const bufferSize = ambientAudioCtx.sampleRate * 5;
         const noiseBuffer = ambientAudioCtx.createBuffer(1, bufferSize, ambientAudioCtx.sampleRate);
         const output = noiseBuffer.getChannelData(0);
         
         for (let i = 0; i < bufferSize; i++) {
-            output[i] = Math.random() * 2 - 1; // Menghasilkan derau acak menyerupai suara hujan
+            output[i] = Math.random() * 2 - 1;
         }
 
         ambientNoiseNode = ambientAudioCtx.createBufferSource();
         ambientNoiseNode.buffer = noiseBuffer;
         ambientNoiseNode.loop = true;
 
-        // Gunakan Filter Lowpass agar suaranya lembut menyerupai gemercik hujan tenang di hutan
+        // Gunakan Lowpass Filter untuk meredam suara agar menjadi desiran hujan yang lembut
         const filter = ambientAudioCtx.createBiquadFilter();
         filter.type = 'lowpass';
-        filter.frequency.value = 800; // Mengatur kehalusan nada derau hujan
+        filter.frequency.setValueAtTime(600, ambientAudioCtx.currentTime);
 
-        // Hubungkan komponen audio
+        // Hubungkan jalur audio ke pengeras suara perangkat
         ambientNoiseNode.connect(filter);
         filter.connect(ambientAudioCtx.destination);
         
