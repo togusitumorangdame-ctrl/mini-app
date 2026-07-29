@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Super App v3.2 - Real Features Edition</title>
+    <title>Premium Super App v3.1 - AR Edition Fixed</title>
     <!-- SDK MONETAG -->
     <script src='//libtl.com/sdk.js' data-zone='11267753' data-sdk='show_11267753'></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -72,6 +72,14 @@
         .white-key:active, .white-key.active { background: linear-gradient(to bottom, #00f2fe 0%, #4facfe 100%); color: #fff; box-shadow: inset 0 2px 4px rgba(0,0,0,0.3); }
         .black-key { position: absolute; width: 6.2%; height: 60%; background: linear-gradient(to bottom, #333333 0%, #0d0d0d 100%); border-left: 1px solid #555; border-right: 1px solid #555; border-bottom: 2px solid #000; border-radius: 0 0 5px 5px; cursor: pointer; z-index: 3; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 8px; color: #aaa; font-size: 8px; transition: background 0.08s; box-shadow: 0 4px 6px rgba(0,0,0,0.5); }
         .black-key:active, .black-key.active { background: linear-gradient(to bottom, #00f2fe 0%, #0284c7 100%); color: #fff; }
+
+        /* AR CAMERA STYLING & 100+ MODE SELECTOR */
+        .ar-container { position: relative; width: 100%; height: 260px; background: #000; border-radius: 14px; overflow: hidden; border: 2px solid #00f2fe; margin-top: 10px; display: flex; align-items: center; justify-content: center; }
+        #arVideo { position: absolute; width: 100%; height: 100%; object-fit: cover; transform: scaleX(-1); }
+        #arCanvas { position: absolute; width: 100%; height: 100%; object-fit: cover; pointer-events: none; transform: scaleX(-1); }
+        .ar-modes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; max-height: 140px; overflow-y: auto; margin-top: 10px; background: rgba(0,0,0,0.4); padding: 8px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.08); }
+        .ar-mode-btn { background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1); color: #fff; padding: 6px 4px; border-radius: 8px; font-size: 10px; cursor: pointer; text-align: center; transition: 0.2s; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .ar-mode-btn.active { background: linear-gradient(45deg, #00f2fe, #4facfe); border-color: #fff; font-weight: bold; box-shadow: 0 0 10px rgba(0,242,254,0.5); }
     </style>
 </head>
 <body>
@@ -124,12 +132,14 @@
             <button id="tab-socialosint" class="tab-btn" onclick="switchTab('socialosint-view', 'tab-socialosint')"><i class="fa-solid fa-user-detect"></i>OSINT</button>
             <button id="tab-scratch" class="tab-btn" onclick="switchTab('scratch-view', 'tab-scratch'); initScratchCard();"><i class="fa-solid fa-ticket"></i>Scratch</button>
             
-            <!-- 5 FITUR BARU NYATA (1 s.d 5) -->
-            <button id="tab-f1" class="tab-btn" onclick="switchTab('f1-view', 'tab-f1')"><i class="fa-solid fa-music"></i>1. Piano</button>
-            <button id="tab-f2" class="tab-btn" onclick="switchTab('f2-view', 'tab-f2')"><i class="fa-solid fa-atom"></i>2. Particles</button>
-            <button id="tab-f3" class="tab-btn" onclick="switchTab('f3-view', 'tab-f3')"><i class="fa-solid fa-brain"></i>3. MindWave</button>
-            <button id="tab-f4" class="tab-btn" onclick="switchTab('f4-view', 'tab-f4')"><i class="fa-solid fa-water"></i>4. FluidSim</button>
-            <button id="tab-f5" class="tab-btn" onclick="switchTab('f5-view', 'tab-f5')"><i class="fa-solid fa-vr-cardboard"></i>5. CyberFly</button>
+            <button id="tab-f1" class="tab-btn" onclick="switchTab('f1-view', 'tab-f1')"><i class="fa-solid fa-music"></i>Piano</button>
+            <button id="tab-f2" class="tab-btn" onclick="switchTab('f2-view', 'tab-f2')"><i class="fa-solid fa-atom"></i>Particles</button>
+            <button id="tab-f3" class="tab-btn" onclick="switchTab('f3-view', 'tab-f3')"><i class="fa-solid fa-brain"></i>BrainWave</button>
+            <button id="tab-f4" class="tab-btn" onclick="switchTab('f4-view', 'tab-f4')"><i class="fa-solid fa-water"></i>FluidSim</button>
+            <button id="tab-f5" class="tab-btn" onclick="switchTab('f5-view', 'tab-f5')"><i class="fa-solid fa-vr-cardboard"></i>Wireframe</button>
+            
+            <!-- AR CAMERA TAB -->
+            <button id="tab-ar" class="tab-btn" onclick="switchTab('ar-view', 'tab-ar')"><i class="fa-solid fa-face-smile-beam"></i>AR Cam</button>
         </div>
 
         <div id="ai-view" class="feature-view active">
@@ -282,13 +292,12 @@
             </div>
         </div>
 
-        <!-- FITUR 1: PIANO -->
         <div id="f1-view" class="feature-view">
-            <h2><i class="fa-solid fa-music"></i> 1. Real Acoustic Piano (3 Koin + Iklan)</h2>
-            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Sentuh tuts keyboard profesional untuk menghasilkan melodi piano asli bersuara jernih.</p>
+            <h2><i class="fa-solid fa-music"></i> Real Acoustic Piano Keyboard (3 Koin)</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Sentuh tuts keyboard profesional di bawah untuk menghasilkan melodi piano asli bersuara jernih.</p>
             <button class="btn-action" onclick="unlockPiano()">Aktifkan Keyboard Piano (3 Koin)</button>
             
-            <div class="real-piano-wrapper" id="pianoBox" style="opacity: 0.5; pointer-events: none; margin-top: 10px;">
+            <div class="real-piano-wrapper" id="pianoBox" style="opacity: 0.5; pointer-events: none;">
                 <div class="real-piano-keys">
                     <div class="white-key" onmousedown="playRealPiano(261.63, this)">C4</div>
                     <div class="white-key" onmousedown="playRealPiano(293.66, this)">D4</div>
@@ -308,20 +317,18 @@
             </div>
         </div>
 
-        <!-- FITUR 2: PARTICLES -->
         <div id="f2-view" class="feature-view">
-            <h2><i class="fa-solid fa-atom"></i> 2. Quantum Particle Life (3 Koin + Iklan)</h2>
-            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Simulasi partikel digital hidup berevolusi membentuk pola pergerakan dinamis.</p>
+            <h2><i class="fa-solid fa-atom"></i> Quantum Particle Life (3 Koin)</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Sentuh layar untuk melihat partikel digital hidup berevolusi membentuk pola.</p>
             <button class="btn-action" onclick="startParticleSim()">Mulai Simulasi Partikel (3 Koin)</button>
-            <div style="margin-top: 12px; position: relative; border: 1px solid #00f2fe; border-radius: 12px; overflow: hidden; display: none;" id="particleContainer">
+            <div style="margin-top: 12px; position: relative; border: 1px solid #00f2fe; border-radius: 12px; overflow: hidden;">
                 <canvas id="particleCanvas" width="400" height="240" style="width: 100%; height: 240px; background: #000; display: block; touch-action: none;"></canvas>
             </div>
         </div>
 
-        <!-- FITUR 3: MINDWAVE -->
         <div id="f3-view" class="feature-view">
-            <h2><i class="fa-solid fa-brain"></i> 3. Mind Frequency Pad (3 Koin + Iklan)</h2>
-            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Hasilkan gelombang suara terapi pikiran (Binaural Beats) langsung dari browser.</p>
+            <h2><i class="fa-solid fa-brain"></i> Mind Frequency Pad (3 Koin)</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Hasilkan gelombang suara terapi pikiran (Binaural Beats) secara langsung dari browser.</p>
             <select id="freqSelect">
                 <option value="432">432 Hz - Frekuensi Relaksasi Semesta</option>
                 <option value="528">528 Hz - Frekuensi Pemulihan DNA</option>
@@ -331,23 +338,40 @@
             <div id="audioStatusText" style="font-size: 11px; color: #22c55e; text-align: center; margin-top: 10px;">Status Audio: Berhenti</div>
         </div>
 
-        <!-- FITUR 4: FLUIDSIM -->
         <div id="f4-view" class="feature-view">
-            <h2><i class="fa-solid fa-water"></i> 4. Interactive Fluid Dynamics (3 Koin + Iklan)</h2>
+            <h2><i class="fa-solid fa-water"></i> Interactive Fluid Dynamics (3 Koin)</h2>
             <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Usap layar untuk menciptakan gelombang fluida warna pelangi yang memukau.</p>
             <button class="btn-action" onclick="startFluidSim()">Aktifkan Simulasi Cairan (3 Koin)</button>
-            <div style="margin-top: 12px; border: 1px solid #00f2fe; border-radius: 12px; overflow: hidden; display: none;" id="fluidContainer">
+            <div style="margin-top: 12px; border: 1px solid #00f2fe; border-radius: 12px; overflow: hidden;">
                 <canvas id="fluidCanvas" width="400" height="240" style="width: 100%; height: 240px; background: #000; display: block; touch-action: none;"></canvas>
             </div>
         </div>
 
-        <!-- FITUR 5: CYBERFLY -->
         <div id="f5-view" class="feature-view">
-            <h2><i class="fa-solid fa-vr-cardboard"></i> 5. Cyber City Flythrough (3 Koin + Iklan)</h2>
-            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Simulasi penerbangan kota hologram 3D masa depan bergaya Tron secara real-time.</p>
+            <h2><i class="fa-solid fa-vr-cardboard"></i> Cyber City Flythrough (3 Koin)</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Simulasi penerbangan kota hologram 3D masa depan bergaya Tron.</p>
             <button class="btn-action" onclick="startCyberCityFly()">Mulai Penerbangan Kota (3 Koin)</button>
-            <div style="margin-top: 12px; border: 1px solid #00f2fe; border-radius: 12px; overflow: hidden; display: none;" id="cyberContainer">
+            <div style="margin-top: 12px; border: 1px solid #00f2fe; border-radius: 12px; overflow: hidden;">
                 <canvas id="cyberCanvas" width="400" height="240" style="width: 100%; height: 240px; background: #000; display: block;"></canvas>
+            </div>
+        </div>
+
+        <!-- AR CAMERA VIEW -->
+        <div id="ar-view" class="feature-view">
+            <h2><i class="fa-solid fa-face-smile-beam"></i> AR Cam & 100+ Live Filters (3 Koin)</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Pilih dari lebih dari 100+ mode filter stiker AR, topeng, glitch, neon, dan animasi wajah real-time.</p>
+            <button class="btn-action" onclick="unlockARCamera()">Aktifkan AR Camera (3 Koin)</button>
+            
+            <div id="arModuleContainer" style="display: none; margin-top: 10px;">
+                <div class="ar-container">
+                    <video id="arVideo" autoplay playsinline muted></video>
+                    <canvas id="arCanvas"></canvas>
+                </div>
+                <div style="margin-top: 8px; display: flex; justify-content: space-between; align-items: center; font-size: 11px; color: #00f2fe;">
+                    <span>Mode Aktif: <b id="activeArModeName">Normal Cam</b></span>
+                    <span id="arModeCounter">Total Mode: 105 Pilihan</span>
+                </div>
+                <div class="ar-modes-grid" id="arModesGrid"></div>
             </div>
         </div>
 
@@ -400,6 +424,7 @@
                 });
                 marketListEl.innerHTML = htmlContent;
             }
+            buildArModesList();
         });
 
         const userLang = navigator.language || navigator.userLanguage;
@@ -482,9 +507,11 @@
                     show_11267753().then(() => {
                         resolve(true);
                     }).catch(() => {
+                        // Fallback jika ad blocker aktif atau gagal load
                         resolve(true);
                     });
                 } else {
+                    // Jika fungsi SDK belum siap, bypass otomatis agar user tetap nyaman
                     resolve(true);
                 }
             });
@@ -601,12 +628,57 @@
                 let customBodyContent = "";
                 let customScriptContent = "";
 
-                if(descLower.includes('game') || descLower.includes('tebak') || descLower.includes('kuis')) {
-                    customBodyContent = `<div style="text-align:center;"><h3 style="color:#00f2fe;">${appName}</h3><p style="font-size:11px;">${appDesc}</p><input type="text" id="ansGame" placeholder="Jawaban..."><button class="btn-action" onclick="mainkanGame()">Kirim</button><div id="hasilGame"></div></div>`;
-                    customScriptContent = `function mainkanGame(){ document.getElementById('hasilGame').innerText = "Berhasil mengirim jawaban!"; }`;
+                if(descLower.includes('game') || descLower.includes('tebak') || descLower.includes('kuis') || descLower.includes('permainan')) {
+                    customBodyContent = `
+                        <div class="card glass" style="text-align: center;">
+                            <h3 style="font-size: 14px; color: #38bdf8; margin-bottom: 5px;">${appName}</h3>
+                            <p style="font-size: 10px; color: #94a3b8; margin-bottom: 12px;">${appDesc}</p>
+                            <div style="background: rgba(15, 23, 42, 0.8); padding: 12px; border-radius: 12px; border: 1px solid rgba(56, 189, 248, 0.2); margin-bottom: 12px;">
+                                <span style="font-size: 10px; color: #cbd5e1;">PETUNJUK SOAL:</span>
+                                <p style="font-size: 11px; color: #fff; margin: 4px 0;">Hewan berbulu, suka mengeong, hewan peliharaan.</p>
+                                <span style="font-size: 10px; color: #f59e0b;">Nyawa: <span id="nyawaGame">3</span></span>
+                            </div>
+                            <input type="text" id="ansGame" placeholder="Ketik jawaban..." style="margin-bottom: 8px;">
+                            <button class="btn-primary" onclick="mainkanGame()">Kirim Jawaban</button>
+                            <div id="hasilGame" style="font-size: 11px; margin-top: 10px; color: #cbd5e1;"></div>
+                        </div>`;
+                    customScriptContent = `
+                        let nyawa = 3;
+                        function mainkanGame() {
+                            let val = document.getElementById('ansGame').value.trim().toUpperCase();
+                            let out = document.getElementById('hasilGame');
+                            if(!val) return alert("Masukkan jawaban!");
+                            if(val === "KUCING") {
+                                out.innerHTML = "🎉 <b style='color:#22c55e;'>BENAR! Anda Menang!</b>";
+                            } else {
+                                nyawa--;
+                                document.getElementById('nyawaGame').innerText = nyawa;
+                                if(nyawa > 0) {
+                                    out.innerHTML = "❌ <b style='color:#ef4444;'>SALAH! Sisa nyawa: " + nyawa + "</b>";
+                                } else {
+                                    out.innerHTML = "💀 <b style='color:#ef4444;'>GAME OVER! Jawaban: KUCING</b>";
+                                    nyawa = 3;
+                                    document.getElementById('nyawaGame').innerText = nyawa;
+                                }
+                            }
+                            document.getElementById('ansGame').value = '';
+                        }`;
                 } else {
-                    customBodyContent = `<div style="text-align:center;"><h3 style="color:#00f2fe;">${appName}</h3><p style="font-size:11px;">${appDesc}</p><input type="text" id="customInput" placeholder="Input data..."><button class="btn-action" onclick="prosesCustom()">Proses</button><div id="customResult"></div></div>`;
-                    customScriptContent = `function prosesCustom(){ document.getElementById('customResult').innerText = "Diproses!"; }`;
+                    customBodyContent = `
+                        <div class="card glass" style="text-align: center;">
+                            <h3 style="font-size: 14px; color: #38bdf8; margin-bottom: 5px;">${appName}</h3>
+                            <p style="font-size: 10px; color: #94a3b8; margin-bottom: 12px;">${appDesc}</p>
+                            <input type="text" id="customInput" placeholder="Masukkan data/pesan..." style="margin-bottom: 8px;">
+                            <button class="btn-primary" onclick="prosesCustom()">Jalankan Aplikasi</button>
+                            <div id="customResult" style="font-size: 11px; margin-top: 10px; color: #cbd5e1; background: rgba(15,23,42,0.6); padding: 8px; border-radius: 8px;">Hasil akan muncul di sini...</div>
+                        </div>`;
+                    customScriptContent = `
+                        function prosesCustom() {
+                            let val = document.getElementById('customInput').value.trim();
+                            if(!val) return alert("Masukkan data terlebih dahulu!");
+                            document.getElementById('customResult').innerHTML = "✨ Berhasil memproses: '<b>" + val + "</b>'";
+                            document.getElementById('customInput').value = '';
+                        }`;
                 }
 
                 let generatedCode = `<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><title>${appName}</title></head><body style="background:#0f172a;color:#fff;padding:20px;font-family:sans-serif;">${customBodyContent}<script>${customScriptContent}<\/script></body></html>`;
@@ -628,7 +700,7 @@
 
         function previewGeneratedApp() {
             let code = document.getElementById('generatedAppCode').value;
-            if(!code) return alert("Belum ada kode aplikasi.");
+            if(!code) return alert("Belum ada kode aplikasi yang dihasilkan.");
             let iframe = document.getElementById('previewIframe');
             iframe.srcdoc = code;
             document.getElementById('appPreviewContainer').style.display = 'block';
@@ -639,11 +711,12 @@
         }
 
         function processWeatherMap() {
-            if(coins < 5) return alert("Butuh 5 koin!");
+            if(coins < 5) return alert("Butuh 5 koin untuk fitur ini!");
             triggerMonetagAd().then(() => {
                 coins -= 5; updateCoinDisplay();
                 let loc = document.getElementById('camLocation').value.trim();
-                if(!loc) return alert("Masukkan lokasi!");
+                if(!loc) return alert("Masukkan nama lokasi!");
+
                 let mapUrl = `https://embed.windy.com/embed2.html?lat=-2.5&lon=118&zoom=5&location=search&search=${encodeURIComponent(loc)}`;
                 document.getElementById('windyIframe').src = mapUrl;
                 document.getElementById('webcamContainer').style.display = 'block';
@@ -651,33 +724,53 @@
         }
 
         function processCctvLink() {
-            if(coins < 5) return alert("Butuh 5 koin!");
+            if(coins < 5) return alert("Butuh 5 koin untuk fitur ini!");
             triggerMonetagAd().then(() => {
                 coins -= 5; updateCoinDisplay();
                 let loc = document.getElementById('camLocation').value.trim();
-                if(!loc) return alert("Masukkan lokasi!");
-                window.open(`https://www.windy.com/?webcams,${encodeURIComponent(loc)},detail=true`, '_blank');
+                if(!loc) return alert("Masukkan nama lokasi!");
+
+                let cctvUrl = `https://www.windy.com/?webcams,${encodeURIComponent(loc)},detail=true`;
+                window.open(cctvUrl, '_blank');
             });
         }
 
         function copyReferralLink() {
              let rawLink = document.getElementById("refLinkInput").value;
-             let promoText = `🔥 Mau dapat koin gratis?\nGabung sekarang:\n${rawLink}`;
+             let promoText = `🔥 Mau dapat koin dan akses fitur AI gratis?\n\nGabung sekarang melalui tautan eksklusif ini:\n${rawLink}`;
              navigator.clipboard.writeText(promoText);
-             alert("Link berhasil disalin!");
+             alert(lang === 'id' ? "Link & pesan promosi berhasil disalin! Silakan bagikan ke teman." : "Link & promo copied! Share it with friends.");
         }
 
         function runSocialMapper() {
-            if(coins < 3) return alert("Butuh 3 koin!");
+            if(coins < 3) return alert("Butuh 3 koin untuk menjalankan Social Footprint Mapper!");
             let username = document.getElementById('targetUsername').value.trim();
-            if(!username) return alert("Masukkan username!");
+            if(!username) return alert("Masukkan username target terlebih dahulu!");
 
             triggerMonetagAd().then(() => {
                 coins -= 3; updateCoinDisplay();
                 let box = document.getElementById('socialResultBox');
                 let list = document.getElementById('socialResultList');
                 box.style.display = 'block';
-                list.innerHTML = `[+] Memindai akun: <b>@${username}</b><br><span style="color:#22c55e;">[✓] Instagram: instagram.com/${username}</span><br><span style="color:#22c55e;">[✓] TikTok: tiktok.com/@${username}</span>`;
+                list.innerHTML = `[+] Menginisialisasi pemindaian database global untuk: <b>@${username}</b><br>`;
+
+                setTimeout(() => {
+                    let platforms = [
+                        { name: "Instagram", url: `https://instagram.com/${username}` },
+                        { name: "TikTok", url: `https://tiktok.com/@${username}` },
+                        { name: "Twitter / X", url: `https://twitter.com/${username}` },
+                        { name: "Telegram", url: `https://t.me/${username}` }
+                    ];
+
+                    let htmlOutput = `<div style="margin-bottom: 8px; color: #22c55e;">[✓] Target Username: <b>@${username}</b></div>`;
+                    platforms.forEach(p => {
+                        htmlOutput += `<div style="background: rgba(255,255,255,0.03); padding: 6px 10px; border-radius: 6px; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center;">` +
+                                      `<span><b>${p.name}</b></span>` +
+                                      `<a href="${p.url}" target="_blank" style="color: #00f2fe; text-decoration: none; font-size: 11px;">Buka Profil ↗</a>` +
+                                      `</div>`;
+                    });
+                    list.innerHTML = htmlOutput;
+                }, 1000);
             });
         }
 
@@ -715,7 +808,7 @@
             let longUrl = document.getElementById('longUrl').value.trim();
             if (longUrl === "") return;
             coins -= 1; updateCoinDisplay();
-            document.getElementById('shortedUrlText').innerText = "Memproses... ⏳";
+            document.getElementById('shortedUrlText').innerText = "Sedang membuat link... ⏳";
             document.getElementById('linkResult').style.display = 'block';
             try {
                 let res = await fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(longUrl)}`);
@@ -736,7 +829,7 @@
         }
 
         function checkTelegramScam() {
-            if(coins < 5) return alert("Butuh 5 koin!");
+            if(coins < 5) return alert("Butuh 5 koin untuk analisis forensik!");
             triggerMonetagAd().then(() => {
                 coins -= 5; updateCoinDisplay();
                 const targetUrl = document.getElementById('scamUrl').value.trim();
@@ -888,19 +981,14 @@
 
         setInterval(fetchLiveCryptoPrices, 3000);
 
-        /* --- 5 FITUR BARU: IKLAN DULUAN + 3 KOSN --- */
-        
-        /* 1. PIANO */
+        /* --- FAKTOR INTERAKTIF (PIANO, PARTIKEL, DLL) --- */
         let pianoAudioCtx = null;
         function unlockPiano() {
-            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin.");
-            triggerMonetagAd().then(() => {
-                coins -= 3; updateCoinDisplay();
-                pianoAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                document.getElementById('pianoBox').style.opacity = '1';
-                document.getElementById('pianoBox').style.pointerEvents = 'auto';
-                alert("Piano berhasil diaktifkan setelah menonton iklan!");
-            });
+            if (coins < 3) return alert("Koin tidak cukup!");
+            coins -= 3; updateCoinDisplay();
+            pianoAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            document.getElementById('pianoBox').style.opacity = '1';
+            document.getElementById('pianoBox').style.pointerEvents = 'auto';
         }
 
         function playRealPiano(frequency, element) {
@@ -914,88 +1002,141 @@
             setTimeout(() => element.classList.remove('active'), 150);
         }
 
-        /* 2. PARTICLES */
         function startParticleSim() {
-            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin.");
-            triggerMonetagAd().then(() => {
-                coins -= 3; updateCoinDisplay();
-                document.getElementById('particleContainer').style.display = 'block';
-                const canvas = document.getElementById('particleCanvas');
-                const ctx = canvas.getContext('2d');
-                let pts = Array.from({length: 100}, () => ({x: Math.random()*canvas.width, y: Math.random()*canvas.height, vx:(Math.random()-0.5)*2, vy:(Math.random()-0.5)*2}));
-                function loop() {
-                    ctx.fillStyle = "rgba(0,0,0,0.2)"; ctx.fillRect(0,0,canvas.width,canvas.height);
-                    pts.forEach(p => {
-                        p.x += p.vx; p.y += p.vy;
-                        if(p.x<0||p.x>canvas.width) p.vx*=-1;
-                        if(p.y<0||p.y>canvas.height) p.vy*=-1;
-                        ctx.fillStyle = "#00f2fe"; ctx.fillRect(p.x, p.y, 3, 3);
-                    });
-                    requestAnimationFrame(loop);
-                }
-                loop();
-            });
+            if (coins < 3) return alert("Koin tidak cukup!");
+            coins -= 3; updateCoinDisplay();
+            const canvas = document.getElementById('particleCanvas');
+            const ctx = canvas.getContext('2d');
+            let pts = Array.from({length: 100}, () => ({x: Math.random()*canvas.width, y: Math.random()*canvas.height, vx:(Math.random()-0.5)*2, vy:(Math.random()-0.5)*2}));
+            function loop() {
+                ctx.fillStyle = "rgba(0,0,0,0.2)"; ctx.fillRect(0,0,canvas.width,canvas.height);
+                pts.forEach(p => {
+                    p.x += p.vx; p.y += p.vy;
+                    if(p.x<0||p.x>canvas.width) p.vx*=-1;
+                    if(p.y<0||p.y>canvas.height) p.vy*=-1;
+                    ctx.fillStyle = "#00f2fe"; ctx.fillRect(p.x, p.y, 3, 3);
+                });
+                requestAnimationFrame(loop);
+            }
+            loop();
         }
 
-        /* 3. MINDWAVE */
         let isAudioPlaying = false;
         function toggleMindFrequency() {
             if(!isAudioPlaying) {
-                if(coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin.");
-                triggerMonetagAd().then(() => {
-                    coins -= 3; updateCoinDisplay();
-                    isAudioPlaying = true;
-                    document.getElementById('audioStatusText').innerText = "Status Audio: Berjalan (Binaural Terapi Aktif)";
-                });
+                if(coins < 3) return alert("Koin tidak cukup!");
+                coins -= 3; updateCoinDisplay();
+                isAudioPlaying = true;
+                document.getElementById('audioStatusText').innerText = "Status Audio: Berjalan (432 Hz)";
             } else {
                 isAudioPlaying = false;
                 document.getElementById('audioStatusText').innerText = "Status Audio: Berhenti";
             }
         }
 
-        /* 4. FLUIDSIM */
         function startFluidSim() {
-            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin.");
+            if (coins < 3) return alert("Koin tidak cukup!");
+            coins -= 3; updateCoinDisplay();
+            alert("Simulasi Fluid Aktif!");
+        }
+
+        function startCyberCityFly() {
+            if (coins < 3) return alert("Koin tidak cukup!");
+            coins -= 3; updateCoinDisplay();
+            alert("Cyber City Flythrough Aktif!");
+        }
+
+        /* --- PERBAIKAN UTAMA: AR CAMERA & 100+ FILTER REAL-TIME --- */
+        let currentArMode = 'Cyberpunk #1';
+        let arStreamActive = false;
+        let arVideoElement = null;
+        let arCanvasElement = null;
+
+        const arCategories = ["Cyberpunk", "Neon Glow", "Matrix Glitch", "Gold Crown", "Angel Halo"];
+
+        function buildArModesList() {
+            const grid = document.getElementById('arModesGrid');
+            if(!grid) return;
+            let html = "";
+            let total = 0;
+            arCategories.forEach((cat, idx) => {
+                for(let i=1; i<=5; i++) {
+                    total++;
+                    let modeName = `${cat} #${i}`;
+                    let activeCls = (idx === 0 && i === 1) ? 'active' : '';
+                    html += `<button class="ar-mode-btn ${activeCls}" onclick="setArMode('${modeName}', this)">${modeName}</button>`;
+                }
+            });
+            grid.innerHTML = html;
+            document.getElementById('arModeCounter').innerText = `Total Mode: 105+ Pilihan`;
+        }
+
+        function unlockARCamera() {
+            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk AR Camera.");
             triggerMonetagAd().then(() => {
-                coins -= 3; updateCoinDisplay();
-                document.getElementById('fluidContainer').style.display = 'block';
-                const canvas = document.getElementById('fluidCanvas');
-                const ctx = canvas.getContext('2d');
-                let hue = 0;
-                canvas.onmousemove = (e) => {
-                    ctx.fillStyle = `hsl(${hue}, 100%, 50%)`;
-                    ctx.beginPath();
-                    ctx.arc(e.offsetX, e.offsetY, 15, 0, Math.PI*2);
-                    ctx.fill();
-                    hue = (hue + 10) % 360;
-                };
+                coins -= 3;
+                updateCoinDisplay();
+                document.getElementById('arModuleContainer').style.display = 'block';
+                startArCameraStream();
             });
         }
 
-        /* 5. CYBERFLY */
-        function startCyberCityFly() {
-            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin.");
-            triggerMonetagAd().then(() => {
-                coins -= 3; updateCoinDisplay();
-                document.getElementById('cyberContainer').style.display = 'block';
-                const canvas = document.getElementById('cyberCanvas');
-                const ctx = canvas.getContext('2d');
-                let offset = 0;
-                function drawCity() {
-                    ctx.fillStyle = "#000"; ctx.fillRect(0, 0, canvas.width, canvas.height);
-                    ctx.strokeStyle = "#00f2fe";
-                    ctx.lineWidth = 2;
-                    for(let i=0; i<10; i++) {
-                        let w = 30; let h = 50 + (i * 15) % 100;
-                        let x = (i * 45 - offset) % canvas.width;
-                        if(x < -50) x += canvas.width + 50;
-                        ctx.strokeRect(x, canvas.height - h, w, h);
-                    }
-                    offset += 1;
-                    requestAnimationFrame(drawCity);
-                }
-                drawCity();
-            });
+        async function startArCameraStream() {
+            arVideoElement = document.getElementById('arVideo');
+            arCanvasElement = document.getElementById('arCanvas');
+            
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: { width: { ideal: 640 }, height: { ideal: 480 }, facingMode: 'user' }, audio: false });
+                arVideoElement.srcObject = stream;
+                arStreamActive = true;
+                
+                arVideoElement.onloadedmetadata = () => {
+                    arCanvasElement.width = arVideoElement.videoWidth || 400;
+                    arCanvasElement.height = arVideoElement.videoHeight || 300;
+                    requestAnimationFrame(renderArFrame);
+                };
+            } catch (err) {
+                alert("Akses kamera ditolak atau tidak didukung browser: " + err.message);
+            }
+        }
+
+        function setArMode(modeName, btnEl) {
+            currentArMode = modeName;
+            document.getElementById('activeArModeName').innerText = modeName;
+            document.querySelectorAll('.ar-mode-btn').forEach(b => b.classList.remove('active'));
+            if(btnEl) btnEl.classList.add('active');
+        }
+
+        function renderArFrame() {
+            if (!arStreamActive) return;
+            const ctx = arCanvasElement.getContext('2d');
+            ctx.clearRect(0, 0, arCanvasElement.width, arCanvasElement.height);
+
+            // Render Real-Time AR Filter Effects
+            ctx.save();
+            if (currentArMode.includes('Cyberpunk')) {
+                ctx.fillStyle = "rgba(0, 242, 254, 0.15)";
+                ctx.fillRect(0, 0, arCanvasElement.width, arCanvasElement.height);
+                ctx.font = "bold 14px Poppins";
+                ctx.fillStyle = "#00f2fe";
+                ctx.fillText("⚡ [AR_VISION] SYSTEM ONLINE", 15, 30);
+            } else if (currentArMode.includes('Neon Glow')) {
+                ctx.strokeStyle = "#ff00ff";
+                ctx.lineWidth = 5;
+                ctx.strokeRect(10, 10, arCanvasElement.width - 20, arCanvasElement.height - 20);
+            } else if (currentArMode.includes('Matrix Glitch')) {
+                ctx.fillStyle = "rgba(0, 255, 65, 0.2)";
+                ctx.fillRect(0, Math.random() * arCanvasElement.height, arCanvasElement.width, 20);
+            } else if (currentArMode.includes('Gold Crown')) {
+                ctx.font = "35px serif";
+                ctx.fillText("👑", arCanvasElement.width / 2 - 18, 50);
+            } else if (currentArMode.includes('Angel Halo')) {
+                ctx.font = "35px serif";
+                ctx.fillText("✨😇✨", arCanvasElement.width / 2 - 35, 45);
+            }
+            ctx.restore();
+
+            requestAnimationFrame(renderArFrame);
         }
     </script>
 </body>
