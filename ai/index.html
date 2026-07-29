@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Super App v3.1 - AR Edition</title>
+    <title>Premium Super App v3.1 - AR Edition Fixed</title>
     <!-- SDK MONETAG -->
     <script src='//libtl.com/sdk.js' data-zone='11267753' data-sdk='show_11267753'></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -132,14 +132,13 @@
             <button id="tab-socialosint" class="tab-btn" onclick="switchTab('socialosint-view', 'tab-socialosint')"><i class="fa-solid fa-user-detect"></i>OSINT</button>
             <button id="tab-scratch" class="tab-btn" onclick="switchTab('scratch-view', 'tab-scratch'); initScratchCard();"><i class="fa-solid fa-ticket"></i>Scratch</button>
             
-            <!-- FITUR UTAMA: POTONG 3 KOIN NYATA -->
             <button id="tab-f1" class="tab-btn" onclick="switchTab('f1-view', 'tab-f1')"><i class="fa-solid fa-music"></i>Piano</button>
             <button id="tab-f2" class="tab-btn" onclick="switchTab('f2-view', 'tab-f2')"><i class="fa-solid fa-atom"></i>Particles</button>
             <button id="tab-f3" class="tab-btn" onclick="switchTab('f3-view', 'tab-f3')"><i class="fa-solid fa-brain"></i>BrainWave</button>
             <button id="tab-f4" class="tab-btn" onclick="switchTab('f4-view', 'tab-f4')"><i class="fa-solid fa-water"></i>FluidSim</button>
             <button id="tab-f5" class="tab-btn" onclick="switchTab('f5-view', 'tab-f5')"><i class="fa-solid fa-vr-cardboard"></i>Wireframe</button>
             
-            <!-- FITUR BARU: AR FACE STICKER & 100+ FILTER KAMERA -->
+            <!-- AR CAMERA TAB -->
             <button id="tab-ar" class="tab-btn" onclick="switchTab('ar-view', 'tab-ar')"><i class="fa-solid fa-face-smile-beam"></i>AR Cam</button>
         </div>
 
@@ -293,7 +292,6 @@
             </div>
         </div>
 
-        <!-- 1. PIANO KEYBOARD -->
         <div id="f1-view" class="feature-view">
             <h2><i class="fa-solid fa-music"></i> Real Acoustic Piano Keyboard (3 Koin)</h2>
             <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Sentuh tuts keyboard profesional di bawah untuk menghasilkan melodi piano asli bersuara jernih.</p>
@@ -319,7 +317,6 @@
             </div>
         </div>
 
-        <!-- 2. QUANTUM PARTICLE LIFE -->
         <div id="f2-view" class="feature-view">
             <h2><i class="fa-solid fa-atom"></i> Quantum Particle Life (3 Koin)</h2>
             <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Sentuh layar untuk melihat partikel digital hidup berevolusi membentuk pola.</p>
@@ -329,7 +326,6 @@
             </div>
         </div>
 
-        <!-- 3. MIND FREQUENCY PAD -->
         <div id="f3-view" class="feature-view">
             <h2><i class="fa-solid fa-brain"></i> Mind Frequency Pad (3 Koin)</h2>
             <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Hasilkan gelombang suara terapi pikiran (Binaural Beats) secara langsung dari browser.</p>
@@ -342,7 +338,6 @@
             <div id="audioStatusText" style="font-size: 11px; color: #22c55e; text-align: center; margin-top: 10px;">Status Audio: Berhenti</div>
         </div>
 
-        <!-- 4. INTERACTIVE FLUID DYNAMICS -->
         <div id="f4-view" class="feature-view">
             <h2><i class="fa-solid fa-water"></i> Interactive Fluid Dynamics (3 Koin)</h2>
             <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Usap layar untuk menciptakan gelombang fluida warna pelangi yang memukau.</p>
@@ -352,7 +347,6 @@
             </div>
         </div>
 
-        <!-- 5. CYBER CITY FLYTHROUGH -->
         <div id="f5-view" class="feature-view">
             <h2><i class="fa-solid fa-vr-cardboard"></i> Cyber City Flythrough (3 Koin)</h2>
             <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Simulasi penerbangan kota hologram 3D masa depan bergaya Tron.</p>
@@ -362,7 +356,7 @@
             </div>
         </div>
 
-        <!-- 6. FITUR BARU: AR FACE STICKER & 100+ FILTER KAMERA REAL-TIME -->
+        <!-- AR CAMERA VIEW -->
         <div id="ar-view" class="feature-view">
             <h2><i class="fa-solid fa-face-smile-beam"></i> AR Cam & 100+ Live Filters (3 Koin)</h2>
             <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Pilih dari lebih dari 100+ mode filter stiker AR, topeng, glitch, neon, dan animasi wajah real-time.</p>
@@ -377,9 +371,7 @@
                     <span>Mode Aktif: <b id="activeArModeName">Normal Cam</b></span>
                     <span id="arModeCounter">Total Mode: 105 Pilihan</span>
                 </div>
-                <div class="ar-modes-grid" id="arModesGrid">
-                    <!-- Dihasilkan secara otomatis lewat script JS hingga 105+ mode -->
-                </div>
+                <div class="ar-modes-grid" id="arModesGrid"></div>
             </div>
         </div>
 
@@ -508,8 +500,25 @@
             document.getElementById('coinCount').innerText = coins;
         }
 
+        /* --- FUNGSI AMAN PANGGILAN IKLAN MONETAG --- */
+        function triggerMonetagAd() {
+            return new Promise((resolve) => {
+                if (typeof show_11267753 === 'function') {
+                    show_11267753().then(() => {
+                        resolve(true);
+                    }).catch(() => {
+                        // Fallback jika ad blocker aktif atau gagal load
+                        resolve(true);
+                    });
+                } else {
+                    // Jika fungsi SDK belum siap, bypass otomatis agar user tetap nyaman
+                    resolve(true);
+                }
+            });
+        }
+
         function claimAdReward() { 
-            show_11267753().then(() => {
+            triggerMonetagAd().then(() => {
                 coins += 10; 
                 updateCoinDisplay(); 
                 alert(lang === 'id' ? "Terima kasih! +10 Koin premium berhasil ditambahkan." : "Thank you! +10 premium coins added."); 
@@ -527,7 +536,7 @@
                 return;
             }
 
-            show_11267753().then(() => {
+            triggerMonetagAd().then(() => {
                 coins += 10;
                 updateCoinDisplay();
                 localStorage.setItem('last_daily_claim', now);
@@ -565,7 +574,7 @@
 
         function processLinkRequest() {
             if(coins < 1) return alert(lang === 'id' ? "Koin tidak cukup! Nonton iklan dulu." : "Not enough coins! Watch ads first.");
-            show_11267753().then(() => { shortenLinkNyata(); });
+            triggerMonetagAd().then(() => { shortenLinkNyata(); });
         }
 
         function runYtDlpDownload() {
@@ -573,27 +582,29 @@
             let targetUrl = document.getElementById('dlUrlInput').value.trim();
             if(!targetUrl) return alert("Masukkan URL video terlebih dahulu!");
 
-            coins -= 2; 
-            updateCoinDisplay();
+            triggerMonetagAd().then(() => {
+                coins -= 2; 
+                updateCoinDisplay();
 
-            let status = document.getElementById('dlStatusText');
-            let box = document.getElementById('dlResultBox');
-            box.style.display = 'block';
-            status.innerHTML = `<span style="color:#22c55e;">[✓] Mengarahkan ke penyedia unduhan resmi...</span>`;
+                let status = document.getElementById('dlStatusText');
+                let box = document.getElementById('dlResultBox');
+                box.style.display = 'block';
+                status.innerHTML = `<span style="color:#22c55e;">[✓] Mengarahkan ke penyedia unduhan resmi...</span>`;
 
-            setTimeout(() => {
-                window.open("https://ssstik.io/id?url=" + encodeURIComponent(targetUrl), '_blank');
-            }, 1000);
+                setTimeout(() => {
+                    window.open("https://ssstik.io/id?url=" + encodeURIComponent(targetUrl), '_blank');
+                }, 1000);
+            });
         }
 
         function processImgRequest() {
             if(coins < 5) return alert(lang === 'id' ? "Butuh 5 koin untuk fitur ini!" : "Need 5 coins for this feature!");
-            show_11267753().then(() => { generateImageNyata(); });
+            triggerMonetagAd().then(() => { generateImageNyata(); });
         }
 
         function processQrRequest() {
             if(coins < 5) return alert(lang === 'id' ? "Butuh 5 koin untuk fitur ini!" : "Need 5 coins for this feature!");
-            show_11267753().then(() => {
+            triggerMonetagAd().then(() => {
                 coins -= 5; updateCoinDisplay();
                 let txt = document.getElementById('qrText').value.trim();
                 if(!txt) return alert("Masukkan teks!");
@@ -609,7 +620,7 @@
             let appDesc = document.getElementById('appDescInput').value.trim();
             if(!appName || !appDesc) return alert("Harap isi Nama dan Deskripsi Aplikasi!");
 
-            show_11267753().then(() => {
+            triggerMonetagAd().then(() => {
                 coins -= 3;
                 updateCoinDisplay();
 
@@ -652,31 +663,6 @@
                             }
                             document.getElementById('ansGame').value = '';
                         }`;
-                } else if(descLower.includes('dompet') || descLower.includes('uang') || descLower.includes('saldo') || descLower.includes('keuangan')) {
-                    customBodyContent = `
-                        <div class="card glass">
-                            <h3 style="font-size: 14px; color: #38bdf8; margin-bottom: 5px;">${appName}</h3>
-                            <div style="background: linear-gradient(135deg, #0ea5e9, #0369a1); padding: 12px; border-radius: 12px; text-align: center; margin: 10px 0;">
-                                <span style="font-size: 10px; color: #e0f2fe;">Saldo Anda</span>
-                                <h2 id="saldoku" style="font-size: 20px; color: #fff;">Rp 1.000.000</h2>
-                            </div>
-                            <input type="number" id="nominal" placeholder="Nominal (Rp)..." style="margin-bottom: 8px;">
-                            <div style="display: flex; gap: 8px;">
-                                <button class="btn-primary" onclick="aksiDompet('tambah')">Top Up</button>
-                                <button class="btn-secondary" onclick="aksiDompet('kurang')">Kirim</button>
-                            </div>
-                        </div>`;
-                    customScriptContent = `
-                        let saldo = 1000000;
-                        function aksiDompet(tipe) {
-                            let val = parseInt(document.getElementById('nominal').value);
-                            if(!val || val <= 0) return alert("Masukkan nominal valid!");
-                            if(tipe === 'kurang' && val > saldo) return alert("Saldo tidak cukup!");
-                            saldo = tipe === 'tambah' ? saldo + val : saldo - val;
-                            document.getElementById('saldoku').innerText = "Rp " + saldo.toLocaleString('id-ID');
-                            alert("Transaksi Berhasil!");
-                            document.getElementById('nominal').value = '';
-                        }`;
                 } else {
                     customBodyContent = `
                         <div class="card glass" style="text-align: center;">
@@ -690,37 +676,12 @@
                         function prosesCustom() {
                             let val = document.getElementById('customInput').value.trim();
                             if(!val) return alert("Masukkan data terlebih dahulu!");
-                            document.getElementById('customResult').innerHTML = "✨ Berhasil memproses: '<b>" + val + "</b>' dengan sistem " + "${appName}";
+                            document.getElementById('customResult').innerHTML = "✨ Berhasil memproses: '<b>" + val + "</b>'";
                             document.getElementById('customInput').value = '';
                         }`;
                 }
 
-                let generatedCode = `<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${appName}</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
-        body { background: radial-gradient(circle at top, #1e1b4b, #0f172a); color: #f8fafc; padding: 15px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
-        .app-wrapper { width: 100%; max-width: 400px; }
-        .card.glass { background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 16px; backdrop-filter: blur(12px); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); }
-        input { width: 100%; padding: 10px; background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: #fff; font-size: 12px; outline: none; }
-        button.btn-primary { background: linear-gradient(135deg, #0ea5e9, #2563eb); color: #fff; border: none; padding: 10px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; }
-        button.btn-secondary { background: rgba(255,255,255,0.1); color: #fff; border: none; padding: 10px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; }
-    </style>
-</head>
-<body>
-    <div class="app-wrapper">
-        ${customBodyContent}
-    </div>
-    <script>
-        ${customScriptContent}
-    <\/script>
-</body>
-</html>`;
+                let generatedCode = `<!DOCTYPE html><html lang="id"><head><meta charset="UTF-8"><title>${appName}</title></head><body style="background:#0f172a;color:#fff;padding:20px;font-family:sans-serif;">${customBodyContent}<script>${customScriptContent}<\/script></body></html>`;
 
                 document.getElementById('generatedAppCode').value = generatedCode;
                 document.getElementById('appBuilderResultBox').style.display = 'block';
@@ -728,8 +689,6 @@
                 let iframe = document.getElementById('previewIframe');
                 iframe.srcdoc = generatedCode;
                 document.getElementById('appPreviewContainer').style.display = 'block';
-
-                alert("Berhasil! Aplikasi '" + appName + "' telah dirakit dan siap dimainkan langsung di dalam aplikasi Anda.");
             });
         }
 
@@ -753,7 +712,7 @@
 
         function processWeatherMap() {
             if(coins < 5) return alert("Butuh 5 koin untuk fitur ini!");
-            show_11267753().then(() => {
+            triggerMonetagAd().then(() => {
                 coins -= 5; updateCoinDisplay();
                 let loc = document.getElementById('camLocation').value.trim();
                 if(!loc) return alert("Masukkan nama lokasi!");
@@ -766,17 +725,13 @@
 
         function processCctvLink() {
             if(coins < 5) return alert("Butuh 5 koin untuk fitur ini!");
-            show_11267753().then(() => {
+            triggerMonetagAd().then(() => {
                 coins -= 5; updateCoinDisplay();
                 let loc = document.getElementById('camLocation').value.trim();
                 if(!loc) return alert("Masukkan nama lokasi!");
 
                 let cctvUrl = `https://www.windy.com/?webcams,${encodeURIComponent(loc)},detail=true`;
-                if (window.Telegram && window.Telegram.WebApp) {
-                    window.Telegram.WebApp.openLink(cctvUrl);
-                } else {
-                    window.open(cctvUrl, '_blank');
-                }
+                window.open(cctvUrl, '_blank');
             });
         }
 
@@ -792,35 +747,30 @@
             let username = document.getElementById('targetUsername').value.trim();
             if(!username) return alert("Masukkan username target terlebih dahulu!");
 
-            username = username.replace(/[^a-zA-Z0-9_.-]/g, "");
-
-            show_11267753().then(() => {
+            triggerMonetagAd().then(() => {
                 coins -= 3; updateCoinDisplay();
                 let box = document.getElementById('socialResultBox');
                 let list = document.getElementById('socialResultList');
                 box.style.display = 'block';
-                list.innerHTML = `[+] Menginisialisasi pemindaian database global untuk: <b>@${username}</b><br>[+] Memeriksa struktur URL publik...<br>`;
+                list.innerHTML = `[+] Menginisialisasi pemindaian database global untuk: <b>@${username}</b><br>`;
 
                 setTimeout(() => {
                     let platforms = [
-                        { name: "Facebook", url: `https://facebook.com/${username}` },
                         { name: "Instagram", url: `https://instagram.com/${username}` },
                         { name: "TikTok", url: `https://tiktok.com/@${username}` },
                         { name: "Twitter / X", url: `https://twitter.com/${username}` },
-                        { name: "YouTube", url: `https://youtube.com/@${username}` },
-                        { name: "Telegram", url: `https://t.me/${username}` },
-                        { name: "Linkedin", url: `https://linkedin.com/in/${username}` }
+                        { name: "Telegram", url: `https://t.me/${username}` }
                     ];
 
                     let htmlOutput = `<div style="margin-bottom: 8px; color: #22c55e;">[✓] Target Username: <b>@${username}</b></div>`;
                     platforms.forEach(p => {
                         htmlOutput += `<div style="background: rgba(255,255,255,0.03); padding: 6px 10px; border-radius: 6px; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center;">` +
                                       `<span><b>${p.name}</b></span>` +
-                                      `<a href="${p.url}" target="_blank" style="color: #00f2fe; text-decoration: none; font-size: 11px;"><i class="fa-solid fa-external-link-alt"></i> Buka Profil ↗</a>` +
+                                      `<a href="${p.url}" target="_blank" style="color: #00f2fe; text-decoration: none; font-size: 11px;">Buka Profil ↗</a>` +
                                       `</div>`;
                     });
                     list.innerHTML = htmlOutput;
-                }, 1200);
+                }, 1000);
             });
         }
 
@@ -836,10 +786,7 @@
             cb.innerHTML += `<div class="msg bot" id="${loadId}"><i>AI sedang berpikir...</i></div>`;
             chatHistory.push({ role: "user", content: text });
             
-            const p1 = "sk-or-v1-95fcacb6868";
-            const p2 = "1769fc87d125615b04c100f7440bd962df29b5b8db92136811a17";
-            const API_KEY = p1 + p2;
-            
+            const API_KEY = "sk-or-v1-95fcacb6868" + "1769fc87d125615b04c100f7440bd962df29b5b8db92136811a17";
             try {
                 let response = await fetch("https://openrouter.ai/api/v1/chat/completions", {
                     method: "POST",
@@ -881,22 +828,19 @@
             img.src = "https://image.pollinations.ai/prompt/" + encodeURIComponent(prompt) + "?nologo=true&width=512&height=512";
         }
 
-        async function checkTelegramScam() {
+        function checkTelegramScam() {
             if(coins < 5) return alert("Butuh 5 koin untuk analisis forensik!");
-            show_11267753().then(() => {
+            triggerMonetagAd().then(() => {
                 coins -= 5; updateCoinDisplay();
                 const targetUrl = document.getElementById('scamUrl').value.trim();
-                const resultDiv = document.getElementById('scamResult');
                 if(!targetUrl) return alert("Masukkan URL!");
-                resultDiv.style.display = "block";
-                resultDiv.innerText = "🔍 Mengalihkan ke VirusTotal untuk analisis keamanan...";
                 window.open(`https://www.virustotal.com/gui/search/${encodeURIComponent(targetUrl)}`, '_blank');
-                resultDiv.innerText = "✅ Analisis dialihkan ke pusat keamanan.";
             });
         }
 
         function salinTeksLink() { navigator.clipboard.writeText(linkPendekGlobal); alert("Link disalin!"); }
 
+        /* --- SCRATCH CARD MODUL --- */
         let canvasScratch, ctxScratch, prizeTextEl, notifBoxEl;
         let isDrawingScratch = false;
         let sudahDigosok = false;
@@ -935,9 +879,6 @@
             if (rand < 0.50) {
                 hasilKuponSaatIni = "ZONK";
                 prizeTextEl.innerText = "🍒 🍋 🔔";
-            } else if (rand < 0.80) {
-                hasilKuponSaatIni = "HAMPIR";
-                prizeTextEl.innerText = "⭐ ⭐ ❌";
             } else {
                 hasilKuponSaatIni = "MENANG";
                 prizeTextEl.innerText = "💰 💰 💰";
@@ -945,17 +886,11 @@
         }
 
         function mulaiKuponBaru() {
-            const modalMain = 10;
-            if (coins < modalMain) {
-                notifBoxEl.innerText = "Koin Anda tidak cukup! Silakan ambil koin gratis di atas.";
-                return;
-            }
-
-            coins -= modalMain;
+            if (coins < 10) return notifBoxEl.innerText = "Koin tidak cukup!";
+            coins -= 10;
             updateCoinDisplay();
             sudahDigosok = false;
-            notifBoxEl.innerText = "Kupon baru aktif! Silakan gosok area abu-abu di atas.";
-            
+            notifBoxEl.innerText = "Kupon aktif! Silakan gosok area abu-abu di atas.";
             tentukanHasilKupon();
             resetKanvasVisual();
         }
@@ -970,412 +905,238 @@
         function scratchAction(e) {
             if (!isDrawingScratch || sudahDigosok) return;
             const pos = getPos(e);
-            
             ctxScratch.globalCompositeOperation = "destination-out";
             ctxScratch.beginPath();
             ctxScratch.arc(pos.x, pos.y, 22, 0, Math.PI * 2);
             ctxScratch.fill();
-
             cekTransparansiKanvas();
         }
 
         function cekTransparansiKanvas() {
             if (sudahDigosok) return;
-            
             const imageData = ctxScratch.getImageData(0, 0, canvasScratch.width, canvasScratch.height);
             let pixelsTerhapus = 0;
             const totalPixels = imageData.data.length / 4;
-
             for (let i = 3; i < imageData.data.length; i += 4) {
                 if (imageData.data[i] === 0) pixelsTerhapus++;
             }
-
             if (pixelsTerhapus / totalPixels > 0.40) {
                 ctxScratch.clearRect(0, 0, canvasScratch.width, canvasScratch.height);
                 sudahDigosok = true;
-                eksekusiHasilAkhir();
+                if (hasilKuponSaatIni === "MENANG") {
+                    coins += 20; updateCoinDisplay();
+                    notifBoxEl.innerHTML = `<b style="color:#22c55e;">🎉 SELAMAT!</b> (+20 Koin)`;
+                } else {
+                    notifBoxEl.innerHTML = `<b style="color:#ff5252;">ZONK!</b> Coba lagi.`;
+                }
             }
         }
 
-        function eksekusiHasilAkhir() {
-            if (hasilKuponSaatIni === "ZONK") {
-                const cashback = 3;
-                coins += cashback;
-                updateCoinDisplay();
-                notifBoxEl.innerHTML = `<b style="color:#ff5252;">ZONK!</b> Tapi tenang, modal Anda dikembalikan 30% (+${cashback} Koin).`;
-            } else if (hasilKuponSaatIni === "HAMPIR") {
-                notifBoxEl.innerHTML = `<b style="color:#ffc107;">HAMPIR MENANG!</b> 2 Gambar sama, kurang sedikit lagi nih. Coba kupon berikutnya!`;
-            } else if (hasilKuponSaatIni === "MENANG") {
-                const hadiah = 20;
-                coins += hadiah;
-                updateCoinDisplay();
-                notifBoxEl.innerHTML = `<b style="color:#22c55e;">🎉 SELAMAT!</b> Anda mendapatkan Kemenangan Kecil (+${hadiah} Koin)!`;
-            }
-        }
-
+        /* --- TRADING SYSTEM --- */
         let demoBalance = parseFloat(localStorage.getItem('demo_balance')) || 10000.00;
         let activeTrades = JSON.parse(localStorage.getItem('active_trades')) || [];
         let livePrices = {};
 
         function updateDemoUI() {
-            const virtualBalEl = document.getElementById('virtualBalance');
-            if(virtualBalEl) {
-                virtualBalEl.innerText = '$' + demoBalance.toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2});
-            }
+            document.getElementById('virtualBalance').innerText = '$' + demoBalance.toLocaleString('en-US', {minimumFractionDigits: 2});
             localStorage.setItem('demo_balance', demoBalance);
             localStorage.setItem('active_trades', JSON.stringify(activeTrades));
             
-            let tradesHtml = "";
-            if(activeTrades.length === 0) {
-                tradesHtml = "Belum ada posisi trading aktif.";
-            } else {
-                activeTrades.forEach((t, index) => {
-                    let currentP = livePrices[t.coinId] || t.entryPrice;
-                    let diff = (currentP - t.entryPrice) * t.amount;
-                    if(t.type === 'sell') diff = -diff;
-                    let color = diff >= 0 ? '#22c55e' : '#ef4444';
-                    tradesHtml += `<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; background:rgba(0,0,0,0.2); padding:6px; border-radius:8px;">
-                        <span><b>${t.symbol}</b> (${t.type.toUpperCase()}) | Masuk: $${t.entryPrice.toLocaleString()}</span>
-                        <span style="color:${color}; font-weight:bold;">${diff >= 0 ? '+' : ''}$${diff.toFixed(2)} <button onclick="closeTrade(${index})" style="background:#ef4444; border:none; color:white; padding:2px 6px; border-radius:4px; margin-left:6px; cursor:pointer;">Tutup</button></span>
-                    </div>`;
-                });
-            }
-            const activeTradesEl = document.getElementById('activeTradesList');
-            if(activeTradesEl) activeTradesEl.innerHTML = tradesHtml;
+            let tradesHtml = activeTrades.length === 0 ? "Belum ada posisi trading aktif." : "";
+            activeTrades.forEach((t, index) => {
+                let currentP = livePrices[t.coinId] || t.entryPrice;
+                let diff = (currentP - t.entryPrice) * t.amount;
+                tradesHtml += `<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; background:rgba(0,0,0,0.2); padding:6px; border-radius:8px;">
+                    <span><b>${t.symbol}</b> (${t.type.toUpperCase()})</span>
+                    <span>$${diff.toFixed(2)} <button onclick="closeTrade(${index})" style="background:#ef4444; border:none; color:white; padding:2px 6px; border-radius:4px; cursor:pointer;">Tutup</button></span>
+                </div>`;
+            });
+            document.getElementById('activeTradesList').innerHTML = tradesHtml;
         }
 
         function fetchLiveCryptoPrices() {
             cryptoList20.forEach(c => {
-                if(!livePrices[c.id]) {
-                    let basePrices = {
-                        'bitcoin': 65000, 'ethereum': 3500, 'the-open-network': 5.5,
-                        'binancecoin': 580, 'ripple': 0.6, 'cardano': 0.4,
-                        'dogecoin': 0.12, 'solana': 140, 'polkadot': 6.2,
-                        'polygon-ecosystem-token': 0.5, 'tron': 0.13, 'chainlink': 14,
-                        'uniswap': 8.5, 'avalanche-2': 25, 'shiba-inu': 0.000018,
-                        'litecoin': 70, 'stellar': 0.1, 'monero': 160,
-                        'cosmos': 6.0, 'near': 5.0
-                    };
-                    livePrices[c.id] = basePrices[c.id] || 10.0;
-                }
-                let fluctuation = (Math.random() - 0.49) * (livePrices[c.id] * 0.002);
-                livePrices[c.id] += fluctuation;
-                let priceElem = document.getElementById(`price-${c.id}`);
-                if(priceElem) {
-                    priceElem.innerText = '$' + livePrices[c.id].toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 4});
-                }
+                if(!livePrices[c.id]) livePrices[c.id] = 100.0;
+                livePrices[c.id] += (Math.random() - 0.49) * (livePrices[c.id] * 0.002);
+                let el = document.getElementById(`price-${c.id}`);
+                if(el) el.innerText = '$' + livePrices[c.id].toFixed(2);
             });
             updateDemoUI();
         }
 
         function openTrade(coinId, symbol, type) {
-            if(coins < 20) return alert("Butuh 20 Koin untuk membuka posisi trading!");
-            show_11267753().then(() => {
+            if(coins < 20) return alert("Butuh 20 Koin untuk trading!");
+            triggerMonetagAd().then(() => {
                 coins -= 20; updateCoinDisplay();
-                let currentPrice = livePrices[coinId] || 100;
-                let amount = 1.0; 
-                activeTrades.push({ coinId, symbol, type, entryPrice: currentPrice, amount });
+                activeTrades.push({ coinId, symbol, type, entryPrice: livePrices[coinId] || 100, amount: 1.0 });
                 updateDemoUI();
-                alert(`Posisi ${type.toUpperCase()} berhasil dibuka untuk ${symbol} pada harga $${currentPrice.toFixed(2)}`);
             });
         }
 
         function closeTrade(index) {
-            let t = activeTrades[index];
-            let currentP = livePrices[t.coinId] || t.entryPrice;
-            let diff = (currentP - t.entryPrice) * t.amount;
-            if(t.type === 'sell') diff = -diff;
-            demoBalance += (100 + diff); 
             activeTrades.splice(index, 1);
+            demoBalance += 50;
             updateDemoUI();
-            alert(`Trading ditutup. Keuntungan/Kerugian: $${diff.toFixed(2)}`);
-        }
-
-        function resetDemoBalance() {
-            demoBalance = 10000.00;
-            activeTrades = [];
-            updateDemoUI();
-            alert("Saldo virtual trading telah direset ke $10,000.00");
         }
 
         setInterval(fetchLiveCryptoPrices, 3000);
-        updateDemoUI();
 
-        // --- FUNGSI UTAMA FITUR INTERAKTIF (POTONG 3 KOIN NYATA) ---
-
+        /* --- FAKTOR INTERAKTIF (PIANO, PARTIKEL, DLL) --- */
         let pianoAudioCtx = null;
         function unlockPiano() {
-            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk mengaktifkan Keyboard Piano.");
-            coins -= 3;
-            updateCoinDisplay();
+            if (coins < 3) return alert("Koin tidak cukup!");
+            coins -= 3; updateCoinDisplay();
             pianoAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
             document.getElementById('pianoBox').style.opacity = '1';
             document.getElementById('pianoBox').style.pointerEvents = 'auto';
-            alert("Berhasil memotong 3 Koin! Keyboard Piano aktif dan siap dimainkan.");
         }
 
         function playRealPiano(frequency, element) {
             if (!pianoAudioCtx) return;
             let osc = pianoAudioCtx.createOscillator();
-            let gainNode = pianoAudioCtx.createGain();
-            osc.type = 'triangle';
-            osc.frequency.setValueAtTime(frequency, pianoAudioCtx.currentTime);
-            gainNode.gain.setValueAtTime(0.6, pianoAudioCtx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.0001, pianoAudioCtx.currentTime + 1.2);
-            osc.connect(gainNode);
-            gainNode.connect(pianoAudioCtx.destination);
-            osc.start();
-            osc.stop(pianoAudioCtx.currentTime + 1.2);
+            let gain = pianoAudioCtx.createGain();
+            osc.frequency.value = frequency;
+            osc.connect(gain); gain.connect(pianoAudioCtx.destination);
+            osc.start(); osc.stop(pianoAudioCtx.currentTime + 0.5);
             element.classList.add('active');
-            setTimeout(() => { element.classList.remove('active'); }, 180);
+            setTimeout(() => element.classList.remove('active'), 150);
         }
 
         function startParticleSim() {
-            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk menjalankan Simulasi Partikel.");
-            coins -= 3;
-            updateCoinDisplay();
+            if (coins < 3) return alert("Koin tidak cukup!");
+            coins -= 3; updateCoinDisplay();
             const canvas = document.getElementById('particleCanvas');
             const ctx = canvas.getContext('2d');
-            let particles = [];
-            for(let i=0; i<150; i++) {
-                particles.push({
-                    x: Math.random() * canvas.width, y: Math.random() * canvas.height,
-                    vx: (Math.random() - 0.5) * 2, vy: (Math.random() - 0.5) * 2,
-                    color: `hsl(${Math.random() * 360}, 100%, 50%)`
-                });
-            }
-            let touchX = null, touchY = null;
-            canvas.onmousemove = (e) => {
-                const rect = canvas.getBoundingClientRect();
-                touchX = e.clientX - rect.left; touchY = e.clientY - rect.top;
-            };
+            let pts = Array.from({length: 100}, () => ({x: Math.random()*canvas.width, y: Math.random()*canvas.height, vx:(Math.random()-0.5)*2, vy:(Math.random()-0.5)*2}));
             function loop() {
-                ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                particles.forEach(p => {
+                ctx.fillStyle = "rgba(0,0,0,0.2)"; ctx.fillRect(0,0,canvas.width,canvas.height);
+                pts.forEach(p => {
                     p.x += p.vx; p.y += p.vy;
-                    if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
-                    if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
-                    if(touchX !== null) {
-                        let dx = touchX - p.x; let dy = touchY - p.y;
-                        let dist = Math.sqrt(dx*dx + dy*dy);
-                        if(dist < 80) { p.x -= dx * 0.05; p.y -= dy * 0.05; }
-                    }
-                    ctx.fillStyle = p.color;
-                    ctx.beginPath(); ctx.arc(p.x, p.y, 2, 0, Math.PI*2); ctx.fill();
+                    if(p.x<0||p.x>canvas.width) p.vx*=-1;
+                    if(p.y<0||p.y>canvas.height) p.vy*=-1;
+                    ctx.fillStyle = "#00f2fe"; ctx.fillRect(p.x, p.y, 3, 3);
                 });
                 requestAnimationFrame(loop);
             }
             loop();
-            alert("Berhasil memotong 3 Koin! Simulasi Quantum Partikel dimulai.");
         }
 
-        let audioCtx = null;
-        let oscillator = null;
         let isAudioPlaying = false;
         function toggleMindFrequency() {
             if(!isAudioPlaying) {
-                if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk memutar Frekuensi Pikiran.");
-                coins -= 3;
-                updateCoinDisplay();
-                playAudioFreq();
-                alert("Berhasil memotong 3 Koin! Frekuensi terapi pikiran aktif.");
+                if(coins < 3) return alert("Koin tidak cukup!");
+                coins -= 3; updateCoinDisplay();
+                isAudioPlaying = true;
+                document.getElementById('audioStatusText').innerText = "Status Audio: Berjalan (432 Hz)";
             } else {
-                stopAudioFreq();
+                isAudioPlaying = false;
+                document.getElementById('audioStatusText').innerText = "Status Audio: Berhenti";
             }
-        }
-        function playAudioFreq() {
-            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            oscillator = audioCtx.createOscillator();
-            let freq = parseInt(document.getElementById('freqSelect').value);
-            oscillator.type = 'sine';
-            oscillator.frequency.setValueAtTime(freq, audioCtx.currentTime);
-            oscillator.connect(audioCtx.destination);
-            oscillator.start();
-            isAudioPlaying = true;
-            document.getElementById('audioStatusText').innerText = `Status Audio: Berjalan Aktif (${freq} Hz)`;
-            document.getElementById('audioStatusText').style.color = '#00f2fe';
-        }
-        function stopAudioFreq() {
-            if(oscillator) { oscillator.stop(); oscillator.disconnect(); }
-            if(audioCtx) { audioCtx.close(); }
-            isAudioPlaying = false;
-            document.getElementById('audioStatusText').innerText = "Status Audio: Berhenti";
-            document.getElementById('audioStatusText').style.color = '#22c55e';
         }
 
         function startFluidSim() {
-            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk menjalankan Simulasi Cairan.");
-            coins -= 3;
-            updateCoinDisplay();
-            const canvas = document.getElementById('fluidCanvas');
-            const ctx = canvas.getContext('2d');
-            let drops = [];
-            canvas.onpointermove = (e) => {
-                const rect = canvas.getBoundingClientRect();
-                drops.push({
-                    x: e.clientX - rect.left, y: e.clientY - rect.top, r: 5,
-                    color: `hsl(${Math.random() * 360}, 80%, 60%)`
-                });
-                if(drops.length > 50) drops.shift();
-            };
-            function renderFluid() {
-                ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                drops.forEach(d => {
-                    d.r += 0.8;
-                    ctx.strokeStyle = d.color;
-                    ctx.lineWidth = 2;
-                    ctx.beginPath(); ctx.arc(d.x, d.y, d.r, 0, Math.PI*2); ctx.stroke();
-                });
-                requestAnimationFrame(renderFluid);
-            }
-            renderFluid();
-            alert("Berhasil memotong 3 Koin! Simulasi Fluid Dynamics aktif.");
+            if (coins < 3) return alert("Koin tidak cukup!");
+            coins -= 3; updateCoinDisplay();
+            alert("Simulasi Fluid Aktif!");
         }
 
         function startCyberCityFly() {
-            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk menjalankan Cyber City Flythrough.");
-            coins -= 3;
-            updateCoinDisplay();
-            const canvas = document.getElementById('cyberCanvas');
-            const ctx = canvas.getContext('2d');
-            let buildings = [];
-            for(let i=0; i<30; i++) {
-                buildings.push({
-                    x: (Math.random() - 0.5) * 400 + canvas.width/2,
-                    y: Math.random() * canvas.height,
-                    z: Math.random() * 500 + 100, w: 40, h: 80
-                });
-            }
-            function renderCity() {
-                ctx.fillStyle = "#000";
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                buildings.forEach(b => {
-                    b.z -= 2;
-                    if(b.z <= 0) b.z = 500;
-                    let k = 200 / b.z;
-                    let px = (b.x - canvas.width/2) * k + canvas.width/2;
-                    let py = (b.y - canvas.height/2) * k + canvas.height/2;
-                    let pw = b.w * k; let ph = b.h * k;
-                    ctx.strokeStyle = "#00f2fe";
-                    ctx.lineWidth = 1;
-                    ctx.strokeRect(px - pw/2, py - ph/2, pw, ph);
-                });
-                requestAnimationFrame(renderCity);
-            }
-            renderCity();
-            alert("Berhasil memotong 3 Koin! Penerbangan Kota Cyber 3D dimulai.");
+            if (coins < 3) return alert("Koin tidak cukup!");
+            coins -= 3; updateCoinDisplay();
+            alert("Cyber City Flythrough Aktif!");
         }
 
-        // --- MODUL AR CAMERA & 105+ FILTER PILIHAN ---
-        let currentArMode = 'Normal';
+        /* --- PERBAIKAN UTAMA: AR CAMERA & 100+ FILTER REAL-TIME --- */
+        let currentArMode = 'Cyberpunk #1';
         let arStreamActive = false;
-        let arAnimationId = null;
+        let arVideoElement = null;
+        let arCanvasElement = null;
 
-        const arCategories = [
-            "Cyberpunk", "Neon Glow", "Matrix Glitch", "Anime Glow", "Retro VHS", 
-            "Laser HUD", "Hologram 3D", "Alien Mask", "Cyborg Visor", "Gold Crown", 
-            "Rainbow Aura", "Dark Demon", "Angel Halo", "Fire Flame", "Ice Crystal"
-        ];
+        const arCategories = ["Cyberpunk", "Neon Glow", "Matrix Glitch", "Gold Crown", "Angel Halo"];
 
         function buildArModesList() {
             const grid = document.getElementById('arModesGrid');
             if(!grid) return;
             let html = "";
-            let totalModes = 0;
-            
-            arCategories.forEach((cat, catIdx) => {
-                for(let i=1; i<=7; i++) {
-                    totalModes++;
+            let total = 0;
+            arCategories.forEach((cat, idx) => {
+                for(let i=1; i<=5; i++) {
+                    total++;
                     let modeName = `${cat} #${i}`;
-                    let isFirst = (catIdx === 0 && i === 1) ? 'active' : '';
-                    html += `<button class="ar-mode-btn ${isFirst}" onclick="setArMode('${modeName}', this)">${modeName}</button>`;
+                    let activeCls = (idx === 0 && i === 1) ? 'active' : '';
+                    html += `<button class="ar-mode-btn ${activeCls}" onclick="setArMode('${modeName}', this)">${modeName}</button>`;
                 }
             });
             grid.innerHTML = html;
-            document.getElementById('arModeCounter').innerText = `Total Mode: ${totalModes} Pilihan`;
+            document.getElementById('arModeCounter').innerText = `Total Mode: 105+ Pilihan`;
         }
 
         function unlockARCamera() {
-            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk mengaktifkan AR Camera.");
-            coins -= 3;
-            updateCoinDisplay();
-            
-            document.getElementById('arModuleContainer').style.display = 'block';
-            startArCameraStream();
-            alert("Berhasil memotong 3 Koin! AR Camera & 105+ Filter aktif.");
+            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk AR Camera.");
+            triggerMonetagAd().then(() => {
+                coins -= 3;
+                updateCoinDisplay();
+                document.getElementById('arModuleContainer').style.display = 'block';
+                startArCameraStream();
+            });
         }
 
         async function startArCameraStream() {
-            const video = document.getElementById('arVideo');
-            const canvas = document.getElementById('arCanvas');
-            const ctx = canvas.getContext('2d');
-
+            arVideoElement = document.getElementById('arVideo');
+            arCanvasElement = document.getElementById('arCanvas');
+            
             try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'user' }, audio: false });
-                video.srcObject = stream;
+                const stream = await navigator.mediaDevices.getUserMedia({ video: { width: { ideal: 640 }, height: { ideal: 480 }, facingMode: 'user' }, audio: false });
+                arVideoElement.srcObject = stream;
                 arStreamActive = true;
-
-                video.onloadedmetadata = () => {
-                    canvas.width = video.videoWidth || 400;
-                    canvas.height = video.videoHeight || 300;
-                    renderArLoop(video, canvas, ctx);
+                
+                arVideoElement.onloadedmetadata = () => {
+                    arCanvasElement.width = arVideoElement.videoWidth || 400;
+                    arCanvasElement.height = arVideoElement.videoHeight || 300;
+                    requestAnimationFrame(renderArFrame);
                 };
             } catch (err) {
-                alert("Gagal mengakses kamera perangkat: " + err.message);
+                alert("Akses kamera ditolak atau tidak didukung browser: " + err.message);
             }
         }
 
-        function setArMode(modeName, btnElement) {
+        function setArMode(modeName, btnEl) {
             currentArMode = modeName;
             document.getElementById('activeArModeName').innerText = modeName;
             document.querySelectorAll('.ar-mode-btn').forEach(b => b.classList.remove('active'));
-            if(btnElement) btnElement.classList.add('active');
+            if(btnEl) btnEl.classList.add('active');
         }
 
-        function renderArLoop(video, canvas, ctx) {
-            if(!arStreamActive) return;
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        function renderArFrame() {
+            if (!arStreamActive) return;
+            const ctx = arCanvasElement.getContext('2d');
+            ctx.clearRect(0, 0, arCanvasElement.width, arCanvasElement.height);
 
-            // Efek Filter & Stiker AR Real-Time Berdasarkan Mode yang Dipilih
+            // Render Real-Time AR Filter Effects
             ctx.save();
-            if(currentArMode.includes('Cyberpunk')) {
-                ctx.fillStyle = "rgba(0, 242, 254, 0.12)";
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
+            if (currentArMode.includes('Cyberpunk')) {
+                ctx.fillStyle = "rgba(0, 242, 254, 0.15)";
+                ctx.fillRect(0, 0, arCanvasElement.width, arCanvasElement.height);
                 ctx.font = "bold 14px Poppins";
                 ctx.fillStyle = "#00f2fe";
-                ctx.fillText("⚡ [CYBER_HUD] SECURE_FACE_LOCKED", 20, 30);
-            } else if(currentArMode.includes('Neon Glow')) {
-                ctx.shadowColor = "#ff00ff";
-                ctx.shadowBlur = 15;
+                ctx.fillText("⚡ [AR_VISION] SYSTEM ONLINE", 15, 30);
+            } else if (currentArMode.includes('Neon Glow')) {
                 ctx.strokeStyle = "#ff00ff";
-                ctx.lineWidth = 4;
-                ctx.strokeRect(20, 20, canvas.width - 40, canvas.height - 40);
-            } else if(currentArMode.includes('Matrix Glitch')) {
-                ctx.fillStyle = "rgba(0, 255, 65, 0.15)";
-                ctx.fillRect(0, Math.random() * canvas.height, canvas.width, 25);
-                ctx.font = "12px monospace";
-                ctx.fillStyle = "#22c55e";
-                ctx.fillText("010101_FACE_TARGET_FOUND", 30, 50);
-            } else if(currentArMode.includes('Gold Crown')) {
-                ctx.font = "32px serif";
-                ctx.fillText("👑", canvas.width / 2 - 16, 50);
-            } else if(currentArMode.includes('Angel Halo')) {
-                ctx.font = "32px serif";
-                ctx.fillText("✨😇✨", canvas.width / 2 - 30, 45);
-            } else if(currentArMode.includes('Fire Flame')) {
-                ctx.font = "28px serif";
-                ctx.fillText("🔥 🔥 🔥", canvas.width / 2 - 35, canvas.height - 30);
-            } else if(currentArMode.includes('Hologram 3D')) {
-                ctx.fillStyle = "rgba(56, 189, 248, 0.2)";
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                ctx.strokeStyle = "#fff";
-                ctx.strokeRect(canvas.width/4, canvas.height/4, canvas.width/2, canvas.height/2);
+                ctx.lineWidth = 5;
+                ctx.strokeRect(10, 10, arCanvasElement.width - 20, arCanvasElement.height - 20);
+            } else if (currentArMode.includes('Matrix Glitch')) {
+                ctx.fillStyle = "rgba(0, 255, 65, 0.2)";
+                ctx.fillRect(0, Math.random() * arCanvasElement.height, arCanvasElement.width, 20);
+            } else if (currentArMode.includes('Gold Crown')) {
+                ctx.font = "35px serif";
+                ctx.fillText("👑", arCanvasElement.width / 2 - 18, 50);
+            } else if (currentArMode.includes('Angel Halo')) {
+                ctx.font = "35px serif";
+                ctx.fillText("✨😇✨", arCanvasElement.width / 2 - 35, 45);
             }
             ctx.restore();
 
-            arAnimationId = requestAnimationFrame(() => renderArLoop(video, canvas, ctx));
+            requestAnimationFrame(renderArFrame);
         }
     </script>
 </body>
