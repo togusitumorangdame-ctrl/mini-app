@@ -141,9 +141,6 @@
             
             <!-- FITUR BARU: AR FACE STICKER & 100+ FILTER KAMERA -->
             <button id="tab-ar" class="tab-btn" onclick="switchTab('ar-view', 'tab-ar')"><i class="fa-solid fa-face-smile-beam"></i>AR Cam</button>
-            
-            <!-- FITUR BARU: NEURAL DREAM & STYLE TRANSFER PHOTO LAB (WebGPU) -->
-            <button id="tab-neural" class="tab-btn" onclick="switchTab('neural-view', 'tab-neural')"><i class="fa-solid fa-palette"></i>Neural Lab</button>
         </div>
 
         <div id="ai-view" class="feature-view active">
@@ -332,23 +329,25 @@
             </div>
         </div>
 
-        <!-- 3. MIND FREQUENCY PAD -->
+        <!-- 3. MIND FREQUENCY PAD (PRO & POTONG 3 KOIN) -->
         <div id="f3-view" class="feature-view">
-            <h2><i class="fa-solid fa-brain"></i> Mind Frequency Pad (3 Koin)</h2>
-            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Hasilkan gelombang suara terapi pikiran (Binaural Beats) secara langsung dari browser.</p>
+            <h2><i class="fa-solid fa-brain"></i> Mind Frequency Pad (3 Koin Pro)</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Hasilkan gelombang suara terapi pikiran (Binaural Beats) secara profesional langsung dari browser.</p>
             <select id="freqSelect">
                 <option value="432">432 Hz - Frekuensi Relaksasi Semesta</option>
                 <option value="528">528 Hz - Frekuensi Pemulihan DNA</option>
                 <option value="285">285 Hz - Frekuensi Regenerasi Sel</option>
+                <option value="174">174 Hz - Frekuensi Pereda Nyeri Alami</option>
+                <option value="963">963 Hz - Frekuensi Kesadaran Murni</option>
             </select>
-            <button class="btn-action" onclick="toggleMindFrequency()">Putar / Hentikan Frekuensi (3 Koin)</button>
+            <button class="btn-action" onclick="toggleMindFrequency()">Aktifkan & Putar Frekuensi (3 Koin)</button>
             <div id="audioStatusText" style="font-size: 11px; color: #22c55e; text-align: center; margin-top: 10px;">Status Audio: Berhenti</div>
         </div>
 
-        <!-- 4. INTERACTIVE FLUID DYNAMICS -->
+        <!-- 4. INTERACTIVE FLUID DYNAMICS (PRO & POTONG 3 KOIN) -->
         <div id="f4-view" class="feature-view">
-            <h2><i class="fa-solid fa-water"></i> Interactive Fluid Dynamics (3 Koin)</h2>
-            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Usap layar untuk menciptakan gelombang fluida warna pelangi yang memukau.</p>
+            <h2><i class="fa-solid fa-water"></i> Interactive Fluid Dynamics (3 Koin Pro)</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Usap layar untuk menciptakan simulasi gelombang fluida warna pelangi tingkat lanjut.</p>
             <button class="btn-action" onclick="startFluidSim()">Aktifkan Simulasi Cairan (3 Koin)</button>
             <div style="margin-top: 12px; border: 1px solid #00f2fe; border-radius: 12px; overflow: hidden;">
                 <canvas id="fluidCanvas" width="400" height="240" style="width: 100%; height: 240px; background: #000; display: block; touch-action: none;"></canvas>
@@ -383,30 +382,6 @@
                 <div class="ar-modes-grid" id="arModesGrid">
                     <!-- Dihasilkan secara otomatis lewat script JS hingga 105+ mode -->
                 </div>
-            </div>
-        </div>
-
-        <!-- 7. FITUR BARU: NEURAL DREAM & STYLE TRANSFER PHOTO LAB (WebGPU) -->
-        <div id="neural-view" class="feature-view">
-            <h2><i class="fa-solid fa-palette"></i> Neural Dream & Style Transfer Photo Lab (3 Koin)</h2>
-            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Transformasikan foto Anda dengan gaya artistik neural network berakselerasi WebGPU secara instan.</p>
-            
-            <input type="file" id="neuralImageInput" accept="image/*" style="margin-bottom: 8px; font-size: 11px;">
-            
-            <select id="neuralStyleSelect" style="margin-bottom: 10px;">
-                <option value="vangogh">Starry Gogh (Post-Impressionism)</option>
-                <option value="cyberpunk">Cyberpunk Neon Glitch</option>
-                <option value="anime">Makoto Shinkai Anime Dream</option>
-                <option value="oilpainting">Classical Renaissance Oil</option>
-                <option value="vaporwave">Vaporwave 90s Aesthetic</option>
-            </select>
-
-            <button class="btn-action" onclick="runNeuralStyleTransfer()">Jalankan Neural Style Transfer (3 Koin)</button>
-
-            <div class="result-box" id="neuralResultBox" style="text-align: center; display: none;">
-                <p style="color: #00f2fe; font-weight: bold; margin-bottom: 8px;"><i class="fa-solid fa-wand-magic-sparkles"></i> Hasil Neural Lab (WebGPU):</p>
-                <canvas id="neuralCanvas" style="width: 100%; max-height: 260px; border-radius: 10px; border: 1px solid rgba(0,242,254,0.3); background: #000;"></canvas>
-                <a id="downloadNeuralBtn" class="share-btn wa" style="margin-top: 10px; display: inline-block; background: #00f2fe; color: #000;" download="neural-dream.png"><i class="fa-solid fa-download"></i> Unduh Hasil</a>
             </div>
         </div>
 
@@ -1200,13 +1175,15 @@
         let audioCtx = null;
         let oscillator = null;
         let isAudioPlaying = false;
+        
+        // FITUR NOMOR 3 PRO (MIND FREQUENCY PAD) DENGAN POTONG 3 KOIN NYATA
         function toggleMindFrequency() {
             if(!isAudioPlaying) {
-                if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk memutar Frekuensi Pikiran.");
+                if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk memutar Mind Frequency Pad.");
                 coins -= 3;
                 updateCoinDisplay();
                 playAudioFreq();
-                alert("Berhasil memotong 3 Koin! Frekuensi terapi pikiran aktif.");
+                alert("Berhasil memotong 3 Koin! Mind Frequency Pad aktif dan berjalan.");
             } else {
                 stopAudioFreq();
             }
@@ -1231,10 +1208,12 @@
             document.getElementById('audioStatusText').style.color = '#22c55e';
         }
 
+        // FITUR NOMOR 4 PRO (INTERACTIVE FLUID DYNAMICS) DENGAN POTONG 3 KOIN NYATA
         function startFluidSim() {
-            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk menjalankan Simulasi Cairan.");
+            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk menjalankan Interactive Fluid Dynamics.");
             coins -= 3;
             updateCoinDisplay();
+            
             const canvas = document.getElementById('fluidCanvas');
             const ctx = canvas.getContext('2d');
             let drops = [];
@@ -1242,23 +1221,23 @@
                 const rect = canvas.getBoundingClientRect();
                 drops.push({
                     x: e.clientX - rect.left, y: e.clientY - rect.top, r: 5,
-                    color: `hsl(${Math.random() * 360}, 80%, 60%)`
+                    color: `hsl(${Math.random() * 360}, 90%, 65%)`
                 });
-                if(drops.length > 50) drops.shift();
+                if(drops.length > 60) drops.shift();
             };
             function renderFluid() {
-                ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
+                ctx.fillStyle = "rgba(0, 0, 0, 0.12)";
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 drops.forEach(d => {
-                    d.r += 0.8;
+                    d.r += 1.2;
                     ctx.strokeStyle = d.color;
-                    ctx.lineWidth = 2;
+                    ctx.lineWidth = 2.5;
                     ctx.beginPath(); ctx.arc(d.x, d.y, d.r, 0, Math.PI*2); ctx.stroke();
                 });
                 requestAnimationFrame(renderFluid);
             }
             renderFluid();
-            alert("Berhasil memotong 3 Koin! Simulasi Fluid Dynamics aktif.");
+            alert("Berhasil memotong 3 Koin! Interactive Fluid Dynamics aktif.");
         }
 
         function startCyberCityFly() {
@@ -1403,76 +1382,6 @@
             ctx.restore();
 
             arAnimationId = requestAnimationFrame(() => renderArLoop(video, canvas, ctx));
-        }
-
-        // --- MODUL BARU: NEURAL DREAM & STYLE TRANSFER PHOTO LAB (WebGPU) ---
-        async function runNeuralStyleTransfer() {
-            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk menjalankan Neural Dream & Style Transfer.");
-            
-            const fileInput = document.getElementById('neuralImageInput');
-            if (!fileInput.files || fileInput.files.length === 0) {
-                return alert("Silakan pilih atau unggah foto terlebih dahulu!");
-            }
-
-            coins -= 3;
-            updateCoinDisplay();
-
-            const styleType = document.getElementById('neuralStyleSelect').value;
-            const file = fileInput.files[0];
-            const reader = new FileReader();
-
-            reader.onload = function(event) {
-                const img = new Image();
-                img.onload = async function() {
-                    const canvas = document.getElementById('neuralCanvas');
-                    const ctx = canvas.getContext('2d');
-                    canvas.width = img.width > 512 ? 512 : img.width;
-                    canvas.height = img.height > 512 ? 512 : img.height;
-                    
-                    // Gambar foto asli ke canvas
-                    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-                    // Simulasi Akselerasi WebGPU Neural Style Processing
-                    let imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-                    let data = imgData.data;
-
-                    for (let i = 0; i < data.length; i += 4) {
-                        let r = data[i], g = data[i+1], b = data[i+2];
-                        if (styleType === 'vangogh') {
-                            data[i]   = Math.min(255, r * 1.2 + 40);
-                            data[i+1] = Math.min(255, g * 1.1 + 20);
-                            data[i+2] = Math.max(0, b * 0.7 - 20);
-                        } else if (styleType === 'cyberpunk') {
-                            data[i]   = Math.min(255, r * 1.4);
-                            data[i+1] = Math.max(0, g * 0.6);
-                            data[i+2] = Math.min(255, b * 1.6 + 50);
-                        } else if (styleType === 'anime') {
-                            data[i]   = Math.min(255, r * 1.1 + 30);
-                            data[i+1] = Math.min(255, g * 1.2 + 30);
-                            data[i+2] = Math.min(255, b * 1.3 + 40);
-                        } else if (styleType === 'oilpainting') {
-                            data[i]   = Math.min(255, r * 0.9 + 50);
-                            data[i+1] = Math.min(255, g * 0.8 + 40);
-                            data[i+2] = Math.max(0, b * 0.6);
-                        } else if (styleType === 'vaporwave') {
-                            data[i]   = Math.min(255, r * 1.3 + 60);
-                            data[i+1] = Math.max(0, g * 0.5);
-                            data[i+2] = Math.min(255, b * 1.4 + 80);
-                        }
-                    }
-
-                    ctx.putImageData(imgData, 0, 0);
-
-                    // Tampilkan hasil dan link unduh
-                    document.getElementById('neuralResultBox').style.display = 'block';
-                    const dataUrl = canvas.toDataURL('image/png');
-                    document.getElementById('downloadNeuralBtn').href = dataUrl;
-
-                    alert("Berhasil memotong 3 Koin! Neural Dream & Style Transfer WebGPU selesai diproses.");
-                }
-                img.src = event.target.result;
-            }
-            reader.readAsDataURL(file);
         }
     </script>
 </body>
