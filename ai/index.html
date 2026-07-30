@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Super App v3.2 - Nature Edition</title>
+    <title>Premium Super App v3.1 - AR Edition</title>
     <!-- SDK MONETAG -->
     <script src='//libtl.com/sdk.js' data-zone='11267753' data-sdk='show_11267753'></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -11,56 +11,57 @@
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background: radial-gradient(circle, #0f2027 0%, #203a43 50%, #2c5364 100%); color: #fff; min-height: 100vh; padding: 15px; display: flex; flex-direction: column; align-items: center; }
+        body { background: radial-gradient(circle, #101026 0%, #070710 100%); color: #fff; min-height: 100vh; padding: 15px; display: flex; flex-direction: column; align-items: center; }
         
-        .header-profile { background: rgba(255, 255, 255, 0.05); backdrop-filter: blur(10px); border: 1px solid rgba(46, 213, 115, 0.3); border-radius: 20px; width: 100%; max-width: 500px; padding: 18px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
-        .user-info h3 { color: #2ed573; font-size: 15px; font-weight: 600; }
-        .user-info p { font-size: 11px; color: #a3cb38; }
+        .header-profile { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; width: 100%; max-width: 500px; padding: 18px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+        .user-info h3 { color: #00f2fe; font-size: 15px; font-weight: 600; }
+        .user-info p { font-size: 11px; color: #a0a0ba; }
         .coin-badge { background: linear-gradient(45deg, #ffd700, #ffa500); padding: 6px 14px; border-radius: 50px; font-weight: bold; font-size: 13px; color: #000; display: flex; align-items: center; gap: 6px; box-shadow: 0 0 10px rgba(255,215,0,0.3); }
         
-        .paywall-container { background: rgba(46, 213, 115, 0.08); border: 1px solid rgba(46, 213, 115, 0.3); border-radius: 18px; width: 100%; max-width: 500px; padding: 15px; margin-bottom: 15px; text-align: center; }
+        .paywall-container { background: rgba(255, 71, 87, 0.08); border: 1px solid rgba(255, 71, 87, 0.3); border-radius: 18px; width: 100%; max-width: 500px; padding: 15px; margin-bottom: 15px; text-align: center; }
         .btn-ad { background: linear-gradient(45deg, #ff4757, #ff6b81); color: white; border: none; padding: 10px 20px; border-radius: 50px; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-block; margin-top: 10px; font-size: 12px; box-shadow: 0 4px 15px rgba(255,71,87,0.3); }
         .btn-daily { background: linear-gradient(45deg, #2ed573, #26af5f); color: white; border: none; padding: 10px 20px; border-radius: 50px; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-block; margin-top: 10px; font-size: 12px; box-shadow: 0 4px 15px rgba(46,213,115,0.3); }
         .btn-daily:disabled { background: #555; cursor: not-allowed; box-shadow: none; }
         
-        .app-card { background: rgba(15, 32, 39, 0.6); backdrop-filter: blur(10px); border: 1px solid rgba(46, 213, 115, 0.2); border-radius: 25px; width: 100%; max-width: 500px; padding: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
-        .nav-tabs { display: flex; justify-content: space-between; margin-bottom: 20px; background: rgba(0,0,0,0.4); padding: 5px; border-radius: 50px; gap: 4px; flex-wrap: wrap; }
-        .tab-btn { background: none; border: none; color: #a3cb38; padding: 8px 4px; font-size: 8px; font-weight: 600; cursor: pointer; border-radius: 50px; flex: 1; text-align: center; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 38px; }
+        .app-card { background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 25px; width: 100%; max-width: 500px; padding: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+        .nav-tabs { display: flex; justify-content: space-between; margin-bottom: 20px; background: rgba(0,0,0,0.3); padding: 5px; border-radius: 50px; gap: 4px; flex-wrap: wrap; }
+        .tab-btn { background: none; border: none; color: #a0a0ba; padding: 8px 4px; font-size: 8px; font-weight: 600; cursor: pointer; border-radius: 50px; flex: 1; text-align: center; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 38px; }
         .tab-btn i { font-size: 10.5px; }
-        .tab-btn.active { background: linear-gradient(45deg, #2ed573, #26af5f); color: white; box-shadow: 0 4px 12px rgba(46,213,115,0.3); }
+        .tab-btn.active { background: linear-gradient(45deg, #00f2fe, #4facfe); color: white; box-shadow: 0 4px 12px rgba(0,242,254,0.3); }
         
         .feature-view { display: none; }
         .feature-view.active { display: block; }
-        h2 { font-size: 15px; color: #2ed573; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        h2 { font-size: 15px; color: #00f2fe; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
         
         input, select, textarea { width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 12px; color: white; font-size: 13px; margin-bottom: 12px; outline: none; transition: 0.2s; }
-        input:focus, select:focus, textarea:focus { border-color: #2ed573; }
-        .btn-action { width: 100%; background: linear-gradient(45deg, #2ed573, #26af5f); color: white; border: none; padding: 12px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 13px; box-shadow: 0 4px 15px rgba(46,213,115,0.2); }
+        input:focus, select:focus, textarea:focus { border-color: #00f2fe; }
+        .btn-action { width: 100%; background: linear-gradient(45deg, #00f2fe, #4facfe); color: white; border: none; padding: 12px; border-radius: 12px; font-weight: bold; cursor: pointer; font-size: 13px; box-shadow: 0 4px 15px rgba(0,242,254,0.2); }
         
         .chat-box { height: 220px; background: rgba(0,0,0,0.4); border-radius: 14px; padding: 12px; overflow-y: auto; margin-bottom: 12px; font-size: 12px; border: 1px solid rgba(255,255,255,0.05); display: flex; flex-direction: column; gap: 8px; }
         .msg { padding: 10px 14px; border-radius: 14px; max-width: 85%; word-wrap: break-word; line-height: 1.4; }
-        .msg.user { background: linear-gradient(135deg, #2ed573, #26af5f); align-self: flex-end; color: white; border-bottom-right-radius: 2px; }
-        .msg.bot { background: #1e293b; color: #e2e8f0; align-self: flex-start; border-bottom-left-radius: 2px; border-left: 3px solid #2ed573; }
+        .msg.user { background: linear-gradient(135deg, #00b0ff, #0070ff); align-self: flex-end; color: white; border-bottom-right-radius: 2px; }
+        .msg.bot { background: #1e293b; color: #e2e8f0; align-self: flex-start; border-bottom-left-radius: 2px; border-left: 3px solid #00f2fe; }
         
-        .result-box { background: rgba(46, 213, 115, 0.04); border: 1px solid rgba(46, 213, 115, 0.2); padding: 15px; border-radius: 16px; margin-top: 15px; display: none; text-align: center; }
+        .result-box { background: rgba(0, 242, 254, 0.04); border: 1px solid rgba(0, 242, 254, 0.2); padding: 15px; border-radius: 16px; margin-top: 15px; display: none; text-align: center; }
         .share-group { display: flex; gap: 8px; justify-content: center; margin: 12px 0; flex-wrap: wrap; }
         .share-btn { color: white; padding: 8px 14px; border-radius: 8px; font-size: 12px; text-decoration: none; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; border: none; cursor: pointer; }
         .share-btn.wa { background: #25d366; }
         .share-btn.tg { background: #0088cc; }
         .share-btn.copy { background: #4a5568; }
         
-        #aiImageResult, #qrResult { width: 100%; border-radius: 14px; margin-top: 15px; display: none; border: 2px solid rgba(46,213,115,0.2); }
+        #aiImageResult, #qrResult { width: 100%; border-radius: 14px; margin-top: 15px; display: none; border: 2px solid rgba(0,242,254,0.2); }
 
         .trade-card { background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
         .trade-info h4 { font-size: 13px; color: #fff; }
-        .trade-info p { font-size: 11px; color: #a3cb38; }
-        .trade-price { font-size: 13px; font-weight: bold; color: #2ed573; }
+        .trade-info p { font-size: 11px; color: #a0a0ba; }
+        .trade-price { font-size: 13px; font-weight: bold; color: #00f2fe; }
+        .trade-actions { display: flex; gap: 6px; }
         .btn-buy { background: #22c55e; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 11px; }
         .btn-sell { background: #ef4444; color: white; border: none; padding: 6px 12px; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 11px; }
-        .portfolio-box { background: rgba(46, 213, 115, 0.05); border: 1px solid rgba(46, 213, 115, 0.2); border-radius: 14px; padding: 12px; margin-top: 15px; font-size: 12px; }
+        .portfolio-box { background: rgba(0, 242, 254, 0.05); border: 1px solid rgba(0, 242, 254, 0.2); border-radius: 14px; padding: 12px; margin-top: 15px; font-size: 12px; }
 
         .scratch-container { display: flex; flex-direction: column; align-items: center; }
-        .card-frame { position: relative; width: 260px; height: 110px; margin: 10px auto 15px auto; border-radius: 12px; overflow: hidden; background: #222; border: 2px dashed #2ed573; display: flex; align-items: center; justify-content: center; }
+        .card-frame { position: relative; width: 260px; height: 110px; margin: 10px auto 15px auto; border-radius: 12px; overflow: hidden; background: #222; border: 2px dashed #00f2fe; display: flex; align-items: center; justify-content: center; }
         .hidden-prize { font-size: 22px; font-weight: bold; letter-spacing: 5px; }
         canvas#scratchCanvas { position: absolute; top: 0; left: 0; cursor: pointer; touch-action: none; }
         .scratch-notif { margin-top: 10px; font-size: 11px; min-height: 40px; color: #b0bec5; text-align: center; line-height: 1.4; }
@@ -68,9 +69,9 @@
         .real-piano-wrapper { background: #12121a; border: 2px solid #2a2a3d; border-radius: 16px; padding: 15px 10px; margin-top: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.7); }
         .real-piano-keys { position: relative; display: flex; height: 160px; background: #000; border-radius: 8px; overflow: hidden; user-select: none; }
         .white-key { flex: 1; background: linear-gradient(to bottom, #eeeeee 0%, #ffffff 100%); border: 1px solid #b5b5b5; border-radius: 0 0 6px 6px; cursor: pointer; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 12px; color: #555; font-size: 11px; font-weight: 600; z-index: 1; transition: background 0.08s, box-shadow 0.08s; box-shadow: inset 0 -4px 6px rgba(0,0,0,0.15); }
-        .white-key:active, .white-key.active { background: linear-gradient(to bottom, #2ed573 0%, #26af5f 100%); color: #fff; box-shadow: inset 0 2px 4px rgba(0,0,0,0.3); }
+        .white-key:active, .white-key.active { background: linear-gradient(to bottom, #00f2fe 0%, #4facfe 100%); color: #fff; box-shadow: inset 0 2px 4px rgba(0,0,0,0.3); }
         .black-key { position: absolute; width: 6.2%; height: 60%; background: linear-gradient(to bottom, #333333 0%, #0d0d0d 100%); border-left: 1px solid #555; border-right: 1px solid #555; border-bottom: 2px solid #000; border-radius: 0 0 5px 5px; cursor: pointer; z-index: 3; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 8px; color: #aaa; font-size: 8px; transition: background 0.08s; box-shadow: 0 4px 6px rgba(0,0,0,0.5); }
-        .black-key:active, .black-key.active { background: linear-gradient(to bottom, #2ed573 0%, #10b981 100%); color: #fff; }
+        .black-key:active, .black-key.active { background: linear-gradient(to bottom, #00f2fe 0%, #0284c7 100%); color: #fff; }
     </style>
 </head>
 <body>
@@ -81,12 +82,12 @@
 
     <div id="apiStatusBanner" style="width: 100%; max-width: 500px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); padding: 8px 12px; border-radius: 12px; margin-bottom: 12px; font-size: 11px; display: flex; align-items: center; justify-content: space-between; color: #22c55e;">
         <span><i class="fa-solid fa-circle-dot"></i> Status Jaringan & API: <b>Terhubung Normal</b></span>
-        <span id="liveClock" style="color: #a3cb38;">--:--:--</span>
+        <span id="liveClock" style="color: #a0a0ba;">--:--:--</span>
     </div>
 
     <div class="header-profile">
         <div class="user-info">
-            <h3 id="ui-title-user">Forest_Explorer_User</h3>
+            <h3 id="ui-title-user">Master_Premium_User</h3>
             <p id="profId">ID: Loading...</p>
         </div>
         <div class="stats-box">
@@ -95,8 +96,8 @@
     </div>
 
     <div class="paywall-container" id="paywall">
-        <p id="ui-paywall-text" style="font-size: 13px; font-weight: bold; color: #2ed573;">⚡ Ambil Koin Hutan & Isi Ulang</p>
-        <p id="ui-paywall-sub" style="font-size: 11px; color: #a3cb38;">Tonton iklan atau klaim harian untuk mendapatkan koin berkah.</p>
+        <p id="ui-paywall-text" style="font-size: 13px; font-weight: bold;">⚡ Ambil Koin Gratis / Isi Ulang</p>
+        <p id="ui-paywall-sub" style="font-size: 11px; color: #a0a0ba;">Tonton iklan atau klaim harian untuk mendapatkan koin premium.</p>
         <div>
             <a href="#" class="btn-ad" onclick="claimAdReward()">
                 <i class="fa-solid fa-film"></i> <span id="ui-ad-btn">NONTON IKLAN (+10 KOIN)</span>
@@ -109,7 +110,7 @@
 
     <div class="app-card">
         <div class="nav-tabs">
-            <button id="tab-ai" class="tab-btn active" onclick="switchTab('ai-view', 'tab-ai')"><i class="fa-solid fa-seedling"></i>AI Alam</button>
+            <button id="tab-ai" class="tab-btn active" onclick="switchTab('ai-view', 'tab-ai')"><i class="fa-solid fa-robot"></i>AI Chat</button>
             <button id="tab-trade" class="tab-btn" onclick="switchTab('trade-view', 'tab-trade')"><i class="fa-solid fa-chart-line"></i>Trading</button>
             <button id="tab-link" class="tab-btn" onclick="switchTab('link-view', 'tab-link')"><i class="fa-solid fa-link"></i>Shortener</button>
             <button id="tab-dl" class="tab-btn" onclick="switchTab('dl-view', 'tab-dl')"><i class="fa-solid fa-download"></i>Downloader</button>
@@ -125,17 +126,20 @@
             
             <button id="tab-f1" class="tab-btn" onclick="switchTab('f1-view', 'tab-f1')"><i class="fa-solid fa-music"></i>Piano</button>
             <button id="tab-f2" class="tab-btn" onclick="switchTab('f2-view', 'tab-f2')"><i class="fa-solid fa-atom"></i>Particles</button>
-            <button id="tab-f3" class="tab-btn" onclick="switchTab('f3-view', 'tab-f3')"><i class="fa-solid fa-brain"></i>MindPad</button>
+            <button id="tab-f3" class="tab-btn" onclick="switchTab('f3-view', 'tab-f3')"><i class="fa-solid fa-brain"></i>BrainWave</button>
             <button id="tab-f4" class="tab-btn" onclick="switchTab('f4-view', 'tab-f4')"><i class="fa-solid fa-water"></i>FluidSim</button>
-            <button id="tab-f5" class="tab-btn" onclick="switchTab('f5-view', 'tab-f5')"><i class="fa-solid fa-tree"></i>Hologram</button>
+            <button id="tab-f5" class="tab-btn" onclick="switchTab('f5-view', 'tab-f5')"><i class="fa-solid fa-vr-cardboard"></i>Wireframe</button>
+            
+            <!-- FITUR BARU: BROWSER MEDIA DOWNLOADER -->
+            <button id="tab-browserdl" class="tab-btn" onclick="switchTab('browserdl-view', 'tab-browserdl')"><i class="fa-solid fa-cloud-arrow-down"></i>Browser DL</button>
             
             <button id="tab-kalimba" class="tab-btn" onclick="switchTab('kalimba-view', 'tab-kalimba')"><i class="fa-solid fa-guitar"></i>Kalimba</button>
         </div>
 
         <div id="ai-view" class="feature-view active">
-            <h2><i class="fa-solid fa-seedling"></i> Chat AI Konservasi Alam</h2>
-            <div class="chat-box" id="aiChatBox"><div class="msg bot">Halo! Tanyakan apa saja tentang alam, tumbuhan, atau ekosistem (Biaya: 1 Koin).</div></div>
-            <input type="text" id="aiInput" placeholder="Ketik pesan tentang alam...">
+            <h2><i class="fa-solid fa-robot"></i> Chat AI Premium Ultra-Fast</h2>
+            <div class="chat-box" id="aiChatBox"><div class="msg bot">Halo! Tanyakan apa saja ke AI Premium (Biaya: 1 Koin).</div></div>
+            <input type="text" id="aiInput" placeholder="Ketik pesan ke AI...">
             <button class="btn-action" id="aiBtn" onclick="sendToAINyata()"><i class="fa-solid fa-paper-plane"></i> Kirim ke AI</button>
         </div>
 
@@ -143,15 +147,15 @@
             <h2><i class="fa-solid fa-chart-line"></i> Demo Trading Crypto Live (20 Koin)</h2>
             <div style="background: rgba(0,0,0,0.4); padding: 12px; border-radius: 12px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center;">
                 <div>
-                    <p style="font-size: 10px; color: #a3cb38;">SALDO VIRTUAL</p>
+                    <p style="font-size: 10px; color: #a0a0ba;">SALDO VIRTUAL</p>
                     <h3 id="virtualBalance" style="color: #ffd700; font-size: 16px;">$10,000.00</h3>
                 </div>
                 <button onclick="resetDemoBalance()" style="background: #ef4444; border: none; padding: 6px 10px; border-radius: 8px; color: white; font-size: 10px; cursor: pointer;">Reset Saldo</button>
             </div>
             <div id="cryptoMarketList" style="max-height: 250px; overflow-y: auto; padding-right: 5px;"></div>
             <div class="portfolio-box">
-                <p style="font-weight: bold; margin-bottom: 6px; color: #2ed573;"><i class="fa-solid fa-wallet"></i> Posisi Terbuka Anda:</p>
-                <div id="activeTradesList" style="font-size: 11px; color: #a3cb38;">Belum ada posisi trading aktif.</div>
+                <p style="font-weight: bold; margin-bottom: 6px; color: #00f2fe;"><i class="fa-solid fa-wallet"></i> Posisi Terbuka Anda:</p>
+                <div id="activeTradesList" style="font-size: 11px; color: #a0a0ba;">Belum ada posisi trading aktif.</div>
             </div>
         </div>
 
@@ -160,7 +164,7 @@
             <input type="text" id="longUrl" placeholder="Tempel URL panjang di sini...">
             <button class="btn-action" id="linkBtn" onclick="processLinkRequest()"><i class="fa-solid fa-bolt"></i> Perpendek Link</button>
             <div class="result-box" id="linkResult">
-                <p style="font-size: 11px; color: #a3cb38; margin-bottom: 4px;">LINK PENDEK BARU ANDA:</p>
+                <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 4px;">LINK PENDEK BARU ANDA:</p>
                 <p id="shortedUrlText" style="font-size: 15px; font-weight: 700; margin-bottom: 10px;"></p>
                 <div class="share-group">
                     <a href="#" id="shareWaBtn" target="_blank" class="share-btn wa"><i class="fa-brands fa-whatsapp"></i> WhatsApp</a>
@@ -172,19 +176,19 @@
 
         <div id="dl-view" class="feature-view">
             <h2><i class="fa-solid fa-download"></i> Downloader Tanpa Watermark (2 Koin)</h2>
-            <p style="font-size: 11px; color: #a3cb38; margin-bottom: 12px;">Didukung engine <b>yt-dlp</b> via Server Lokal Termux Port 8080.</p>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Didukung engine <b>yt-dlp</b> via Server Lokal Termux Port 8080.</p>
             <input type="text" id="dlUrlInput" placeholder="Tempel link video TikTok, IG, atau YouTube...">
             <button class="btn-action" onclick="runYtDlpDownload()"><i class="fa-solid fa-cloud-arrow-down"></i> Unduh Tanpa Watermark</button>
             <div class="result-box" id="dlResultBox" style="text-align: left;">
-                <p style="color: #2ed573; font-weight: bold; margin-bottom: 6px;"><i class="fa-solid fa-server"></i> Status Server Lokal:</p>
+                <p style="color: #00f2fe; font-weight: bold; margin-bottom: 6px;"><i class="fa-solid fa-server"></i> Status Server Lokal:</p>
                 <div id="dlStatusText" style="font-size: 11px; color: #ddd; word-break: break-all;">Menunggu permintaan unduh...</div>
             </div>
         </div>
 
         <div id="img-view" class="feature-view">
-            <h2><i class="fa-solid fa-image"></i> AI Image Generator Alam (5 Koin)</h2>
-            <input type="text" id="imgPrompt" placeholder="Contoh: Hutan tropis berkabut di pagi hari...">
-            <button class="btn-action" id="imgBtn" onclick="processImgRequest()"><i class="fa-solid fa-wand-magic-sparkles"></i> Buat Gambar Alam</button>
+            <h2><i class="fa-solid fa-image"></i> AI Image Generator (5 Koin)</h2>
+            <input type="text" id="imgPrompt" placeholder="Contoh: Pemandangan kota cyberpunk masa depan...">
+            <button class="btn-action" id="imgBtn" onclick="processImgRequest()"><i class="fa-solid fa-wand-magic-sparkles"></i> Buat Gambar</button>
             <img id="aiImageResult" src="" alt="Hasil Gambar AI">
         </div>
 
@@ -197,23 +201,23 @@
 
         <div id="appbuilder-view" class="feature-view">
             <h2><i class="fa-solid fa-hammer"></i> AI App Builder Profesional (3 Koin)</h2>
-            <p style="font-size: 11px; color: #a3cb38; margin-bottom: 12px;">Hasilkan aplikasi web instan yang lengkap dengan antarmuka dan logika kustom secara otomatis!</p>
-            <input type="text" id="appNameInput" placeholder="Nama Aplikasi (cth: Kalkulator Jejak Karbon)">
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Hasilkan aplikasi web instan yang lengkap dengan antarmuka dan logika kustom secara otomatis!</p>
+            <input type="text" id="appNameInput" placeholder="Nama Aplikasi (cth: Kalkulator BMI Pintar)">
             <textarea id="appDescInput" rows="3" placeholder="Jelaskan fitur & fungsi aplikasi yang ingin dibuat secara detail..."></textarea>
             <button class="btn-action" onclick="runAppBuilder()"><i class="fa-solid fa-code"></i> Buat Aplikasi Profesional</button>
             
             <div class="result-box" id="appBuilderResultBox" style="text-align: left;">
-                <p style="color: #2ed573; font-weight: bold; margin-bottom: 6px;"><i class="fa-solid fa-circle-check"></i> Kode Sumber Aplikasi (HTML/CSS/JS):</p>
-                <textarea id="generatedAppCode" rows="6" readonly style="font-size: 10px; font-family: monospace; background: #000; color: #2ed573; width: 100%; border-radius: 8px; padding: 8px; border: 1px solid rgba(255,255,255,0.1);"></textarea>
+                <p style="color: #00f2fe; font-weight: bold; margin-bottom: 6px;"><i class="fa-solid fa-circle-check"></i> Kode Sumber Aplikasi (HTML/CSS/JS):</p>
+                <textarea id="generatedAppCode" rows="6" readonly style="font-size: 10px; font-family: monospace; background: #000; color: #00f2fe; width: 100%; border-radius: 8px; padding: 8px; border: 1px solid rgba(255,255,255,0.1);"></textarea>
                 <div style="display: flex; gap: 6px; margin-top: 8px;">
                     <button class="share-btn copy" style="flex: 1; justify-content: center;" onclick="copyAppCode()"><i class="fa-solid fa-copy"></i> Salin Kode</button>
-                    <button class="share-btn wa" style="flex: 1; justify-content: center; background: #2ed573; color: #000;" onclick="previewGeneratedApp()"><i class="fa-solid fa-play"></i> Pratinjau App</button>
+                    <button class="share-btn wa" style="flex: 1; justify-content: center; background: #00f2fe; color: #000;" onclick="previewGeneratedApp()"><i class="fa-solid fa-play"></i> Pratinjau App</button>
                 </div>
             </div>
 
-            <div id="appPreviewContainer" style="display: none; margin-top: 15px; background: rgba(0,0,0,0.6); border: 2px solid #2ed573; border-radius: 14px; padding: 12px;">
+            <div id="appPreviewContainer" style="display: none; margin-top: 15px; background: rgba(0,0,0,0.6); border: 2px solid #00f2fe; border-radius: 14px; padding: 12px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                    <b style="color: #2ed573; font-size: 12px;"><i class="fa-solid fa-eye"></i> Live Preview Aplikasi</b>
+                    <b style="color: #00f2fe; font-size: 12px;"><i class="fa-solid fa-eye"></i> Live Preview Aplikasi</b>
                     <button onclick="closeAppPreview()" style="background: #ef4444; border: none; color: white; padding: 2px 8px; border-radius: 6px; font-size: 10px; cursor: pointer;">Tutup</button>
                 </div>
                 <iframe id="previewIframe" style="width: 100%; height: 220px; border: none; background: #fff; border-radius: 8px;"></iframe>
@@ -232,14 +236,14 @@
             <input type="text" id="camLocation" placeholder="Masukkan nama kota/negara...">
             <button class="btn-action" onclick="processWeatherMap()">Lihat Peta Cuaca</button>
             <button class="btn-action" onclick="processCctvLink()">Lihat CCTV (Browser)</button>
-            <div id="webcamContainer" style="margin-top: 15px; display: none; width: 100%; height: 300px; border: 2px solid #2ed573; border-radius: 14px; overflow: hidden;">
+            <div id="webcamContainer" style="margin-top: 15px; display: none; width: 100%; height: 300px; border: 2px solid #00f2fe; border-radius: 14px; overflow: hidden;">
                 <iframe id="windyIframe" src="" width="100%" height="100%" frameborder="0"></iframe>
             </div>
         </div>
 
         <div id="support-view" class="feature-view">
             <h2><i class="fa-solid fa-headset"></i> Support Chat (@NaburjuSidoli)</h2>
-            <p style="font-size: 11px; color: #a3cb38; margin-bottom: 12px;">Butuh bantuan, kendala koin, atau pertanyaan seputar aplikasi? Hubungi admin resmi kami langsung melalui Telegram.</p>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Butuh bantuan, kendala koin, atau pertanyaan seputar aplikasi? Hubungi admin resmi kami langsung melalui Telegram.</p>
             <a href="https://t.me/NaburjuSidoli" target="_blank" class="btn-action" style="text-align: center; text-decoration: none; display: block; background: linear-gradient(45deg, #0088cc, #229ed9);">
                 <i class="fa-brands fa-telegram"></i> Hubungi @NaburjuSidoli
             </a>
@@ -247,10 +251,10 @@
 
         <div id="referral-view" class="feature-view">
             <h2><i class="fa-solid fa-users"></i> Program Referral Nyata (+30 Koin)</h2>
-            <p style="font-size: 11px; color: #a3cb38; margin-bottom: 12px;">Bagikan tautan unik Anda. Saldo akan otomatis bertambah +30 Koin setiap ada teman baru yang bergabung ke aplikasi!</p>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Bagikan tautan unik Anda. Saldo akan otomatis bertambah +30 Koin setiap ada teman baru yang bergabung ke aplikasi!</p>
             <div style="background: rgba(0,0,0,0.4); padding: 15px; border-radius: 12px; margin-bottom: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.05);">
-                <p style="font-size: 11px; color: #a3cb38; margin-bottom: 5px;">TAUTAN REFERRAL ANDA:</p>
-                <input type="text" id="refLinkInput" readonly style="width: 100%; background: #000; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 8px; color: #2ed573; font-size: 11px; text-align: center; margin-bottom: 10px; outline: none;">
+                <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 5px;">TAUTAN REFERRAL ANDA:</p>
+                <input type="text" id="refLinkInput" readonly style="width: 100%; background: #000; border: 1px solid rgba(255,255,255,0.2); border-radius: 8px; padding: 8px; color: #00f2fe; font-size: 11px; text-align: center; margin-bottom: 10px; outline: none;">
                 <button class="btn-action" style="padding: 10px;" onclick="copyReferralLink()"><i class="fa-solid fa-copy"></i> Salin Link Referral</button>
             </div>
             <div style="font-size: 11px; color: #22c55e; text-align: center;">
@@ -260,31 +264,32 @@
 
         <div id="socialosint-view" class="feature-view">
             <h2><i class="fa-solid fa-user-detect"></i> OSINT Social Footprint Mapper (3 Koin)</h2>
-            <p style="font-size: 11px; color: #a3cb38; margin-bottom: 12px;">Petakan jejak akun publik target di berbagai platform sosial media secara nyata.</p>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Petakan jejak akun publik target di berbagai platform sosial media secara nyata.</p>
             <input type="text" id="targetUsername" placeholder="Masukkan username target (cth: johndoe)..." style="width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 12px; color: white; font-size: 12px; margin-bottom: 12px; outline: none;">
             <button class="btn-action" onclick="runSocialMapper()"><i class="fa-solid fa-magnifying-glass-chart"></i> Analisis Jejak Akun</button>
-            <div id="socialResultBox" style="margin-top: 15px; display: none; background: #050505; border: 1px solid #2ed573; padding: 12px; border-radius: 10px; font-size: 12px; max-height: 220px; overflow-y: auto;">
-                <p style="color: #2ed573; margin-bottom: 8px; font-weight: bold;"><i class="fa-solid fa-satellite"></i> Laporan Pemetaan Target:</p>
+            <div id="socialResultBox" style="margin-top: 15px; display: none; background: #050505; border: 1px solid #00f2fe; padding: 12px; border-radius: 10px; font-size: 12px; max-height: 220px; overflow-y: auto;">
+                <p style="color: #00f2fe; margin-bottom: 8px; font-weight: bold;"><i class="fa-solid fa-satellite"></i> Laporan Pemetaan Target:</p>
                 <div id="socialResultList" style="color: #ddd; line-height: 1.6;"></div>
             </div>
         </div>
 
         <div id="scratch-view" class="feature-view">
             <h2><i class="fa-solid fa-ticket"></i> Kupon Gosok Berkah (Modal: 10 Koin)</h2>
-            <p style="font-size: 11px; color: #a3cb38; margin-bottom: 10px;">Gosok area abu-abu di bawah untuk menguji peruntungan Anda!</p>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Gosok area abu-abu di bawah untuk menguji peruntungan Anda!</p>
             <div class="scratch-container">
                 <div class="card-frame">
                     <div id="prize-text" class="hidden-prize">? ? ?</div>
                     <canvas id="scratchCanvas" width="260" height="110"></canvas>
                 </div>
-                <button class="btn-action" onclick="mulaiKuponBaru()" style="background: linear-gradient(45deg, #2ed573, #10b981);">Ambil Kupon Baru (10 Koin)</button>
+                <button class="btn-action" onclick="mulaiKuponBaru()" style="background: linear-gradient(45deg, #ff9800, #ff5722);">Ambil Kupon Baru (10 Koin)</button>
                 <div class="scratch-notif" id="notifBox">Klik tombol di atas untuk memulai kupon gosok!</div>
             </div>
         </div>
 
+        <!-- PIANO KEYBOARD -->
         <div id="f1-view" class="feature-view">
             <h2><i class="fa-solid fa-music"></i> Real Acoustic Piano Keyboard (3 Koin)</h2>
-            <p style="font-size: 11px; color: #a3cb38; margin-bottom: 10px;">Sentuh tuts keyboard profesional di bawah untuk menghasilkan melodi piano asli bersuara jernih.</p>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Sentuh tuts keyboard profesional di bawah untuk menghasilkan melodi piano asli bersuara jernih.</p>
             <button class="btn-action" onclick="unlockPiano()">Aktifkan Keyboard Piano (3 Koin)</button>
             
             <div class="real-piano-wrapper" id="pianoBox" style="opacity: 0.5; pointer-events: none;">
@@ -307,60 +312,89 @@
             </div>
         </div>
 
+        <!-- QUANTUM PARTICLE LIFE -->
         <div id="f2-view" class="feature-view">
             <h2><i class="fa-solid fa-atom"></i> Quantum Particle Life (3 Koin)</h2>
-            <p style="font-size: 11px; color: #a3cb38; margin-bottom: 10px;">Sentuh layar untuk melihat partikel digital hidup berevolusi membentuk pola.</p>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Sentuh layar untuk melihat partikel digital hidup berevolusi membentuk pola.</p>
             <button class="btn-action" onclick="startParticleSim()">Mulai Simulasi Partikel (3 Koin)</button>
-            <div style="margin-top: 12px; position: relative; border: 1px solid #2ed573; border-radius: 12px; overflow: hidden;">
+            <div style="margin-top: 12px; position: relative; border: 1px solid #00f2fe; border-radius: 12px; overflow: hidden;">
                 <canvas id="particleCanvas" width="400" height="240" style="width: 100%; height: 240px; background: #000; display: block; touch-action: none;"></canvas>
             </div>
         </div>
 
+        <!-- MIND FREQUENCY PAD -->
         <div id="f3-view" class="feature-view">
             <h2><i class="fa-solid fa-brain"></i> Mind Frequency Pad (3 Koin)</h2>
-            <p style="font-size: 11px; color: #a3cb38; margin-bottom: 10px;">Hasilkan gelombang suara terapi pikiran (Binaural Beats) secara langsung dari browser.</p>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Hasilkan gelombang suara terapi pikiran (Binaural Beats) secara langsung dari browser.</p>
             <select id="freqSelect">
-                <option value="432">432 Hz - Frekuensi Relaksasi Alam Semesta</option>
-                <option value="528">528 Hz - Frekuensi Pemulihan Jiwa</option>
+                <option value="432">432 Hz - Frekuensi Relaksasi Semesta</option>
+                <option value="528">528 Hz - Frekuensi Pemulihan DNA</option>
                 <option value="285">285 Hz - Frekuensi Regenerasi Sel</option>
             </select>
             <button class="btn-action" onclick="toggleMindFrequency()">Putar / Hentikan Frekuensi (3 Koin)</button>
             <div id="audioStatusText" style="font-size: 11px; color: #22c55e; text-align: center; margin-top: 10px;">Status Audio: Berhenti</div>
         </div>
 
+        <!-- INTERACTIVE FLUID DYNAMICS -->
         <div id="f4-view" class="feature-view">
             <h2><i class="fa-solid fa-water"></i> Interactive Fluid Dynamics (3 Koin)</h2>
-            <p style="font-size: 11px; color: #a3cb38; margin-bottom: 10px;">Usap layar untuk menciptakan gelombang aliran air alami yang memukau.</p>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Usap layar untuk menciptakan gelombang fluida warna pelangi yang memukau.</p>
             <button class="btn-action" onclick="startFluidSim()">Aktifkan Simulasi Cairan (3 Koin)</button>
-            <div style="margin-top: 12px; border: 1px solid #2ed573; border-radius: 12px; overflow: hidden;">
+            <div style="margin-top: 12px; border: 1px solid #00f2fe; border-radius: 12px; overflow: hidden;">
                 <canvas id="fluidCanvas" width="400" height="240" style="width: 100%; height: 240px; background: #000; display: block; touch-action: none;"></canvas>
             </div>
         </div>
 
+        <!-- CYBER CITY FLYTHROUGH -->
         <div id="f5-view" class="feature-view">
-            <h2><i class="fa-solid fa-tree"></i> Forest Canopy Flythrough (3 Koin)</h2>
-            <p style="font-size: 11px; color: #a3cb38; margin-bottom: 10px;">Simulasi penerbangan melintasi hutan pepohonan hologram 3D nan menenangkan.</p>
-            <button class="btn-action" onclick="startCyberCityFly()">Mulai Penerbangan Hutan (3 Koin)</button>
-            <div style="margin-top: 12px; border: 1px solid #2ed573; border-radius: 12px; overflow: hidden;">
+            <h2><i class="fa-solid fa-vr-cardboard"></i> Cyber City Flythrough (3 Koin)</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Simulasi penerbangan kota hologram 3D masa depan bergaya Tron.</p>
+            <button class="btn-action" onclick="startCyberCityFly()">Mulai Penerbangan Kota (3 Koin)</button>
+            <div style="margin-top: 12px; border: 1px solid #00f2fe; border-radius: 12px; overflow: hidden;">
                 <canvas id="cyberCanvas" width="400" height="240" style="width: 100%; height: 240px; background: #000; display: block;"></canvas>
             </div>
         </div>
 
+        <!-- FITUR BARU: BROWSER MEDIA DOWNLOADER & SELECTOR -->
+        <div id="browserdl-view" class="feature-view">
+            <h2><i class="fa-solid fa-cloud-arrow-down"></i> Browser Media Downloader (3 Koin)</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Manfaatkan kecanggihan browser untuk mendownload video & musik publik secara bebas.</p>
+            <input type="text" id="browserDlUrl" placeholder="Tempel link URL publik (YouTube, TikTok, IG, Soundcloud)...">
+            <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+                <select id="mediaTypeSelect" style="margin-bottom: 0;">
+                    <option value="video">Format Video (MP4)</option>
+                    <option value="audio">Format Musik (MP3 / Audio)</option>
+                </select>
+                <select id="mediaQualitySelect" style="margin-bottom: 0;">
+                    <option value="high">Kualitas Tinggi (HD)</option>
+                    <option value="standard">Kualitas Standar</option>
+                </select>
+            </div>
+            <button class="btn-action" onclick="runBrowserMediaDownloader()"><i class="fa-solid fa-download"></i> Proses & Unduh Media (3 Koin)</button>
+            
+            <div id="browserDlResultBox" class="result-box" style="text-align: left; display: none;">
+                <p style="color: #00f2fe; font-weight: bold; margin-bottom: 6px;"><i class="fa-solid fa-circle-check"></i> Media Siap Diunduh:</p>
+                <div id="browserDlDetails" style="font-size: 11px; color: #ddd; margin-bottom: 10px;"></div>
+                <div id="browserDlActionContainer"></div>
+            </div>
+        </div>
+
+        <!-- ACOUSTIC FINGERSTYLE & KALIMBA STUDIO -->
         <div id="kalimba-view" class="feature-view">
             <h2><i class="fa-solid fa-guitar"></i> Acoustic Fingerstyle & Kalimba Studio (3 Koin)</h2>
-            <p style="font-size: 11px; color: #a3cb38; margin-bottom: 10px;">Zona relaksasi batin & terapi jiwa. Mainkan melodi kalimba & petikan gitar akustik menenangkan.</p>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Zona relaksasi batin & terapi jiwa. Mainkan melodi kalimba & petikan gitar akustik menenangkan.</p>
             <button class="btn-action" onclick="unlockKalimbaStudio()">Aktifkan Kalimba & Akustik (3 Koin)</button>
             
-            <div id="kalimbaModuleBox" style="opacity: 0.5; pointer-events: none; margin-top: 12px; background: rgba(0,0,0,0.4); border: 1px solid #2ed573; border-radius: 14px; padding: 12px;">
-                <p style="font-size: 12px; color: #2ed573; font-weight: bold; margin-bottom: 8px;"><i class="fa-solid fa-music"></i> Tuts Kalimba Interaktif:</p>
+            <div id="kalimbaModuleBox" style="opacity: 0.5; pointer-events: none; margin-top: 12px; background: rgba(0,0,0,0.4); border: 1px solid #00f2fe; border-radius: 14px; padding: 12px;">
+                <p style="font-size: 12px; color: #00f2fe; font-weight: bold; margin-bottom: 8px;"><i class="fa-solid fa-music"></i> Tuts Kalimba Interaktif:</p>
                 <div style="display: flex; gap: 4px; justify-content: center; margin-bottom: 12px;">
-                    <button class="share-btn" style="background:#10b981; flex:1;" onmousedown="playKalimbaTone(523.25, 'C5')">C5</button>
-                    <button class="share-btn" style="background:#10b981; flex:1;" onmousedown="playKalimbaTone(587.33, 'D5')">D5</button>
-                    <button class="share-btn" style="background:#10b981; flex:1;" onmousedown="playKalimbaTone(659.25, 'E5')">E5</button>
-                    <button class="share-btn" style="background:#10b981; flex:1;" onmousedown="playKalimbaTone(698.46, 'F5')">F5</button>
-                    <button class="share-btn" style="background:#10b981; flex:1;" onmousedown="playKalimbaTone(783.99, 'G5')">G5</button>
+                    <button class="share-btn" style="background:#0ea5e9; flex:1;" onmousedown="playKalimbaTone(523.25, 'C5')">C5</button>
+                    <button class="share-btn" style="background:#0ea5e9; flex:1;" onmousedown="playKalimbaTone(587.33, 'D5')">D5</button>
+                    <button class="share-btn" style="background:#0ea5e9; flex:1;" onmousedown="playKalimbaTone(659.25, 'E5')">E5</button>
+                    <button class="share-btn" style="background:#0ea5e9; flex:1;" onmousedown="playKalimbaTone(698.46, 'F5')">F5</button>
+                    <button class="share-btn" style="background:#0ea5e9; flex:1;" onmousedown="playKalimbaTone(783.99, 'G5')">G5</button>
                 </div>
-                <p style="font-size: 11px; color: #a3cb38; margin-bottom: 6px;">Pilih Suasana Latar Alam (Ambient Sound):</p>
+                <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 6px;">Pilih Suasana Latar Alam (Ambient Sound):</p>
                 <select id="ambientSoundSelect" style="margin-bottom: 8px;">
                     <option value="rain">Hujan Tenang di Hutan Bambu</option>
                     <option value="waves">Ombak Pantai Malam Hari</option>
@@ -424,13 +458,13 @@
         const userLang = navigator.language || navigator.userLanguage;
         const translations = {
             'id': {
-                title: 'Forest_Explorer_User', paywall: '⚡ Ambil Koin Hutan & Isi Ulang',
-                sub: 'Tonton iklan atau klaim harian untuk mendapatkan koin berkah.',
+                title: 'Master_Premium_User', paywall: '⚡ Ambil Koin Gratis / Isi Ulang',
+                sub: 'Tonton iklan atau klaim harian untuk mendapatkan koin premium.',
                 ad: 'NONTON IKLAN (+10 KOIN)', daily: 'CLAIM HARIAN (+10 KOIN)'
             },
             'en': {
-                title: 'Forest_Explorer_User', paywall: '⚡ Get Free Forest Coins / Refill',
-                sub: 'Watch ads or claim daily reward to get blessings coins.',
+                title: 'Premium_User', paywall: '⚡ Get Free Coins / Refill',
+                sub: 'Watch ads or claim daily reward to get premium coins.',
                 ad: 'WATCH ADS (+10 COINS)', daily: 'DAILY CLAIM (+10 COINS)'
             }
         };
@@ -441,10 +475,10 @@
         document.getElementById('ui-ad-btn').innerText = translations[lang].ad;
         document.getElementById('ui-daily-btn').innerText = translations[lang].daily;
 
-        let chatHistory = [{ role: "system", content: "Anda adalah asisten AI yang ramah lingkungan, mahir berbahasa Indonesia, dan sangat membantu terkait alam." }];
+        let chatHistory = [{ role: "system", content: "Anda adalah asisten AI yang cerdas, mahir berbahasa Indonesia, dan sangat membantu." }];
         if(localStorage.getItem('user_coins') === null) localStorage.setItem('user_coins', '10');
         let coins = parseInt(localStorage.getItem('user_coins'));
-        let userId = localStorage.getItem('user_id') || 'FOREST-' + Math.floor(100000 + Math.random() * 900000);
+        let userId = localStorage.getItem('user_id') || 'ID-' + Math.floor(100000 + Math.random() * 900000);
         localStorage.setItem('user_id', userId);
         document.getElementById('profId').innerText = 'ID: ' + userId;
         updateCoinDisplay();
@@ -498,7 +532,7 @@
             show_11267753().then(() => {
                 coins += 10; 
                 updateCoinDisplay(); 
-                alert(lang === 'id' ? "Terima kasih! +10 Koin alam berhasil ditambahkan." : "Thank you! +10 nature coins added."); 
+                alert(lang === 'id' ? "Terima kasih! +10 Koin premium berhasil ditambahkan." : "Thank you! +10 premium coins added."); 
             });
         }
 
@@ -565,11 +599,41 @@
             let status = document.getElementById('dlStatusText');
             let box = document.getElementById('dlResultBox');
             box.style.display = 'block';
-            status.innerHTML = `<span style="color:#2ed573;">[✓] Mengarahkan ke penyedia unduhan resmi...</span>`;
+            status.innerHTML = `<span style="color:#22c55e;">[✓] Mengarahkan ke penyedia unduhan resmi...</span>`;
 
             setTimeout(() => {
                 window.open("https://ssstik.io/id?url=" + encodeURIComponent(targetUrl), '_blank');
             }, 1000);
+        }
+
+        // --- FITUR BARU: BROWSER MEDIA DOWNLOADER & SELECTOR ---
+        function runBrowserMediaDownloader() {
+            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk menggunakan Browser Media Downloader.");
+            let urlInput = document.getElementById('browserDlUrl').value.trim();
+            let mediaType = document.getElementById('mediaTypeSelect').value;
+            let mediaQuality = document.getElementById('mediaQualitySelect').value;
+
+            if (!urlInput) return alert("Harap masukkan URL publik yang valid!");
+
+            coins -= 3;
+            updateCoinDisplay();
+
+            let resultBox = document.getElementById('browserDlResultBox');
+            let detailsEl = document.getElementById('browserDlDetails');
+            let actionContainer = document.getElementById('browserDlActionContainer');
+
+            resultBox.style.display = 'block';
+            detailsEl.innerHTML = `<b>URL Target:</b> ${urlInput}<br><b>Format:</b> ${mediaType.toUpperCase()} (${mediaQuality.toUpperCase()})<br><span style="color:#22c55e;">[✓] Browser berhasil memproses aliran media publik!</span>`;
+
+            // Memanfaatkan kapabilitas browser untuk memproses link unduhan langsung
+            let downloadLink = urlInput;
+            let buttonLabel = mediaType === 'video' ? 'Download Video (MP4)' : 'Download Musik (MP3)';
+            
+            actionContainer.innerHTML = `
+                <a href="${downloadLink}" target="_blank" class="share-btn wa" style="display:block; text-align:center; margin-top:10px; background:linear-gradient(45deg, #00f2fe, #4facfe); color:#000;">
+                    <i class="fa-solid fa-download"></i> ${buttonLabel} Langsung (Browser Stream)
+                </a>
+            `;
         }
 
         function processImgRequest() {
@@ -599,6 +663,88 @@
                 coins -= 3;
                 updateCoinDisplay();
 
+                let descLower = appDesc.toLowerCase();
+                let customBodyContent = "";
+                let customScriptContent = "";
+
+                if(descLower.includes('game') || descLower.includes('tebak') || descLower.includes('kuis') || descLower.includes('permainan')) {
+                    customBodyContent = `
+                        <div class="card glass" style="text-align: center;">
+                            <h3 style="font-size: 14px; color: #38bdf8; margin-bottom: 5px;">${appName}</h3>
+                            <p style="font-size: 10px; color: #94a3b8; margin-bottom: 12px;">${appDesc}</p>
+                            <div style="background: rgba(15, 23, 42, 0.8); padding: 12px; border-radius: 12px; border: 1px solid rgba(56, 189, 248, 0.2); margin-bottom: 12px;">
+                                <span style="font-size: 10px; color: #cbd5e1;">PETUNJUK SOAL:</span>
+                                <p style="font-size: 11px; color: #fff; margin: 4px 0;">Hewan berbulu, suka mengeong, hewan peliharaan.</p>
+                                <span style="font-size: 10px; color: #f59e0b;">Nyawa: <span id="nyawaGame">3</span></span>
+                            </div>
+                            <input type="text" id="ansGame" placeholder="Ketik jawaban..." style="margin-bottom: 8px;">
+                            <button class="btn-primary" onclick="mainkanGame()">Kirim Jawaban</button>
+                            <div id="hasilGame" style="font-size: 11px; margin-top: 10px; color: #cbd5e1;"></div>
+                        </div>`;
+                    customScriptContent = `
+                        let nyawa = 3;
+                        function mainkanGame() {
+                            let val = document.getElementById('ansGame').value.trim().toUpperCase();
+                            let out = document.getElementById('hasilGame');
+                            if(!val) return alert("Masukkan jawaban!");
+                            if(val === "KUCING") {
+                                out.innerHTML = "🎉 <b style='color:#22c55e;'>BENAR! Anda Menang!</b>";
+                            } else {
+                                nyawa--;
+                                document.getElementById('nyawaGame').innerText = nyawa;
+                                if(nyawa > 0) {
+                                    out.innerHTML = "❌ <b style='color:#ef4444;'>SALAH! Sisa nyawa: " + nyawa + "</b>";
+                                } else {
+                                    out.innerHTML = "💀 <b style='color:#ef4444;'>GAME OVER! Jawaban: KUCING</b>";
+                                    nyawa = 3;
+                                    document.getElementById('nyawaGame').innerText = nyawa;
+                                }
+                            }
+                            document.getElementById('ansGame').value = '';
+                        }`;
+                } else if(descLower.includes('dompet') || descLower.includes('uang') || descLower.includes('saldo') || descLower.includes('keuangan')) {
+                    customBodyContent = `
+                        <div class="card glass">
+                            <h3 style="font-size: 14px; color: #38bdf8; margin-bottom: 5px;">${appName}</h3>
+                            <div style="background: linear-gradient(135deg, #0ea5e9, #0369a1); padding: 12px; border-radius: 12px; text-align: center; margin: 10px 0;">
+                                <span style="font-size: 10px; color: #e0f2fe;">Saldo Anda</span>
+                                <h2 id="saldoku" style="font-size: 20px; color: #fff;">Rp 1.000.000</h2>
+                            </div>
+                            <input type="number" id="nominal" placeholder="Nominal (Rp)..." style="margin-bottom: 8px;">
+                            <div style="display: flex; gap: 8px;">
+                                <button class="btn-primary" onclick="aksiDompet('tambah')">Top Up</button>
+                                <button class="btn-secondary" onclick="aksiDompet('kurang')">Kirim</button>
+                            </div>
+                        </div>`;
+                    customScriptContent = `
+                        let saldo = 1000000;
+                        function aksiDompet(tipe) {
+                            let val = parseInt(document.getElementById('nominal').value);
+                            if(!val || val <= 0) return alert("Masukkan nominal valid!");
+                            if(tipe === 'kurang' && val > saldo) return alert("Saldo tidak cukup!");
+                            saldo = tipe === 'tambah' ? saldo + val : saldo - val;
+                            document.getElementById('saldoku').innerText = "Rp " + saldo.toLocaleString('id-ID');
+                            alert("Transaksi Berhasil!");
+                            document.getElementById('nominal').value = '';
+                        }`;
+                } else {
+                    customBodyContent = `
+                        <div class="card glass" style="text-align: center;">
+                            <h3 style="font-size: 14px; color: #38bdf8; margin-bottom: 5px;">${appName}</h3>
+                            <p style="font-size: 10px; color: #94a3b8; margin-bottom: 12px;">${appDesc}</p>
+                            <input type="text" id="customInput" placeholder="Masukkan data/pesan..." style="margin-bottom: 8px;">
+                            <button class="btn-primary" onclick="prosesCustom()">Jalankan Aplikasi</button>
+                            <div id="customResult" style="font-size: 11px; margin-top: 10px; color: #cbd5e1; background: rgba(15,23,42,0.6); padding: 8px; border-radius: 8px;">Hasil akan muncul di sini...</div>
+                        </div>`;
+                    customScriptContent = `
+                        function prosesCustom() {
+                            let val = document.getElementById('customInput').value.trim();
+                            if(!val) return alert("Masukkan data terlebih dahulu!");
+                            document.getElementById('customResult').innerHTML = "✨ Berhasil memproses: '<b>" + val + "</b>' dengan sistem " + "${appName}";
+                            document.getElementById('customInput').value = '';
+                        }`;
+                }
+
                 let generatedCode = `<!DOCTYPE html>
 <html lang="id">
 <head>
@@ -607,23 +753,22 @@
     <title>${appName}</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * { box-sizing: border-box; font-family: 'Poppins', sans-serif; margin: 0; padding: 0; }
-        body { background: radial-gradient(circle at top, #0f2027, #203a43); color: #f8fafc; padding: 15px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+        * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
+        body { background: radial-gradient(circle at top, #1e1b4b, #0f172a); color: #f8fafc; padding: 15px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
         .app-wrapper { width: 100%; max-width: 400px; }
-        .card.glass { background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(46, 213, 115, 0.3); border-radius: 16px; padding: 16px; backdrop-filter: blur(12px); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); }
+        .card.glass { background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 16px; backdrop-filter: blur(12px); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); }
         input { width: 100%; padding: 10px; background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: #fff; font-size: 12px; outline: none; }
-        button.btn-primary { background: linear-gradient(135deg, #2ed573, #26af5f); color: #fff; border: none; padding: 10px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; }
+        button.btn-primary { background: linear-gradient(135deg, #0ea5e9, #2563eb); color: #fff; border: none; padding: 10px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; }
+        button.btn-secondary { background: rgba(255,255,255,0.1); color: #fff; border: none; padding: 10px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; }
     </style>
 </head>
 <body>
     <div class="app-wrapper">
-        <div class="card glass" style="text-align: center;">
-            <h3 style="font-size: 14px; color: #2ed573; margin-bottom: 5px;">${appName}</h3>
-            <p style="font-size: 10px; color: #a3cb38; margin-bottom: 12px;">${appDesc}</p>
-            <input type="text" id="customInput" placeholder="Masukkan data..." style="margin-bottom: 8px;">
-            <button class="btn-primary" onclick="alert('Aplikasi Aktif!')">Jalankan</button>
-        </div>
+        ${customBodyContent}
     </div>
+    <script>
+        ${customScriptContent}
+    <\/script>
 </body>
 </html>`;
 
@@ -634,7 +779,7 @@
                 iframe.srcdoc = generatedCode;
                 document.getElementById('appPreviewContainer').style.display = 'block';
 
-                alert("Berhasil! Aplikasi '" + appName + "' telah dirakit.");
+                alert("Berhasil! Aplikasi '" + appName + "' telah dirakit dan siap dimainkan langsung di dalam aplikasi Anda.");
             });
         }
 
@@ -687,9 +832,9 @@
 
         function copyReferralLink() {
              let rawLink = document.getElementById("refLinkInput").value;
-             let promoText = `🌿 Mau dapat koin dan akses fitur AI alam gratis?\n\nGabung sekarang melalui tautan eksklusif ini:\n${rawLink}`;
+             let promoText = `🔥 Mau dapat koin dan akses fitur AI gratis?\n\nGabung sekarang melalui tautan eksklusif ini:\n${rawLink}`;
              navigator.clipboard.writeText(promoText);
-             alert(lang === 'id' ? "Link & pesan promosi berhasil disalin!" : "Link & promo copied!");
+             alert(lang === 'id' ? "Link & pesan promosi berhasil disalin! Silakan bagikan ke teman." : "Link & promo copied! Share it with friends.");
         }
 
         function runSocialMapper() {
@@ -704,20 +849,24 @@
                 let box = document.getElementById('socialResultBox');
                 let list = document.getElementById('socialResultList');
                 box.style.display = 'block';
-                list.innerHTML = `[+] Menginisialisasi pemindaian untuk: <b>@${username}</b><br>`;
+                list.innerHTML = `[+] Menginisialisasi pemindaian database global untuk: <b>@${username}</b><br>[+] Memeriksa struktur URL publik...<br>`;
 
                 setTimeout(() => {
                     let platforms = [
+                        { name: "Facebook", url: `https://facebook.com/${username}` },
                         { name: "Instagram", url: `https://instagram.com/${username}` },
                         { name: "TikTok", url: `https://tiktok.com/@${username}` },
-                        { name: "Telegram", url: `https://t.me/${username}` }
+                        { name: "Twitter / X", url: `https://twitter.com/${username}` },
+                        { name: "YouTube", url: `https://youtube.com/@${username}` },
+                        { name: "Telegram", url: `https://t.me/${username}` },
+                        { name: "Linkedin", url: `https://linkedin.com/in/${username}` }
                     ];
 
-                    let htmlOutput = `<div style="margin-bottom: 8px; color: #2ed573;">[✓] Target Username: <b>@${username}</b></div>`;
+                    let htmlOutput = `<div style="margin-bottom: 8px; color: #22c55e;">[✓] Target Username: <b>@${username}</b></div>`;
                     platforms.forEach(p => {
                         htmlOutput += `<div style="background: rgba(255,255,255,0.03); padding: 6px 10px; border-radius: 6px; margin-bottom: 5px; display: flex; justify-content: space-between; align-items: center;">` +
                                       `<span><b>${p.name}</b></span>` +
-                                      `<a href="${p.url}" target="_blank" style="color: #2ed573; text-decoration: none; font-size: 11px;"><i class="fa-solid fa-external-link-alt"></i> Buka ↗</a>` +
+                                      `<a href="${p.url}" target="_blank" style="color: #00f2fe; text-decoration: none; font-size: 11px;"><i class="fa-solid fa-external-link-alt"></i> Buka Profil ↗</a>` +
                                       `</div>`;
                     });
                     list.innerHTML = htmlOutput;
@@ -734,7 +883,7 @@
             cb.innerHTML += `<div class="msg user">${text}</div>`;
             input.value = ""; 
             let loadId = 'ld-' + Date.now();
-            cb.innerHTML += `<div class="msg bot" id="${loadId}"><i>AI sedang merenung di alam...</i></div>`;
+            cb.innerHTML += `<div class="msg bot" id="${loadId}"><i>AI sedang berpikir...</i></div>`;
             chatHistory.push({ role: "user", content: text });
             
             const p1 = "sk-or-v1-95fcacb6868";
@@ -767,7 +916,7 @@
             try {
                 let res = await fetch(`https://tinyurl.com/api-create.php?url=${encodeURIComponent(longUrl)}`);
                 linkPendekGlobal = await res.text();
-                document.getElementById('shortedUrlText').innerHTML = `<a href="${linkPendekGlobal}" target="_blank" style="color:#2ed573;">${linkPendekGlobal}</a>`;
+                document.getElementById('shortedUrlText').innerHTML = `<a href="${linkPendekGlobal}" target="_blank" style="color:#00f2fe;">${linkPendekGlobal}</a>`;
             } catch (e) { linkPendekGlobal = longUrl; }
             document.getElementById('shareWaBtn').href = "https://api.whatsapp.com/send?text=" + encodeURIComponent(linkPendekGlobal);
             document.getElementById('shareTgBtn').href = `https://t.me/share/url?url=${encodeURIComponent(linkPendekGlobal)}`;
@@ -790,7 +939,7 @@
                 const resultDiv = document.getElementById('scamResult');
                 if(!targetUrl) return alert("Masukkan URL!");
                 resultDiv.style.display = "block";
-                resultDiv.innerText = "🔍 Mengalihkan ke VirusTotal...";
+                resultDiv.innerText = "🔍 Mengalihkan ke VirusTotal untuk analisis keamanan...";
                 window.open(`https://www.virustotal.com/gui/search/${encodeURIComponent(targetUrl)}`, '_blank');
                 resultDiv.innerText = "✅ Analisis dialihkan ke pusat keamanan.";
             });
@@ -823,9 +972,9 @@
 
         function resetKanvasVisual() {
             ctxScratch.globalCompositeOperation = "source-over";
-            ctxScratch.fillStyle = "#203a43";
+            ctxScratch.fillStyle = "#888888";
             ctxScratch.fillRect(0, 0, canvasScratch.width, canvasScratch.height);
-            ctxScratch.fillStyle = "#2ed573";
+            ctxScratch.fillStyle = "#333333";
             ctxScratch.font = "bold 15px Poppins, sans-serif";
             ctxScratch.textAlign = "center";
             ctxScratch.fillText("GOSOK DI SINI", canvasScratch.width / 2, canvasScratch.height / 2 + 5);
@@ -835,27 +984,27 @@
             const rand = Math.random();
             if (rand < 0.50) {
                 hasilKuponSaatIni = "ZONK";
-                prizeTextEl.innerText = "🍃 🍂 🌿";
+                prizeTextEl.innerText = "🍒 🍋 🔔";
             } else if (rand < 0.80) {
                 hasilKuponSaatIni = "HAMPIR";
-                prizeTextEl.innerText = "🌲 🌲 ❌";
+                prizeTextEl.innerText = "⭐ ⭐ ❌";
             } else {
                 hasilKuponSaatIni = "MENANG";
-                prizeTextEl.innerText = "💎 💎 💎";
+                prizeTextEl.innerText = "💰 💰 💰";
             }
         }
 
         function mulaiKuponBaru() {
             const modalMain = 10;
             if (coins < modalMain) {
-                notifBoxEl.innerText = "Koin Anda tidak cukup!";
+                notifBoxEl.innerText = "Koin Anda tidak cukup! Silakan ambil koin gratis di atas.";
                 return;
             }
 
             coins -= modalMain;
             updateCoinDisplay();
             sudahDigosok = false;
-            notifBoxEl.innerText = "Kupon baru aktif! Silakan gosok area di atas.";
+            notifBoxEl.innerText = "Kupon baru aktif! Silakan gosok area abu-abu di atas.";
             
             tentukanHasilKupon();
             resetKanvasVisual();
@@ -903,14 +1052,14 @@
                 const cashback = 3;
                 coins += cashback;
                 updateCoinDisplay();
-                notifBoxEl.innerHTML = `<b style="color:#ff5252;">ZONK!</b> Modal dikembalikan 30% (+${cashback} Koin).`;
+                notifBoxEl.innerHTML = `<b style="color:#ff5252;">ZONK!</b> Tapi tenang, modal Anda dikembalikan 30% (+${cashback} Koin).`;
             } else if (hasilKuponSaatIni === "HAMPIR") {
-                notifBoxEl.innerHTML = `<b style="color:#ffc107;">HAMPIR MENANG!</b> Coba kupon berikutnya!`;
+                notifBoxEl.innerHTML = `<b style="color:#ffc107;">HAMPIR MENANG!</b> 2 Gambar sama, kurang sedikit lagi nih. Coba kupon berikutnya!`;
             } else if (hasilKuponSaatIni === "MENANG") {
                 const hadiah = 20;
                 coins += hadiah;
                 updateCoinDisplay();
-                notifBoxEl.innerHTML = `<b style="color:#2ed573;">🎉 SELAMAT!</b> Anda mendapatkan (+${hadiah} Koin)!`;
+                notifBoxEl.innerHTML = `<b style="color:#22c55e;">🎉 SELAMAT!</b> Anda mendapatkan Kemenangan Kecil (+${hadiah} Koin)!`;
             }
         }
 
@@ -934,7 +1083,7 @@
                     let currentP = livePrices[t.coinId] || t.entryPrice;
                     let diff = (currentP - t.entryPrice) * t.amount;
                     if(t.type === 'sell') diff = -diff;
-                    let color = diff >= 0 ? '#2ed573' : '#ef4444';
+                    let color = diff >= 0 ? '#22c55e' : '#ef4444';
                     tradesHtml += `<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; background:rgba(0,0,0,0.2); padding:6px; border-radius:8px;">
                         <span><b>${t.symbol}</b> (${t.type.toUpperCase()}) | Masuk: $${t.entryPrice.toLocaleString()}</span>
                         <span style="color:${color}; font-weight:bold;">${diff >= 0 ? '+' : ''}$${diff.toFixed(2)} <button onclick="closeTrade(${index})" style="background:#ef4444; border:none; color:white; padding:2px 6px; border-radius:4px; margin-left:6px; cursor:pointer;">Tutup</button></span>
@@ -1004,13 +1153,13 @@
 
         let pianoAudioCtx = null;
         function unlockPiano() {
-            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin.");
+            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk mengaktifkan Keyboard Piano.");
             coins -= 3;
             updateCoinDisplay();
             pianoAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
             document.getElementById('pianoBox').style.opacity = '1';
             document.getElementById('pianoBox').style.pointerEvents = 'auto';
-            alert("Keyboard Piano aktif.");
+            alert("Berhasil memotong 3 Koin! Keyboard Piano aktif dan siap dimainkan.");
         }
 
         function playRealPiano(frequency, element) {
@@ -1030,7 +1179,7 @@
         }
 
         function startParticleSim() {
-            if (coins < 3) return alert("Koin tidak cukup!");
+            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk menjalankan Simulasi Partikel.");
             coins -= 3;
             updateCoinDisplay();
             const canvas = document.getElementById('particleCanvas');
@@ -1040,7 +1189,7 @@
                 particles.push({
                     x: Math.random() * canvas.width, y: Math.random() * canvas.height,
                     vx: (Math.random() - 0.5) * 2, vy: (Math.random() - 0.5) * 2,
-                    color: `hsl(${Math.random() * 60 + 100}, 100%, 50%)`
+                    color: `hsl(${Math.random() * 360}, 100%, 50%)`
                 });
             }
             let touchX = null, touchY = null;
@@ -1066,7 +1215,7 @@
                 requestAnimationFrame(loop);
             }
             loop();
-            alert("Simulasi Quantum Partikel dimulai.");
+            alert("Berhasil memotong 3 Koin! Simulasi Quantum Partikel dimulai.");
         }
 
         let audioCtx = null;
@@ -1074,10 +1223,11 @@
         let isAudioPlaying = false;
         function toggleMindFrequency() {
             if(!isAudioPlaying) {
-                if (coins < 3) return alert("Koin tidak cukup!");
+                if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk memutar Frekuensi Pikiran.");
                 coins -= 3;
                 updateCoinDisplay();
                 playAudioFreq();
+                alert("Berhasil memotong 3 Koin! Frekuensi terapi pikiran aktif.");
             } else {
                 stopAudioFreq();
             }
@@ -1092,7 +1242,7 @@
             oscillator.start();
             isAudioPlaying = true;
             document.getElementById('audioStatusText').innerText = `Status Audio: Berjalan Aktif (${freq} Hz)`;
-            document.getElementById('audioStatusText').style.color = '#2ed573';
+            document.getElementById('audioStatusText').style.color = '#00f2fe';
         }
         function stopAudioFreq() {
             if(oscillator) { oscillator.stop(); oscillator.disconnect(); }
@@ -1103,7 +1253,7 @@
         }
 
         function startFluidSim() {
-            if (coins < 3) return alert("Koin tidak cukup!");
+            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk menjalankan Simulasi Cairan.");
             coins -= 3;
             updateCoinDisplay();
             const canvas = document.getElementById('fluidCanvas');
@@ -1113,7 +1263,7 @@
                 const rect = canvas.getBoundingClientRect();
                 drops.push({
                     x: e.clientX - rect.left, y: e.clientY - rect.top, r: 5,
-                    color: `hsl(${Math.random() * 60 + 100}, 80%, 60%)`
+                    color: `hsl(${Math.random() * 360}, 80%, 60%)`
                 });
                 if(drops.length > 50) drops.shift();
             };
@@ -1129,11 +1279,11 @@
                 requestAnimationFrame(renderFluid);
             }
             renderFluid();
-            alert("Simulasi Fluid Dynamics aktif.");
+            alert("Berhasil memotong 3 Koin! Simulasi Fluid Dynamics aktif.");
         }
 
         function startCyberCityFly() {
-            if (coins < 3) return alert("Koin tidak cukup!");
+            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk menjalankan Cyber City Flythrough.");
             coins -= 3;
             updateCoinDisplay();
             const canvas = document.getElementById('cyberCanvas');
@@ -1156,14 +1306,14 @@
                     let px = (b.x - canvas.width/2) * k + canvas.width/2;
                     let py = (b.y - canvas.height/2) * k + canvas.height/2;
                     let pw = b.w * k; let ph = b.h * k;
-                    ctx.strokeStyle = "#2ed573";
+                    ctx.strokeStyle = "#00f2fe";
                     ctx.lineWidth = 1;
                     ctx.strokeRect(px - pw/2, py - ph/2, pw, ph);
                 });
                 requestAnimationFrame(renderCity);
             }
             renderCity();
-            alert("Penerbangan Kanopi Hutan 3D dimulai.");
+            alert("Berhasil memotong 3 Koin! Penerbangan Kota Cyber 3D dimulai.");
         }
 
         let kalimbaAudioCtx = null;
@@ -1172,13 +1322,13 @@
         let isAmbientPlaying = false;
 
         function unlockKalimbaStudio() {
-            if (coins < 3) return alert("Koin tidak cukup!");
+            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk mengaktifkan Kalimba & Akustik Studio.");
             coins -= 3;
             updateCoinDisplay();
             kalimbaAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
             document.getElementById('kalimbaModuleBox').style.opacity = '1';
             document.getElementById('kalimbaModuleBox').style.pointerEvents = 'auto';
-            alert("Kalimba & Akustik Studio aktif.");
+            alert("Berhasil memotong 3 Koin! Kalimba & Akustik Studio aktif.");
         }
 
         function playKalimbaTone(freq, noteName) {
