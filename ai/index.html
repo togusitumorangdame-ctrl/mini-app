@@ -11,19 +11,41 @@
     
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
-        body { background: radial-gradient(circle, #101026 0%, #070710 100%); color: #fff; min-height: 100vh; padding: 15px; display: flex; flex-direction: column; align-items: center; }
         
-        .header-profile { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; width: 100%; max-width: 500px; padding: 18px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 8px 32px rgba(0,0,0,0.3); }
+        /* PENGATURAN LATAR BELAKANG ANIMASI MEWAH */
+        body { 
+            background: #070710; 
+            color: #fff; 
+            min-height: 100vh; 
+            padding: 15px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        #bgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .header-profile { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 20px; width: 100%; max-width: 500px; padding: 18px; margin-bottom: 15px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 8px 32px rgba(0,0,0,0.3); z-index: 1; }
         .user-info h3 { color: #00f2fe; font-size: 15px; font-weight: 600; }
         .user-info p { font-size: 11px; color: #a0a0ba; }
         .coin-badge { background: linear-gradient(45deg, #ffd700, #ffa500); padding: 6px 14px; border-radius: 50px; font-weight: bold; font-size: 13px; color: #000; display: flex; align-items: center; gap: 6px; box-shadow: 0 0 10px rgba(255,215,0,0.3); }
         
-        .paywall-container { background: rgba(255, 71, 87, 0.08); border: 1px solid rgba(255, 71, 87, 0.3); border-radius: 18px; width: 100%; max-width: 500px; padding: 15px; margin-bottom: 15px; text-align: center; }
+        .paywall-container { background: rgba(255, 71, 87, 0.08); border: 1px solid rgba(255, 71, 87, 0.3); border-radius: 18px; width: 100%; max-width: 500px; padding: 15px; margin-bottom: 15px; text-align: center; z-index: 1; }
         .btn-ad { background: linear-gradient(45deg, #ff4757, #ff6b81); color: white; border: none; padding: 10px 20px; border-radius: 50px; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-block; margin-top: 10px; font-size: 12px; box-shadow: 0 4px 15px rgba(255,71,87,0.3); }
         .btn-daily { background: linear-gradient(45deg, #2ed573, #26af5f); color: white; border: none; padding: 10px 20px; border-radius: 50px; font-weight: bold; cursor: pointer; text-decoration: none; display: inline-block; margin-top: 10px; font-size: 12px; box-shadow: 0 4px 15px rgba(46,213,115,0.3); }
         .btn-daily:disabled { background: #555; cursor: not-allowed; box-shadow: none; }
         
-        .app-card { background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 25px; width: 100%; max-width: 500px; padding: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+        .app-card { background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 25px; width: 100%; max-width: 500px; padding: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); z-index: 1; }
         .nav-tabs { display: flex; justify-content: space-between; margin-bottom: 20px; background: rgba(0,0,0,0.3); padding: 5px; border-radius: 50px; gap: 4px; flex-wrap: wrap; }
         .tab-btn { background: none; border: none; color: #a0a0ba; padding: 8px 4px; font-size: 8.5px; font-weight: 600; cursor: pointer; border-radius: 50px; flex: 1; text-align: center; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 40px; }
         .tab-btn i { font-size: 11px; }
@@ -69,11 +91,14 @@
 </head>
 <body>
 
+    <!-- KANVAS LATAR BELAKANG ANIMASI HIDUP & MEWAH -->
+    <canvas id="bgCanvas"></canvas>
+
     <script type="text/javascript" data-cfasync="false">
         (function(){var e=window,n="02c4883f05470762419409893976378c",r=[["siteId",392805],["minBid",0],["popundersPerIP",0],["delayBetween",0],["default",0],["defaultPerDay",0],["topmost",0]],c=document,a=c.createElement("script");a.type="text/javascript",a.async=!0,a.src="https://a.hilltopads.com/gz.js",c.body&&c.body.appendChild(a)})()
     </script>
 
-    <div id="apiStatusBanner" style="width: 100%; max-width: 500px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); padding: 8px 12px; border-radius: 12px; margin-bottom: 12px; font-size: 11px; display: flex; align-items: center; justify-content: space-between; color: #22c55e;">
+    <div id="apiStatusBanner" style="width: 100%; max-width: 500px; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.3); padding: 8px 12px; border-radius: 12px; margin-bottom: 12px; font-size: 11px; display: flex; align-items: center; justify-content: space-between; color: #22c55e; z-index: 1;">
         <span><i class="fa-solid fa-circle-dot"></i> Status Jaringan & API: <b>Terhubung Normal</b></span>
         <span id="liveClock" style="color: #a0a0ba;">--:--:--</span>
     </div>
@@ -200,7 +225,7 @@
 
             <div id="appPreviewContainer" style="display: none; margin-top: 15px; background: rgba(0,0,0,0.6); border: 2px solid #00f2fe; border-radius: 14px; padding: 12px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                    <b style="color: #00f2fe; font-size: 12px;"><i class="fa-solid	fa-eye"></i> Live Preview Aplikasi</b>
+                    <b style="color: #00f2fe; font-size: 12px;"><i class="fa-solid fa-eye"></i> Live Preview Aplikasi</b>
                     <button onclick="closeAppPreview()" style="background: #ef4444; border: none; color: white; padding: 2px 8px; border-radius: 6px; font-size: 10px; cursor: pointer;">Tutup</button>
                 </div>
                 <iframe id="previewIframe" style="width: 100%; height: 220px; border: none; background: #fff; border-radius: 8px;"></iframe>
@@ -271,6 +296,86 @@
     </div>
 
     <script>
+        // SCRIPT ANIMASI LATAR BELAKANG MEWAH (FLOATING NEON PARTICLES)
+        const bgCanvas = document.getElementById('bgCanvas');
+        const bgCtx = bgCanvas.getContext('2d');
+        
+        let width, height;
+        let particles = [];
+
+        function resizeBg() {
+            width = bgCanvas.width = window.innerWidth;
+            height = bgCanvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeBg);
+        resizeBg();
+
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.8;
+                this.vy = (Math.random() - 0.5) * 0.8;
+                this.radius = Math.random() * 2.5 + 1;
+                this.color = Math.random() > 0.5 ? '#00f2fe' : '#4facfe';
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                if (this.x < 0 || this.x > width) this.vx = -this.vx;
+                if (this.y < 0 || this.y > height) this.vy = -this.vy;
+            }
+            draw() {
+                bgCtx.beginPath();
+                bgCtx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                bgCtx.fillStyle = this.color;
+                bgCtx.shadowBlur = 10;
+                bgCtx.shadowColor = this.color;
+                bgCtx.fill();
+                bgCtx.closePath();
+            }
+        }
+
+        for (let i = 0; i < 45; i++) {
+            particles.push(new Particle());
+        }
+
+        function animateBg() {
+            bgCtx.clearRect(0, 0, width, height);
+            
+            // Buat Gradien Latar Belakang yang Mewah
+            let grad = bgCtx.createRadialGradient(width / 2, height / 3, 10, width / 2, height / 2, Math.max(width, height));
+            grad.addColorStop(0, '#101026');
+            grad.addColorStop(1, '#070710');
+            bgCtx.fillStyle = grad;
+            bgCtx.fillRect(0, 0, width, height);
+
+            // Hubungkan partikel dengan garis tipis bercahaya
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+
+                for (let j = i + 1; j < particles.length; j++) {
+                    let dx = particles[i].x - particles[j].x;
+                    let dy = particles[i].y - particles[j].y;
+                    let dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 110) {
+                        bgCtx.beginPath();
+                        bgCtx.moveTo(particles[i].x, particles[i].y);
+                        bgCtx.lineTo(particles[j].x, particles[j].y);
+                        bgCtx.strokeStyle = `rgba(0, 242, 254, ${1 - dist / 110})`;
+                        bgCtx.lineWidth = 0.5;
+                        bgCtx.stroke();
+                        bgCtx.closePath();
+                    }
+                }
+            }
+            requestAnimationFrame(animateBg);
+        }
+        animateBg();
+
+        // KODE UTAMA APLIKASI
         const cryptoList20 = [
             {id: 'bitcoin', symbol: 'BTC', name: 'Bitcoin'},
             {id: 'ethereum', symbol: 'ETH', name: 'Ethereum'},
@@ -487,7 +592,7 @@
             });
         }
 
-                function runAppBuilder() {
+        function runAppBuilder() {
             if(coins < 15) return alert("Butuh 15 Koin untuk membuat aplikasi instan profesional!");
             let appName = document.getElementById('appNameInput').value.trim();
             let appDesc = document.getElementById('appDescInput').value.trim();
@@ -498,13 +603,10 @@
                 updateCoinDisplay();
 
                 let descLower = appDesc.toLowerCase();
-                let iconClass = "fa-solid fa-wand-magic-sparkles";
                 let customBodyContent = "";
                 let customScriptContent = "";
 
-                // --- 1. JIKA KATEGORI: GAME / TEBAK KATA / PERMAINAN ---
                 if(descLower.includes('game') || descLower.includes('tebak') || descLower.includes('kuis') || descLower.includes('permainan')) {
-                    iconClass = "fa-solid fa-gamepad";
                     customBodyContent = `
                         <div class="card glass" style="text-align: center;">
                             <h3 style="font-size: 14px; color: #38bdf8; margin-bottom: 5px;">${appName}</h3>
@@ -539,10 +641,7 @@
                             }
                             document.getElementById('ansGame').value = '';
                         }`;
-                } 
-                // --- 2. JIKA KATEGORI: KEUANGAN / DOMPET ---
-                else if(descLower.includes('dompet') || descLower.includes('uang') || descLower.includes('saldo') || descLower.includes('keuangan')) {
-                    iconClass = "fa-solid fa-wallet";
+                } else if(descLower.includes('dompet') || descLower.includes('uang') || descLower.includes('saldo') || descLower.includes('keuangan')) {
                     customBodyContent = `
                         <div class="card glass">
                             <h3 style="font-size: 14px; color: #38bdf8; margin-bottom: 5px;">${appName}</h3>
@@ -567,10 +666,7 @@
                             alert("Transaksi Berhasil!");
                             document.getElementById('nominal').value = '';
                         }`;
-                } 
-                // --- 3. KATEGORI UMUM / LAINNYA (DAPAT MERAKIT APA SAJA) ---
-                else {
-                    iconClass = "fa-solid alt fa-rocket";
+                } else {
                     customBodyContent = `
                         <div class="card glass" style="text-align: center;">
                             <h3 style="font-size: 14px; color: #38bdf8; margin-bottom: 5px;">${appName}</h3>
@@ -588,7 +684,6 @@
                         }`;
                 }
 
-                // --- TEMPLATE TAMPILAN MEWAH (GLASSMORPHISM) ---
                 let generatedCode = `<!DOCTYPE html>
 <html lang="id">
 <head>
