@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Super App v3.1 - AR Edition</title>
+    <title>Premium Super App v2.8</title>
     <!-- SDK MONETAG -->
     <script src='//libtl.com/sdk.js' data-zone='11267753' data-sdk='show_11267753'></script>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -25,13 +25,13 @@
         
         .app-card { background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 25px; width: 100%; max-width: 500px; padding: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
         .nav-tabs { display: flex; justify-content: space-between; margin-bottom: 20px; background: rgba(0,0,0,0.3); padding: 5px; border-radius: 50px; gap: 4px; flex-wrap: wrap; }
-        .tab-btn { background: none; border: none; color: #a0a0ba; padding: 8px 4px; font-size: 8px; font-weight: 600; cursor: pointer; border-radius: 50px; flex: 1; text-align: center; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 38px; }
-        .tab-btn i { font-size: 10.5px; }
+        .tab-btn { background: none; border: none; color: #a0a0ba; padding: 8px 4px; font-size: 8.5px; font-weight: 600; cursor: pointer; border-radius: 50px; flex: 1; text-align: center; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 40px; }
+        .tab-btn i { font-size: 11px; }
         .tab-btn.active { background: linear-gradient(45deg, #00f2fe, #4facfe); color: white; box-shadow: 0 4px 12px rgba(0,242,254,0.3); }
         
         .feature-view { display: none; }
         .feature-view.active { display: block; }
-        h2 { font-size: 15px; color: #00f2fe; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; }
+        h2 { font-size: 16px; color: #00f2fe; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; }
         
         input, select, textarea { width: 100%; background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 12px; color: white; font-size: 13px; margin-bottom: 12px; outline: none; transition: 0.2s; }
         input:focus, select:focus, textarea:focus { border-color: #00f2fe; }
@@ -65,13 +65,6 @@
         .hidden-prize { font-size: 22px; font-weight: bold; letter-spacing: 5px; }
         canvas#scratchCanvas { position: absolute; top: 0; left: 0; cursor: pointer; touch-action: none; }
         .scratch-notif { margin-top: 10px; font-size: 11px; min-height: 40px; color: #b0bec5; text-align: center; line-height: 1.4; }
-
-        .real-piano-wrapper { background: #12121a; border: 2px solid #2a2a3d; border-radius: 16px; padding: 15px 10px; margin-top: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.7); }
-        .real-piano-keys { position: relative; display: flex; height: 160px; background: #000; border-radius: 8px; overflow: hidden; user-select: none; }
-        .white-key { flex: 1; background: linear-gradient(to bottom, #eeeeee 0%, #ffffff 100%); border: 1px solid #b5b5b5; border-radius: 0 0 6px 6px; cursor: pointer; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 12px; color: #555; font-size: 11px; font-weight: 600; z-index: 1; transition: background 0.08s, box-shadow 0.08s; box-shadow: inset 0 -4px 6px rgba(0,0,0,0.15); }
-        .white-key:active, .white-key.active { background: linear-gradient(to bottom, #00f2fe 0%, #4facfe 100%); color: #fff; box-shadow: inset 0 2px 4px rgba(0,0,0,0.3); }
-        .black-key { position: absolute; width: 6.2%; height: 60%; background: linear-gradient(to bottom, #333333 0%, #0d0d0d 100%); border-left: 1px solid #555; border-right: 1px solid #555; border-bottom: 2px solid #000; border-radius: 0 0 5px 5px; cursor: pointer; z-index: 3; display: flex; align-items: flex-end; justify-content: center; padding-bottom: 8px; color: #aaa; font-size: 8px; transition: background 0.08s; box-shadow: 0 4px 6px rgba(0,0,0,0.5); }
-        .black-key:active, .black-key.active { background: linear-gradient(to bottom, #00f2fe 0%, #0284c7 100%); color: #fff; }
     </style>
 </head>
 <body>
@@ -123,17 +116,6 @@
             <button id="tab-referral" class="tab-btn" onclick="switchTab('referral-view', 'tab-referral')"><i class="fa-solid fa-users"></i>Referral</button>
             <button id="tab-socialosint" class="tab-btn" onclick="switchTab('socialosint-view', 'tab-socialosint')"><i class="fa-solid fa-user-detect"></i>OSINT</button>
             <button id="tab-scratch" class="tab-btn" onclick="switchTab('scratch-view', 'tab-scratch'); initScratchCard();"><i class="fa-solid fa-ticket"></i>Scratch</button>
-            
-            <button id="tab-f1" class="tab-btn" onclick="switchTab('f1-view', 'tab-f1')"><i class="fa-solid fa-music"></i>Piano</button>
-            <button id="tab-f2" class="tab-btn" onclick="switchTab('f2-view', 'tab-f2')"><i class="fa-solid fa-atom"></i>Particles</button>
-            <button id="tab-f3" class="tab-btn" onclick="switchTab('f3-view', 'tab-f3')"><i class="fa-solid fa-brain"></i>BrainWave</button>
-            <button id="tab-f4" class="tab-btn" onclick="switchTab('f4-view', 'tab-f4')"><i class="fa-solid fa-water"></i>FluidSim</button>
-            <button id="tab-f5" class="tab-btn" onclick="switchTab('f5-view', 'tab-f5')"><i class="fa-solid fa-vr-cardboard"></i>Wireframe</button>
-            
-            <!-- FITUR BARU: BROWSER MEDIA DOWNLOADER -->
-            <button id="tab-browserdl" class="tab-btn" onclick="switchTab('browserdl-view', 'tab-browserdl')"><i class="fa-solid fa-cloud-arrow-down"></i>Browser DL</button>
-            
-            <button id="tab-kalimba" class="tab-btn" onclick="switchTab('kalimba-view', 'tab-kalimba')"><i class="fa-solid fa-guitar"></i>Kalimba</button>
         </div>
 
         <div id="ai-view" class="feature-view active">
@@ -199,8 +181,9 @@
             <img id="qrResult" src="" alt="Hasil QR Code">
         </div>
 
+        <!-- FITUR PROFESSIONAL AI APP BUILDER -->
         <div id="appbuilder-view" class="feature-view">
-            <h2><i class="fa-solid fa-hammer"></i> AI App Builder Profesional (3 Koin)</h2>
+            <h2><i class="fa-solid fa-hammer"></i> AI App Builder Profesional (15 Koin)</h2>
             <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Hasilkan aplikasi web instan yang lengkap dengan antarmuka dan logika kustom secara otomatis!</p>
             <input type="text" id="appNameInput" placeholder="Nama Aplikasi (cth: Kalkulator BMI Pintar)">
             <textarea id="appDescInput" rows="3" placeholder="Jelaskan fitur & fungsi aplikasi yang ingin dibuat secara detail..."></textarea>
@@ -217,7 +200,7 @@
 
             <div id="appPreviewContainer" style="display: none; margin-top: 15px; background: rgba(0,0,0,0.6); border: 2px solid #00f2fe; border-radius: 14px; padding: 12px;">
                 <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                    <b style="color: #00f2fe; font-size: 12px;"><i class="fa-solid fa-eye"></i> Live Preview Aplikasi</b>
+                    <b style="color: #00f2fe; font-size: 12px;"><i class="fa-solid	fa-eye"></i> Live Preview Aplikasi</b>
                     <button onclick="closeAppPreview()" style="background: #ef4444; border: none; color: white; padding: 2px 8px; border-radius: 6px; font-size: 10px; cursor: pointer;">Tutup</button>
                 </div>
                 <iframe id="previewIframe" style="width: 100%; height: 220px; border: none; background: #fff; border-radius: 8px;"></iframe>
@@ -285,125 +268,6 @@
                 <div class="scratch-notif" id="notifBox">Klik tombol di atas untuk memulai kupon gosok!</div>
             </div>
         </div>
-
-        <!-- PIANO KEYBOARD -->
-        <div id="f1-view" class="feature-view">
-            <h2><i class="fa-solid fa-music"></i> Real Acoustic Piano Keyboard (3 Koin)</h2>
-            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Sentuh tuts keyboard profesional di bawah untuk menghasilkan melodi piano asli bersuara jernih.</p>
-            <button class="btn-action" onclick="unlockPiano()">Aktifkan Keyboard Piano (3 Koin)</button>
-            
-            <div class="real-piano-wrapper" id="pianoBox" style="opacity: 0.5; pointer-events: none;">
-                <div class="real-piano-keys">
-                    <div class="white-key" onmousedown="playRealPiano(261.63, this)">C4</div>
-                    <div class="white-key" onmousedown="playRealPiano(293.66, this)">D4</div>
-                    <div class="white-key" onmousedown="playRealPiano(329.63, this)">E4</div>
-                    <div class="white-key" onmousedown="playRealPiano(349.23, this)">F4</div>
-                    <div class="white-key" onmousedown="playRealPiano(392.00, this)">G4</div>
-                    <div class="white-key" onmousedown="playRealPiano(440.00, this)">A4</div>
-                    <div class="white-key" onmousedown="playRealPiano(493.88, this)">B4</div>
-                    <div class="white-key" onmousedown="playRealPiano(523.25, this)">C5</div>
-
-                    <div class="black-key" style="left: 9.5%;" onmousedown="playRealPiano(277.18, this)">C#</div>
-                    <div class="black-key" style="left: 22.0%;" onmousedown="playRealPiano(311.13, this)">D#</div>
-                    <div class="black-key" style="left: 47.0%;" onmousedown="playRealPiano(369.99, this)">F#</div>
-                    <div class="black-key" style="left: 59.5%;" onmousedown="playRealPiano(415.30, this)">G#</div>
-                    <div class="black-key" style="left: 72.0%;" onmousedown="playRealPiano(466.16, this)">A#</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- QUANTUM PARTICLE LIFE -->
-        <div id="f2-view" class="feature-view">
-            <h2><i class="fa-solid fa-atom"></i> Quantum Particle Life (3 Koin)</h2>
-            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Sentuh layar untuk melihat partikel digital hidup berevolusi membentuk pola.</p>
-            <button class="btn-action" onclick="startParticleSim()">Mulai Simulasi Partikel (3 Koin)</button>
-            <div style="margin-top: 12px; position: relative; border: 1px solid #00f2fe; border-radius: 12px; overflow: hidden;">
-                <canvas id="particleCanvas" width="400" height="240" style="width: 100%; height: 240px; background: #000; display: block; touch-action: none;"></canvas>
-            </div>
-        </div>
-
-        <!-- MIND FREQUENCY PAD -->
-        <div id="f3-view" class="feature-view">
-            <h2><i class="fa-solid fa-brain"></i> Mind Frequency Pad (3 Koin)</h2>
-            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Hasilkan gelombang suara terapi pikiran (Binaural Beats) secara langsung dari browser.</p>
-            <select id="freqSelect">
-                <option value="432">432 Hz - Frekuensi Relaksasi Semesta</option>
-                <option value="528">528 Hz - Frekuensi Pemulihan DNA</option>
-                <option value="285">285 Hz - Frekuensi Regenerasi Sel</option>
-            </select>
-            <button class="btn-action" onclick="toggleMindFrequency()">Putar / Hentikan Frekuensi (3 Koin)</button>
-            <div id="audioStatusText" style="font-size: 11px; color: #22c55e; text-align: center; margin-top: 10px;">Status Audio: Berhenti</div>
-        </div>
-
-        <!-- INTERACTIVE FLUID DYNAMICS -->
-        <div id="f4-view" class="feature-view">
-            <h2><i class="fa-solid fa-water"></i> Interactive Fluid Dynamics (3 Koin)</h2>
-            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Usap layar untuk menciptakan gelombang fluida warna pelangi yang memukau.</p>
-            <button class="btn-action" onclick="startFluidSim()">Aktifkan Simulasi Cairan (3 Koin)</button>
-            <div style="margin-top: 12px; border: 1px solid #00f2fe; border-radius: 12px; overflow: hidden;">
-                <canvas id="fluidCanvas" width="400" height="240" style="width: 100%; height: 240px; background: #000; display: block; touch-action: none;"></canvas>
-            </div>
-        </div>
-
-        <!-- CYBER CITY FLYTHROUGH -->
-        <div id="f5-view" class="feature-view">
-            <h2><i class="fa-solid fa-vr-cardboard"></i> Cyber City Flythrough (3 Koin)</h2>
-            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Simulasi penerbangan kota hologram 3D masa depan bergaya Tron.</p>
-            <button class="btn-action" onclick="startCyberCityFly()">Mulai Penerbangan Kota (3 Koin)</button>
-            <div style="margin-top: 12px; border: 1px solid #00f2fe; border-radius: 12px; overflow: hidden;">
-                <canvas id="cyberCanvas" width="400" height="240" style="width: 100%; height: 240px; background: #000; display: block;"></canvas>
-            </div>
-        </div>
-
-        <!-- FITUR BARU: BROWSER MEDIA DOWNLOADER & SELECTOR -->
-        <div id="browserdl-view" class="feature-view">
-            <h2><i class="fa-solid fa-cloud-arrow-down"></i> Browser Media Downloader (3 Koin)</h2>
-            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Manfaatkan kecanggihan browser untuk mendownload video & musik publik secara bebas.</p>
-            <input type="text" id="browserDlUrl" placeholder="Tempel link URL publik (YouTube, TikTok, IG, Soundcloud)...">
-            <div style="display: flex; gap: 8px; margin-bottom: 12px;">
-                <select id="mediaTypeSelect" style="margin-bottom: 0;">
-                    <option value="video">Format Video (MP4)</option>
-                    <option value="audio">Format Musik (MP3 / Audio)</option>
-                </select>
-                <select id="mediaQualitySelect" style="margin-bottom: 0;">
-                    <option value="high">Kualitas Tinggi (HD)</option>
-                    <option value="standard">Kualitas Standar</option>
-                </select>
-            </div>
-            <button class="btn-action" onclick="runBrowserMediaDownloader()"><i class="fa-solid fa-download"></i> Proses & Unduh Media (3 Koin)</button>
-            
-            <div id="browserDlResultBox" class="result-box" style="text-align: left; display: none;">
-                <p style="color: #00f2fe; font-weight: bold; margin-bottom: 6px;"><i class="fa-solid fa-circle-check"></i> Media Siap Diunduh:</p>
-                <div id="browserDlDetails" style="font-size: 11px; color: #ddd; margin-bottom: 10px;"></div>
-                <div id="browserDlActionContainer"></div>
-            </div>
-        </div>
-
-        <!-- ACOUSTIC FINGERSTYLE & KALIMBA STUDIO -->
-        <div id="kalimba-view" class="feature-view">
-            <h2><i class="fa-solid fa-guitar"></i> Acoustic Fingerstyle & Kalimba Studio (3 Koin)</h2>
-            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 10px;">Zona relaksasi batin & terapi jiwa. Mainkan melodi kalimba & petikan gitar akustik menenangkan.</p>
-            <button class="btn-action" onclick="unlockKalimbaStudio()">Aktifkan Kalimba & Akustik (3 Koin)</button>
-            
-            <div id="kalimbaModuleBox" style="opacity: 0.5; pointer-events: none; margin-top: 12px; background: rgba(0,0,0,0.4); border: 1px solid #00f2fe; border-radius: 14px; padding: 12px;">
-                <p style="font-size: 12px; color: #00f2fe; font-weight: bold; margin-bottom: 8px;"><i class="fa-solid fa-music"></i> Tuts Kalimba Interaktif:</p>
-                <div style="display: flex; gap: 4px; justify-content: center; margin-bottom: 12px;">
-                    <button class="share-btn" style="background:#0ea5e9; flex:1;" onmousedown="playKalimbaTone(523.25, 'C5')">C5</button>
-                    <button class="share-btn" style="background:#0ea5e9; flex:1;" onmousedown="playKalimbaTone(587.33, 'D5')">D5</button>
-                    <button class="share-btn" style="background:#0ea5e9; flex:1;" onmousedown="playKalimbaTone(659.25, 'E5')">E5</button>
-                    <button class="share-btn" style="background:#0ea5e9; flex:1;" onmousedown="playKalimbaTone(698.46, 'F5')">F5</button>
-                    <button class="share-btn" style="background:#0ea5e9; flex:1;" onmousedown="playKalimbaTone(783.99, 'G5')">G5</button>
-                </div>
-                <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 6px;">Pilih Suasana Latar Alam (Ambient Sound):</p>
-                <select id="ambientSoundSelect" style="margin-bottom: 8px;">
-                    <option value="rain">Hujan Tenang di Hutan Bambu</option>
-                    <option value="waves">Ombak Pantai Malam Hari</option>
-                    <option value="wind">Angin Sepoi-sepoi Pegunungan</option>
-                </select>
-                <button class="share-btn copy" style="width: 100%; justify-content: center; background: linear-gradient(45deg, #10b981, #059669);" onclick="toggleAmbientSound()"><i class="fa-solid fa-volume-high"></i> Putar / Matikan Ambient Sound</button>
-            </div>
-        </div>
-
     </div>
 
     <script>
@@ -606,36 +470,6 @@
             }, 1000);
         }
 
-        // --- FITUR BARU: BROWSER MEDIA DOWNLOADER & SELECTOR ---
-        function runBrowserMediaDownloader() {
-            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk menggunakan Browser Media Downloader.");
-            let urlInput = document.getElementById('browserDlUrl').value.trim();
-            let mediaType = document.getElementById('mediaTypeSelect').value;
-            let mediaQuality = document.getElementById('mediaQualitySelect').value;
-
-            if (!urlInput) return alert("Harap masukkan URL publik yang valid!");
-
-            coins -= 3;
-            updateCoinDisplay();
-
-            let resultBox = document.getElementById('browserDlResultBox');
-            let detailsEl = document.getElementById('browserDlDetails');
-            let actionContainer = document.getElementById('browserDlActionContainer');
-
-            resultBox.style.display = 'block';
-            detailsEl.innerHTML = `<b>URL Target:</b> ${urlInput}<br><b>Format:</b> ${mediaType.toUpperCase()} (${mediaQuality.toUpperCase()})<br><span style="color:#22c55e;">[✓] Browser berhasil memproses aliran media publik!</span>`;
-
-            // Memanfaatkan kapabilitas browser untuk memproses link unduhan langsung
-            let downloadLink = urlInput;
-            let buttonLabel = mediaType === 'video' ? 'Download Video (MP4)' : 'Download Musik (MP3)';
-            
-            actionContainer.innerHTML = `
-                <a href="${downloadLink}" target="_blank" class="share-btn wa" style="display:block; text-align:center; margin-top:10px; background:linear-gradient(45deg, #00f2fe, #4facfe); color:#000;">
-                    <i class="fa-solid fa-download"></i> ${buttonLabel} Langsung (Browser Stream)
-                </a>
-            `;
-        }
-
         function processImgRequest() {
             if(coins < 5) return alert(lang === 'id' ? "Butuh 5 koin untuk fitur ini!" : "Need 5 coins for this feature!");
             show_11267753().then(() => { generateImageNyata(); });
@@ -653,21 +487,24 @@
             });
         }
 
-        function runAppBuilder() {
-            if(coins < 3) return alert("Butuh 3 Koin untuk membuat aplikasi instan profesional!");
+                function runAppBuilder() {
+            if(coins < 15) return alert("Butuh 15 Koin untuk membuat aplikasi instan profesional!");
             let appName = document.getElementById('appNameInput').value.trim();
             let appDesc = document.getElementById('appDescInput').value.trim();
             if(!appName || !appDesc) return alert("Harap isi Nama dan Deskripsi Aplikasi!");
 
             show_11267753().then(() => {
-                coins -= 3;
+                coins -= 15;
                 updateCoinDisplay();
 
                 let descLower = appDesc.toLowerCase();
+                let iconClass = "fa-solid fa-wand-magic-sparkles";
                 let customBodyContent = "";
                 let customScriptContent = "";
 
+                // --- 1. JIKA KATEGORI: GAME / TEBAK KATA / PERMAINAN ---
                 if(descLower.includes('game') || descLower.includes('tebak') || descLower.includes('kuis') || descLower.includes('permainan')) {
+                    iconClass = "fa-solid fa-gamepad";
                     customBodyContent = `
                         <div class="card glass" style="text-align: center;">
                             <h3 style="font-size: 14px; color: #38bdf8; margin-bottom: 5px;">${appName}</h3>
@@ -702,7 +539,10 @@
                             }
                             document.getElementById('ansGame').value = '';
                         }`;
-                } else if(descLower.includes('dompet') || descLower.includes('uang') || descLower.includes('saldo') || descLower.includes('keuangan')) {
+                } 
+                // --- 2. JIKA KATEGORI: KEUANGAN / DOMPET ---
+                else if(descLower.includes('dompet') || descLower.includes('uang') || descLower.includes('saldo') || descLower.includes('keuangan')) {
+                    iconClass = "fa-solid fa-wallet";
                     customBodyContent = `
                         <div class="card glass">
                             <h3 style="font-size: 14px; color: #38bdf8; margin-bottom: 5px;">${appName}</h3>
@@ -727,7 +567,10 @@
                             alert("Transaksi Berhasil!");
                             document.getElementById('nominal').value = '';
                         }`;
-                } else {
+                } 
+                // --- 3. KATEGORI UMUM / LAINNYA (DAPAT MERAKIT APA SAJA) ---
+                else {
+                    iconClass = "fa-solid alt fa-rocket";
                     customBodyContent = `
                         <div class="card glass" style="text-align: center;">
                             <h3 style="font-size: 14px; color: #38bdf8; margin-bottom: 5px;">${appName}</h3>
@@ -745,6 +588,7 @@
                         }`;
                 }
 
+                // --- TEMPLATE TAMPILAN MEWAH (GLASSMORPHISM) ---
                 let generatedCode = `<!DOCTYPE html>
 <html lang="id">
 <head>
@@ -1150,218 +994,6 @@
 
         setInterval(fetchLiveCryptoPrices, 3000);
         updateDemoUI();
-
-        let pianoAudioCtx = null;
-        function unlockPiano() {
-            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk mengaktifkan Keyboard Piano.");
-            coins -= 3;
-            updateCoinDisplay();
-            pianoAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            document.getElementById('pianoBox').style.opacity = '1';
-            document.getElementById('pianoBox').style.pointerEvents = 'auto';
-            alert("Berhasil memotong 3 Koin! Keyboard Piano aktif dan siap dimainkan.");
-        }
-
-        function playRealPiano(frequency, element) {
-            if (!pianoAudioCtx) return;
-            let osc = pianoAudioCtx.createOscillator();
-            let gainNode = pianoAudioCtx.createGain();
-            osc.type = 'triangle';
-            osc.frequency.setValueAtTime(frequency, pianoAudioCtx.currentTime);
-            gainNode.gain.setValueAtTime(0.6, pianoAudioCtx.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.0001, pianoAudioCtx.currentTime + 1.2);
-            osc.connect(gainNode);
-            gainNode.connect(pianoAudioCtx.destination);
-            osc.start();
-            osc.stop(pianoAudioCtx.currentTime + 1.2);
-            element.classList.add('active');
-            setTimeout(() => { element.classList.remove('active'); }, 180);
-        }
-
-        function startParticleSim() {
-            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk menjalankan Simulasi Partikel.");
-            coins -= 3;
-            updateCoinDisplay();
-            const canvas = document.getElementById('particleCanvas');
-            const ctx = canvas.getContext('2d');
-            let particles = [];
-            for(let i=0; i<150; i++) {
-                particles.push({
-                    x: Math.random() * canvas.width, y: Math.random() * canvas.height,
-                    vx: (Math.random() - 0.5) * 2, vy: (Math.random() - 0.5) * 2,
-                    color: `hsl(${Math.random() * 360}, 100%, 50%)`
-                });
-            }
-            let touchX = null, touchY = null;
-            canvas.onmousemove = (e) => {
-                const rect = canvas.getBoundingClientRect();
-                touchX = e.clientX - rect.left; touchY = e.clientY - rect.top;
-            };
-            function loop() {
-                ctx.fillStyle = "rgba(0, 0, 0, 0.2)";
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                particles.forEach(p => {
-                    p.x += p.vx; p.y += p.vy;
-                    if(p.x < 0 || p.x > canvas.width) p.vx *= -1;
-                    if(p.y < 0 || p.y > canvas.height) p.vy *= -1;
-                    if(touchX !== null) {
-                        let dx = touchX - p.x; let dy = touchY - p.y;
-                        let dist = Math.sqrt(dx*dx + dy*dy);
-                        if(dist < 80) { p.x -= dx * 0.05; p.y -= dy * 0.05; }
-                    }
-                    ctx.fillStyle = p.color;
-                    ctx.beginPath(); ctx.arc(p.x, p.y, 2, 0, Math.PI*2); ctx.fill();
-                });
-                requestAnimationFrame(loop);
-            }
-            loop();
-            alert("Berhasil memotong 3 Koin! Simulasi Quantum Partikel dimulai.");
-        }
-
-        let audioCtx = null;
-        let oscillator = null;
-        let isAudioPlaying = false;
-        function toggleMindFrequency() {
-            if(!isAudioPlaying) {
-                if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk memutar Frekuensi Pikiran.");
-                coins -= 3;
-                updateCoinDisplay();
-                playAudioFreq();
-                alert("Berhasil memotong 3 Koin! Frekuensi terapi pikiran aktif.");
-            } else {
-                stopAudioFreq();
-            }
-        }
-        function playAudioFreq() {
-            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            oscillator = audioCtx.createOscillator();
-            let freq = parseInt(document.getElementById('freqSelect').value);
-            oscillator.type = 'sine';
-            oscillator.frequency.setValueAtTime(freq, audioCtx.currentTime);
-            oscillator.connect(audioCtx.destination);
-            oscillator.start();
-            isAudioPlaying = true;
-            document.getElementById('audioStatusText').innerText = `Status Audio: Berjalan Aktif (${freq} Hz)`;
-            document.getElementById('audioStatusText').style.color = '#00f2fe';
-        }
-        function stopAudioFreq() {
-            if(oscillator) { oscillator.stop(); oscillator.disconnect(); }
-            if(audioCtx) { audioCtx.close(); }
-            isAudioPlaying = false;
-            document.getElementById('audioStatusText').innerText = "Status Audio: Berhenti";
-            document.getElementById('audioStatusText').style.color = '#22c55e';
-        }
-
-        function startFluidSim() {
-            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk menjalankan Simulasi Cairan.");
-            coins -= 3;
-            updateCoinDisplay();
-            const canvas = document.getElementById('fluidCanvas');
-            const ctx = canvas.getContext('2d');
-            let drops = [];
-            canvas.onpointermove = (e) => {
-                const rect = canvas.getBoundingClientRect();
-                drops.push({
-                    x: e.clientX - rect.left, y: e.clientY - rect.top, r: 5,
-                    color: `hsl(${Math.random() * 360}, 80%, 60%)`
-                });
-                if(drops.length > 50) drops.shift();
-            };
-            function renderFluid() {
-                ctx.fillStyle = "rgba(0, 0, 0, 0.1)";
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                drops.forEach(d => {
-                    d.r += 0.8;
-                    ctx.strokeStyle = d.color;
-                    ctx.lineWidth = 2;
-                    ctx.beginPath(); ctx.arc(d.x, d.y, d.r, 0, Math.PI*2); ctx.stroke();
-                });
-                requestAnimationFrame(renderFluid);
-            }
-            renderFluid();
-            alert("Berhasil memotong 3 Koin! Simulasi Fluid Dynamics aktif.");
-        }
-
-        function startCyberCityFly() {
-            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk menjalankan Cyber City Flythrough.");
-            coins -= 3;
-            updateCoinDisplay();
-            const canvas = document.getElementById('cyberCanvas');
-            const ctx = canvas.getContext('2d');
-            let buildings = [];
-            for(let i=0; i<30; i++) {
-                buildings.push({
-                    x: (Math.random() - 0.5) * 400 + canvas.width/2,
-                    y: Math.random() * canvas.height,
-                    z: Math.random() * 500 + 100, w: 40, h: 80
-                });
-            }
-            function renderCity() {
-                ctx.fillStyle = "#000";
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
-                buildings.forEach(b => {
-                    b.z -= 2;
-                    if(b.z <= 0) b.z = 500;
-                    let k = 200 / b.z;
-                    let px = (b.x - canvas.width/2) * k + canvas.width/2;
-                    let py = (b.y - canvas.height/2) * k + canvas.height/2;
-                    let pw = b.w * k; let ph = b.h * k;
-                    ctx.strokeStyle = "#00f2fe";
-                    ctx.lineWidth = 1;
-                    ctx.strokeRect(px - pw/2, py - ph/2, pw, ph);
-                });
-                requestAnimationFrame(renderCity);
-            }
-            renderCity();
-            alert("Berhasil memotong 3 Koin! Penerbangan Kota Cyber 3D dimulai.");
-        }
-
-        let kalimbaAudioCtx = null;
-        let ambientAudioCtx = null;
-        let ambientOscillator = null;
-        let isAmbientPlaying = false;
-
-        function unlockKalimbaStudio() {
-            if (coins < 3) return alert("Koin tidak cukup! Butuh 3 Koin untuk mengaktifkan Kalimba & Akustik Studio.");
-            coins -= 3;
-            updateCoinDisplay();
-            kalimbaAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
-            document.getElementById('kalimbaModuleBox').style.opacity = '1';
-            document.getElementById('kalimbaModuleBox').style.pointerEvents = 'auto';
-            alert("Berhasil memotong 3 Koin! Kalimba & Akustik Studio aktif.");
-        }
-
-        function playKalimbaTone(freq, noteName) {
-            if (!kalimbaAudioCtx) return;
-            let osc = kalimbaAudioCtx.createOscillator();
-            let gain = kalimbaAudioCtx.createGain();
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(freq, kalimbaAudioCtx.currentTime);
-            gain.gain.setValueAtTime(0.5, kalimbaAudioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.0001, kalimbaAudioCtx.currentTime + 1.5);
-            osc.connect(gain);
-            gain.connect(kalimbaAudioCtx.destination);
-            osc.start();
-            osc.stop(kalimbaAudioCtx.currentTime + 1.5);
-        }
-
-        function toggleAmbientSound() {
-            if (!isAmbientPlaying) {
-                ambientAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                ambientOscillator = ambientAudioCtx.createOscillator();
-                ambientOscillator.type = 'triangle';
-                ambientOscillator.frequency.setValueAtTime(110, ambientAudioCtx.currentTime);
-                ambientOscillator.connect(ambientAudioCtx.destination);
-                ambientOscillator.start();
-                isAmbientPlaying = true;
-                alert("Ambient sound latar aktif.");
-            } else {
-                if (ambientOscillator) { ambientOscillator.stop(); ambientOscillator.disconnect(); }
-                if (ambientAudioCtx) { ambientAudioCtx.close(); }
-                isAmbientPlaying = false;
-                alert("Ambient sound dimatikan.");
-            }
-        }
     </script>
 </body>
 </html>
