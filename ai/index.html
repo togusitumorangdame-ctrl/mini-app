@@ -47,7 +47,7 @@
         
         .app-card { background: rgba(255, 255, 255, 0.04); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 25px; width: 100%; max-width: 500px; padding: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); z-index: 1; }
         .nav-tabs { display: flex; justify-content: space-between; margin-bottom: 20px; background: rgba(0,0,0,0.3); padding: 5px; border-radius: 50px; gap: 4px; flex-wrap: wrap; }
-        .tab-btn { background: none; border: none; color: #a0a0ba; padding: 8px 4px; font-size: 8.5px; font-weight: 600; cursor: pointer; border-radius: 50px; flex: 1; text-align: center; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 40px; }
+        .tab-btn { background: none; border: none; color: #a0a0ba; padding: 8px 4px; font-size: 8px; font-weight: 600; cursor: pointer; border-radius: 50px; flex: 1; text-align: center; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 3px; min-width: 36px; }
         .tab-btn i { font-size: 11px; }
         .tab-btn.active { background: linear-gradient(45deg, #00f2fe, #4facfe); color: white; box-shadow: 0 4px 12px rgba(0,242,254,0.3); }
         
@@ -134,6 +134,7 @@
             <button id="tab-dl" class="tab-btn" onclick="switchTab('dl-view', 'tab-dl')"><i class="fa-solid fa-download"></i>Downloader</button>
             <button id="tab-img" class="tab-btn" onclick="switchTab('img-view', 'tab-img')"><i class="fa-solid fa-image"></i>AI Image</button>
             <button id="tab-qr" class="tab-btn" onclick="switchTab('qr-view', 'tab-qr')"><i class="fa-solid fa-qrcode"></i>QR Code</button>
+            <button id="tab-watermark" class="tab-btn" onclick="switchTab('watermark-view', 'tab-watermark')"><i class="fa-solid fa-certificate"></i>Watermark</button>
             <button id="tab-appbuilder" class="tab-btn" onclick="switchTab('appbuilder-view', 'tab-appbuilder')"><i class="fa-solid fa-hammer"></i>Builder</button>
             <button id="tab-scam" class="tab-btn" onclick="switchTab('scam-view', 'tab-scam')"><i class="fa-solid fa-shield-halved"></i>Shield</button>
             <button id="tab-webcam" class="tab-btn" onclick="switchTab('webcam-view', 'tab-webcam')"><i class="fa-solid fa-camera"></i>Webcams</button>
@@ -204,6 +205,42 @@
             <input type="text" id="qrText" placeholder="Masukkan URL atau teks untuk QR...">
             <button class="btn-action" onclick="processQrRequest()"><i class="fa-solid fa-qrcode"></i> Buat QR Code</button>
             <img id="qrResult" src="" alt="Hasil QR Code">
+        </div>
+
+        <!-- FITUR BARU: WATERMARK (PENYEMAT TANDA AIR GAMBAR) -->
+        <div id="watermark-view" class="feature-view">
+            <h2><i class="fa-solid fa-certificate"></i> Watermark Generator (2 Koin)</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Lindungi hak cipta gambar atau foto Anda dengan menyematkan teks tanda air digital.</p>
+            
+            <div style="margin-bottom: 10px;">
+                <label style="font-size: 11px; color: #00f2fe; display: block; margin-bottom: 4px;">Pilih Gambar / Foto:</label>
+                <input type="file" id="wmImageInput" accept="image/*">
+            </div>
+            
+            <div style="margin-bottom: 10px;">
+                <label style="font-size: 11px; color: #00f2fe; display: block; margin-bottom: 4px;">Teks Watermark:</label>
+                <input type="text" id="wmTextInput" placeholder="Cth: @Master_Premium_User">
+            </div>
+
+            <div style="margin-bottom: 12px;">
+                <label style="font-size: 11px; color: #00f2fe; display: block; margin-bottom: 4px;">Posisi Tanda Air:</label>
+                <select id="wmPosition">
+                    <option value="bottom-right">Pojok Kanan Bawah</option>
+                    <option value="bottom-left">Pojok Kiri Bawah</option>
+                    <option value="top-right">Pojok Kanan Atas</option>
+                    <option value="top-left">Pojok Kiri Atas</option>
+                    <option value="center">Tengah (Center)</option>
+                </select>
+            </div>
+
+            <button class="btn-action" onclick="processWatermark()"><i class="fa-solid fa-stamp"></i> Proses & Sematkan Watermark</button>
+
+            <div class="result-box" id="wmResultBox" style="text-align: center;">
+                <p style="color: #00f2fe; font-weight: bold; margin-bottom: 8px;"><i class="fa-solid fa-circle-check"></i> Hasil Gambar Ber-Watermark:</p>
+                <canvas id="wmCanvas" style="max-width: 100%; border-radius: 8px; display: none; border: 1px solid rgba(0,242,254,0.3); margin: 0 auto;"></canvas>
+                <br>
+                <a id="wmDownloadBtn" style="display: none;" class="share-btn wa" download="protected-image.png"><i class="fa-solid fa-download"></i> Unduh Gambar</a>
+            </div>
         </div>
 
         <!-- FITUR PROFESSIONAL AI APP BUILDER -->
@@ -590,6 +627,90 @@
                 img.src = "https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=" + encodeURIComponent(txt);
                 img.style.display = 'block';
             });
+        }
+
+        // LOGIKA FITUR BARU: WATERMARK
+        function processWatermark() {
+            if(coins < 2) return alert("Butuh 2 Koin untuk menggunakan fitur Watermark!");
+            
+            const fileInput = document.getElementById('wmImageInput');
+            const textInput = document.getElementById('wmTextInput').value.trim();
+            const position = document.getElementById('wmPosition').value;
+
+            if(!fileInput.files || !fileInput.files[0]) {
+                return alert("Silakan pilih gambar terlebih dahulu!");
+            }
+            if(!textInput) {
+                return alert("Masukkan teks watermark terlebih dahulu!");
+            }
+
+            coins -= 2;
+            updateCoinDisplay();
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const img = new Image();
+                img.onload = function() {
+                    const canvas = document.getElementById('wmCanvas');
+                    const ctx = canvas.getContext('2d');
+
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+
+                    // Gambar gambar asli
+                    ctx.drawImage(img, 0, 0);
+
+                    // Pengaturan gaya teks watermark
+                    const fontSize = Math.max(16, Math.floor(img.width / 30));
+                    ctx.font = `bold ${fontSize}px Poppins, sans-serif`;
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
+                    ctx.shadowColor = 'rgba(0, 0, 0, 0.9)';
+                    ctx.shadowBlur = 6;
+
+                    const padding = 30;
+                    const textMetrics = ctx.measureText(textInput);
+                    const textWidth = textMetrics.width;
+
+                    let x = padding;
+                    let y = padding + fontSize;
+
+                    switch(position) {
+                        case 'bottom-right':
+                            x = img.width - textWidth - padding;
+                            y = img.height - padding;
+                            break;
+                        case 'bottom-left':
+                            x = padding;
+                            y = img.height - padding;
+                            break;
+                        case 'top-right':
+                            x = img.width - textWidth - padding;
+                            y = fontSize + padding;
+                            break;
+                        case 'top-left':
+                            x = padding;
+                            y = fontSize + padding;
+                            break;
+                        case 'center':
+                            x = (img.width - textWidth) / 2;
+                            y = img.height / 2;
+                            break;
+                    }
+
+                    ctx.fillText(textInput, x, y);
+
+                    // Tampilkan hasil
+                    canvas.style.display = 'block';
+                    const downloadBtn = document.getElementById('wmDownloadBtn');
+                    downloadBtn.href = canvas.toDataURL('image/png');
+                    downloadBtn.style.display = 'inline-flex';
+
+                    document.getElementById('wmResultBox').style.display = 'block';
+                    alert("Watermark berhasil disematkan!");
+                }
+                img.src = e.target.result;
+            }
+            reader.readAsDataURL(fileInput.files[0]);
         }
 
         function runAppBuilder() {
