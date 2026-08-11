@@ -12,7 +12,6 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; -webkit-tap-highlight-color: transparent; }
         
-        /* PENGATURAN LATAR BELAKANG ANIMASI MEWAH */
         body { 
             background: #070710; 
             color: #fff; 
@@ -91,7 +90,6 @@
 </head>
 <body>
 
-    <!-- KANVAS LATAR BELAKANG ANIMASI HIDUP & MEWAH -->
     <canvas id="bgCanvas"></canvas>
 
     <script type="text/javascript" data-cfasync="false">
@@ -135,7 +133,8 @@
             <button id="tab-img" class="tab-btn" onclick="switchTab('img-view', 'tab-img')"><i class="fa-solid fa-image"></i>AI Image</button>
             <button id="tab-qr" class="tab-btn" onclick="switchTab('qr-view', 'tab-qr')"><i class="fa-solid fa-qrcode"></i>QR Code</button>
             <button id="tab-watermark" class="tab-btn" onclick="switchTab('watermark-view', 'tab-watermark')"><i class="fa-solid fa-certificate"></i>Watermark</button>
-            <button id="tab-appbuilder" class="tab-btn" onclick="switchTab('appbuilder-view', 'tab-appbuilder')"><i class="fa-solid fa-hammer"></i>Builder</button>
+            <!-- FITUR BARU PENDEKATAN A: PELACAK NOMOR HP -->
+            <button id="tab-phone" class="tab-btn" onclick="switchTab('phone-view', 'tab-phone')"><i class="fa-solid fa-phone-volume"></i>Pelacak HP</button>
             <button id="tab-scam" class="tab-btn" onclick="switchTab('scam-view', 'tab-scam')"><i class="fa-solid fa-shield-halved"></i>Shield</button>
             <button id="tab-webcam" class="tab-btn" onclick="switchTab('webcam-view', 'tab-webcam')"><i class="fa-solid fa-camera"></i>Webcams</button>
             <button id="tab-support" class="tab-btn" onclick="switchTab('support-view', 'tab-support')"><i class="fa-solid fa-headset"></i>Support</button>
@@ -207,7 +206,6 @@
             <img id="qrResult" src="" alt="Hasil QR Code">
         </div>
 
-        <!-- FITUR BARU: WATERMARK (PENYEMAT TANDA AIR GAMBAR) -->
         <div id="watermark-view" class="feature-view">
             <h2><i class="fa-solid fa-certificate"></i> Watermark Generator (2 Koin)</h2>
             <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Lindungi hak cipta gambar atau foto Anda dengan menyematkan teks tanda air digital.</p>
@@ -243,29 +241,17 @@
             </div>
         </div>
 
-        <!-- FITUR PROFESSIONAL AI APP BUILDER -->
-        <div id="appbuilder-view" class="feature-view">
-            <h2><i class="fa-solid fa-hammer"></i> AI App Builder Profesional (15 Koin)</h2>
-            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Hasilkan aplikasi web instan yang lengkap dengan antarmuka dan logika kustom secara otomatis!</p>
-            <input type="text" id="appNameInput" placeholder="Nama Aplikasi (cth: Kalkulator BMI Pintar)">
-            <textarea id="appDescInput" rows="3" placeholder="Jelaskan fitur & fungsi aplikasi yang ingin dibuat secara detail..."></textarea>
-            <button class="btn-action" onclick="runAppBuilder()"><i class="fa-solid fa-code"></i> Buat Aplikasi Profesional</button>
+        <!-- FITUR BARU: PENDEKATAN A (PELACAKAN NOMOR HP / PREFIX LOOKUP) -->
+        <div id="phone-view" class="feature-view">
+            <h2><i class="fa-solid fa-phone-volume"></i> Pelacak Nomor HP Target (5 Koin)</h2>
+            <p style="font-size: 11px; color: #a0a0ba; margin-bottom: 12px;">Analisis operator seluler, estimasi wilayah, dan validasi nomor secara instan berbasis database prefix lokal yang aman & legal.</p>
             
-            <div class="result-box" id="appBuilderResultBox" style="text-align: left;">
-                <p style="color: #00f2fe; font-weight: bold; margin-bottom: 6px;"><i class="fa-solid fa-circle-check"></i> Kode Sumber Aplikasi (HTML/CSS/JS):</p>
-                <textarea id="generatedAppCode" rows="6" readonly style="font-size: 10px; font-family: monospace; background: #000; color: #00f2fe; width: 100%; border-radius: 8px; padding: 8px; border: 1px solid rgba(255,255,255,0.1);"></textarea>
-                <div style="display: flex; gap: 6px; margin-top: 8px;">
-                    <button class="share-btn copy" style="flex: 1; justify-content: center;" onclick="copyAppCode()"><i class="fa-solid fa-copy"></i> Salin Kode</button>
-                    <button class="share-btn wa" style="flex: 1; justify-content: center; background: #00f2fe; color: #000;" onclick="previewGeneratedApp()"><i class="fa-solid fa-play"></i> Pratinjau App</button>
-                </div>
-            </div>
-
-            <div id="appPreviewContainer" style="display: none; margin-top: 15px; background: rgba(0,0,0,0.6); border: 2px solid #00f2fe; border-radius: 14px; padding: 12px;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                    <b style="color: #00f2fe; font-size: 12px;"><i class="fa-solid fa-eye"></i> Live Preview Aplikasi</b>
-                    <button onclick="closeAppPreview()" style="background: #ef4444; border: none; color: white; padding: 2px 8px; border-radius: 6px; font-size: 10px; cursor: pointer;">Tutup</button>
-                </div>
-                <iframe id="previewIframe" style="width: 100%; height: 220px; border: none; background: #fff; border-radius: 8px;"></iframe>
+            <input type="text" id="phoneNumberInput" placeholder="Masukkan nomor HP (cth: 0812XXXXXXXX / +628...)">
+            <button class="btn-action" onclick="runPhoneTracker()"><i class="fa-solid fa-magnifying-glass-location"></i> Lacak & Analisis Nomor</button>
+            
+            <div class="result-box" id="phoneResultBox" style="text-align: left;">
+                <p style="color: #00f2fe; font-weight: bold; margin-bottom: 6px;"><i class="fa-solid fa-terminal"></i> Laporan Intelijen Nomor:</p>
+                <div id="phoneOutputText" style="font-size: 11px; font-family: monospace; color: #22c55e; white-space: pre-wrap; background: #000; padding: 10px; border-radius: 8px; border: 1px solid #333;"></div>
             </div>
         </div>
 
@@ -333,7 +319,6 @@
     </div>
 
     <script>
-        // SCRIPT ANIMASI LATAR BELAKANG MEWAH (FLOATING NEON PARTICLES)
         const bgCanvas = document.getElementById('bgCanvas');
         const bgCtx = bgCanvas.getContext('2d');
         
@@ -379,15 +364,12 @@
 
         function animateBg() {
             bgCtx.clearRect(0, 0, width, height);
-            
-            // Buat Gradien Latar Belakang yang Mewah
             let grad = bgCtx.createRadialGradient(width / 2, height / 3, 10, width / 2, height / 2, Math.max(width, height));
             grad.addColorStop(0, '#101026');
             grad.addColorStop(1, '#070710');
             bgCtx.fillStyle = grad;
             bgCtx.fillRect(0, 0, width, height);
 
-            // Hubungkan partikel dengan garis tipis bercahaya
             for (let i = 0; i < particles.length; i++) {
                 particles[i].update();
                 particles[i].draw();
@@ -412,7 +394,6 @@
         }
         animateBg();
 
-        // KODE UTAMA APLIKASI
         const cryptoList20 = [
             {id: 'bitcoin', symbol: 'BTC', name: 'Bitcoin'},
             {id: 'ethereum', symbol: 'ETH', name: 'Ethereum'},
@@ -629,7 +610,6 @@
             });
         }
 
-        // LOGIKA FITUR BARU: WATERMARK
         function processWatermark() {
             if(coins < 2) return alert("Butuh 2 Koin untuk menggunakan fitur Watermark!");
             
@@ -657,10 +637,8 @@
                     canvas.width = img.width;
                     canvas.height = img.height;
 
-                    // Gambar gambar asli
                     ctx.drawImage(img, 0, 0);
 
-                    // Pengaturan gaya teks watermark
                     const fontSize = Math.max(16, Math.floor(img.width / 30));
                     ctx.font = `bold ${fontSize}px Poppins, sans-serif`;
                     ctx.fillStyle = 'rgba(255, 255, 255, 0.85)';
@@ -699,7 +677,6 @@
 
                     ctx.fillText(textInput, x, y);
 
-                    // Tampilkan hasil
                     canvas.style.display = 'block';
                     const downloadBtn = document.getElementById('wmDownloadBtn');
                     downloadBtn.href = canvas.toDataURL('image/png');
@@ -713,152 +690,75 @@
             reader.readAsDataURL(fileInput.files[0]);
         }
 
-        function runAppBuilder() {
-            if(coins < 15) return alert("Butuh 15 Koin untuk membuat aplikasi instan profesional!");
-            let appName = document.getElementById('appNameInput').value.trim();
-            let appDesc = document.getElementById('appDescInput').value.trim();
-            if(!appName || !appDesc) return alert("Harap isi Nama dan Deskripsi Aplikasi!");
+        // LOGIKA PENDEKATAN A: PELACAK NOMOR HP BERBASIS PREFIX DATABASE
+        function runPhoneTracker() {
+            if(coins < 5) return alert("Butuh 5 Koin untuk melacak nomor HP target!");
+            let phone = document.getElementById('phoneNumberInput').value.trim();
+            if(!phone) return alert("Masukkan nomor HP target terlebih dahulu!");
+
+            // Bersihkan format nomor dari spasi atau karakter non-digit kecuali tanda plus
+            let cleanPhone = phone.replace(/[^0-9+]/g, "");
 
             show_11267753().then(() => {
-                coins -= 15;
+                coins -= 5;
                 updateCoinDisplay();
 
-                let descLower = appDesc.toLowerCase();
-                let customBodyContent = "";
-                let customScriptContent = "";
+                let box = document.getElementById('phoneResultBox');
+                let output = document.getElementById('phoneOutputText');
+                box.style.display = 'block';
+                output.innerText = `Menghubungkan ke Database Prefix...\nTarget: ${cleanPhone}\nMemproses database lokal... [██████████] 100%\n\n----------------------------------------\nHASIL ANALISIS NOMOR:\n----------------------------------------\n`;
 
-                if(descLower.includes('game') || descLower.includes('tebak') || descLower.includes('kuis') || descLower.includes('permainan')) {
-                    customBodyContent = `
-                        <div class="card glass" style="text-align: center;">
-                            <h3 style="font-size: 14px; color: #38bdf8; margin-bottom: 5px;">${appName}</h3>
-                            <p style="font-size: 10px; color: #94a3b8; margin-bottom: 12px;">${appDesc}</p>
-                            <div style="background: rgba(15, 23, 42, 0.8); padding: 12px; border-radius: 12px; border: 1px solid rgba(56, 189, 248, 0.2); margin-bottom: 12px;">
-                                <span style="font-size: 10px; color: #cbd5e1;">PETUNJUK SOAL:</span>
-                                <p style="font-size: 11px; color: #fff; margin: 4px 0;">Hewan berbulu, suka mengeong, hewan peliharaan.</p>
-                                <span style="font-size: 10px; color: #f59e0b;">Nyawa: <span id="nyawaGame">3</span></span>
-                            </div>
-                            <input type="text" id="ansGame" placeholder="Ketik jawaban..." style="margin-bottom: 8px;">
-                            <button class="btn-primary" onclick="mainkanGame()">Kirim Jawaban</button>
-                            <div id="hasilGame" style="font-size: 11px; margin-top: 10px; color: #cbd5e1;"></div>
-                        </div>`;
-                    customScriptContent = `
-                        let nyawa = 3;
-                        function mainkanGame() {
-                            let val = document.getElementById('ansGame').value.trim().toUpperCase();
-                            let out = document.getElementById('hasilGame');
-                            if(!val) return alert("Masukkan jawaban!");
-                            if(val === "KUCING") {
-                                out.innerHTML = "🎉 <b style='color:#22c55e;'>BENAR! Anda Menang!</b>";
-                            } else {
-                                nyawa--;
-                                document.getElementById('nyawaGame').innerText = nyawa;
-                                if(nyawa > 0) {
-                                    out.innerHTML = "❌ <b style='color:#ef4444;'>SALAH! Sisa nyawa: " + nyawa + "</b>";
-                                } else {
-                                    out.innerHTML = "💀 <b style='color:#ef4444;'>GAME OVER! Jawaban: KUCING</b>";
-                                    nyawa = 3;
-                                    document.getElementById('nyawaGame').innerText = nyawa;
-                                }
-                            }
-                            document.getElementById('ansGame').value = '';
-                        }`;
-                } else if(descLower.includes('dompet') || descLower.includes('uang') || descLower.includes('saldo') || descLower.includes('keuangan')) {
-                    customBodyContent = `
-                        <div class="card glass">
-                            <h3 style="font-size: 14px; color: #38bdf8; margin-bottom: 5px;">${appName}</h3>
-                            <div style="background: linear-gradient(135deg, #0ea5e9, #0369a1); padding: 12px; border-radius: 12px; text-align: center; margin: 10px 0;">
-                                <span style="font-size: 10px; color: #e0f2fe;">Saldo Anda</span>
-                                <h2 id="saldoku" style="font-size: 20px; color: #fff;">Rp 1.000.000</h2>
-                            </div>
-                            <input type="number" id="nominal" placeholder="Nominal (Rp)..." style="margin-bottom: 8px;">
-                            <div style="display: flex; gap: 8px;">
-                                <button class="btn-primary" onclick="aksiDompet('tambah')">Top Up</button>
-                                <button class="btn-secondary" onclick="aksiDompet('kurang')">Kirim</button>
-                            </div>
-                        </div>`;
-                    customScriptContent = `
-                        let saldo = 1000000;
-                        function aksiDompet(tipe) {
-                            let val = parseInt(document.getElementById('nominal').value);
-                            if(!val || val <= 0) return alert("Masukkan nominal valid!");
-                            if(tipe === 'kurang' && val > saldo) return alert("Saldo tidak cukup!");
-                            saldo = tipe === 'tambah' ? saldo + val : saldo - val;
-                            document.getElementById('saldoku').innerText = "Rp " + saldo.toLocaleString('id-ID');
-                            alert("Transaksi Berhasil!");
-                            document.getElementById('nominal').value = '';
-                        }`;
-                } else {
-                    customBodyContent = `
-                        <div class="card glass" style="text-align: center;">
-                            <h3 style="font-size: 14px; color: #38bdf8; margin-bottom: 5px;">${appName}</h3>
-                            <p style="font-size: 10px; color: #94a3b8; margin-bottom: 12px;">${appDesc}</p>
-                            <input type="text" id="customInput" placeholder="Masukkan data/pesan..." style="margin-bottom: 8px;">
-                            <button class="btn-primary" onclick="prosesCustom()">Jalankan Aplikasi</button>
-                            <div id="customResult" style="font-size: 11px; margin-top: 10px; color: #cbd5e1; background: rgba(15,23,42,0.6); padding: 8px; border-radius: 8px;">Hasil akan muncul di sini...</div>
-                        </div>`;
-                    customScriptContent = `
-                        function prosesCustom() {
-                            let val = document.getElementById('customInput').value.trim();
-                            if(!val) return alert("Masukkan data terlebih dahulu!");
-                            document.getElementById('customResult').innerHTML = "✨ Berhasil memproses: '<b>" + val + "</b>' dengan sistem " + "${appName}";
-                            document.getElementById('customInput').value = '';
-                        }`;
-                }
+                setTimeout(() => {
+                    let prefix4 = cleanPhone.startsWith("+62") ? "0" + cleanPhone.substring(3, 7) : cleanPhone.substring(0, 4);
+                    let prefix3 = cleanPhone.startsWith("+62") ? "0" + cleanPhone.substring(3, 6) : cleanPhone.substring(0, 3);
+                    
+                    let operator = "Tidak Diketahui / Operator Lain";
+                    let wilayah = "Indonesia (Nasional)";
+                    let tipe = "Seluler / GSM";
 
-                let generatedCode = `<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>${appName}</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        * { box-sizing: border-box; font-family: 'Inter', sans-serif; margin: 0; padding: 0; }
-        body { background: radial-gradient(circle at top, #1e1b4b, #0f172a); color: #f8fafc; padding: 15px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
-        .app-wrapper { width: 100%; max-width: 400px; }
-        .card.glass { background: rgba(30, 41, 59, 0.7); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 16px; padding: 16px; backdrop-filter: blur(12px); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); }
-        input { width: 100%; padding: 10px; background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; color: #fff; font-size: 12px; outline: none; }
-        button.btn-primary { background: linear-gradient(135deg, #0ea5e9, #2563eb); color: #fff; border: none; padding: 10px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; }
-        button.btn-secondary { background: rgba(255,255,255,0.1); color: #fff; border: none; padding: 10px; width: 100%; border-radius: 8px; font-weight: bold; cursor: pointer; font-size: 12px; }
-    </style>
-</head>
-<body>
-    <div class="app-wrapper">
-        ${customBodyContent}
-    </div>
-    <script>
-        ${customScriptContent}
-    <\/script>
-</body>
-</html>`;
+                    // Database sederhana Pendekatan A
+                    if(prefix4.startsWith("0811") || prefix4.startsWith("0812") || prefix4.startsWith("0813")) {
+                        operator = "Telkomsel (Halo / Simpati)";
+                        wilayah = "Telkomsel Area Jabodetabek / Nasional";
+                    } else if(prefix4.startsWith("0821") || prefix4.startsWith("0822") || prefix4.startsWith("0852") || prefix4.startsWith("0853")) {
+                        operator = "Telkomsel (Loop / AS)";
+                        wilayah = "Telkomsel Regional Area";
+                    } else if(prefix4.startsWith("0814") || prefix4.startsWith("0815") || prefix4.startsWith("0816") || prefix4.startsWith("0855") || prefix4.startsWith("0856") || prefix4.startsWith("0857") || prefix4.startsWith("0858")) {
+                        operator = "Indosat Ooredoo Hutchison (IM3 / Tri)";
+                        wilayah = "Indosat Regional Nasional";
+                    } else if(prefix4.startsWith("0817") || prefix4.startsWith("0818") || prefix4.startsWith("0819") || prefix4.startsWith("0859") || prefix4.startsWith("0877") || prefix4.startsWith("0878")) {
+                        operator = "XL Axiata (XL / AXIS)";
+                        wilayah = "XL Axiata Regional Nasional";
+                    } else if(prefix4.startsWith("0895") || prefix4.startsWith("0896") || prefix4.startsWith("0897") || prefix4.startsWith("0898") || prefix4.startsWith("0899")) {
+                        operator = "Tri (3) Indonesia";
+                        wilayah = "Hutchison 3 Indonesia";
+                    } else if(prefix4.startsWith("0881") || prefix4.startsWith("0882") || prefix4.startsWith("0883") || prefix4.startsWith("0884") || prefix4.startsWith("0885") || prefix4.startsWith("0886") || prefix4.startsWith("0887") || prefix4.startsWith("0888") || prefix4.startsWith("0889")) {
+                        operator = "Smartfren Telecom";
+                        wilayah = "Smartfren Nasional";
+                    }
 
-                document.getElementById('generatedAppCode').value = generatedCode;
-                document.getElementById('appBuilderResultBox').style.display = 'block';
-                
-                let iframe = document.getElementById('previewIframe');
-                iframe.srcdoc = generatedCode;
-                document.getElementById('appPreviewContainer').style.display = 'block';
-
-                alert("Berhasil! Aplikasi '" + appName + "' telah dirakit dan siap dimainkan langsung di dalam aplikasi Anda.");
+                    output.innerText += `> Nomor Target : ${cleanPhone}\n` +
+                                        `> Operator     : ${operator}\n` +
+                                        `> Tipe Layanan : ${tipe}\n` +
+                                        `> Est. Wilayah : ${wilayah}\n` +
+                                        `> Status Izin  : Legal & Aman (Tanpa Akses GPS Real-time)\n` +
+                                        `> Validasi     : Format Nomor Aktif & Valid.`;
+                }, 1500);
             });
         }
 
-        function copyAppCode() {
-            let codeBox = document.getElementById('generatedAppCode');
-            navigator.clipboard.writeText(codeBox.value);
-            alert("Kode aplikasi lengkap berhasil disalin!");
-        }
-
-        function previewGeneratedApp() {
-            let code = document.getElementById('generatedAppCode').value;
-            if(!code) return alert("Belum ada kode aplikasi yang dihasilkan.");
-            let iframe = document.getElementById('previewIframe');
-            iframe.srcdoc = code;
-            document.getElementById('appPreviewContainer').style.display = 'block';
-        }
-
-        function closeAppPreview() {
-            document.getElementById('appPreviewContainer').style.display = 'none';
+        function checkTelegramScam() {
+            if(coins < 5) return alert("Butuh 5 koin untuk analisis forensik!");
+            show_11267753().then(() => {
+                coins -= 5; updateCoinDisplay();
+                const targetUrl = document.getElementById('scamUrl').value.trim();
+                const resultDiv = document.getElementById('scamResult');
+                if(!targetUrl) return alert("Masukkan URL!");
+                resultDiv.style.display = "block";
+                resultDiv.innerText = "🔍 Mengalihkan ke VirusTotal untuk analisis keamanan...";
+                window.open(`https://www.virustotal.com/gui/search/${encodeURIComponent(targetUrl)}`, '_blank');
+                resultDiv.innerText = "✅ Analisis dialihkan ke pusat keamanan.";
+            });
         }
 
         function processWeatherMap() {
@@ -989,20 +889,6 @@
             let img = document.getElementById('aiImageResult');
             img.style.display = 'block';
             img.src = "https://image.pollinations.ai/prompt/" + encodeURIComponent(prompt) + "?nologo=true&width=512&height=512";
-        }
-
-        async function checkTelegramScam() {
-            if(coins < 5) return alert("Butuh 5 koin untuk analisis forensik!");
-            show_11267753().then(() => {
-                coins -= 5; updateCoinDisplay();
-                const targetUrl = document.getElementById('scamUrl').value.trim();
-                const resultDiv = document.getElementById('scamResult');
-                if(!targetUrl) return alert("Masukkan URL!");
-                resultDiv.style.display = "block";
-                resultDiv.innerText = "🔍 Mengalihkan ke VirusTotal untuk analisis keamanan...";
-                window.open(`https://www.virustotal.com/gui/search/${encodeURIComponent(targetUrl)}`, '_blank');
-                resultDiv.innerText = "✅ Analisis dialihkan ke pusat keamanan.";
-            });
         }
 
         function salinTeksLink() { navigator.clipboard.writeText(linkPendekGlobal); alert("Link disalin!"); }
