@@ -108,7 +108,7 @@
                 if (data.status === 'success') {
                     statusDiv.style.color = '#2ed573';
                     // Memunculkan tombol link download manual agar tidak diblokir browser
-                    statusDiv.innerHTML = `Akses VIP Disetujui!<br><a href="${data.download_url}" target="_blank" style="display:inline-block; margin-top:8px; padding:10px 15px; background-color:#2ed573; color:#121212; font-weight:bold; text-decoration:none; border-radius:6px;">📥 Klik Disini Untuk Unduh Video</a>`;
+                    statusDiv.innerHTML = `Akses VIP Disetujui!<br><a href="${data.download_url}" download="video_vip.mp4" target="_blank" style="display:inline-block; margin-top:8px; padding:10px 15px; background-color:#2ed573; color:#121212; font-weight:bold; text-decoration:none; border-radius:6px;">📥 Klik Disini Untuk Unduh Video</a>`;
                 } else {
                     statusDiv.style.color = '#ff4757';
                     statusDiv.innerText = data.message;
