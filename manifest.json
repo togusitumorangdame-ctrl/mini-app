@@ -1,0 +1,9 @@
+{
+  "name": "Media Downloader Pro",
+  "short_name": "Downloader",
+  "start_url": "/mini-app/",
+  "display": "standalone",
+  "background_color": "#121212",
+  "theme_color": "#ff4757"
+}
+
