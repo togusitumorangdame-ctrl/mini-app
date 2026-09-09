@@ -95,7 +95,7 @@
             }
 
             statusDiv.style.color = '#eccc68';
-            statusDiv.innerText = 'Memverifikasi langganan...';
+            statusDiv.innerText = 'Memverifikasi langganan & menyiapkan link...';
 
             // Alamat URL Cloudflare Tunnel yang terhubung langsung ke Termux
             fetch('https://amount-republic-computers-upgrading.trycloudflare.com/download', {
@@ -108,6 +108,15 @@
                 if (data.status === 'success') {
                     statusDiv.style.color = '#2ed573';
                     statusDiv.innerText = data.message;
+
+                    // Otomatis memicu unduhan langsung di browser HP pengguna masing-masing
+                    const a = document.createElement('a');
+                    a.href = data.download_url;
+                    a.target = '_blank';
+                    a.download = '';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
                 } else {
                     statusDiv.style.color = '#ff4757';
                     statusDiv.innerText = data.message;
