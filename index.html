@@ -107,16 +107,8 @@
             .then(data => {
                 if (data.status === 'success') {
                     statusDiv.style.color = '#2ed573';
-                    statusDiv.innerText = data.message;
-
-                    // Otomatis memicu unduhan langsung di browser HP pengguna masing-masing
-                    const a = document.createElement('a');
-                    a.href = data.download_url;
-                    a.target = '_blank';
-                    a.download = '';
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
+                    // Memunculkan tombol link download manual agar tidak diblokir browser
+                    statusDiv.innerHTML = `Akses VIP Disetujui!<br><a href="${data.download_url}" target="_blank" style="display:inline-block; margin-top:8px; padding:10px 15px; background-color:#2ed573; color:#121212; font-weight:bold; text-decoration:none; border-radius:6px;">📥 Klik Disini Untuk Unduh Video</a>`;
                 } else {
                     statusDiv.style.color = '#ff4757';
                     statusDiv.innerText = data.message;
