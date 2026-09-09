@@ -97,7 +97,7 @@
             statusDiv.style.color = '#eccc68';
             statusDiv.innerText = 'Memverifikasi langganan...';
 
-            fetch('http://127.0.0.1:5000/download', {
+            fetch('https://amount-republic-computers-upgrading.trycloudflare.com/download', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ token: token, url: url, format: format })
