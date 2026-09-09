@@ -1,14 +1,14 @@
 {
-  "name": "Media Downloader Pro VIP",
-  "short_name": "Downloader",
-  "description": "Aplikasi downloader media VIP profesional",
+  "name": "Warung Cinema Official",
+  "short_name": "Warung Cinema",
+  "description": "Aplikasi streaming film Warung Cinema Official",
   "start_url": "/mini-app/",
   "display": "standalone",
-  "background_color": "#121212",
-  "theme_color": "#ff4757",
+  "background_color": "#ffffff",
+  "theme_color": "#FFD700",
   "icons": [
     {
-      "src": "https://raw.githubusercontent.com/github/explore/80688e429a7d4ef2fca1e62350fe873517d6494d/topics/javascript/javascript.png",
+      "src": "/mini-app/IMG_20260813_191458.png",
       "sizes": "512x512",
       "type": "image/png"
     }
