@@ -1,9 +1,16 @@
 {
-  "name": "Media Downloader Pro",
+  "name": "Media Downloader Pro VIP",
   "short_name": "Downloader",
+  "description": "Aplikasi downloader media VIP profesional",
   "start_url": "/mini-app/",
   "display": "standalone",
   "background_color": "#121212",
-  "theme_color": "#ff4757"
+  "theme_color": "#ff4757",
+  "icons": [
+    {
+      "src": "https://raw.githubusercontent.com/pwabuilder/pwa-starter/main/assets/images/pwabuilder-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
 }
-
